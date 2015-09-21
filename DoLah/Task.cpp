@@ -1,38 +1,38 @@
 #include "Task.h"
 
 namespace DoLah {
-    AbstractTask::AbstractTask() {}
-    AbstractTask::~AbstractTask() {}
+    Task::Task() {}
+    Task::~Task() {}
 
-    void AbstractTask::setName(std::string name) {
+    void Task::setName(std::string name) {
         this->name = name;
     }
 
-    std::string AbstractTask::getName() {
+    std::string Task::getName() {
         return this->name;
     }
 
-    void AbstractTask::setDescription(std::string description) {
+    void Task::setDescription(std::string description) {
         this->description = description;
     }
 
-    std::string AbstractTask::getDescription() {
+    std::string Task::getDescription() {
         return this->description;
     }
 
-    void AbstractTask::setDone(bool done) {
+    void Task::setDone(bool done) {
         this->done = done;
     }
 
-    bool AbstractTask::isDone() {
+    bool Task::isDone() {
         return this->done;
     }
 
-    void AbstractTask::setId(int id) {
+    void Task::setId(int id) {
         this->id = id;
     }
 
-    int AbstractTask::getId() {
+    int Task::getId() {
         return this->id;
     }
 }

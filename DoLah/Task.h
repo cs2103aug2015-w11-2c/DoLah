@@ -3,10 +3,10 @@
 
 
 namespace DoLah {
-    class AbstractTask {
+    class Task {
     public:
-        AbstractTask();
-        virtual ~AbstractTask();
+        Task();
+        virtual ~Task();
         void setId(int id);
         int getId();
         void setName(std::string);
