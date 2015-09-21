@@ -35,3 +35,8 @@ std::string TokenizerLibrary::vectorToString(std::vector<std::string> vec) {
     str += " }";
     return str;
 }
+
+std::string TokenizerLibrary::tolowercase(std::string str) {
+    std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+    return str;
+}

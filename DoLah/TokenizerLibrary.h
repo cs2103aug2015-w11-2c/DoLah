@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 class TokenizerLibrary {
 public:
@@ -10,6 +11,7 @@ public:
 
     static std::vector<std::string> explode(std::string line);
     static std::string vectorToString(std::vector<std::string> vec);
+    static std::string tolowercase(std::string str);
 
 };
 
