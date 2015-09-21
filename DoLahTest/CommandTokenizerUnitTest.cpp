@@ -33,12 +33,13 @@ public:
     }
 
     TEST_METHOD(findCommandInputTest) {
+        CommandTokenizer ct;
         std::string input = "dispray";
         std::string actual;
         std::string expected = "command not recognized";
         try {
-            TokenizerLibrary::inArray(commandList, input);
-        } catch (std::invalid_argument message) {
+            ct.tokenize(input);
+        } catch (std::exception message) {
             actual = std::string(message.what());
         }
         Assert::AreEqual(expected, actual);
