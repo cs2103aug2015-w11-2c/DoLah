@@ -11,7 +11,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace DoLahTest {
     TEST_CLASS(Tokenize) {
 public:
-    std::vector<std::string> commandList = { "add", "dislay", "undo", "delete", "edit", "clear", "search", "sort" };
+    std::vector<std::string> commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort" };
 
     TEST_METHOD(vectorToStringTest) {
         std::vector<std::string> input = { "1", "2", "3", "4", "5" };
@@ -26,16 +26,22 @@ public:
         Assert::AreEqual(expected, TokenizerLibrary::vectorToString(TokenizerLibrary::explode(input, arg1)));
     }
 
-    TEST_METHOD(isCommandCaseTest) {
+    TEST_METHOD(inArrayCaseTest) {
         std::string input = "ADD";
         bool expected = true;
         Assert::AreEqual(expected, TokenizerLibrary::inArray(commandList, input));
     }
 
-    TEST_METHOD(isCommandWrongInputTest) {
+    TEST_METHOD(findCommandInputTest) {
         std::string input = "dispray";
-        bool expected = false;
-        Assert::AreEqual(expected, TokenizerLibrary::inArray(commandList, input));
+        std::string actual;
+        std::string expected = "command not recognized";
+        try {
+            TokenizerLibrary::inArray(commandList, input);
+        } catch (std::invalid_argument message) {
+            actual = std::string(message.what());
+        }
+        Assert::AreEqual(expected, actual);
     }
 
     };
