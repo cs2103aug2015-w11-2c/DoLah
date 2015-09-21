@@ -9,12 +9,11 @@ CommandTokenizer::CommandTokenizer() {
 CommandTokenizer::~CommandTokenizer() {
 }
 
-
-bool CommandTokenizer::isCommand(std::string str) {
-    return std::find(commandList.begin(), commandList.end(), TokenizerLibrary::tolowercase(str)) != commandList.end();
-}
-
 std::vector<std::string> CommandTokenizer::tokenize(std::string line) {
+    std::vector<std::string> lineArr = TokenizerLibrary::explode(line, " ");
+    if (TokenizerLibrary::inArray(commandList, lineArr.at(0))) {
+
+    }
     return {};
 }
 

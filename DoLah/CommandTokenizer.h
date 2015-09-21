@@ -11,9 +11,8 @@ public:
     ~CommandTokenizer();
 
     std::vector<std::string> tokenize(std::string line);
-    bool isCommand(std::string str);
 
 private:
-    std::vector<std::string> commandList = {"add", "dislay", "undo", "delete", "edit", "clear", "search", "sort"};
+    std::vector<std::string> commandList = { "add", "dislay", "undo", "delete", "edit", "clear", "search", "sort"};
 };
 
