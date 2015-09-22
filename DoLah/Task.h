@@ -35,6 +35,17 @@ namespace DoLah {
         std::chrono::system_clock::time_point startDate;
         std::chrono::system_clock::time_point endDate;
     };
+
+    class DeadlineTask : Task {
+    public:
+        DeadlineTask();
+        ~DeadlineTask();
+        std::chrono::system_clock::time_point getDueDate();
+        void setDueDate(std::chrono::system_clock::time_point);
+
+    private:
+        std::chrono::system_clock::time_point dueDate;
+    };
 }
 
 using DoLah::Task;
