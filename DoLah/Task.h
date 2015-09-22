@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <chrono>
 
 
 namespace DoLah {
@@ -21,4 +22,20 @@ namespace DoLah {
         int id;
         bool done;
     };
+
+    class EventTask : Task {
+    public:
+        EventTask();
+        ~EventTask();
+        std::chrono::system_clock::time_point getStartDate();
+        void setStartDate(std::chrono::system_clock::time_point);
+        std::chrono::system_clock::time_point getEndDate();
+        void setEndDate(std::chrono::system_clock::time_point);
+    private:
+        std::chrono::system_clock::time_point startDate;
+        std::chrono::system_clock::time_point endDate;
+    };
 }
+
+using DoLah::Task;
+using DoLah::EventTask;
