@@ -120,11 +120,16 @@
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
     <ClCompile Include="CommandTokenizer.cpp" />
+    <ClCompile Include="DateTimeToken.cpp" />
+    <ClCompile Include="IntegerToken.cpp" />
+    <ClCompile Include="ITokenObject.cpp" />
+    <ClCompile Include="StringToken.cpp" />
     <ClCompile Include="TokenizerLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />
     <ClInclude Include="CommandTokenizer.h" />
+    <ClInclude Include="ITokenObject.h" />
     <ClInclude Include="TokenizerLibrary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

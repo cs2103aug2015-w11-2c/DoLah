@@ -9,27 +9,51 @@ CommandTokenizer::CommandTokenizer() {
 CommandTokenizer::~CommandTokenizer() {
 }
 
-std::string CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
-    std::string command;
+StringToken CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
+    StringToken output;
     if (TokenizerLibrary::inArray(commandList, lineArr.at(0))) {
-        command = lineArr.at(0);
+        output.setData(lineArr.at(0));
     } else {
         throw std::exception("command not recognized");
     }
 
-    return command;
+    return output;
+}
+
+std::vector<StringToken> CommandTokenizer::findTags(std::vector<std::string> lineArr) {
+    std::vector<StringToken> output;
+
+    for (int i = 0; i < lineArr.size(); i++) {
+        while () {
+
+        }
+    }
+
+    return output;
+}
+
+std::vector<DateTimeToken> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
+    std::vector<DateTimeToken> output;
+
+    return output;
+}
+
+std::vector<StringToken> CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
+    std::vector<StringToken> output;
+
+    return output;
 }
 
 std::vector<std::string> CommandTokenizer::tokenize(std::string line) {
     std::vector<std::string> lineArr = TokenizerLibrary::explode(line, " ");
-    std::string command;
+    StringToken command;
     try {
         command = CommandTokenizer::findCommand(lineArr);
     } catch (std::exception exception) {
         throw exception;
     }
     
-    if (command == commandList.at(0)) {
+    if (command.getData() == commandList.at(0)) {
 
     }
 

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "TokenizerLibrary.h""
+#include "ITokenObject.h"
 
 class CommandTokenizer {
 public:
@@ -16,9 +17,9 @@ private:
     std::vector<std::string> commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort"};
     std::vector<std::string> addSubCommandList = { "on" };
     
-    std::string findCommand(std::vector<std::string> lineArr);
-    std::vector<std::string> findTags(std::string line);
-    std::vector<std::string> findDate(std::string line);
-    std::vector<std::string> findDescription(std::string line);
+    StringToken findCommand(std::vector<std::string> lineArr);
+    std::vector<StringToken> findTags(std::vector<std::string> lineArr);
+    std::vector<DateTimeToken> findDate(std::vector<std::string> lineArr);
+    std::vector<StringToken> findDescription(std::vector<std::string> lineArr);
 };
 

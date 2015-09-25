@@ -32,7 +32,7 @@ public:
         Assert::AreEqual(expected, TokenizerLibrary::inArray(commandList, input));
     }
 
-    TEST_METHOD(findCommandInputTest) {
+    TEST_METHOD(findCommandInputExceptionTest) {
         CommandTokenizer ct;
         std::string input = "dispray";
         std::string actual;
