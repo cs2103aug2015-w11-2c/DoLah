@@ -44,3 +44,10 @@ std::string TokenizerLibrary::tolowercase(std::string str) {
 bool TokenizerLibrary::inArray(std::vector<std::string> arr, std::string str) {
     return std::find(arr.begin(), arr.end(), TokenizerLibrary::tolowercase(str)) != arr.end();
 }
+
+std::vector<std::string> TokenizerLibrary::stringVectorUnique(std::vector<std::string> vector) {
+    std::vector<std::string>::iterator it;
+    it = std::unique(vector.begin(), vector.end());
+    vector.resize(std::distance(vector.begin(), it));
+    return vector;
+}

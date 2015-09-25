@@ -23,11 +23,19 @@ StringToken CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
 std::vector<StringToken> CommandTokenizer::findTags(std::vector<std::string> lineArr) {
     std::vector<StringToken> output;
 
+    std::vector<std::string> tags;
+    std::vector<std::string> moretags;
     for (int i = 0; i < lineArr.size(); i++) {
-        while () {
+        moretags = TokenizerLibrary::explode(lineArr.at(i), tag);
+        moretags.erase(tags.begin());
 
-        }
     }
+    for (int i = 0; i < tags.size(); i++) {
+        tags.at(i) = TokenizerLibrary::tolowercase(tags.at(i));
+    }
+
+
+
 
     return output;
 }

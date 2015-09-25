@@ -16,6 +16,8 @@ public:
 private:
     std::vector<std::string> commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort"};
     std::vector<std::string> addSubCommandList = { "on" };
+
+    std::string tag = "#";
     
     StringToken findCommand(std::vector<std::string> lineArr);
     std::vector<StringToken> findTags(std::vector<std::string> lineArr);

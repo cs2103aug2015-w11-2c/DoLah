@@ -13,5 +13,6 @@ public:
     static std::string vectorToString(std::vector<std::string> vec);
     static std::string tolowercase(std::string str);
     static bool inArray(std::vector<std::string> arr, std::string str);
+    std::vector<std::string> stringVectorUnique(std::vector<std::string> vector);
 };
 
