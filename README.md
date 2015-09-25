@@ -1,14 +1,5 @@
 # DoLah
 
+DoLah is a simple todo app.
 
-Branch Naming:
-
-    # Specific Feature or Functionality
-    feature/<feature-label>
-    
-    # Semantic, Confiuration, Formatting, Code Cleanup, etc...
-    enhance/<enhancement>
-    
-    # Bug, Error Fix, Etc...
-    fix/<fix-label>
-
+To contribute please visit our [documentation page](https://github.com/cs2103aug2015-w11-2c/DoLah/blob/master/CONTRIBUTE.md).
