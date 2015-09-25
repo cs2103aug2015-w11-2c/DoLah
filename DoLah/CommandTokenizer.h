@@ -23,5 +23,7 @@ private:
     std::vector<StringToken> findTags(std::vector<std::string> lineArr);
     std::vector<DateTimeToken> findDate(std::vector<std::string> lineArr);
     std::vector<StringToken> findDescription(std::vector<std::string> lineArr);
+
+    std::vector<ITokenObject> tokenizeAdd(std::vector<std::string> lineArr);
 };
 
