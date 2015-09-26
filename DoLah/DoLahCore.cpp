@@ -20,10 +20,20 @@ namespace DoLah {
 	}
 
 	void DoLahCore::save() {
+		std::fstream storage(DoLahCore::storageFile, std::fstream::in);
 
+		//TODO: Function calls to convert taskList and then write to file
+		//TODO: Settings file
+		
+		storage.close();
 	}
 
 	void DoLahCore::load() {
+		std::fstream storage(DoLahCore::storageFile, std::fstream::out);
 
+		//TODO: Function calls to convert lines from file then add to taskList
+		//TODO: Settings file
+		
+		storage.close();
 	}
 }

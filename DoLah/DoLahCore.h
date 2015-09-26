@@ -2,8 +2,9 @@
 
 #include <vector>
 #include <stack>
-#include "Models/Task.h"
 #include <string>
+#include <fstream>
+#include "Models/Task.h"
 #include "Commands\Command.h"
 
 namespace DoLah {

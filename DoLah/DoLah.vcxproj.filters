@@ -27,6 +27,12 @@
     <ClCompile Include="Models\Task.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DoLahCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands\AddTaskCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h">
@@ -38,7 +44,7 @@
     <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DoLah.h">
+    <ClInclude Include="DoLahCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
