@@ -20,5 +20,5 @@ namespace DoLahTest
 
 	TEST_CLASS(COMMAND_TESTER) {
 
-	}
+	};
 }
