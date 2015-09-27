@@ -119,12 +119,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
+    <ClCompile Include="DoLahApp.cpp" />
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />
     <ClCompile Include="Models\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />
+    <ClInclude Include="DoLahApp.h" />
     <ClInclude Include="Models\Task.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

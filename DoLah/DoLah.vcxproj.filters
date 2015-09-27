@@ -27,12 +27,18 @@
     <ClCompile Include="Models\Task.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DoLahApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Models\Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DoLahApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
