@@ -5,6 +5,10 @@
 namespace DoLah {
     class AbstractTask {
     public:
+        class Serializer {
+            static AbstractTask * serialize(std::string data);
+            std::string deserialize();
+        };
         AbstractTask();
         virtual ~AbstractTask() = 0;
         void setId(int id);

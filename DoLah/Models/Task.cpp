@@ -36,5 +36,4 @@ namespace DoLah {
     int AbstractTask::getId() {
         return this->id;
     }
-
 }
