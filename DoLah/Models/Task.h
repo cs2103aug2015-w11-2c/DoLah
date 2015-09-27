@@ -2,12 +2,11 @@
 #include <string>
 #include <chrono>
 
-
 namespace DoLah {
-    class Task {
+    class AbstractTask {
     public:
-        Task();
-        virtual ~Task();
+        AbstractTask();
+        virtual ~AbstractTask() = 0;
         void setId(int id);
         int getId();
         void setName(std::string);
@@ -23,7 +22,9 @@ namespace DoLah {
         bool done;
     };
 
-    class EventTask : Task {
+    class FloatingTask : public AbstractTask { };
+
+    class EventTask : public AbstractTask {
     public:
         EventTask();
         ~EventTask();
@@ -36,7 +37,7 @@ namespace DoLah {
         std::chrono::system_clock::time_point endDate;
     };
 
-    class DeadlineTask : Task {
+    class DeadlineTask : public AbstractTask {
     public:
         DeadlineTask();
         ~DeadlineTask();
@@ -48,5 +49,6 @@ namespace DoLah {
     };
 }
 
-using DoLah::Task;
+using DoLah::FloatingTask;
+using DoLah::DeadlineTask;
 using DoLah::EventTask;

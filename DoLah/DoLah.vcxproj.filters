@@ -35,5 +35,8 @@
     <ClInclude Include="Models\Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Models\TaskFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
