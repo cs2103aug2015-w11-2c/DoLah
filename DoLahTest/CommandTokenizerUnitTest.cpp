@@ -7,18 +7,6 @@
 #include "TokenizerLibrary.h"
 
 
-class MutualFriend {
-public:
-    CommandTokenizer commandTokenizer;
-
-    MutualFriend() {};
-    ~MutualFriend() {};
-
-    StringToken* doFindTags(std::vector<std::string> lineArr) {
-        return commandTokenizer.findTags(lineArr);
-    }
-};
-
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace DoLahTest {
@@ -60,12 +48,11 @@ public:
     }
 
     TEST_METHOD(findTagsTest) {
-        MutualFriend mf;
-        
+        CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on Thursday";
-        std::string expected = (std::string) "{ #cs2103, #homework }";
+        std::string expected = (std::string) "{ homework, cs2103 }";
 
-        StringToken* obj = mf.doFindTags(TokenizerLibrary::explode(input, " "));
+        StringToken* obj = ct.findTags(TokenizerLibrary::explode(input, " "));
         Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getData()));
     }
 

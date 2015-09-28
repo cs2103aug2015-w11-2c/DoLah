@@ -10,7 +10,7 @@ CommandTokenizer::~CommandTokenizer() {
 }
 
 StringToken* CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
-    StringToken* output;
+    StringToken* output = new StringToken;
     if (TokenizerLibrary::inArray(commandList, lineArr.at(0))) {
         output->setData(lineArr.at(0));
     } else {
@@ -21,17 +21,16 @@ StringToken* CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
 }
 
 StringToken* CommandTokenizer::findTags(std::vector<std::string> lineArr) {
-    StringToken* tagToken;
+    StringToken* tagToken = new StringToken;
     std::vector<std::string> tags;
     std::vector<std::string> moretags;
     
-    for (int i = 0; i < lineArr.size(); i++) {
+    for (size_t i = 0; i < lineArr.size(); i++) {
         moretags = TokenizerLibrary::explode(lineArr.at(i), tag);
-        tags.resize(tags.size() + moretags.size() - 1);
-        merge(tags.begin(), tags.end(), moretags.begin() + 1, moretags.end(), tags);
+        tags.insert(tags.begin(), moretags.begin()+1, moretags.end());
     }
 
-    for (int i = 0; i < tags.size(); i++) {
+    for (size_t i = 0; i < tags.size(); i++) {
         tags.at(i) = TokenizerLibrary::tolowercase(tags.at(i));
     }
 
@@ -42,13 +41,13 @@ StringToken* CommandTokenizer::findTags(std::vector<std::string> lineArr) {
 }
 
 DateTimeToken* CommandTokenizer::findDate(std::vector<std::string> lineArr) {
-    DateTimeToken* output;
+    DateTimeToken* output = new DateTimeToken;
 
     return output;
 }
 
 StringToken* CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
-    StringToken* output;
+    StringToken* output = new StringToken;
 
     return output;
 }
