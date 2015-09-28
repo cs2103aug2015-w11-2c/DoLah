@@ -20,9 +20,9 @@ private:
     std::string tag = "#";
     
     StringToken findCommand(std::vector<std::string> lineArr);
-    std::vector<StringToken> findTags(std::vector<std::string> lineArr);
-    std::vector<DateTimeToken> findDate(std::vector<std::string> lineArr);
-    std::vector<StringToken> findDescription(std::vector<std::string> lineArr);
+    std::vector<ITokenObject> findTags(std::vector<std::string> lineArr);
+    DateTimeToken findDate(std::vector<std::string> lineArr);
+    StringToken findDescription(std::vector<std::string> lineArr);
 
     std::vector<ITokenObject> tokenizeAdd(std::vector<std::string> lineArr);
 };

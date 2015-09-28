@@ -20,7 +20,7 @@ StringToken CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
     return output;
 }
 
-std::vector<StringToken> CommandTokenizer::findTags(std::vector<std::string> lineArr) {
+std::vector<ITokenObject> CommandTokenizer::findTags(std::vector<std::string> lineArr) {
     std::vector<StringToken> tagTokenVector;
     std::vector<std::string> tags;
     std::vector<std::string> moretags;
@@ -46,13 +46,13 @@ std::vector<StringToken> CommandTokenizer::findTags(std::vector<std::string> lin
     return tagTokenVector;
 }
 
-std::vector<DateTimeToken> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
+DateTimeToken CommandTokenizer::findDate(std::vector<std::string> lineArr) {
     std::vector<DateTimeToken> output;
 
     return output;
 }
 
-std::vector<StringToken> CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
+StringToken CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
     std::vector<StringToken> output;
 
     return output;
@@ -61,7 +61,12 @@ std::vector<StringToken> CommandTokenizer::findDescription(std::vector<std::stri
 std::vector<ITokenObject> CommandTokenizer::tokenizeAdd(std::vector<std::string> lineArr) {
     std::vector<StringToken> tagTokenVector = CommandTokenizer::findTags(lineArr);
 
-    std::vector<std::vector<ITokenObject>> out;
+    std::vector<std::vector<ITokenObject *>> out;
+    out.push_back(findDescription(lineArr));
+
+    std::vector<ITokenObject *> test;
+    test.push_back(new StringToken);
+
 
     // wait.. how to compile different kinds of token into one datastructure??
 }
