@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <chrono>
 
 class ITokenObject {
@@ -10,21 +11,24 @@ public:
 
 class DateTimeToken : public ITokenObject {
 public:
-    std::chrono::system_clock::time_point data;
+    std::vector<std::chrono::system_clock::time_point> data;
     void setDate(std::chrono::system_clock::time_point input);
-    std::chrono::system_clock::time_point getData();
+    void setDate(std::vector<std::chrono::system_clock::time_point> input);
+    std::vector<std::chrono::system_clock::time_point> getData();
 };
 
 class StringToken : public ITokenObject {
 public:
-    std::string data;
+    std::vector<std::string> data;
     void setData(std::string input);
-    std::string getData();
+    void setData(std::vector<std::string> input);
+    std::vector<std::string> getData();
 };
 
 class IntegerToken : public ITokenObject {
 public:
-    int data;
+    std::vector<int> data;
     void setData(int input);
-    int getData();
+    void setData(std::vector<int> input);
+    std::vector<int> getData();
 };

@@ -1,8 +1,11 @@
 #include "ITokenObject.h"
 
 void StringToken::setData(std::string input) {
+    this->data = { input };
+}
+void StringToken::setData(std::vector<std::string> input) {
     this->data = input;
 }
-std::string StringToken::getData() {
+std::vector<std::string> StringToken::getData() {
     return this->data;
 }

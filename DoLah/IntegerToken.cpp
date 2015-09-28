@@ -1,8 +1,8 @@
 #include "ITokenObject.h"
 
-void IntegerToken::setData(int input) {
+void IntegerToken::setData(std::vector<int> input) {
     this->data = input;
 }
-int IntegerToken::getData() {
+std::vector<int> IntegerToken::getData() {
     return this->data;
 }
