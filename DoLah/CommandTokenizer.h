@@ -11,7 +11,7 @@ public:
     CommandTokenizer();
     ~CommandTokenizer();
 
-    std::vector<std::string> tokenize(std::string line);
+    std::vector<ITokenObject *> tokenize(std::string line);
 
     StringToken* findCommand(std::vector<std::string> lineArr);
 
@@ -19,6 +19,7 @@ public:
     StringToken* findTags(std::vector<std::string> lineArr);
     DateTimeToken* findDate(std::vector<std::string> lineArr);
     StringToken* findDescription(std::vector<std::string> lineArr);
+    IntegerToken* findPriority(std::vector<std::string> lineArr);
 
 
 private:

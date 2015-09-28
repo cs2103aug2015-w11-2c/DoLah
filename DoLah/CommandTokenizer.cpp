@@ -43,7 +43,7 @@ StringToken* CommandTokenizer::findTags(std::vector<std::string> lineArr) {
 DateTimeToken* CommandTokenizer::findDate(std::vector<std::string> lineArr) {
     DateTimeToken* output = new DateTimeToken;
 
-    std::chrono::system_clock::time_point time;
+    
 
     return output;
 }
@@ -57,17 +57,26 @@ StringToken* CommandTokenizer::findDescription(std::vector<std::string> lineArr)
     return output;
 }
 
+IntegerToken* CommandTokenizer::findPriority(std::vector<std::string> lineArr) {
+    IntegerToken* output = new IntegerToken;
+
+    return output;
+}
+
 std::vector<ITokenObject *> CommandTokenizer::tokenizeAdd(std::vector<std::string> lineArr) {
     std::vector<ITokenObject *> *out = new std::vector<ITokenObject *>;
 
+    StringToken* command = new StringToken;
+    command->setData("add");
+    out->push_back(command);
     out->push_back(CommandTokenizer::findDescription(lineArr));
     out->push_back(CommandTokenizer::findTags(lineArr));
-    out->push_back(CommandTokenizer::findDate(lineArr));
+    //out->push_back(CommandTokenizer::findDate(lineArr));
 
     return *out;
 }
 
-std::vector<std::string> CommandTokenizer::tokenize(std::string line) {
+std::vector<ITokenObject *> CommandTokenizer::tokenize(std::string line) {
     std::vector<ITokenObject *> tokenizedLine;
 
     std::vector<std::string> lineArr = TokenizerLibrary::explode(line, " ");
@@ -78,10 +87,11 @@ std::vector<std::string> CommandTokenizer::tokenize(std::string line) {
         throw exception;
     }
     
-    if (command->getData().at(0) == commandList.at(0)) {
-        tokenizedLine = CommandTokenizer::tokenizeAdd(lineArr);
+    tokenizedLine = CommandTokenizer::tokenizeAdd(lineArr);
+    if (command->getStringVector().at(0) == commandList.at(0)) {
+        
     }
 
-    return {};
+    return tokenizedLine;
 }
 
