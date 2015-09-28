@@ -2,15 +2,13 @@
 #include <string>
 #include <chrono>
 
-
 namespace DoLah {
 
-    /// Task class is a task. It is also referred as floating task.
-    /** A floating task is a task without any time specified. */
-    class Task {
+    /// Abstract Task class is the base class for any Task.
+    class AbstractTask {
     public:
-        Task(); ///< default constructor
-        virtual ~Task(); ///< destructor
+        AbstractTask(); ///< default constructor
+        virtual ~AbstractTask() = 0; ///< destructor
         void setId(int id); ///< set the Task ID
         int getId(); ///< get the Task ID
         void setName(std::string); ///< set the Task name
@@ -26,8 +24,11 @@ namespace DoLah {
         bool done; ///< a flag that mark whether a task has finished, and may be hide or cleared later.
     };
 
+    /// A floating task is a task without any time specified.
+    class FloatingTask : public AbstractTask { };
+
     /// EventTask is a Task that have a specific starting datetime and ending datetime.
-    class EventTask : Task {
+    class EventTask : public AbstractTask {
     public:
         EventTask(); ///< default constructor
         ~EventTask(); ///< destructor
@@ -41,7 +42,7 @@ namespace DoLah {
     };
 
     /// DeadlineTask is a task that have a specific due datetime.
-    class DeadlineTask : Task {
+    class DeadlineTask : public AbstractTask {
     public:
         DeadlineTask(); ///< default constructor
         ~DeadlineTask(); ///< destructor
@@ -53,5 +54,6 @@ namespace DoLah {
     };
 }
 
-using DoLah::Task;
+using DoLah::FloatingTask;
+using DoLah::DeadlineTask;
 using DoLah::EventTask;
