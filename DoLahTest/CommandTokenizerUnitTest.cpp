@@ -7,44 +7,19 @@
 #include "TokenizerLibrary.h"
 
 
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace DoLahTest {
     TEST_CLASS(Tokenize) {
 public:
-
-    std::vector<std::string> commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort" };
-
-    TEST_METHOD(vectorToStringTest) {
-        std::vector<std::string> input = { "1", "2", "3", "4", "5" };
-        std::string expected = (std::string) "{ 1, 2, 3, 4, 5 }";
-        Assert::AreEqual(expected, TokenizerLibrary::vectorToString(input));
-    }
-
-    TEST_METHOD(explodeTest) {
-        std::string input = "add #cs2103 #homework on Thursday";
-        std::string arg1 = " ";
-        std::string expected = (std::string) "{ add, #cs2103, #homework, on, Thursday }";
-        Assert::AreEqual(expected, TokenizerLibrary::vectorToString(TokenizerLibrary::explode(input, arg1)));
-    }
-
-    TEST_METHOD(inArrayCaseTest) {
-        std::string input = "ADD";
-        bool expected = true;
-        Assert::AreEqual(expected, TokenizerLibrary::inArray(commandList, input));
-    }
-
-    TEST_METHOD(findCommandInputExceptionTest) {
+    TEST_METHOD(findCommandTest) {
         CommandTokenizer ct;
-        std::string input = "dispray";
-        std::string actual;
-        std::string expected = "command not recognized";
-        try {
-            ct.tokenize(input);
-        } catch (std::exception message) {
-            actual = std::string(message.what());
-        }
-        Assert::AreEqual(expected, actual);
+        std::string input = "add #cs2103 #homework on Thursday";
+        std::string expected = (std::string) "{ add }";
+
+        StringToken* obj = ct.findCommand(TokenizerLibrary::explode(input, " "));
+        Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getData()));
     }
 
     TEST_METHOD(findTagsTest) {
@@ -56,6 +31,24 @@ public:
         Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getData()));
     }
 
+    TEST_METHOD(findDescriptionTest) {
+        CommandTokenizer ct;
+        std::string input = "add #cs2103 #homework on Thursday";
+        std::string expected = (std::string) "{ #cs2103 #homework on Thursday }";
+
+        StringToken* obj = ct.findDescription(TokenizerLibrary::explode(input, " "));
+        Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getData()));
+    }
+
+    TEST_METHOD(findDateTest) {
+        CommandTokenizer ct;
+        std::string input = "add #cs2103 #homework on 17th of March";
+        std::string expected = (std::string) "{ 17-03-2016 }";
+        
+
+        DateTimeToken* obj = ct.findDate(TokenizerLibrary::explode(input, " "));
+        Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getData()));
+    }
     };
 }
 

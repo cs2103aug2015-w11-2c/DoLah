@@ -14,11 +14,12 @@ public:
     std::vector<std::string> tokenize(std::string line);
 
     StringToken* findCommand(std::vector<std::string> lineArr);
+
+    std::vector<ITokenObject *> tokenizeAdd(std::vector<std::string> lineArr);
     StringToken* findTags(std::vector<std::string> lineArr);
     DateTimeToken* findDate(std::vector<std::string> lineArr);
     StringToken* findDescription(std::vector<std::string> lineArr);
 
-    std::vector<ITokenObject *> tokenizeAdd(std::vector<std::string> lineArr);
 
 private:
     std::vector<std::string> commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort"};

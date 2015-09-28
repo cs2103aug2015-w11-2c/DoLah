@@ -43,11 +43,16 @@ StringToken* CommandTokenizer::findTags(std::vector<std::string> lineArr) {
 DateTimeToken* CommandTokenizer::findDate(std::vector<std::string> lineArr) {
     DateTimeToken* output = new DateTimeToken;
 
+    std::chrono::system_clock::time_point time;
+
     return output;
 }
 
 StringToken* CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
     StringToken* output = new StringToken;
+
+    lineArr.erase(lineArr.begin());
+    output->setData(TokenizerLibrary::implode(lineArr, " "));
 
     return output;
 }

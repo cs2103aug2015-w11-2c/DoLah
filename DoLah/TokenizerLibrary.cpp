@@ -24,6 +24,21 @@ std::vector<std::string> TokenizerLibrary::explode(std::string line, std::string
     return out;
 }
 
+std::string TokenizerLibrary::implode(std::vector<std::string> line, std::string delimeter) {
+    std::string out = "";
+
+    for (size_t i = 0; i < line.size(); i++) {
+        if (i > 0) {
+            out += delimeter;
+        }
+        out += line.at(i);
+    }
+
+    return out;
+
+}
+
+
 std::string TokenizerLibrary::vectorToString(std::vector<std::string> vec) {
     std::string str = "{ ";
     for (int i = 0; i < (int)vec.size(); i++) {
