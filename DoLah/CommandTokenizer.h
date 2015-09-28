@@ -8,6 +8,8 @@
 
 class CommandTokenizer {
 public:
+    friend class MutualFriend;
+
     CommandTokenizer();
     ~CommandTokenizer();
 
