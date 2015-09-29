@@ -45,6 +45,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DoLahCore.h">
+    <ClInclude Include="Models\TaskFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
