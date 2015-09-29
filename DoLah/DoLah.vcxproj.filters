@@ -41,11 +41,13 @@
     <ClInclude Include="Models\Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
+    <ClInclude Include="DoLahCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DoLahCore.h">
     <ClInclude Include="Models\TaskFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands\Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
