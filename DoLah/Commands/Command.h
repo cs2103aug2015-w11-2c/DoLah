@@ -3,10 +3,9 @@
 #include <vector>
 #include <string>
 #include "..\Models\Task.h"
+#include "..\CommandReceiver\Calendar.h"
 
 namespace DoLah {
-
-	class Calendar;
 
 	class AbstractCommand {
 	public:
