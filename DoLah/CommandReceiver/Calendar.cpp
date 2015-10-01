@@ -2,7 +2,8 @@
 
 namespace DoLah {
 	Calendar::Calendar() {
-		//TODO
+		//TO BE CONFIRMED
+		history = new CalendarHistory();
 	}
 	
 	Calendar::~Calendar() {

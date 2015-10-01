@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "..\Models\Task.h"
+#include "CalendarHistory.h"
 
 namespace DoLah {
 	class CalendarHistory;
