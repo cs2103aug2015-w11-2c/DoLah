@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
+    <ClCompile Include="Commands\Command.cpp" />
     <ClCompile Include="DoLahCore.cpp" />
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />

@@ -6,49 +6,62 @@
 
 namespace DoLah {
 
-	class ITokenObject;
+	class Calendar;
 
-	class ITaskCommand {
+	class AbstractCommand {
 	public:
-		ITaskCommand(std::vector<ITokenObject>);
+		AbstractCommand();
+		virtual ~AbstractCommand() = 0;
+
+		void setCalendar(Calendar* cal);
+		Calendar* getCalendar();
+
+		void execute();
+
+	protected:
+		Calendar* calendar;
+	};
+
+	class AddTaskCommand : public AbstractCommand {
+	public:
+		//AddTaskCommand(DoLah::AbstractTask* task);
+		AddTaskCommand();
+		AddTaskCommand(Calendar* cal, DoLah::AbstractTask* task);
+		~AddTaskCommand();
+
+		DoLah::AbstractTask* getTask();
+		void setTask(DoLah::AbstractTask * tk);
 		void execute();
 	protected:
-		std::vector<ITokenObject> tokenVector;
-		std::vector<DoLah::Task> * taskList;
-		virtual void virtualmethod() = 0;
+		DoLah::AbstractTask* task;
 	};
 
-	class AddTaskCommand : protected ITaskCommand {
-		//AddTaskCommand(std::vector<ITokenObject> tokenVector);
-		void execute();
-	};
-
-	class EditTaskCommand : public ITaskCommand {
+	class EditTaskCommand : public AbstractCommand {
 		//EditTaskCommand(std::vector<ITokenObject> tokenVector);
 		void execute();
 	};
 
-	class DeleteTaskCommand : public ITaskCommand {
+	class DeleteTaskCommand : public AbstractCommand {
 		//DeleteTaskCommand(std::vector<ITokenObject> tokenVector);
 		void execute();
 	};
-	class ClearTaskCommand : public ITaskCommand {
+	class ClearTaskCommand : public AbstractCommand {
 		//ClearTaskCommand(std::vector<ITokenObject> tokenVector);
 		void execute();
 	};
 
-	class UndoTaskCommand : public ITaskCommand {
-		UndoTaskCommand(std::vector<ITokenObject> tokenVector);
+	class UndoTaskCommand : public AbstractCommand {
+		//UndoTaskCommand(std::vector<ITokenObject> tokenVector);
 		void execute();
 	};
 
-	class RedoTaskCommand : public ITaskCommand {
-		RedoTaskCommand(std::vector<ITokenObject> tokenVector);
+	class RedoTaskCommand : public AbstractCommand {
+		//RedoTaskCommand(std::vector<ITokenObject> tokenVector);
 		void execute();
 	};
 
-	class SearchTaskCommand : public ITaskCommand {
-		SearchTaskCommand(std::vector<ITokenObject> tokenVector);
+	class SearchTaskCommand : public AbstractCommand {
+		//SearchTaskCommand(std::vector<ITokenObject> tokenVector);
 		void execute();
 	};
 }

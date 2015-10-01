@@ -7,9 +7,30 @@ namespace DoLah {
 		AddTaskCommand::tokenVector = tokenVector;
 	}*/
 
-	void AddTaskCommand::execute(){
+	AddTaskCommand::AddTaskCommand() {
 
 	}
 
-	//private
+	AddTaskCommand::~AddTaskCommand() {
+
+	}
+
+	AddTaskCommand::AddTaskCommand(Calendar* cal, DoLah::AbstractTask* tk) {
+		task = tk;
+		calendar = cal;
+	}
+
+	DoLah::AbstractTask* AddTaskCommand::getTask() {
+		return task;
+	}
+
+	void AddTaskCommand::setTask(DoLah::AbstractTask* tk) {
+		task = tk;
+	}
+
+	void AddTaskCommand::execute() {
+
+	}
+
+	//protected
 }
