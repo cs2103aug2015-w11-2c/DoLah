@@ -15,31 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="basic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\DeadlineTask.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\EventTask.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Models\Task.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DoLahClient.cpp">
+    <ClCompile Include="UIDoLahWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Task.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DoLahClient.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="UIDoLahWindow.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
