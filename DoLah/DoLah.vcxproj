@@ -120,7 +120,13 @@
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
+    <ClCompile Include="Commands\ClearTaskCommand.cpp" />
     <ClCompile Include="Commands\Command.cpp" />
+    <ClCompile Include="Commands\DeleteTaskCommand.cpp" />
+    <ClCompile Include="Commands\EditTaskCommand.cpp" />
+    <ClCompile Include="Commands\RedoTaskCommand.cpp" />
+    <ClCompile Include="Commands\SearchTaskCommand.cpp" />
+    <ClCompile Include="Commands\UndoTaskCommand.cpp" />
     <ClCompile Include="DoLahCore.cpp" />
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />

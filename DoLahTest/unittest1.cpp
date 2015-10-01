@@ -30,9 +30,9 @@ namespace DoLahTest
 			DoLah::AddTaskCommand addCmd = DoLah::AddTaskCommand();
 
 			task->setName("myeaow");
-			addCmd.setTask(task);
+			addCmd.setNewTask(task);
 
-			Assert::AreEqual(task->getName(), addCmd.getTask()->getName());
+			Assert::AreEqual(task->getName(), addCmd.getNewTask()->getName());
 			//Assert::AreSame(task, addCmd.getTask());
 		}
 

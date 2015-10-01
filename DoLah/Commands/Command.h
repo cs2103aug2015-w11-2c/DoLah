@@ -24,44 +24,85 @@ namespace DoLah {
 
 	class AddTaskCommand : public AbstractCommand {
 	public:
-		//AddTaskCommand(DoLah::AbstractTask* task);
 		AddTaskCommand();
 		AddTaskCommand(Calendar* cal, DoLah::AbstractTask* task);
 		~AddTaskCommand();
 
-		DoLah::AbstractTask* getTask();
-		void setTask(DoLah::AbstractTask * tk);
+		DoLah::AbstractTask* getNewTask();
+		void setNewTask(DoLah::AbstractTask *);
 		void execute();
-	protected:
-		DoLah::AbstractTask* task;
+
+	private:
+		DoLah::AbstractTask* newTask;
 	};
 
 	class EditTaskCommand : public AbstractCommand {
-		//EditTaskCommand(std::vector<ITokenObject> tokenVector);
+	public:
+		EditTaskCommand();
+		EditTaskCommand(Calendar * cal, DoLah::AbstractTask * tk);
+		~EditTaskCommand();
+
+		DoLah::AbstractTask* getTargetTask();
+		void setTargetTask(DoLah::AbstractTask *);
 		void execute();
+
+	private:
+		DoLah::AbstractTask* targetTask;
 	};
 
 	class DeleteTaskCommand : public AbstractCommand {
-		//DeleteTaskCommand(std::vector<ITokenObject> tokenVector);
+	public:
+		DeleteTaskCommand();
+		~DeleteTaskCommand();
+
+		int getTargetId();
+		void setTargetId(int);
 		void execute();
+
+	private:
+		int targetId;
 	};
+
 	class ClearTaskCommand : public AbstractCommand {
-		//ClearTaskCommand(std::vector<ITokenObject> tokenVector);
+	public:
+		ClearTaskCommand();
+		~ClearTaskCommand();
+
 		void execute();
+
+	private:
 	};
 
 	class UndoTaskCommand : public AbstractCommand {
-		//UndoTaskCommand(std::vector<ITokenObject> tokenVector);
+	public:
+		UndoTaskCommand();
+		~UndoTaskCommand();
+
 		void execute();
+	
+	private:
 	};
 
 	class RedoTaskCommand : public AbstractCommand {
-		//RedoTaskCommand(std::vector<ITokenObject> tokenVector);
+	public:
+		RedoTaskCommand();
+		~RedoTaskCommand();
+
 		void execute();
+
+	private:
 	};
 
 	class SearchTaskCommand : public AbstractCommand {
-		//SearchTaskCommand(std::vector<ITokenObject> tokenVector);
+	public:
+		SearchTaskCommand();
+		~SearchTaskCommand();
+
+		std::string getQuery();
+		void setQuery(std::string);
 		void execute();
+
+	private:
+		std::string query;
 	};
 }

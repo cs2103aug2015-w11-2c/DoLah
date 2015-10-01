@@ -2,10 +2,6 @@
 
 namespace DoLah {
 	//public
-	
-	/*AddTaskCommand::AddTaskCommand(std::vector<ITokenObject> tokenVector) {
-		AddTaskCommand::tokenVector = tokenVector;
-	}*/
 
 	AddTaskCommand::AddTaskCommand() {
 
@@ -15,17 +11,17 @@ namespace DoLah {
 
 	}
 
-	AddTaskCommand::AddTaskCommand(Calendar* cal, DoLah::AbstractTask* tk) {
-		task = tk;
+	AddTaskCommand::AddTaskCommand(Calendar* cal, DoLah::AbstractTask* task) {
+		newTask = task;
 		calendar = cal;
 	}
 
-	DoLah::AbstractTask* AddTaskCommand::getTask() {
-		return task;
+	DoLah::AbstractTask* AddTaskCommand::getNewTask() {
+		return newTask;
 	}
 
-	void AddTaskCommand::setTask(DoLah::AbstractTask* tk) {
-		task = tk;
+	void AddTaskCommand::setNewTask(DoLah::AbstractTask* task) {
+		newTask = task;
 	}
 
 	void AddTaskCommand::execute() {
