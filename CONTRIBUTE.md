@@ -19,3 +19,9 @@ Generally, you should write the API docs in header file instead of the source fi
     
     # Bug, Error Fix, Etc...
     fix/<fix-label>
+
+## Code Style
+
+Use forward slash for library include path.
+
+    #include "path/path/module.h"
