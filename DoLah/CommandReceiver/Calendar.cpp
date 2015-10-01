@@ -3,7 +3,7 @@
 namespace DoLah {
 	Calendar::Calendar() {
 		//TO BE CONFIRMED
-		history = new CalendarHistory();
+		history = new DoLah::CalendarHistory();
 	}
 	
 	Calendar::~Calendar() {

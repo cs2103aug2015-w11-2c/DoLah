@@ -11,7 +11,7 @@ namespace DoLah {
 
 	}
 
-	EditTaskCommand::EditTaskCommand(Calendar* cal, DoLah::AbstractTask* tk) {
+	EditTaskCommand::EditTaskCommand(DoLah::Calendar* cal, DoLah::AbstractTask* tk) {
 		targetTask = tk;
 		calendar = cal;
 	}

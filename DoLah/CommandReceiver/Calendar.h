@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "..\Models\Task.h"
-#include "CalendarHistory.h"
+
 
 namespace DoLah {
 	class CalendarHistory;
@@ -20,6 +20,7 @@ namespace DoLah {
 
 	private:
 		std::vector<AbstractTask> taskList;
-		CalendarHistory* history;
+		DoLah::CalendarHistory* history;
 	};
 }
+#include "CalendarHistory.h"

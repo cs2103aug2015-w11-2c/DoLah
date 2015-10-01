@@ -12,19 +12,19 @@ namespace DoLah {
 		AbstractCommand();
 		virtual ~AbstractCommand() = 0;
 
-		void setCalendar(Calendar* cal);
-		Calendar* getCalendar();
+		void setCalendar(DoLah::Calendar * cal);
+		DoLah::Calendar* getCalendar();
 
 		void execute();
 
 	protected:
-		Calendar* calendar;
+		DoLah::Calendar * calendar;
 	};
 
 	class AddTaskCommand : public AbstractCommand {
 	public:
 		AddTaskCommand();
-		AddTaskCommand(Calendar* cal, DoLah::AbstractTask* task);
+		AddTaskCommand(DoLah::Calendar* cal, DoLah::AbstractTask* task);
 		~AddTaskCommand();
 
 		DoLah::AbstractTask* getNewTask();
@@ -38,7 +38,7 @@ namespace DoLah {
 	class EditTaskCommand : public AbstractCommand {
 	public:
 		EditTaskCommand();
-		EditTaskCommand(Calendar * cal, DoLah::AbstractTask * tk);
+		EditTaskCommand(DoLah::Calendar* cal, DoLah::AbstractTask * tk);
 		~EditTaskCommand();
 
 		DoLah::AbstractTask* getTargetTask();
