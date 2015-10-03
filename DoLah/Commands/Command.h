@@ -9,11 +9,9 @@ namespace DoLah {
 
 	class ITaskCommand {
 	public:
-		ITaskCommand();
 		virtual ~ITaskCommand() = 0;
 
-		void execute();
-	private:
+		virtual void execute() = 0;
 	};
 
 	class AddTaskCommand : public ITaskCommand {
