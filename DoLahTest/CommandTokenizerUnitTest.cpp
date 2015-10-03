@@ -18,7 +18,7 @@ public:
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "{ add }";
 
-        StringToken* obj = ct.findCommand(TokenizerLibrary::explode(input, " "));
+        std::string* obj = ct.findCommand(TokenizerLibrary::explode(input, " "));
         Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getStringVector()));
     }
 
@@ -27,7 +27,7 @@ public:
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "{ homework, cs2103 }";
 
-        StringToken* obj = ct.findTags(TokenizerLibrary::explode(input, " "));
+        std::string* obj = ct.findTags(TokenizerLibrary::explode(input, " "));
         Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getStringVector()));
     }
 
@@ -36,7 +36,7 @@ public:
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "{ #cs2103 #homework on 30th Sep }";
 
-        StringToken* obj = ct.findDescription(TokenizerLibrary::explode(input, " "));
+        std::string* obj = ct.findDescription(TokenizerLibrary::explode(input, " "));
         Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getStringVector()));
     }
 
@@ -54,7 +54,7 @@ public:
         CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::vector<std::string> expected = { "{ add }", "{ #cs2103 #homework on Thursday }", "{ homework, cs2103 }" };
-        
+
         std::vector<ITokenObject *> obj = ct.tokenizeAdd(TokenizerLibrary::explode(input, " "));
         Assert::AreEqual(expected.at(0), TokenizerLibrary::vectorToString(obj.at(0)->getStringVector()));
         Assert::AreEqual(expected.at(1), TokenizerLibrary::vectorToString(obj.at(1)->getStringVector()));
