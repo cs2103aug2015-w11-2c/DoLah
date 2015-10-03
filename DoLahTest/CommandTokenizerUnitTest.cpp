@@ -40,15 +40,15 @@ public:
         Assert::AreEqual(expected, obj);
     }
 
-    //TEST_METHOD(findDateTest) {
-    //    CommandTokenizer ct;
-    //    std::string input = "add #cs2103 #homework on 17th of March";
-    //    std::string expected = (std::string) "{ 17-03-2016 }";
-    //    
-
-    //    DateTimeToken* obj = ct.findDate(ParserLibrary::explode(input, " "));
-    //    Assert::AreEqual(expected, ParserLibrary::vectorToString(obj->getData()));
-    //}
+    TEST_METHOD(findDateTest) {
+        CommandTokenizer ct;
+        std::string input = "add #cs2103 #homework on 17th of March";
+        std::string expected = (std::string) "{ 17-03-2016 }";
+        std::string actual = "";
+        
+        DateTimeToken* obj = ct.findDate(ParserLibrary::explode(input, " "));
+        Assert::AreEqual(expected, actual);
+    }
 
     };
 }
