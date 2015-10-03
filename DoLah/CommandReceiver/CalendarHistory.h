@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stack>
-#include "..\Commands\Command.h"
 
 namespace DoLah {
 	class CalendarHistory {
@@ -11,10 +10,10 @@ namespace DoLah {
 
 		void redo();
 		void undo();
-		//void add(DoLah::AbstractCommand*);
 
 	private:
-		//std::stack<DoLah::AbstractCommand*> undoStack;
-		//std::stack<DoLah::AbstractCommand*> redoStack;
+		//placeholder
+		std::stack<std::string> undoStack;
+		std::stack<std::string> redoStack;
 	};
 }

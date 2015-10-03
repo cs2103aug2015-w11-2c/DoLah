@@ -1,21 +1,12 @@
 #include "Command.h"
 
 namespace DoLah {
-	AbstractCommand::AbstractCommand() {
+	ITaskCommand::ITaskCommand() {
 	}
 
-	AbstractCommand::~AbstractCommand() {
+	ITaskCommand::~ITaskCommand() {
 	}
 
-	void AbstractCommand::setCalendar(Calendar* cal) {
-		calendar = cal;
-	}
-
-	Calendar* AbstractCommand::getCalendar() {
-		return calendar;
-	}
-
-	void execute() {
-
+	void ITaskCommand::execute() {
 	}
 }

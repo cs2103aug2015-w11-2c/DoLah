@@ -18,10 +18,5 @@ namespace DoLah {
 		//TODO
 	}
 
-	//void CalendarHistory::add(DoLah::AbstractCommand* cmd) {
-	//	//TO BE CONFIRMED
-	//	//undoStack.push(cmd);
-	//}
-
 	//private
 }

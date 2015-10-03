@@ -7,72 +7,105 @@
 
 namespace DoLah {
 
-	class AbstractCommand {
+	class ITaskCommand {
 	public:
-		AbstractCommand();
-		virtual ~AbstractCommand() = 0;
-
-		void setCalendar(DoLah::Calendar * cal);
-		DoLah::Calendar* getCalendar();
+		ITaskCommand();
+		virtual ~ITaskCommand() = 0;
 
 		void execute();
-
-	protected:
-		DoLah::Calendar * calendar;
+	private:
 	};
 
-	class AddTaskCommand : public AbstractCommand {
+	class AddTaskCommand : public ITaskCommand {
 	public:
 		AddTaskCommand();
-		AddTaskCommand(DoLah::Calendar* cal, DoLah::AbstractTask* task);
+		AddTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task);
 		~AddTaskCommand();
 
 		DoLah::AbstractTask* getNewTask();
+		DoLah::Calendar getCalendar();
+
 		void setNewTask(DoLah::AbstractTask *);
+		void setCalendar(DoLah::Calendar cal);
+
 		void execute();
 
 	private:
 		DoLah::AbstractTask* newTask;
+		DoLah::Calendar calendar;
 	};
 
-	class EditTaskCommand : public AbstractCommand {
+	class EditTaskCommand : public ITaskCommand {
 	public:
 		EditTaskCommand();
-		EditTaskCommand(DoLah::Calendar* cal, DoLah::AbstractTask * tk);
+		EditTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask * tk);
 		~EditTaskCommand();
 
 		DoLah::AbstractTask* getTargetTask();
+		DoLah::Calendar getCalendar();
+
 		void setTargetTask(DoLah::AbstractTask *);
+		void setCalendar(DoLah::Calendar cal);
+
 		void execute();
 
 	private:
 		DoLah::AbstractTask* targetTask;
+		DoLah::Calendar calendar;
 	};
 
-	class DeleteTaskCommand : public AbstractCommand {
+	class DeleteTaskCommand : public ITaskCommand {
 	public:
 		DeleteTaskCommand();
 		~DeleteTaskCommand();
 
 		int getTargetId();
+		DoLah::Calendar getCalendar();
+
 		void setTargetId(int);
+		void setCalendar(DoLah::Calendar cal);
+
 		void execute();
 
 	private:
 		int targetId;
+		DoLah::Calendar calendar;
 	};
 
-	class ClearTaskCommand : public AbstractCommand {
+	class ClearTaskCommand : public ITaskCommand {
 	public:
 		ClearTaskCommand();
 		~ClearTaskCommand();
 
+		DoLah::Calendar getCalendar();
+
+		void setCalendar(DoLah::Calendar cal);
+
 		void execute();
 
 	private:
+		DoLah::Calendar calendar;
 	};
 
-	class UndoTaskCommand : public AbstractCommand {
+	class SearchTaskCommand : public ITaskCommand {
+	public:
+		SearchTaskCommand();
+		~SearchTaskCommand();
+
+		std::string getQuery();
+		DoLah::Calendar getCalendar();
+
+		void setQuery(std::string);
+		void setCalendar(DoLah::Calendar cal);
+
+		void execute();
+
+	private:
+		std::string query;
+		DoLah::Calendar calendar;
+	};
+
+	class UndoTaskCommand : public ITaskCommand {
 	public:
 		UndoTaskCommand();
 		~UndoTaskCommand();
@@ -80,9 +113,10 @@ namespace DoLah {
 		void execute();
 	
 	private:
+		DoLah::Calendar calendar;
 	};
 
-	class RedoTaskCommand : public AbstractCommand {
+	class RedoTaskCommand : public ITaskCommand {
 	public:
 		RedoTaskCommand();
 		~RedoTaskCommand();
@@ -90,18 +124,7 @@ namespace DoLah {
 		void execute();
 
 	private:
+		DoLah::Calendar calendar;
 	};
 
-	class SearchTaskCommand : public AbstractCommand {
-	public:
-		SearchTaskCommand();
-		~SearchTaskCommand();
-
-		std::string getQuery();
-		void setQuery(std::string);
-		void execute();
-
-	private:
-		std::string query;
-	};
 }

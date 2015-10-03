@@ -11,7 +11,7 @@ namespace DoLah {
 
 	}
 
-	AddTaskCommand::AddTaskCommand(DoLah::Calendar* cal, DoLah::AbstractTask* task) {
+	AddTaskCommand::AddTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task) {
 		newTask = task;
 		calendar = cal;
 	}
@@ -20,8 +20,16 @@ namespace DoLah {
 		return newTask;
 	}
 
+	DoLah::Calendar AddTaskCommand::getCalendar() {
+		return calendar;
+	}
+
 	void AddTaskCommand::setNewTask(DoLah::AbstractTask* task) {
 		newTask = task;
+	}
+
+	void AddTaskCommand::setCalendar(DoLah::Calendar cal) {
+		calendar = cal;
 	}
 
 	void AddTaskCommand::execute() {

@@ -14,8 +14,16 @@ namespace DoLah {
 		return targetId;
 	}
 
+	DoLah::Calendar DeleteTaskCommand::getCalendar() {
+		return calendar;
+	}
+
 	void DeleteTaskCommand::setTargetId(int id) {
 		targetId = id;
+	}
+
+	void DeleteTaskCommand::setCalendar(DoLah::Calendar cal) {
+		calendar = cal;
 	}
 
 	void DeleteTaskCommand::execute() {

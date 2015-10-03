@@ -10,6 +10,14 @@ namespace DoLah {
 
 	}
 
+	DoLah::Calendar ClearTaskCommand::getCalendar() {
+		return calendar;
+	}
+
+	void ClearTaskCommand::setCalendar(DoLah::Calendar cal) {
+		calendar = cal;
+	}
+
 	void ClearTaskCommand::execute() {
 		//TODO
 	}

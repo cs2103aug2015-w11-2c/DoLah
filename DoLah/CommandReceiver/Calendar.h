@@ -5,8 +5,6 @@
 
 
 namespace DoLah {
-	class CalendarHistory;
-
 	class Calendar {
 	public:
 		Calendar();
@@ -19,8 +17,6 @@ namespace DoLah {
 		std::vector<AbstractTask> search(std::string);
 
 	private:
-		std::vector<AbstractTask> taskList;
-		DoLah::CalendarHistory* history;
+		std::vector<AbstractTask*> taskList;
 	};
 }
-#include "CalendarHistory.h"

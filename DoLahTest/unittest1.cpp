@@ -26,14 +26,12 @@ namespace DoLahTest
 
 		TEST_METHOD(TestTask) {
 			DoLah::AbstractTask* task = dynamic_cast<DoLah::AbstractTask*>(&DeadlineTask()); 
-			//DoLah::AbstractTask* task1 = dynamic_cast<DoLah::AbstractTask*>(&DeadlineTask());
 			DoLah::AddTaskCommand addCmd = DoLah::AddTaskCommand();
 
 			task->setName("myeaow");
 			addCmd.setNewTask(task);
 
 			Assert::AreEqual(task->getName(), addCmd.getNewTask()->getName());
-			//Assert::AreSame(task, addCmd.getTask());
 		}
 
 	};
