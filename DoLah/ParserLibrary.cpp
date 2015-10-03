@@ -10,7 +10,7 @@ ParserLibrary::~ParserLibrary() {
 }
 
 
-std::vector<std::string> ParserLibrary::explode(std::string line, std::string delimeter) {
+std::vector<std::string> ParserLibrary::explode(const std::string &line, const std::string &delimeter) {
     std::vector<std::string> out;
     int from = 0;
     int to;
@@ -24,7 +24,7 @@ std::vector<std::string> ParserLibrary::explode(std::string line, std::string de
     return out;
 }
 
-std::string ParserLibrary::implode(std::vector<std::string> line, std::string delimeter) {
+std::string ParserLibrary::implode(std::vector<std::string> line, const std::string &delimeter) {
     std::string out = "";
 
     for (size_t i = 0; i < line.size(); i++) {
@@ -51,12 +51,12 @@ std::string ParserLibrary::vectorToString(std::vector<std::string> vec) {
     return str;
 }
 
-std::string ParserLibrary::tolowercase(std::string str) {
+std::string ParserLibrary::tolowercase(const std::string &str) {
     std::transform(str.begin(), str.end(), str.begin(), ::tolower);
     return str;
 }
 
-bool ParserLibrary::inArray(std::vector<std::string> arr, std::string str) {
+bool ParserLibrary::inArray(std::vector<std::string> arr, const std::string &str) {
     return std::find(arr.begin(), arr.end(), ParserLibrary::tolowercase(str)) != arr.end();
 }
 
