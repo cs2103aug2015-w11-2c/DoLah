@@ -12,15 +12,15 @@ namespace DoLah {
 		//TODO
 	}
 
-	void deleteTask(int id) {
+	void Calendar::deleteTask(int id) {
 		//TODO
 	}
 
-	void updateTask(AbstractTask*) {
+	void Calendar::updateTask(AbstractTask*) {
 		//TODO
 	}
 
-	AbstractTask* getTask(int id) {
+	AbstractTask* Calendar::getTask(int id) {
 		//TODO
 
 		return new FloatingTask;
