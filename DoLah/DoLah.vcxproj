@@ -119,12 +119,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
+    <ClCompile Include="CommandParser.cpp" />
     <ClCompile Include="CommandTokenizer.cpp" />
     <ClCompile Include="ParserLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />
+    <ClInclude Include="CommandParser.h" />
     <ClInclude Include="CommandTokenizer.h" />
+    <ClInclude Include="ParserLibrary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

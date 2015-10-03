@@ -13,9 +13,11 @@ void CommandParser::parse(const std::string &line) {
     CommandTokenizer tokenizer;
     std::vector<std::string> lineArr = ParserLibrary::explode(line, " ");
 
-    std::vector<std::string> commands = tokenizer.findCommand(lineArr);
+    std::string command = tokenizer.findCommand(lineArr);
 
-    if (1==1) {
-
+    if (command == "add") {
+        std::string description = tokenizer.findDescription(lineArr);
+        std::vector<std::string> tags = tokenizer.findTags(lineArr);
+        int priority = tokenizer.findPriority(lineArr);
     }
 }
