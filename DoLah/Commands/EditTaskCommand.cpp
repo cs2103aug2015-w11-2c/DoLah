@@ -11,8 +11,8 @@ namespace DoLah {
 
 	}
 
-	EditTaskCommand::EditTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* tk) {
-		targetTask = tk;
+	EditTaskCommand::EditTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task) {
+		targetTask = task;
 		calendar = cal;
 	}
 
@@ -33,7 +33,7 @@ namespace DoLah {
 	}
 
 	void EditTaskCommand::execute() {
-		//TODO
+		calendar.updateTask(targetTask);
 	}
 
 	//protected

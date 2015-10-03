@@ -27,7 +27,7 @@ namespace DoLah {
 	}
 
 	void DeleteTaskCommand::execute() {
-		//TODO
+		calendar.deleteTask(targetId);
 	}
 
 	//private

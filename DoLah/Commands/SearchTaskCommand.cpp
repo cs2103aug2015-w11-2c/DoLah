@@ -27,7 +27,7 @@ namespace DoLah {
 	}
 
 	void SearchTaskCommand::execute() {
-		//TODO
+		calendar.search(query);
 	}
 
 	//private

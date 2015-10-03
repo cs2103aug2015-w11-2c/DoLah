@@ -27,9 +27,6 @@
     <ClCompile Include="Models\Task.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DoLahCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Commands\AddTaskCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,10 +51,13 @@
     <ClCompile Include="Commands\UndoTaskCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CommandReceiver\Calendar.cpp">
+    <ClCompile Include="DoLahClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CommandReceiver\CalendarHistory.cpp">
+    <ClCompile Include="Models\Calendar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Models\CalendarHistory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,19 +68,19 @@
     <ClInclude Include="Models\Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DoLahCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Models\TaskFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Commands\Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CommandReceiver\Calendar.h">
+    <ClInclude Include="DoLahClient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CommandReceiver\CalendarHistory.h">
+    <ClInclude Include="Models\Calendar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\CalendarHistory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

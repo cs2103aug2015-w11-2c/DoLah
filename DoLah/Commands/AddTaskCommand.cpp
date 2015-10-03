@@ -33,7 +33,7 @@ namespace DoLah {
 	}
 
 	void AddTaskCommand::execute() {
-
+		calendar.addTask(newTask);
 	}
 
 	//protected

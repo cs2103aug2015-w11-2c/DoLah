@@ -2,8 +2,8 @@
 
 #include <vector>
 #include <string>
-#include "..\Models\Task.h"
-#include "..\CommandReceiver\Calendar.h"
+#include "Models/Task.h"
+#include "Models/Calendar.h"
 
 namespace DoLah {
 

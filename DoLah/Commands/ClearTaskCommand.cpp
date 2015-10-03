@@ -19,7 +19,7 @@ namespace DoLah {
 	}
 
 	void ClearTaskCommand::execute() {
-		//TODO
+		calendar.clearTasks();
 	}
 
 	//private

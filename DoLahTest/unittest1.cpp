@@ -3,8 +3,8 @@
 
 #include "basic.h"
 
-#include "..\DoLah\Models\Task.h"
-#include "..\DoLah\Commands\Command.h"
+#include "Models/Task.h"
+#include "Commands/Command.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

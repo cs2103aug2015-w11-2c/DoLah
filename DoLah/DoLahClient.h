@@ -4,8 +4,8 @@
 #include <stack>
 #include <string>
 #include <fstream>
-#include "Models\Task.h"
-#include "Commands\Command.h"
+#include "Models/Task.h"
+#include "Commands/Command.h"
 
 namespace DoLah {
 
