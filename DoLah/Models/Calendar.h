@@ -17,10 +17,7 @@ namespace DoLah {
 		void deleteTask(int);
 		void updateTask(AbstractTask*);
 		void clearTasks();
-		AbstractTask* getTask(int);
 		std::vector<AbstractTask*> search(std::string);
-
-		bool Calendar::TaskIdSearcher(int i);
 
 	private:
 		std::vector<AbstractTask*> taskList;

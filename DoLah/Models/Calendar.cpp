@@ -31,14 +31,12 @@ namespace DoLah {
 	}
 
 	void Calendar::clearTasks() {
-
-	}
-
-	AbstractTask* Calendar::getTask(int id) {
-		return *(std::find(taskList.begin(), taskList.end(), id));
+		taskList.clear();
 	}
 	
 	std::vector<AbstractTask*> Calendar::search(std::string query) {
-		
+		std::vector<AbstractTask*> results;
+
+		return results;
 	}
 }
