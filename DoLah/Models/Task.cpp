@@ -1,4 +1,5 @@
 #include "Task.h"
+#include "TaskFactory.h"
 
 namespace DoLah {
 
@@ -36,4 +37,23 @@ namespace DoLah {
     int AbstractTask::getId() {
         return this->id;
     }
+    ISerializable * FloatingTask::serialize(const std::string& data) {
+        return NULL;
+    }
+    std::string FloatingTask::deserialize() {
+        return std::string();
+    }
+    ISerializable * DeadlineTask::serialize(const std::string& data) {
+        return NULL;
+    }
+    std::string DeadlineTask::deserialize() {
+        return std::string();
+    }
+    ISerializable * EventTask::serialize(const std::string& data) {
+        return NULL;
+    }
+    std::string EventTask::deserialize() {
+        return std::string();
+    }
+
 }

@@ -1,14 +1,11 @@
 #pragma once
 #include <string>
 #include <chrono>
+#include "ISerializable.h"
 
 namespace DoLah {
-    class AbstractTask {
+    class AbstractTask : public ISerializable {
     public:
-        class Serializer {
-            static AbstractTask * serialize(std::string data);
-            std::string deserialize();
-        };
         AbstractTask();
         virtual ~AbstractTask() = 0;
         void setId(int id);
@@ -26,7 +23,10 @@ namespace DoLah {
         bool done;
     };
 
-    class FloatingTask : public AbstractTask { };
+    class FloatingTask : public AbstractTask {
+        ISerializable* serialize(const std::string&);
+        std::string deserialize();
+    };
 
     class EventTask : public AbstractTask {
     public:
@@ -36,6 +36,8 @@ namespace DoLah {
         void setStartDate(std::chrono::system_clock::time_point);
         std::chrono::system_clock::time_point getEndDate();
         void setEndDate(std::chrono::system_clock::time_point);
+        ISerializable* serialize(const std::string&);
+        std::string deserialize();
     private:
         std::chrono::system_clock::time_point startDate;
         std::chrono::system_clock::time_point endDate;
@@ -47,7 +49,8 @@ namespace DoLah {
         ~DeadlineTask();
         std::chrono::system_clock::time_point getDueDate();
         void setDueDate(std::chrono::system_clock::time_point);
-
+        ISerializable* serialize(const std::string&);
+        std::string deserialize();
     private:
         std::chrono::system_clock::time_point dueDate;
     };

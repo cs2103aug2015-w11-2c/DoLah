@@ -127,6 +127,7 @@
     <ClInclude Include="basic.h" />
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
+    <ClInclude Include="Models\ISerializable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
