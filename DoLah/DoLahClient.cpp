@@ -19,9 +19,9 @@ void DoLahClient::parseAndProcessCommand(std::string userinput) {
 }
 
 void DoLahClient::save() {
-    
+    // save to storageFile
 }
 
 void DoLahClient::load() {
-    
+    // load settingsFile and storageFile
 }
