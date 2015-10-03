@@ -125,7 +125,7 @@
   <ItemGroup>
     <ClInclude Include="basic.h" />
     <ClInclude Include="CommandTokenizer.h" />
-    <ClInclude Include="TokenizerLibrary.h" />
+    <ClInclude Include="ParserLibrary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

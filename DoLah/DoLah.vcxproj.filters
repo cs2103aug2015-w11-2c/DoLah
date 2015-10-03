@@ -32,7 +32,7 @@
     <ClInclude Include="CommandTokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TokenizerLibrary.h">
+    <ClInclude Include="ParserLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

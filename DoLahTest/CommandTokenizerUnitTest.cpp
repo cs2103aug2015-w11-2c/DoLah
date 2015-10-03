@@ -16,10 +16,10 @@ public:
     TEST_METHOD(findCommandTest) {
         CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 30th Sep";
-        std::string expected = (std::string) "{ add }";
+        std::string expected = (std::string) "add";
 
-        std::vector<std::string> obj = ct.findCommand(ParserLibrary::explode(input, " "));
-        Assert::AreEqual(expected, ParserLibrary::vectorToString(obj));
+        std::string obj = ct.findCommand(ParserLibrary::explode(input, " "));
+        Assert::AreEqual(expected, obj);
     }
 
     TEST_METHOD(findTagsTest) {
@@ -34,10 +34,10 @@ public:
     TEST_METHOD(findDescriptionTest) {
         CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 30th Sep";
-        std::string expected = (std::string) "{ #cs2103 #homework on 30th Sep }";
+        std::string expected = (std::string) "#cs2103 #homework on 30th Sep";
 
-        std::vector<std::string> obj = ct.findDescription(ParserLibrary::explode(input, " "));
-        Assert::AreEqual(expected, ParserLibrary::vectorToString(obj));
+        std::string obj = ct.findDescription(ParserLibrary::explode(input, " "));
+        Assert::AreEqual(expected, obj);
     }
 
     //TEST_METHOD(findDateTest) {

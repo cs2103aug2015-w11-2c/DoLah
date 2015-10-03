@@ -12,11 +12,11 @@ public:
     CommandTokenizer();
     ~CommandTokenizer();
 
-    std::vector<std::string> findCommand(std::vector<std::string> lineArr);
+    std::string findCommand(std::vector<std::string> lineArr);
     std::vector<std::string> findTags(std::vector<std::string> lineArr);
     std::vector<std::chrono::system_clock::time_point> findDate(std::vector<std::string> lineArr);
-    std::vector<std::string> findDescription(std::vector<std::string> lineArr);
-    std::vector<int> findPriority(std::vector<std::string> lineArr);
+    std::string findDescription(std::vector<std::string> lineArr);
+    int findPriority(std::vector<std::string> lineArr);
 
 
 private:

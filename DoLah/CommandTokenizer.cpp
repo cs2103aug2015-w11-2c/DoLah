@@ -9,10 +9,10 @@ CommandTokenizer::CommandTokenizer() {
 CommandTokenizer::~CommandTokenizer() {
 }
 
-std::vector<std::string> CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
-    std::vector<std::string> output;
+std::string CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
+    std::string output;
     if (ParserLibrary::inArray(commandList, lineArr.at(0))) {
-        output.push_back(lineArr.at(0));
+        output = lineArr.at(0);
     } else {
         throw std::exception("command not recognized");
     }
@@ -46,17 +46,17 @@ std::vector<std::chrono::system_clock::time_point> CommandTokenizer::findDate(st
     return output;
 }
 
-std::vector<std::string> CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
-    std::vector<std::string> output;
+std::string CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
+    std::string output;
 
     lineArr.erase(lineArr.begin());
-    output.push_back(ParserLibrary::implode(lineArr, " "));
+    output = ParserLibrary::implode(lineArr, " ");
 
     return output;
 }
 
-std::vector<int> CommandTokenizer::findPriority(std::vector<std::string> lineArr) {
-    std::vector<int> output;
+int CommandTokenizer::findPriority(std::vector<std::string> lineArr) {
+    int output = 0;
 
     return output;
 }
