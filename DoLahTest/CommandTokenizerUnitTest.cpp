@@ -4,7 +4,7 @@
 #include "basic.h"
 
 #include "CommandTokenizer.h"
-#include "TokenizerLibrary.h"
+#include "ParserLibrary.h"
 
 
 
@@ -18,8 +18,8 @@ public:
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "{ add }";
 
-        std::vector<std::string> obj = ct.findCommand(TokenizerLibrary::explode(input, " "));
-        Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj));
+        std::vector<std::string> obj = ct.findCommand(ParserLibrary::explode(input, " "));
+        Assert::AreEqual(expected, ParserLibrary::vectorToString(obj));
     }
 
     TEST_METHOD(findTagsTest) {
@@ -27,8 +27,8 @@ public:
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "{ homework, cs2103 }";
 
-        std::vector<std::string> obj = ct.findTags(TokenizerLibrary::explode(input, " "));
-        Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj));
+        std::vector<std::string> obj = ct.findTags(ParserLibrary::explode(input, " "));
+        Assert::AreEqual(expected, ParserLibrary::vectorToString(obj));
     }
 
     TEST_METHOD(findDescriptionTest) {
@@ -36,8 +36,8 @@ public:
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "{ #cs2103 #homework on 30th Sep }";
 
-        std::vector<std::string> obj = ct.findDescription(TokenizerLibrary::explode(input, " "));
-        Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj));
+        std::vector<std::string> obj = ct.findDescription(ParserLibrary::explode(input, " "));
+        Assert::AreEqual(expected, ParserLibrary::vectorToString(obj));
     }
 
     //TEST_METHOD(findDateTest) {
@@ -46,8 +46,8 @@ public:
     //    std::string expected = (std::string) "{ 17-03-2016 }";
     //    
 
-    //    DateTimeToken* obj = ct.findDate(TokenizerLibrary::explode(input, " "));
-    //    Assert::AreEqual(expected, TokenizerLibrary::vectorToString(obj->getData()));
+    //    DateTimeToken* obj = ct.findDate(ParserLibrary::explode(input, " "));
+    //    Assert::AreEqual(expected, ParserLibrary::vectorToString(obj->getData()));
     //}
 
     };

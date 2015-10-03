@@ -4,10 +4,10 @@
 #include <vector>
 #include <algorithm>
 
-class TokenizerLibrary {
+class ParserLibrary {
 public:
-    TokenizerLibrary();
-    ~TokenizerLibrary();
+    ParserLibrary();
+    ~ParserLibrary();
 
     static std::vector<std::string> explode(std::string line, std::string delimeter);
     static std::string implode(std::vector<std::string> line, std::string delimeter);

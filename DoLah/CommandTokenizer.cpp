@@ -11,7 +11,7 @@ CommandTokenizer::~CommandTokenizer() {
 
 std::vector<std::string> CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
     std::vector<std::string> output;
-    if (TokenizerLibrary::inArray(commandList, lineArr.at(0))) {
+    if (ParserLibrary::inArray(commandList, lineArr.at(0))) {
         output.push_back(lineArr.at(0));
     } else {
         throw std::exception("command not recognized");
@@ -25,15 +25,15 @@ std::vector<std::string> CommandTokenizer::findTags(std::vector<std::string> lin
     std::vector<std::string> moretags;
 
     for (size_t i = 0; i < lineArr.size(); i++) {
-        moretags = TokenizerLibrary::explode(lineArr.at(i), tag);
+        moretags = ParserLibrary::explode(lineArr.at(i), tag);
         tags.insert(tags.begin(), moretags.begin() + 1, moretags.end());
     }
 
     for (size_t i = 0; i < tags.size(); i++) {
-        tags.at(i) = TokenizerLibrary::tolowercase(tags.at(i));
+        tags.at(i) = ParserLibrary::tolowercase(tags.at(i));
     }
 
-    tags = TokenizerLibrary::stringVectorUnique(tags);
+    tags = ParserLibrary::stringVectorUnique(tags);
 
     return tags;
 }
@@ -50,7 +50,7 @@ std::vector<std::string> CommandTokenizer::findDescription(std::vector<std::stri
     std::vector<std::string> output;
 
     lineArr.erase(lineArr.begin());
-    output.push_back(TokenizerLibrary::implode(lineArr, " "));
+    output.push_back(ParserLibrary::implode(lineArr, " "));
 
     return output;
 }

@@ -120,7 +120,7 @@
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
     <ClCompile Include="CommandTokenizer.cpp" />
-    <ClCompile Include="TokenizerLibrary.cpp" />
+    <ClCompile Include="ParserLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />

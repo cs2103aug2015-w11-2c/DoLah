@@ -1,16 +1,16 @@
-#include "TokenizerLibrary.h"
+#include "ParserLibrary.h"
 
 
 
-TokenizerLibrary::TokenizerLibrary() {
+ParserLibrary::ParserLibrary() {
 }
 
 
-TokenizerLibrary::~TokenizerLibrary() {
+ParserLibrary::~ParserLibrary() {
 }
 
 
-std::vector<std::string> TokenizerLibrary::explode(std::string line, std::string delimeter) {
+std::vector<std::string> ParserLibrary::explode(std::string line, std::string delimeter) {
     std::vector<std::string> out;
     int from = 0;
     int to;
@@ -24,7 +24,7 @@ std::vector<std::string> TokenizerLibrary::explode(std::string line, std::string
     return out;
 }
 
-std::string TokenizerLibrary::implode(std::vector<std::string> line, std::string delimeter) {
+std::string ParserLibrary::implode(std::vector<std::string> line, std::string delimeter) {
     std::string out = "";
 
     for (size_t i = 0; i < line.size(); i++) {
@@ -39,7 +39,7 @@ std::string TokenizerLibrary::implode(std::vector<std::string> line, std::string
 }
 
 
-std::string TokenizerLibrary::vectorToString(std::vector<std::string> vec) {
+std::string ParserLibrary::vectorToString(std::vector<std::string> vec) {
     std::string str = "{ ";
     for (int i = 0; i < (int)vec.size(); i++) {
         str += vec.at(i);
@@ -51,16 +51,16 @@ std::string TokenizerLibrary::vectorToString(std::vector<std::string> vec) {
     return str;
 }
 
-std::string TokenizerLibrary::tolowercase(std::string str) {
+std::string ParserLibrary::tolowercase(std::string str) {
     std::transform(str.begin(), str.end(), str.begin(), ::tolower);
     return str;
 }
 
-bool TokenizerLibrary::inArray(std::vector<std::string> arr, std::string str) {
-    return std::find(arr.begin(), arr.end(), TokenizerLibrary::tolowercase(str)) != arr.end();
+bool ParserLibrary::inArray(std::vector<std::string> arr, std::string str) {
+    return std::find(arr.begin(), arr.end(), ParserLibrary::tolowercase(str)) != arr.end();
 }
 
-std::vector<std::string> TokenizerLibrary::stringVectorUnique(std::vector<std::string> vector) {
+std::vector<std::string> ParserLibrary::stringVectorUnique(std::vector<std::string> vector) {
     std::vector<std::string>::iterator it;
     it = std::unique(vector.begin(), vector.end());
     vector.resize(std::distance(vector.begin(), it));

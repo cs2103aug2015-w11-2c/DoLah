@@ -21,7 +21,7 @@
     <ClCompile Include="CommandTokenizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TokenizerLibrary.cpp">
+    <ClCompile Include="ParserLibrary.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
