@@ -11,15 +11,44 @@ CommandParser::~CommandParser() {
 
 
 void CommandParser::parseAdd(std::vector<std::string> inputArr) {
-    tokenizer.findDescription(inputArr);
-    tokenizer.findTags(inputArr);
-    tokenizer.findPriority(inputArr);
+    std::string description = tokenizer.findDescription(inputArr);
+    std::vector<std::string> tags = tokenizer.findTags(inputArr);
+    int priority = tokenizer.findPriority(inputArr);
+    std::vector<std::chrono::system_clock::time_point> time = tokenizer.findDate(inputArr);
+    
+    //make ITskCommand
 }
 
 
-std::string CommandParser::parseSearch(std::string input) {
+void CommandParser::parseSearch(std::string input) {
     int pos = input.find(" ");
     std::string arg = input.substr(pos, input.size() - pos);
+
+    //make ITskCommand
+}
+
+
+void CommandParser::parseEdit(std::vector<std::string> inputArr) {
+    int arg = std::stoi(inputArr.at(1));
+    
+    //make ITskCommand
+}
+
+
+void CommandParser::parseDelete(std::vector<std::string> inputArr) {
+    int arg = std::stoi(inputArr.at(1));
+
+    //make ITskCommand
+}
+
+
+void CommandParser::parseClear() {
+    //make ITskCommand
+}
+
+
+void CommandParser::parseUndo() {
+    //make ITskCommand
 }
 
 

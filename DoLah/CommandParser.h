@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <chrono>
 
 #include "ParserLibrary.h"
 #include "CommandTokenizer.h"
@@ -13,15 +14,19 @@ public:
 
     void parse(std::string);
     void parseAdd(std::vector<std::string>);
-    std::string parseSearch(std::string);
+    void parseSearch(std::string);
+    void parseEdit(std::vector<std::string>);
+    void parseDelete(std::vector<std::string>);
+    void parseClear();
+    void parseUndo();
 private:
     CommandTokenizer tokenizer;
     
     std::string ADD = "add";
-    std::string EDIT = "edit";
     std::string SEARCH = "search";
-    std::string CLEAR = "clear";
+    std::string EDIT = "edit";
     std::string DELETE = "delete";
+    std::string CLEAR = "clear";
     std::string UNDO = "undo";
 
     std::string TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
