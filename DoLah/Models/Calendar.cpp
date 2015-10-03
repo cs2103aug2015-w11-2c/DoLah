@@ -26,10 +26,14 @@ namespace DoLah {
 		return new FloatingTask;
 	}
 	
-	std::vector<AbstractTask> search(std::string) {
-		std::vector<AbstractTask> results;
+	std::vector<AbstractTask*> Calendar::search(std::string query) {
+		std::vector<AbstractTask*> results;
 
-		//TODO
+		for (int i = 0; i < taskList.size(); i++) {
+			if (taskList.at(i)->getName().find(query) != std::string::npos) {
+				results.push_back(taskList.at(i));
+			}
+		}
 
 		return results;
 	}
