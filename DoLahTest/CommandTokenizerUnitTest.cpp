@@ -40,6 +40,35 @@ public:
         Assert::AreEqual(expected, obj);
     }
 
+    TEST_METHOD(isDMYDateFormatTest1) {
+        CommandTokenizer ct;
+        std::string input = "17th March 2015";
+        std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
+        Assert::IsTrue(ct.isDMYDateFormat(inputArr));
+    }
+
+    TEST_METHOD(isDMYDateFormatTest2) {
+        CommandTokenizer ct;
+        std::string input = "17th March";
+        std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
+        Assert::IsTrue(ct.isDMYDateFormat(inputArr));
+    }
+
+    TEST_METHOD(isDMYDateFormatTest3) {
+        CommandTokenizer ct;
+        std::string input = "17th";
+        std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
+        Assert::IsTrue(ct.isDMYDateFormat(inputArr));
+    }
+
+    TEST_METHOD(isDMYDateFormatTest4) {
+        CommandTokenizer ct;
+        std::string input = "March";
+        std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
+        Assert::IsFalse(ct.isDMYDateFormat(inputArr));
+    }
+
+
     TEST_METHOD(findDateTest) {
         CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 17th of March";
@@ -49,6 +78,12 @@ public:
         std::vector<std::chrono::system_clock::time_point> obj = ct.findDate(ParserLibrary::explode(input, " "));
 
         Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(explodeTest) {
+        std::string input = "17th";
+        std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
+        Assert::AreEqual(input, inputArr.at(0));
     }
 
     };

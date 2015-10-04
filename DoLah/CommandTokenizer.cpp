@@ -41,31 +41,67 @@ std::vector<std::string> CommandTokenizer::findTags(std::vector<std::string> lin
 std::string CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
     std::string output;
 
-    lineArr.erase(lineArr.begin());
-    output = ParserLibrary::implode(lineArr, " ");
+    std::vector<std::string> description(lineArr.begin()+1, lineArr.end());
+    output = ParserLibrary::implode(description, " ");
 
     return output;
+}
+
+bool CommandTokenizer::isDate(std::string str) {
+    return false;
+}
+
+bool CommandTokenizer::isDay(std::string str) {
+    return std::regex_match(str, std::regex(dayPattern, std::regex_constants::icase));
+}
+
+bool CommandTokenizer::isMonth(std::string str) {
+    return std::regex_match(str, std::regex(monthPattern, std::regex_constants::icase));
+}
+
+bool CommandTokenizer::isYear(std::string str) {
+    return std::regex_match(str, std::regex(yearPattern, std::regex_constants::icase));
+}
+
+bool CommandTokenizer::isDMYDateFormat(std::vector<std::string> strArr) {
+    if (!isDay(strArr.at(0))) {
+        return false;
+    }
+
+    if (strArr.size() <= 1) {
+        return true;
+    } else if (!isMonth(strArr.at(1))) {
+        return false;
+    }
+    
+    if (strArr.size() <= 2) {
+        return true;
+    } else if (!isYear(strArr.at(2))) {
+        return false;
+    }
+
+    return true;
+}
+
+std::chrono::system_clock::time_point CommandTokenizer::DMYToTimePoint(std::vector<std::string> strArr) {
+
+
+    return std::chrono::system_clock::time_point();
 }
 
 std::vector<std::chrono::system_clock::time_point> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
     std::vector<std::chrono::system_clock::time_point> output;
 
-    std::string datePattern = 
-        "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
-        "|mon|tue|wed|thu|fri|sat|sun";
-    std::string dayPattern = 
-        "^([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)$";
-    std::string monthPattern = 
-        "january|february|march|april|may|june|july|august|september|october|november|december"
-        "|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec"
-        "|^([1-9]|0[1-9]|1[0-2])$";
-    std::string yearPattern =
-        "^2[0-1][0-9][0-9]|[0-9][0-9]$";
-
-
-    for (size_t i = 0; i < lineArr.size(); i++) {
+    bool dateFlag = false;
+    for (size_t i = lineArr.size()-1; i > 0 ; i--) {
         if (ParserLibrary::inStringArray(timeSubCommandList, lineArr.at(i))) {
+            dateFlag = true;
+        }
+        if (dateFlag) {
+            std::vector<std::string> subVec(lineArr.begin()+i, lineArr.end());
+            if (isDMYDateFormat(subVec)) {
 
+            }
         }
     }
 
