@@ -44,30 +44,36 @@ public:
         CommandTokenizer ct;
         std::string input = "17th March 2015";
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
-        Assert::IsTrue(ct.isDMYDateFormat(inputArr));
+        Assert::IsTrue(ct.isDateFormat(inputArr));
     }
 
     TEST_METHOD(isDMYDateFormatTest2) {
         CommandTokenizer ct;
         std::string input = "17th March";
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
-        Assert::IsTrue(ct.isDMYDateFormat(inputArr));
+        Assert::IsTrue(ct.isDateFormat(inputArr));
     }
 
     TEST_METHOD(isDMYDateFormatTest3) {
         CommandTokenizer ct;
         std::string input = "17th";
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
-        Assert::IsTrue(ct.isDMYDateFormat(inputArr));
+        Assert::IsTrue(ct.isDateFormat(inputArr));
     }
 
     TEST_METHOD(isDMYDateFormatTest4) {
         CommandTokenizer ct;
         std::string input = "March";
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
-        Assert::IsFalse(ct.isDMYDateFormat(inputArr));
+        Assert::IsFalse(ct.isDateFormat(inputArr));
     }
 
+    TEST_METHOD(isDMYDateFormatTest5) {
+        CommandTokenizer ct;
+        std::string input = "March 17th 2015";
+        std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
+        Assert::IsTrue(ct.isDateFormat(inputArr));
+    }
 
     TEST_METHOD(findDateTest) {
         CommandTokenizer ct;

@@ -19,7 +19,10 @@ public:
     std::vector<std::string> findTags(std::vector<std::string> lineArr);
     std::vector<std::chrono::system_clock::time_point> findDate(std::vector<std::string> lineArr);
 
-    bool isDMYDateFormat(std::vector<std::string>);
+    // decision tree to classify the input as dateformat or not
+    // accepts DD, DD-MM, DD-MM-YYYY, MM-DD, MM-DD-YYYY
+    // consider changing into toDateFormat to do everything at once
+    bool isDateFormat(std::vector<std::string>);
     bool CommandTokenizer::isDate(std::string);
     bool CommandTokenizer::isDay(std::string);
     bool CommandTokenizer::isMonth(std::string);
@@ -42,12 +45,10 @@ private:
         "([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)"
         ")$";
     std::string monthPattern = "^("
+        // consider finding alterntive for the first line to speed up the process
         "january|february|march|april|may|june|july|august|september|october|november|december"
         "|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec"
         "|[1-9]|0[1-9]|1[0-2]"
-        ")$";
-    std::string yearPattern = "^("
-        "2[0-1][0-9][0-9]|[0-9][0-9]"
         ")$";
 
     std::vector<std::string> monthFormat = {

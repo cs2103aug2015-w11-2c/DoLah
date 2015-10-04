@@ -60,27 +60,50 @@ bool CommandTokenizer::isMonth(std::string str) {
 }
 
 bool CommandTokenizer::isYear(std::string str) {
-    return std::regex_match(str, std::regex(yearPattern, std::regex_constants::icase));
+    try {
+        std::stoi(str);
+    } catch (std::invalid_argument e) {
+        return false;
+    }
 }
 
-bool CommandTokenizer::isDMYDateFormat(std::vector<std::string> strArr) {
-    if (!isDay(strArr.at(0))) {
+bool CommandTokenizer::isDateFormat(std::vector<std::string> strArr) {
+    int size = strArr.size();
+    if (isDay(strArr.at(0))) {
+        if (size <= 1) {
+            return true;
+        }
+        if (isMonth(strArr.at(1))) {
+            if (size <= 2) {
+                return true;
+            }
+            if (isYear(strArr.at(2))) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else if (isMonth(strArr.at(0))) {
+        if (size <= 1) {
+            return false;
+        }
+        if (isDay(strArr.at(1))) {
+            if (size <= 2) {
+                return true;
+            }
+            if (isYear(strArr.at(2))) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
         return false;
     }
-
-    if (strArr.size() <= 1) {
-        return true;
-    } else if (!isMonth(strArr.at(1))) {
-        return false;
-    }
-    
-    if (strArr.size() <= 2) {
-        return true;
-    } else if (!isYear(strArr.at(2))) {
-        return false;
-    }
-
-    return true;
 }
 
 std::chrono::system_clock::time_point CommandTokenizer::DMYToTimePoint(std::vector<std::string> strArr) {
@@ -99,7 +122,7 @@ std::vector<std::chrono::system_clock::time_point> CommandTokenizer::findDate(st
         }
         if (dateFlag) {
             std::vector<std::string> subVec(lineArr.begin()+i, lineArr.end());
-            if (isDMYDateFormat(subVec)) {
+            if (isDateFormat(subVec)) {
 
             }
         }
