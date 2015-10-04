@@ -12,6 +12,7 @@ public:
     CommandParser();
     ~CommandParser();
 
+    // needs to use Calendar parameter later
     void parse(std::string);
     void parseAdd(std::vector<std::string>);
     void parseSearch(std::string);

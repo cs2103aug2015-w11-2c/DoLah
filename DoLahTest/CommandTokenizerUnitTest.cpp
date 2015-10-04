@@ -46,7 +46,8 @@ public:
         std::string expected = (std::string) "{ 17-03-2016 }";
         std::string actual = "";
         
-        DateTimeToken* obj = ct.findDate(ParserLibrary::explode(input, " "));
+        std::vector<std::chrono::system_clock::time_point> obj = ct.findDate(ParserLibrary::explode(input, " "));
+
         Assert::AreEqual(expected, actual);
     }
 

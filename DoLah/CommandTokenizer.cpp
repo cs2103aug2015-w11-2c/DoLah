@@ -11,10 +11,10 @@ CommandTokenizer::~CommandTokenizer() {
 
 std::string CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
     std::string output;
-    if (ParserLibrary::inArray(commandList, lineArr.at(0))) {
+    if (ParserLibrary::inStringArray(commandList, lineArr.at(0))) {
         output = lineArr.at(0);
     } else {
-        throw std::exception("command not recognized");
+        throw std::invalid_argument(UNKNOWN_COMMAND_MESSAGE);
     }
 
     return output;
@@ -38,14 +38,6 @@ std::vector<std::string> CommandTokenizer::findTags(std::vector<std::string> lin
     return tags;
 }
 
-std::vector<std::chrono::system_clock::time_point> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
-    std::vector<std::chrono::system_clock::time_point> output;
-
-
-
-    return output;
-}
-
 std::string CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
     std::string output;
 
@@ -55,8 +47,28 @@ std::string CommandTokenizer::findDescription(std::vector<std::string> lineArr) 
     return output;
 }
 
-int CommandTokenizer::findPriority(std::vector<std::string> lineArr) {
-    int output = 0;
+std::vector<std::chrono::system_clock::time_point> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
+    std::vector<std::chrono::system_clock::time_point> output;
+
+    std::string datePattern = 
+        "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
+        "|mon|tue|wed|thu|fri|sat|sun";
+    std::string dayPattern = 
+        "^([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)$";
+    std::string monthPattern = 
+        "january|february|march|april|may|june|july|august|september|october|november|december"
+        "|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec"
+        "|^([1-9]|0[1-9]|1[0-2])$";
+    std::string yearPattern =
+        "^2[0-1][0-9][0-9]|[0-9][0-9]$";
+
+
+    for (size_t i = 0; i < lineArr.size(); i++) {
+        if (ParserLibrary::inStringArray(timeSubCommandList, lineArr.at(i))) {
+
+        }
+    }
 
     return output;
 }
+

@@ -56,7 +56,7 @@ std::string ParserLibrary::tolowercase(std::string str) {
     return str;
 }
 
-bool ParserLibrary::inArray(std::vector<std::string> arr, std::string str) {
+bool ParserLibrary::inStringArray(std::vector<std::string> arr, std::string str) {
     return std::find(arr.begin(), arr.end(), ParserLibrary::tolowercase(str)) != arr.end();
 }
 
