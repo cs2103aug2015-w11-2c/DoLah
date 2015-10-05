@@ -24,11 +24,6 @@ public:
     // accepts DD, DD-MM, DD-MM-YYYY, MM-DD, MM-DD-YYYY
     // consider changing into toDateFormat to do everything at once
     std::tm toDateFormat(std::vector<std::string>);
-    bool isDateFormat(std::vector<std::string>);
-    bool isDate(std::string);
-    bool isDay(std::string);
-    bool isMonth(std::string);
-    bool isYear(std::string);
     int getDay(std::string);
     int getMonth(std::string);
     int getYear(std::string);
@@ -52,12 +47,20 @@ private:
         "([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)"
         ")$";
     std::string dayAppendixPattern = "(st|nd|rd|th)$";
-    std::string monthPattern = "^("
-        // consider finding alterntive for the first line to speed up the process
-        "january|february|march|april|may|june|july|august|september|october|november|december"
-        "|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec"
-        "|[1-9]|0[1-9]|1[0-2]"
-        ")$";
+    std::vector<std::string> monthPattern = {
+        "^(january|jan|01|1)$",
+        "^(february|feb|02|2)$",
+        "^(march|mar|03|3)$",
+        "^(april|apr|04|4)$",
+        "^(may|05|5)$",
+        "^(june|jun|06|6)$",
+        "^(july|jul|07|7)$",
+        "^(august|aug|08|8)$",
+        "^(september|sep|09|9)$",
+        "^(october|oct|10)$",
+        "^(november|nov|11)$",
+        "^(december|dec|12)$"
+    };
 
     std::vector<std::string> monthFormat = {
         "^(january|jan|1|01)$",

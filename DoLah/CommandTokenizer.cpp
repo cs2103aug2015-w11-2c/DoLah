@@ -47,38 +47,10 @@ std::string CommandTokenizer::findDescription(std::vector<std::string> lineArr) 
     return output;
 }
 
-bool CommandTokenizer::isDate(std::string str) {
-    return false;
-}
-
 std::string stringRemove(std::string str, std::string substr) {
     size_t f = str.find(substr);
     str.replace(f, substr.length(), "");
     return str;
-}
-
-bool CommandTokenizer::isDay(std::string str) {
-    str = std::regex_replace(str, std::regex(dayAppendixPattern), "");
-
-    if (str.length() > 2) {
-        return false;
-    } else if (!isDecimal(str)) {
-        return false;
-    }
-    return true;
-}
-
-bool CommandTokenizer::isMonth(std::string str) {
-    return std::regex_match(str, std::regex(monthPattern, std::regex_constants::icase));
-}
-
-bool CommandTokenizer::isYear(std::string str) {
-    if (str.length() != 2 && str.length() != 4) {
-        return false;
-    } else if (!isDecimal(str)) {
-        return false;
-    }
-    return true;
 }
 
 int CommandTokenizer::getDay(std::string str) {
@@ -94,24 +66,8 @@ int CommandTokenizer::getDay(std::string str) {
 }
 
 int CommandTokenizer::getMonth(std::string str) {
-    std::vector<std::string> monthPattern = {
-        "",
-        "^(january|jan|01|1)$",
-        "^(february|feb|02|2)$",
-        "^(march|mar|03|3)$",
-        "^(april|apr|04|4)$",
-        "^(may|05|5)$",
-        "^(june|jun|06|6)$",
-        "^(july|jul|07|7)$",
-        "^(august|aug|08|8)$",
-        "^(september|sep|09|9)$",
-        "^(october|oct|10)$",
-        "^(november|nov|11)$",
-        "^(december|dec|12)$"
-    };
-
     std::string out;
-    for (size_t m = 1; m < monthPattern.size(); m++) {
+    for (size_t m = 0; m < monthPattern.size(); m++) {
         if (std::regex_match(str, std::regex(monthPattern.at(m), std::regex_constants::icase))) {
             return m;
         }
@@ -161,7 +117,7 @@ std::tm CommandTokenizer::toDateFormat(std::vector<std::string> strArr) {
                 return output;
             }
             if ((year = getYear(strArr.at(2))) != NULL) {
-                output.tm_year = year;
+                output.tm_year = year - 1900;
                 return output;
             } else {
                 throw std::invalid_argument("");
@@ -180,7 +136,7 @@ std::tm CommandTokenizer::toDateFormat(std::vector<std::string> strArr) {
                 return output;
             }
             if ((year = getYear(strArr.at(2))) != NULL) {
-                output.tm_year = year;
+                output.tm_year = year - 1900;
                 return output;
             } else {
                 throw std::invalid_argument("");
@@ -193,50 +149,6 @@ std::tm CommandTokenizer::toDateFormat(std::vector<std::string> strArr) {
     }
 }
 
-bool CommandTokenizer::isDateFormat(std::vector<std::string> strArr) {
-    std::chrono::system_clock::time_point output;
-
-    int day;
-    int month;
-    int year;
-
-    int size = strArr.size();
-    if (isDay(strArr.at(0))) {
-        if (size <= 1) {
-            return true;
-        }
-        if (isMonth(strArr.at(1))) {
-            if (size <= 2) {
-                return true;
-            }
-            if (isYear(strArr.at(2))) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    } else if (isMonth(strArr.at(0))) {
-        if (size <= 1) {
-            return false;
-        }
-        if (isDay(strArr.at(1))) {
-            if (size <= 2) {
-                return true;
-            }
-            if (isYear(strArr.at(2))) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    } else {
-        return false;
-    }
-}
 
 std::chrono::system_clock::time_point CommandTokenizer::DMYToTimePoint(std::vector<std::string> strArr) {
 
@@ -254,9 +166,7 @@ std::vector<std::chrono::system_clock::time_point> CommandTokenizer::findDate(st
         }
         if (dateFlag) {
             std::vector<std::string> subVec(lineArr.begin()+i, lineArr.end());
-            if (isDateFormat(subVec)) {
 
-            }
         }
     }
 
