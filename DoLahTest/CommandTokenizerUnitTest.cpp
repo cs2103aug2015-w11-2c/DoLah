@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
+#include "regex"
+#include <iterator>
+
 
 #include "basic.h"
 
@@ -75,6 +78,15 @@ public:
         Assert::IsTrue(ct.isDateFormat(inputArr));
     }
 
+    TEST_METHOD(isDMYDateFormatTest6) {
+        CommandTokenizer ct;
+        std::string input = "March 17wow 2015";
+        std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
+        Assert::IsFalse(ct.isDateFormat(inputArr));
+    }
+
+
+
     TEST_METHOD(findDateTest) {
         CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 17th of March";
@@ -91,6 +103,30 @@ public:
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
         Assert::AreEqual(input, inputArr.at(0));
     }
+
+
+    std::string test(std::string input) {
+        std::string dayAppendixPattern = "(st|nd|rd|th)$";
+        input = std::regex_replace(input, std::regex(dayAppendixPattern), "");
+
+        if (input.length() > 2) {
+            return "(1) " + input;
+        } else if (input.at(1) > '9' || input.at(1) < '0') {
+            return "(2) " + input.at(0);
+        } else if (input.at(0) > '3' || input.at(1) < '0') {
+            return "(3) " + input;
+        }
+        return input;
+    }
+
+    TEST_METHOD(generalTest) {
+        CommandTokenizer ct;
+        std::string input = "17th";
+        std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
+        std::string expected = "17";
+        Assert::AreEqual(expected, test(input));
+    }
+
 
     };
 }

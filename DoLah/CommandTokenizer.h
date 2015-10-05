@@ -31,6 +31,8 @@ public:
     bool isYear(std::string);
     std::chrono::system_clock::time_point DMYToTimePoint(std::vector<std::string>);
 
+    bool isDecimal(std::string);
+
 private:
     std::vector<std::string> commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort" };
     std::vector<std::string> timeSubCommandList = { "on" };
@@ -42,6 +44,9 @@ private:
     std::string datePattern = "^("
         "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
         "|mon|tue|wed|thu|fri|sat|sun"
+        ")$";
+    std::string dayPattern = "^("
+        "([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)"
         ")$";
     std::string dayAppendixPattern = "(st|nd|rd|th)$";
     std::string monthPattern = "^("

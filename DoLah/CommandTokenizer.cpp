@@ -58,12 +58,14 @@ std::string stringRemove(std::string str, std::string substr) {
 }
 
 bool CommandTokenizer::isDay(std::string str) {
-    std::string dayAppendixPattern = "(st|nd|rd|th)";
+    //return std::regex_match(str, std::regex(dayPattern, std::regex_constants::icase));
+
+    std::string dayAppendixPattern = "(st|nd|rd|th)$";
     str = std::regex_replace(str, std::regex(dayAppendixPattern), "");
 
-    try {
-        std::stoi(str);
-    } catch (std::invalid_argument e) {
+    if (str.length() > 2) {
+        return false;
+    } else if (!isDecimal(str)) {
         return false;
     }
     return true;
@@ -78,10 +80,19 @@ bool CommandTokenizer::isMonth(std::string str) {
 }
 
 bool CommandTokenizer::isYear(std::string str) {
-    try {
-        std::stoi(str);
-    } catch (std::invalid_argument e) {
+    if (str.length() != 2 && str.length() != 4) {
         return false;
+    } else if (!isDecimal(str)) {
+        return false;
+    }
+    return true;
+}
+
+bool CommandTokenizer::isDecimal(std::string str) {
+    for (size_t i = 0; i < str.length(); i++) {
+        if (str.at(i) > '9' || str.at(i) < '0') {
+            return false;
+        }
     }
     return true;
 }
