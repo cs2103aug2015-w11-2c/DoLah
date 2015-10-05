@@ -68,7 +68,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)DoLah;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -118,11 +120,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Models\Calendar.cpp" />
+    <ClCompile Include="Models\CalendarHistory.cpp" />
+    <ClCompile Include="Commands\AddTaskCommand.cpp" />
+    <ClCompile Include="Commands\ClearTaskCommand.cpp" />
+    <ClCompile Include="Commands\Command.cpp" />
+    <ClCompile Include="Commands\DeleteTaskCommand.cpp" />
+    <ClCompile Include="Commands\EditTaskCommand.cpp" />
+    <ClCompile Include="Commands\RedoTaskCommand.cpp" />
+    <ClCompile Include="Commands\SearchTaskCommand.cpp" />
+    <ClCompile Include="Commands\UndoTaskCommand.cpp" />
+    <ClCompile Include="DoLahClient.cpp" />
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />
     <ClCompile Include="Models\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Models\Calendar.h" />
+    <ClInclude Include="Models\CalendarHistory.h" />
+    <ClInclude Include="Commands\Command.h" />
+    <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
   </ItemGroup>
