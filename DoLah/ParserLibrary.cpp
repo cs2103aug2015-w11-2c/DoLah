@@ -35,7 +35,6 @@ std::string ParserLibrary::implode(std::vector<std::string> line, std::string de
     }
 
     return out;
-
 }
 
 
