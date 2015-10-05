@@ -65,3 +65,20 @@ std::vector<std::string> ParserLibrary::stringVectorUnique(std::vector<std::stri
     vector.resize(std::distance(vector.begin(), it));
     return vector;
 }
+
+
+bool ParserLibrary::isDecimal(std::string str) {
+    for (size_t i = 0; i < str.length(); i++) {
+        if (str.at(i) > '9' || str.at(i) < '0') {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+std::string ParserLibrary::stringRemove(std::string str, std::string substr) {
+    size_t f = str.find(substr);
+    str.replace(f, substr.length(), "");
+    return str;
+}

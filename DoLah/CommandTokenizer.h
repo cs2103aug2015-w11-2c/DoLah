@@ -28,8 +28,6 @@ public:
     int getMonth(std::string);
     int getYear(std::string);
 
-    bool isDecimal(std::string);
-
 private:
     std::vector<std::string> commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort" };
     std::vector<std::string> timeSubCommandList = { "on" };

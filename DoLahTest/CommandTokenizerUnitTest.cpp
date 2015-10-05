@@ -117,7 +117,7 @@ public:
         Assert::IsTrue(assertion);
     }
 
-    TEST_METHOD(findDateTest) {
+    TEST_METHOD(findDateTest1) {
         CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 17th March";
         std::string expected = (std::string) "17/3/2015";
@@ -129,6 +129,29 @@ public:
         Assert::AreEqual(expected, actual);
     }
 
+    TEST_METHOD(findDateTest2) {
+        CommandTokenizer ct;
+        std::string input = "add #cs2103 #homework on 17 Dec 2016";
+        std::string expected = (std::string) "17/12/2016";
+
+        std::vector<std::tm> output = ct.findDate(ParserLibrary::explode(input, " "));
+        std::tm time = output.at(0);
+        std::string actual = std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
+
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(findDateTest3) {
+        CommandTokenizer ct;
+        std::string input = "add #cs2103 #homework on 17th";
+        std::string expected = (std::string) "17/10/2015";
+
+        std::vector<std::tm> output = ct.findDate(ParserLibrary::explode(input, " "));
+        std::tm time = output.at(0);
+        std::string actual = std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
+
+        Assert::AreEqual(expected, actual);
+    }
 
     TEST_METHOD(explodeTest) {
         std::string input = "17th";

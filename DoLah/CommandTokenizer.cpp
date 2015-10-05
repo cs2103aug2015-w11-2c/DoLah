@@ -41,16 +41,10 @@ std::vector<std::string> CommandTokenizer::findTags(std::vector<std::string> lin
 std::string CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
     std::string output;
 
-    std::vector<std::string> description(lineArr.begin()+1, lineArr.end());
+    std::vector<std::string> description(lineArr.begin() + 1, lineArr.end());
     output = ParserLibrary::implode(description, " ");
 
     return output;
-}
-
-std::string stringRemove(std::string str, std::string substr) {
-    size_t f = str.find(substr);
-    str.replace(f, substr.length(), "");
-    return str;
 }
 
 int CommandTokenizer::getDay(std::string str) {
@@ -58,7 +52,7 @@ int CommandTokenizer::getDay(std::string str) {
 
     if (str.length() > 2) {
         return NULL;
-    } else if (!isDecimal(str)) {
+    } else if (!ParserLibrary::isDecimal(str)) {
         return NULL;
     }
 
@@ -79,22 +73,12 @@ int CommandTokenizer::getMonth(std::string str) {
 int CommandTokenizer::getYear(std::string str) {
     if (str.length() != 2 && str.length() != 4) {
         return NULL;
-    } else if (!isDecimal(str)) {
+    } else if (!ParserLibrary::isDecimal(str)) {
         return NULL;
     }
 
     return std::stoi(str);
 }
-
-bool CommandTokenizer::isDecimal(std::string str) {
-    for (size_t i = 0; i < str.length(); i++) {
-        if (str.at(i) > '9' || str.at(i) < '0') {
-            return false;
-        }
-    }
-    return true;
-}
-
 
 std::tm CommandTokenizer::toDateFormat(std::vector<std::string> strArr) {
     time_t t = time(0);

@@ -15,5 +15,7 @@ public:
     static std::string tolowercase(std::string str);
     static bool inStringArray(std::vector<std::string> arr, std::string str);
     static std::vector<std::string> stringVectorUnique(std::vector<std::string> vector);
+    static bool isDecimal(std::string str);
+    static std::string stringRemove(std::string str, std::string substr);
 };
 
