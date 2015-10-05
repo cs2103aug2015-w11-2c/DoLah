@@ -23,12 +23,15 @@ public:
     // decision tree to classify the input as dateformat or not
     // accepts DD, DD-MM, DD-MM-YYYY, MM-DD, MM-DD-YYYY
     // consider changing into toDateFormat to do everything at once
+    std::tm toDateFormat(std::vector<std::string>);
     bool isDateFormat(std::vector<std::string>);
     bool isDate(std::string);
     bool isDay(std::string);
-    int getDay(std::string);
     bool isMonth(std::string);
     bool isYear(std::string);
+    int getDay(std::string);
+    int getMonth(std::string);
+    int getYear(std::string);
     std::chrono::system_clock::time_point DMYToTimePoint(std::vector<std::string>);
 
     bool isDecimal(std::string);

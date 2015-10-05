@@ -58,9 +58,6 @@ std::string stringRemove(std::string str, std::string substr) {
 }
 
 bool CommandTokenizer::isDay(std::string str) {
-    //return std::regex_match(str, std::regex(dayPattern, std::regex_constants::icase));
-
-    std::string dayAppendixPattern = "(st|nd|rd|th)$";
     str = std::regex_replace(str, std::regex(dayAppendixPattern), "");
 
     if (str.length() > 2) {
@@ -69,10 +66,6 @@ bool CommandTokenizer::isDay(std::string str) {
         return false;
     }
     return true;
-}
-
-int CommandTokenizer::getDay(std::string) {
-    return 0;
 }
 
 bool CommandTokenizer::isMonth(std::string str) {
@@ -88,6 +81,55 @@ bool CommandTokenizer::isYear(std::string str) {
     return true;
 }
 
+int CommandTokenizer::getDay(std::string str) {
+    str = std::regex_replace(str, std::regex(dayAppendixPattern), "");
+
+    if (str.length() > 2) {
+        return NULL;
+    } else if (!isDecimal(str)) {
+        return NULL;
+    }
+
+    return std::stoi(str);
+}
+
+int CommandTokenizer::getMonth(std::string str) {
+    std::vector<std::string> monthPattern = {
+        "",
+        "^(january|jan|01|1)$",
+        "^(february|feb|02|2)$",
+        "^(march|mar|03|3)$",
+        "^(april|apr|04|4)$",
+        "^(may|05|5)$",
+        "^(june|jun|06|6)$",
+        "^(july|jul|07|7)$",
+        "^(august|aug|08|8)$",
+        "^(september|sep|09|9)$",
+        "^(october|oct|10)$",
+        "^(november|nov|11)$",
+        "^(december|dec|12)$"
+    };
+
+    std::string out;
+    for (size_t m = 1; m < monthPattern.size(); m++) {
+        if (std::regex_match(str, std::regex(monthPattern.at(m), std::regex_constants::icase))) {
+            return m;
+        }
+    }
+
+    return NULL;
+}
+
+int CommandTokenizer::getYear(std::string str) {
+    if (str.length() != 2 && str.length() != 4) {
+        return NULL;
+    } else if (!isDecimal(str)) {
+        return NULL;
+    }
+
+    return std::stoi(str);
+}
+
 bool CommandTokenizer::isDecimal(std::string str) {
     for (size_t i = 0; i < str.length(); i++) {
         if (str.at(i) > '9' || str.at(i) < '0') {
@@ -95,6 +137,60 @@ bool CommandTokenizer::isDecimal(std::string str) {
         }
     }
     return true;
+}
+
+
+std::tm CommandTokenizer::toDateFormat(std::vector<std::string> strArr) {
+    time_t t = time(0);
+    struct tm output;
+    localtime_s(&output, &t);
+
+    int day;
+    int month;
+    int year;
+
+    int size = strArr.size();
+    if ((day = getDay(strArr.at(0))) != NULL) {
+        output.tm_mday = day;
+        if (size <= 1) {
+            return output;
+        }
+        if ((month = getMonth(strArr.at(1))) != NULL) {
+            output.tm_mon = month;
+            if (size <= 2) {
+                return output;
+            }
+            if ((year = getYear(strArr.at(2))) != NULL) {
+                output.tm_year = year;
+                return output;
+            } else {
+                throw std::invalid_argument("");
+            }
+        } else {
+            throw std::invalid_argument("");
+        }
+    } else if ((month = getMonth(strArr.at(0))) != NULL) {
+        output.tm_mon = month;
+        if (size <= 1) {
+            throw std::invalid_argument("");
+        }
+        if ((day = getDay(strArr.at(1))) != NULL) {
+            output.tm_mday = day;
+            if (size <= 2) {
+                return output;
+            }
+            if ((year = getYear(strArr.at(2))) != NULL) {
+                output.tm_year = year;
+                return output;
+            } else {
+                throw std::invalid_argument("");
+            }
+        } else {
+            throw std::invalid_argument("");
+        }
+    } else {
+        throw std::invalid_argument("");
+    }
 }
 
 bool CommandTokenizer::isDateFormat(std::vector<std::string> strArr) {
