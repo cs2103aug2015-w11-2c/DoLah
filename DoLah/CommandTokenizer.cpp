@@ -51,8 +51,26 @@ bool CommandTokenizer::isDate(std::string str) {
     return false;
 }
 
+std::string stringRemove(std::string str, std::string substr) {
+    size_t f = str.find(substr);
+    str.replace(f, substr.length(), "");
+    return str;
+}
+
 bool CommandTokenizer::isDay(std::string str) {
-    return std::regex_match(str, std::regex(dayPattern, std::regex_constants::icase));
+    std::string dayAppendixPattern = "(st|nd|rd|th)";
+    str = std::regex_replace(str, std::regex(dayAppendixPattern), "");
+
+    try {
+        std::stoi(str);
+    } catch (std::invalid_argument e) {
+        return false;
+    }
+    return true;
+}
+
+int CommandTokenizer::getDay(std::string) {
+    return 0;
 }
 
 bool CommandTokenizer::isMonth(std::string str) {
@@ -65,9 +83,16 @@ bool CommandTokenizer::isYear(std::string str) {
     } catch (std::invalid_argument e) {
         return false;
     }
+    return true;
 }
 
 bool CommandTokenizer::isDateFormat(std::vector<std::string> strArr) {
+    std::chrono::system_clock::time_point output;
+
+    int day;
+    int month;
+    int year;
+
     int size = strArr.size();
     if (isDay(strArr.at(0))) {
         if (size <= 1) {

@@ -5,6 +5,7 @@
 #include <ctime>
 #include <chrono>
 #include <regex>
+#include <iterator>
 
 #include "ParserLibrary.h"
 
@@ -23,10 +24,11 @@ public:
     // accepts DD, DD-MM, DD-MM-YYYY, MM-DD, MM-DD-YYYY
     // consider changing into toDateFormat to do everything at once
     bool isDateFormat(std::vector<std::string>);
-    bool CommandTokenizer::isDate(std::string);
-    bool CommandTokenizer::isDay(std::string);
-    bool CommandTokenizer::isMonth(std::string);
-    bool CommandTokenizer::isYear(std::string);
+    bool isDate(std::string);
+    bool isDay(std::string);
+    int getDay(std::string);
+    bool isMonth(std::string);
+    bool isYear(std::string);
     std::chrono::system_clock::time_point DMYToTimePoint(std::vector<std::string>);
 
 private:
@@ -41,9 +43,7 @@ private:
         "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
         "|mon|tue|wed|thu|fri|sat|sun"
         ")$";
-    std::string dayPattern = "^("
-        "([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)"
-        ")$";
+    std::string dayAppendixPattern = "(st|nd|rd|th)$";
     std::string monthPattern = "^("
         // consider finding alterntive for the first line to speed up the process
         "january|february|march|april|may|june|july|august|september|october|november|december"
