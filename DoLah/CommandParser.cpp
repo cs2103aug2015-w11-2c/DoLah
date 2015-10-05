@@ -15,7 +15,7 @@ void CommandParser::parseAdd(std::vector<std::string> inputArr) {
     std::vector<std::string> tags = tokenizer.findTags(inputArr);
 
     // havent done
-    std::vector<std::chrono::system_clock::time_point> time = tokenizer.findDate(inputArr);
+    //std::vector<std::chrono::system_clock::time_point> time = tokenizer.findDate(inputArr);
 
     //make ITaskCommand
 }
@@ -35,7 +35,7 @@ void CommandParser::parseEdit(std::vector<std::string> inputArr) {
     std::vector<std::string> tags = tokenizer.findTags(inputArr);
 
     // havent done
-    std::vector<std::chrono::system_clock::time_point> time = tokenizer.findDate(inputArr);
+    //std::vector<std::chrono::system_clock::time_point> time = tokenizer.findDate(inputArr);
 
     //make ITaskCommand
 }

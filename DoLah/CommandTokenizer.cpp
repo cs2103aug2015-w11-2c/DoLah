@@ -149,25 +149,27 @@ std::tm CommandTokenizer::toDateFormat(std::vector<std::string> strArr) {
     }
 }
 
+std::vector<std::tm> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
+    CommandTokenizer ct;
 
-std::chrono::system_clock::time_point CommandTokenizer::DMYToTimePoint(std::vector<std::string> strArr) {
+    std::vector<std::string> timeSubCommandList = { "on" };
 
-
-    return std::chrono::system_clock::time_point();
-}
-
-std::vector<std::chrono::system_clock::time_point> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
-    std::vector<std::chrono::system_clock::time_point> output;
+    std::vector<std::tm> output;
 
     bool dateFlag = false;
-    for (size_t i = lineArr.size()-1; i > 0 ; i--) {
+    for (size_t i = lineArr.size() - 1; i > 0; i--) {
         if (ParserLibrary::inStringArray(timeSubCommandList, lineArr.at(i))) {
             dateFlag = true;
         }
         if (dateFlag) {
-            std::vector<std::string> subVec(lineArr.begin()+i, lineArr.end());
-
+            std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
+            try {
+                output.push_back(ct.toDateFormat(subVec));
+            } catch (std::invalid_argument e) {
+                throw std::invalid_argument(ParserLibrary::implode(subVec, " "));
+            }
         }
+        dateFlag = false;
     }
 
     return output;

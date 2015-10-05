@@ -18,7 +18,7 @@ public:
 
     std::string findDescription(std::vector<std::string> lineArr);
     std::vector<std::string> findTags(std::vector<std::string> lineArr);
-    std::vector<std::chrono::system_clock::time_point> findDate(std::vector<std::string> lineArr);
+    std::vector<std::tm> findDate(std::vector<std::string> lineArr);
 
     // decision tree to classify the input as dateformat or not
     // accepts DD, DD-MM, DD-MM-YYYY, MM-DD, MM-DD-YYYY
@@ -27,7 +27,6 @@ public:
     int getDay(std::string);
     int getMonth(std::string);
     int getYear(std::string);
-    std::chrono::system_clock::time_point DMYToTimePoint(std::vector<std::string>);
 
     bool isDecimal(std::string);
 
