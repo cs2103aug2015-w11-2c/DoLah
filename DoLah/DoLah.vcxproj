@@ -69,7 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)DoLah;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)DoLah;$(SolutionDir)Library\yaml-cpp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Library;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -121,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
+    <ClCompile Include="Storage\CalendarStorage.cpp" />
     <ClCompile Include="Models\Calendar.cpp" />
     <ClCompile Include="Models\CalendarHistory.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
@@ -138,12 +140,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />
+    <ClInclude Include="Storage\CalendarStorage.h" />
     <ClInclude Include="Models\Calendar.h" />
     <ClInclude Include="Models\CalendarHistory.h" />
     <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
+    <ClInclude Include="Models\ISerializable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
