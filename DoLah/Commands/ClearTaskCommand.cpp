@@ -5,13 +5,9 @@ namespace DoLah {
 	ClearTaskCommand::ClearTaskCommand() {
 
 	}
-	
+
 	ClearTaskCommand::~ClearTaskCommand() {
 
-	}
-
-	DoLah::Calendar ClearTaskCommand::getCalendar() {
-		return calendar;
 	}
 
 	void ClearTaskCommand::setCalendar(DoLah::Calendar cal) {
