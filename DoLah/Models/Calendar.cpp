@@ -1,15 +1,25 @@
 #include "Calendar.h"
 
 namespace DoLah {
+
 	Calendar::Calendar() {
 	}
 	
 	Calendar::~Calendar() {
-		//TODO
+	}
+
+	std::vector<AbstractTask*> Calendar::getTaskList() {
+		return taskList;
 	}
 
 	void Calendar::addTask(AbstractTask* task) {
-		//TODO
+		if (taskList.empty()) {
+			task->setId(1);
+		}
+		else {
+			task->setId(taskList.back()->getId() + 1);
+		}
+		taskList.push_back(task);
 	}
 
 	void Calendar::deleteTask(int id) {
@@ -20,10 +30,8 @@ namespace DoLah {
 		//TODO
 	}
 
-	AbstractTask* Calendar::getTask(int id) {
-		//TODO
-
-		return new FloatingTask;
+	void Calendar::clearTasks() {
+		taskList.clear();
 	}
 	
 	std::vector<AbstractTask*> Calendar::search(std::string query) {

@@ -5,6 +5,7 @@
 
 #include "Models/Task.h"
 #include "Commands/Command.h"
+#include "Models/Calendar.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -13,25 +14,47 @@ namespace DoLahTest
 	TEST_CLASS(UnitTest1){
 	public:
 		
-		TEST_METHOD(TestMethod1)
-		{
+		TEST_METHOD(TestMethod1) {
             int result = add(1, 1);
             Assert::AreEqual(result, 2);
 		}
 
 	};
 
-	TEST_CLASS(COMMAND_TESTER) {
+	TEST_CLASS(CALENDAR_TESTER) {
+	private:
+		DoLah::Calendar testCal;
+		std::vector<DoLah::AbstractTask*> testVector;
+
 	public:
+		TEST_METHOD_INITIALIZE(Startup) {
+			DoLah::FloatingTask* task1 = new DoLah::FloatingTask;
+			task1->setName("CS2103 homework");
+			DoLah::FloatingTask* task2 = new DoLah::FloatingTask;
+			task2->setName("CS2101 homework");
+			DoLah::FloatingTask* task3 = new DoLah::FloatingTask;
+			task3->setName("singing practice");
 
-		TEST_METHOD(TestTask) {
-			DoLah::AbstractTask* task = dynamic_cast<DoLah::AbstractTask*>(&DeadlineTask()); 
-			DoLah::AddTaskCommand addCmd = DoLah::AddTaskCommand();
+			testVector.push_back(task1);
+			testVector.push_back(task2);
+			testVector.push_back(task3);
 
-			task->setName("myeaow");
-			addCmd.setNewTask(task);
+			for (int i = 0; i < testVector.size(); i++) {
+				testCal.addTask(testVector.at(i));
+			}
 
-			Assert::AreEqual(task->getName(), addCmd.getNewTask()->getName());
+			testCal = DoLah::Calendar();
+		}
+
+		TEST_METHOD(AddTask) {
+			/*for (int i = 0; i < testVector.size(); i++) {
+				Assert::AreEqual(testVector.at(i), testCal.getTaskList().at(i));
+			}*/
+		}
+
+		TEST_METHOD(ClearTask) {
+			testCal.clearTasks();
+			Assert::IsTrue(testCal.getTaskList().empty());
 		}
 
 	};
