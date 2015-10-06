@@ -122,12 +122,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
+    <ClCompile Include="CommandInvoker.cpp" />
     <ClCompile Include="Storage\CalendarStorage.cpp" />
     <ClCompile Include="Models\Calendar.cpp" />
     <ClCompile Include="Models\CalendarHistory.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
     <ClCompile Include="Commands\ClearTaskCommand.cpp" />
-    <ClCompile Include="Commands\Command.cpp" />
     <ClCompile Include="Commands\DeleteTaskCommand.cpp" />
     <ClCompile Include="Commands\EditTaskCommand.cpp" />
     <ClCompile Include="Commands\RedoTaskCommand.cpp" />
@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />
+    <ClInclude Include="CommandInvoker.h" />
     <ClInclude Include="Storage\CalendarStorage.h" />
     <ClInclude Include="Models\Calendar.h" />
     <ClInclude Include="Models\CalendarHistory.h" />
