@@ -27,15 +27,15 @@ public:
     }
 
     TEST_METHOD(findTagsTest) {
-        std::string input = "add #cs2103 #homework on 30th Sep";
+        std::string input = "#cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "{ homework, cs2103 }";
 
         std::vector<std::string> obj = DoLah::CommandTokenizer::findTags(DoLah::ParserLibrary::explode(input, " "));
         Assert::AreEqual(expected, DoLah::ParserLibrary::vectorToString(obj));
     }
 
-    TEST_METHOD(findDescriptionTest) {
-        std::string input = "add #cs2103 #homework on 30th Sep";
+    TEST_METHOD(findDescriptionTest1) {
+        std::string input = "#cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "#cs2103 #homework on 30th Sep";
 
         std::string obj = DoLah::CommandTokenizer::findDescription(DoLah::ParserLibrary::explode(input, " "));
@@ -111,7 +111,7 @@ public:
     }
 
     TEST_METHOD(findDateTest1) {
-        std::string input = "add #cs2103 #homework on 17th March";
+        std::string input = "#cs2103 #homework on 17th March";
         std::string expected = (std::string) "17/3/2015";
 
         std::vector<std::tm> output = DoLah::CommandTokenizer::findDate(DoLah::ParserLibrary::explode(input, " "));
@@ -122,7 +122,7 @@ public:
     }
 
     TEST_METHOD(findDateTest2) {
-        std::string input = "add #cs2103 #homework on 17 Dec 2016";
+        std::string input = "#cs2103 #homework on 17 Dec 2016";
         std::string expected = (std::string) "17/12/2016";
 
         std::vector<std::tm> output = DoLah::CommandTokenizer::findDate(DoLah::ParserLibrary::explode(input, " "));
@@ -133,7 +133,7 @@ public:
     }
 
     TEST_METHOD(findDateTest3) {
-        std::string input = "add #cs2103 #homework on 17th";
+        std::string input = "#cs2103 #homework on 17th";
         std::string expected = (std::string) "17/10/2015";
 
         std::vector<std::tm> output = DoLah::CommandTokenizer::findDate(DoLah::ParserLibrary::explode(input, " "));
@@ -148,6 +148,24 @@ public:
         std::vector<std::string> inputArr = DoLah::ParserLibrary::explode(input, " ");
         Assert::AreEqual(input, inputArr.at(0));
     }
+
+
+    TEST_METHOD(parseAddTest) {
+        std::string input = "add #cs2103 #homework on 30th";
+        std::string expected = (std::string) "#cs2103 #homework on 30th Sep";
+
+        std::vector<std::string> inputArr = DoLah::ParserLibrary::explode(input, " ");
+        std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
+        std::tm dueDate = DoLah::CommandTokenizer::findDate(inputArr).at(0);
+        std::vector<std::string> tags = DoLah::CommandTokenizer::findTags(inputArr);
+        std::string description = DoLah::CommandTokenizer::findDescription(inputArr);
+
+        Assert::AreEqual((std::string) "add", command);
+        Assert::AreEqual((std::string) "30/10/2015", std::to_string(dueDate.tm_mday) + "/" + std::to_string(dueDate.tm_mon + 1) + "/" + std::to_string(dueDate.tm_year + 1900));
+        Assert::AreEqual((std::string) "{ homework, cs2103 }", DoLah::ParserLibrary::vectorToString(tags));
+        Assert::AreEqual((std::string) "#cs2103 #homework", description);
+    }
+
 
     };
 }

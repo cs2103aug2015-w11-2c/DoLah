@@ -27,7 +27,7 @@ namespace DoLah {
         std::string description = CommandTokenizer::findDescription(inputArr);
 
         AddTaskCommand command;
-        AbstractTask* task;
+        AbstractTask* task = new FloatingTask();
         if (dueDate.size() == 0) {
             // FloatingTask
             task = new FloatingTask();
@@ -50,22 +50,22 @@ namespace DoLah {
 
 
     SearchTaskCommand CommandParser::parseSearch(std::vector<std::string> inputArr) {
-        std::vector<std::string> subVec(inputArr.begin() + 1, inputArr.end());
-        std::string arg = ParserLibrary::implode(subVec, " ");
+        std::string arg = ParserLibrary::implode(inputArr, " ");
         SearchTaskCommand command(arg);
         return command;
     }
 
 
     EditTaskCommand CommandParser::parseEdit(std::vector<std::string> inputArr) {
-        int arg = std::stoi(inputArr.at(1));
+        int arg = std::stoi(inputArr.at(0));
 
         // needs implementation
+        return EditTaskCommand();
     }
 
 
     DeleteTaskCommand CommandParser::parseDelete(std::vector<std::string> inputArr) {
-        int arg = std::stoi(inputArr.at(1));
+        int arg = std::stoi(inputArr.at(0));
         DeleteTaskCommand command(arg);
         return command;
     }
@@ -87,36 +87,36 @@ namespace DoLah {
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
         std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
         if (command == ADD) {
-            if (inputArr.size() == 1) {
+            if (inputArr.size() == 0) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
             }
             return &parseAdd(inputArr);
         } else if (command == SEARCH) {
-            if (inputArr.size() == 1) {
+            if (inputArr.size() == 0) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
             }
             return &parseSearch(inputArr);
         } else if (command == EDIT) {
-            if (inputArr.size() == 1) {
+            if (inputArr.size() == 0) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
-            } else if (inputArr.size() > 2) {
+            } else if (inputArr.size() > 1) {
                 throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
             }
             return &parseEdit(inputArr);
         } else if (command == DELETE) {
-            if (inputArr.size() == 1) {
+            if (inputArr.size() == 0) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
-            } else if (inputArr.size() > 2) {
+            } else if (inputArr.size() > 1) {
                 throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
             }
             return &parseDelete(inputArr);
         } else if (command == CLEAR) {
-            if (inputArr.size() > 1) {
+            if (inputArr.size() > 0) {
                 throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
             }
             return &parseClear();
         } else if (command == UNDO) {
-            if (inputArr.size() > 1) {
+            if (inputArr.size() > 0) {
                 throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
             }
             return &parseUndo();

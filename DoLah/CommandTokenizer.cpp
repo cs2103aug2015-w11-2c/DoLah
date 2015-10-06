@@ -14,8 +14,10 @@ namespace DoLah {
     CommandTokenizer::~CommandTokenizer() {
     }
 
-    std::string CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
-        return lineArr.at(0);   
+    std::string CommandTokenizer::findCommand(std::vector<std::string> &lineArr) {
+        std::string output = lineArr.at(0);
+        lineArr.erase(lineArr.begin());
+        return output;   
     }
 
     std::vector<std::string> CommandTokenizer::findTags(std::vector<std::string> lineArr) {
@@ -37,15 +39,10 @@ namespace DoLah {
     }
 
     std::string CommandTokenizer::findDescription(std::vector<std::string> lineArr) {
-        std::string output;
-
-        std::vector<std::string> description(lineArr.begin() + 1, lineArr.end());
-        output = ParserLibrary::implode(description, " ");
-
-        return output;
+        return ParserLibrary::implode(lineArr, " ");
     }
 
-    std::vector<std::tm> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
+    std::vector<std::tm> CommandTokenizer::findDate(std::vector<std::string> &lineArr) {
         CommandTokenizer ct;
         std::vector<std::tm> output;
 
@@ -58,6 +55,7 @@ namespace DoLah {
                 std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
                 try {
                     output.push_back(DateTimeParser::toDateFormat(subVec));
+                    lineArr.erase(lineArr.begin() + i, lineArr.end());
                 } catch (std::invalid_argument e) {
                     throw std::invalid_argument("");
                 }

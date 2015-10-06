@@ -18,7 +18,7 @@ namespace DoLah {
         ~CommandTokenizer();
 
         // Fixed format ~ command is always on the front
-        static std::string findCommand(std::vector<std::string>);
+        static std::string findCommand(std::vector<std::string>&);
         
         // The input should not have date already, and thus findDate always come before this.
         // Tag is ignored as further consideration is needed.
@@ -28,7 +28,7 @@ namespace DoLah {
         static std::vector<std::string> findTags(std::vector<std::string>);
 
         // Fixed format ~ date is at the end of command indicated by subcommand 'on'.
-        static std::vector<std::tm> findDate(std::vector<std::string>);
+        static std::vector<std::tm> findDate(std::vector<std::string>&);
 
     private:
         static std::vector<std::string> commandList;
