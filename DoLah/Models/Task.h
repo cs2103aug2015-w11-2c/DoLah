@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <chrono>
+#include <yaml-cpp/yaml.h>
 #include "ISerializable.h"
 
 namespace DoLah {

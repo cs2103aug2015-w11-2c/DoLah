@@ -3,7 +3,6 @@
 #include <vector>
 #include "Models/Task.h"
 
-
 namespace DoLah {
 	class Calendar {
 	public:
