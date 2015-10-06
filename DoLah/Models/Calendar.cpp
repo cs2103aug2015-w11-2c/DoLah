@@ -33,4 +33,9 @@ namespace DoLah {
 
 		return results;
 	}
+
+    std::vector<AbstractTask*> Calendar::getAllTask() const
+    {
+        return this->taskList;
+    }
 }
