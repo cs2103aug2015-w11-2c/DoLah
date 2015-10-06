@@ -17,6 +17,7 @@ namespace DoLah {
         std::string getDescription();
         void setDone(bool);
         bool isDone();
+
     private:
         std::string description;
         std::string name;

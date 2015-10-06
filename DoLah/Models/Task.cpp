@@ -30,6 +30,7 @@ namespace DoLah {
         return this->done;
     }
 
+
     void AbstractTask::setId(int id) {
         this->id = id;
     }
