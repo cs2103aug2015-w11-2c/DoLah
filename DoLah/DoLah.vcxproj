@@ -72,6 +72,12 @@
     <IncludePath>$(SolutionDir)DoLah;$(SolutionDir)Library\yaml-cpp\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Library;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)DoLah;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)DoLah;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -124,6 +130,16 @@
     <ClCompile Include="basic.cpp" />
     <ClCompile Include="CommandInvoker.cpp" />
     <ClCompile Include="Storage\CalendarStorage.cpp" />
+    <ClCompile Include="CommandParser.cpp" />
+    <ClCompile Include="CommandTokenizer.cpp" />
+    <ClCompile Include="DateTimeParser.cpp" />
+    <ClCompile Include="ParserLibrary.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommandParser.h" />
+    <ClInclude Include="CommandTokenizer.h" />
+    <ClInclude Include="DateTimeParser.h" />
+    <ClInclude Include="ParserLibrary.h" />
     <ClCompile Include="Models\Calendar.cpp" />
     <ClCompile Include="Models\CalendarHistory.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
