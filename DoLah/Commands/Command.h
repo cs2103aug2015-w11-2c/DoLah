@@ -11,7 +11,7 @@ namespace DoLah {
 	public:
 		virtual ~ITaskCommand() = 0;
 
-		virtual void execute() const = 0;
+		virtual void execute() = 0;
 	};
 
 	class AddTaskCommand : public ITaskCommand {

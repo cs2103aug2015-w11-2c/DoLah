@@ -7,6 +7,6 @@ public:
     CommandInvoker();
     ~CommandInvoker();
 
-    static void process(const DoLah::ITaskCommand&);
+    static void process(DoLah::ITaskCommand&);
 };
 

@@ -11,6 +11,6 @@ CommandInvoker::~CommandInvoker()
 {
 }
 
-void CommandInvoker::process(const DoLah::ITaskCommand& command) {
+void CommandInvoker::process(DoLah::ITaskCommand& command) {
     command.execute();
 }
