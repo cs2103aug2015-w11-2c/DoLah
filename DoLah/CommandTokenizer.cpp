@@ -7,8 +7,6 @@ namespace DoLah {
 
     std::string CommandTokenizer::tag = "#";
 
-    std::string CommandTokenizer::UNKNOWN_COMMAND_MESSAGE = "command not recognized";
-
     CommandTokenizer::CommandTokenizer() {
     }
 
@@ -17,14 +15,7 @@ namespace DoLah {
     }
 
     std::string CommandTokenizer::findCommand(std::vector<std::string> lineArr) {
-        std::string output;
-        if (ParserLibrary::inStringArray(commandList, lineArr.at(0))) {
-            output = lineArr.at(0);
-        } else {
-            throw std::invalid_argument(UNKNOWN_COMMAND_MESSAGE);
-        }
-
-        return output;
+        return lineArr.at(0);   
     }
 
     std::vector<std::string> CommandTokenizer::findTags(std::vector<std::string> lineArr) {

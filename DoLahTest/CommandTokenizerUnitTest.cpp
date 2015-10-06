@@ -8,6 +8,8 @@
 #include "CommandTokenizer.h"
 #include "ParserLibrary.h"
 #include "DateTimeParser.h"
+#include "CommandParser.h"
+
 #include "Commands/Command.h"
 #include "Models/Task.h"
 
@@ -131,17 +133,6 @@ public:
     }
 
     TEST_METHOD(findDateTest3) {
-        std::string input = "add #cs2103 #homework on 17th";
-        std::string expected = (std::string) "17/10/2015";
-
-        std::vector<std::tm> output = DoLah::CommandTokenizer::findDate(DoLah::ParserLibrary::explode(input, " "));
-        std::tm time = output.at(0);
-        std::string actual = std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
-
-        Assert::AreEqual(expected, actual);
-    }
-
-    TEST_METHOD(parseAddTest1) {
         std::string input = "add #cs2103 #homework on 17th";
         std::string expected = (std::string) "17/10/2015";
 

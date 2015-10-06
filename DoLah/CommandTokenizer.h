@@ -29,8 +29,5 @@ namespace DoLah {
         static std::vector<std::string> timeSubCommandList;
 
         static std::string tag;
-
-        static std::string UNKNOWN_COMMAND_MESSAGE;
     };
-
 }

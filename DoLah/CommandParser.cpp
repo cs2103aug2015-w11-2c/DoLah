@@ -8,6 +8,7 @@ namespace DoLah {
     std::string CommandParser::CLEAR = "clear";
     std::string CommandParser::UNDO = "undo";
 
+    std::string CommandParser::UNKNOWN_COMMAND_MESSAGE = "command not recognized";
     std::string CommandParser::TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
     std::string CommandParser::TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
 
@@ -31,7 +32,7 @@ namespace DoLah {
             task.setName(description);
             
             Calendar cal;
-            AddTaskCommand command(cal, &task);
+            AddTaskCommand command(&task);
             return command;
         } else if (dueDate.size() == 1) {
             // DeadlineTask
@@ -44,71 +45,78 @@ namespace DoLah {
     }
 
 
-    void CommandParser::parseSearch(std::string input) {
-        int pos = input.find(" ");
-        std::string arg = input.substr(pos, input.size() - pos);
-
-        //make ITaskCommand
+    SearchTaskCommand CommandParser::parseSearch(std::vector<std::string> inputArr) {
+        std::vector<std::string> subVec(inputArr.begin() + 1, inputArr.end());
+        std::string arg = ParserLibrary::implode(subVec, " ");
+        SearchTaskCommand command(arg);
+        return command;
     }
 
 
-    void CommandParser::parseEdit(std::vector<std::string> inputArr) {
+    EditTaskCommand CommandParser::parseEdit(std::vector<std::string> inputArr) {
         int arg = std::stoi(inputArr.at(1));
 
-        //make ITaskCommand
     }
 
 
-    void CommandParser::parseDelete(std::vector<std::string> inputArr) {
+    DeleteTaskCommand CommandParser::parseDelete(std::vector<std::string> inputArr) {
         int arg = std::stoi(inputArr.at(1));
-
-        //make ITaskCommand
+        DeleteTaskCommand command(arg);
+        return command;
     }
 
 
-    void CommandParser::parseClear() {
-        //make ITaskCommand
+    ClearTaskCommand CommandParser::parseClear() {
+        ClearTaskCommand command;
+        return command;
     }
 
 
-    void CommandParser::parseUndo() {
-        //make ITaskCommand
+    UndoTaskCommand CommandParser::parseUndo() {
+        UndoTaskCommand command;
+        return command;
     }
 
 
-    void CommandParser::parse(std::string input) {
+    ITaskCommand* CommandParser::parse(std::string input) {
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
         std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
         if (command == ADD) {
             if (inputArr.size() == 1) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
             }
-            parseAdd(inputArr);
+            return &parseAdd(inputArr);
         } else if (command == SEARCH) {
             if (inputArr.size() == 1) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
             }
-            parseSearch(input);
+            return &parseSearch(inputArr);
         } else if (command == EDIT) {
             if (inputArr.size() == 1) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
             } else if (inputArr.size() > 2) {
                 throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
             }
+            return &parseEdit(inputArr);
         } else if (command == DELETE) {
             if (inputArr.size() == 1) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
             } else if (inputArr.size() > 2) {
                 throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
             }
+            return &parseDelete(inputArr);
         } else if (command == CLEAR) {
             if (inputArr.size() > 1) {
                 throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
             }
+            return &parseClear();
         } else if (command == UNDO) {
             if (inputArr.size() > 1) {
                 throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
             }
+            return &parseUndo();
+        } else {
+            throw std::invalid_argument(UNKNOWN_COMMAND_MESSAGE);
         }
     }
 }
