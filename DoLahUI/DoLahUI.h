@@ -1,6 +1,8 @@
 #ifndef DOLAHUI_H
 #define DOLAHUI_H
 
+//#include "..\DoLah\DoLahClient.h"
+
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
@@ -22,16 +24,19 @@ class DoLahUI : public QMainWindow
 public:
     DoLahUI(QWidget *parent = 0);
     ~DoLahUI();
+
     QWidget *centralWidget;
     QScrollArea *scrollArea;
-    QWidget *scrollAreaWidgetContents;
-    QLabel *label;
+    QLabel *tasksLabel;
     QLineEdit *lineEdit;
     QPushButton *pushButton;
 
 private:
-    void setupUi();
-    void retranslateUi();
+    //DoLahClient appClient;
+
+    void setupUI();
+    void retranslateUI();
+    void initDisplayArea();
 };
 
 #endif // DOLAHUI_H
