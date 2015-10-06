@@ -29,11 +29,11 @@ namespace DoLahTest
 	public:
 		TEST_METHOD_INITIALIZE(Startup) {
 			DoLah::FloatingTask* task1 = new DoLah::FloatingTask;
-			task1->setName("Fly Me To The Moon");
+			task1->setName("CS2103 homework");
 			DoLah::FloatingTask* task2 = new DoLah::FloatingTask;
-			task2->setName("And Let Me Play Among The Stars");
+			task2->setName("CS2101 homework");
 			DoLah::FloatingTask* task3 = new DoLah::FloatingTask;
-			task3->setName("Let me see what spring is like");
+			task3->setName("singing practice");
 
 			testVector.push_back(task1);
 			testVector.push_back(task2);
