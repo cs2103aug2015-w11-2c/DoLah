@@ -3,6 +3,10 @@
 
 //#include "..\DoLah\DoLahClient.h"
 
+#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <Windows.h>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
