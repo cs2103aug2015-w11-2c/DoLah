@@ -121,8 +121,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
-<<<<<<< HEAD
-=======
+    <ClCompile Include="CommandInvoker.cpp" />
     <ClCompile Include="Models\Calendar.cpp" />
     <ClCompile Include="Models\CalendarHistory.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
@@ -133,7 +132,6 @@
     <ClCompile Include="Commands\RedoTaskCommand.cpp" />
     <ClCompile Include="Commands\SearchTaskCommand.cpp" />
     <ClCompile Include="Commands\UndoTaskCommand.cpp" />
->>>>>>> 161c5e565b91c9582f05fe3195de50a1664b0d34
     <ClCompile Include="DoLahClient.cpp" />
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />
@@ -141,12 +139,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />
-<<<<<<< HEAD
-=======
+    <ClInclude Include="CommandInvoker.h" />
     <ClInclude Include="Models\Calendar.h" />
     <ClInclude Include="Models\CalendarHistory.h" />
     <ClInclude Include="Commands\Command.h" />
->>>>>>> 161c5e565b91c9582f05fe3195de50a1664b0d34
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
