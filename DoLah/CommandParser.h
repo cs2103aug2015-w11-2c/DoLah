@@ -18,22 +18,22 @@ namespace DoLah {
         ~CommandParser();
 
         // needs to use Calendar parameter later
-        void parse(std::string);
-        void parseAdd(std::vector<std::string>);
-        void parseSearch(std::string);
-        void parseEdit(std::vector<std::string>);
-        void parseDelete(std::vector<std::string>);
-        void parseClear();
-        void parseUndo();
+        static void parse(std::string);
+        static void parseAdd(std::vector<std::string>);
+        static void parseSearch(std::string);
+        static void parseEdit(std::vector<std::string>);
+        static void parseDelete(std::vector<std::string>);
+        static void parseClear();
+        static void parseUndo();
     private:
-        std::string ADD = "add";
-        std::string SEARCH = "search";
-        std::string EDIT = "edit";
-        std::string DELETE = "delete";
-        std::string CLEAR = "clear";
-        std::string UNDO = "undo";
+        static std::string ADD;
+        static std::string SEARCH;
+        static std::string EDIT;
+        static std::string DELETE;
+        static std::string CLEAR;
+        static std::string UNDO;
 
-        std::string TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
-        std::string TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
+        static std::string TOO_MANY_ARGUMENTS_MESSAGE;
+        static std::string TOO_LITTLE_ARGUMENTS_MESSAGE;
     };
 }

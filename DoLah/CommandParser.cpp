@@ -1,8 +1,17 @@
 #include "CommandParser.h"
 
-
-
 namespace DoLah {
+    std::string CommandParser::ADD = "add";
+    std::string CommandParser::SEARCH = "search";
+    std::string CommandParser::EDIT = "edit";
+    std::string CommandParser::DELETE = "delete";
+    std::string CommandParser::CLEAR = "clear";
+    std::string CommandParser::UNDO = "undo";
+
+    std::string CommandParser::TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
+    std::string CommandParser::TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
+
+
     CommandParser::CommandParser() {
     }
 
