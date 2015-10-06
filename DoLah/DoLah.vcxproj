@@ -68,7 +68,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)DoLah;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -119,6 +121,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Models\Calendar.cpp" />
+    <ClCompile Include="Models\CalendarHistory.cpp" />
+    <ClCompile Include="Commands\AddTaskCommand.cpp" />
+    <ClCompile Include="Commands\ClearTaskCommand.cpp" />
+    <ClCompile Include="Commands\Command.cpp" />
+    <ClCompile Include="Commands\DeleteTaskCommand.cpp" />
+    <ClCompile Include="Commands\EditTaskCommand.cpp" />
+    <ClCompile Include="Commands\RedoTaskCommand.cpp" />
+    <ClCompile Include="Commands\SearchTaskCommand.cpp" />
+    <ClCompile Include="Commands\UndoTaskCommand.cpp" />
+>>>>>>> 161c5e565b91c9582f05fe3195de50a1664b0d34
     <ClCompile Include="DoLahClient.cpp" />
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />
@@ -126,10 +141,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Models\Calendar.h" />
+    <ClInclude Include="Models\CalendarHistory.h" />
+    <ClInclude Include="Commands\Command.h" />
+>>>>>>> 161c5e565b91c9582f05fe3195de50a1664b0d34
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
+    <ClInclude Include="Models\TaskFactory.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\boost.1.59.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.59.0.0\build\native\boost.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost.1.59.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.59.0.0\build\native\boost.targets'))" />
+  </Target>
 </Project>

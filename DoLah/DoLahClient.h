@@ -1,4 +1,5 @@
 #pragma once
+<<<<<<< HEAD
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -23,3 +24,24 @@ private:
     TaskCommandParser parser;
 };
 
+=======
+
+#include <vector>
+#include <stack>
+#include <string>
+#include <fstream>
+#include "Models/Task.h"
+#include "Commands/Command.h"
+
+namespace DoLah {
+
+	class DoLahClient {
+	public:
+		DoLahClient();
+
+		void parseAndProcessCommand(std::string line);
+
+	private:
+	};
+}
+>>>>>>> 161c5e565b91c9582f05fe3195de50a1664b0d34

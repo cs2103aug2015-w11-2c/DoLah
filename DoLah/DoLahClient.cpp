@@ -1,5 +1,6 @@
 #include "DoLahClient.h"
 
+<<<<<<< HEAD
 
 
 DoLahClient::DoLahClient() {
@@ -24,4 +25,16 @@ void DoLahClient::save() {
 
 void DoLahClient::load() {
     // load settingsFile and storageFile
+=======
+namespace DoLah {
+
+	DoLahClient::DoLahClient() {
+
+	}
+
+	void DoLahClient::parseAndProcessCommand(std::string line) {
+		//TODO
+	}
+
+>>>>>>> 161c5e565b91c9582f05fe3195de50a1664b0d34
 }
