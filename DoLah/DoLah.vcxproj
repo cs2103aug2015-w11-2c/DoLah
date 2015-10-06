@@ -69,7 +69,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)DoLah;$(SolutionDir)includes;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)DoLah;D:\Visual Studio 2015\Projects\DoLah\Library\yaml-cpp\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Library;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
