@@ -17,29 +17,26 @@ namespace DoLahTest {
     TEST_CLASS(Tokenize) {
 public:
     TEST_METHOD(findCommandTest) {
-        DoLah::CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "add";
 
-        std::string obj = ct.findCommand(DoLah::ParserLibrary::explode(input, " "));
+        std::string obj = DoLah::CommandTokenizer::findCommand(DoLah::ParserLibrary::explode(input, " "));
         Assert::AreEqual(expected, obj);
     }
 
     TEST_METHOD(findTagsTest) {
-        DoLah::CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "{ homework, cs2103 }";
 
-        std::vector<std::string> obj = ct.findTags(DoLah::ParserLibrary::explode(input, " "));
+        std::vector<std::string> obj = DoLah::CommandTokenizer::findTags(DoLah::ParserLibrary::explode(input, " "));
         Assert::AreEqual(expected, DoLah::ParserLibrary::vectorToString(obj));
     }
 
     TEST_METHOD(findDescriptionTest) {
-        DoLah::CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 30th Sep";
         std::string expected = (std::string) "#cs2103 #homework on 30th Sep";
 
-        std::string obj = ct.findDescription(DoLah::ParserLibrary::explode(input, " "));
+        std::string obj = DoLah::CommandTokenizer::findDescription(DoLah::ParserLibrary::explode(input, " "));
         Assert::AreEqual(expected, obj);
     }
 
@@ -112,11 +109,10 @@ public:
     }
 
     TEST_METHOD(findDateTest1) {
-        DoLah::CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 17th March";
         std::string expected = (std::string) "17/3/2015";
 
-        std::vector<std::tm> output = ct.findDate(DoLah::ParserLibrary::explode(input, " "));
+        std::vector<std::tm> output = DoLah::CommandTokenizer::findDate(DoLah::ParserLibrary::explode(input, " "));
         std::tm time = output.at(0);
         std::string actual = std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
 
@@ -124,11 +120,10 @@ public:
     }
 
     TEST_METHOD(findDateTest2) {
-        DoLah::CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 17 Dec 2016";
         std::string expected = (std::string) "17/12/2016";
 
-        std::vector<std::tm> output = ct.findDate(DoLah::ParserLibrary::explode(input, " "));
+        std::vector<std::tm> output = DoLah::CommandTokenizer::findDate(DoLah::ParserLibrary::explode(input, " "));
         std::tm time = output.at(0);
         std::string actual = std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
 
@@ -136,11 +131,10 @@ public:
     }
 
     TEST_METHOD(findDateTest3) {
-        DoLah::CommandTokenizer ct;
         std::string input = "add #cs2103 #homework on 17th";
         std::string expected = (std::string) "17/10/2015";
 
-        std::vector<std::tm> output = ct.findDate(DoLah::ParserLibrary::explode(input, " "));
+        std::vector<std::tm> output = DoLah::CommandTokenizer::findDate(DoLah::ParserLibrary::explode(input, " "));
         std::tm time = output.at(0);
         std::string actual = std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
 

@@ -9,7 +9,6 @@
 
 
 namespace DoLah {
-
     class DateTimeParser {
     public:
         DateTimeParser();
@@ -30,5 +29,4 @@ namespace DoLah {
         static std::vector<std::string> monthPattern;
         static std::vector<std::string> monthFormat;
     };
-
 }

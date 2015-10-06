@@ -2,6 +2,13 @@
 
 namespace DoLah {
 
+    std::vector<std::string> CommandTokenizer::commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort" };
+    std::vector<std::string> CommandTokenizer::timeSubCommandList = { "on" };
+
+    std::string CommandTokenizer::tag = "#";
+
+    std::string CommandTokenizer::UNKNOWN_COMMAND_MESSAGE = "command not recognized";
+
     CommandTokenizer::CommandTokenizer() {
     }
 

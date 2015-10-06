@@ -26,8 +26,6 @@ namespace DoLah {
         void parseClear();
         void parseUndo();
     private:
-        CommandTokenizer tokenizer;
-
         std::string ADD = "add";
         std::string SEARCH = "search";
         std::string EDIT = "edit";

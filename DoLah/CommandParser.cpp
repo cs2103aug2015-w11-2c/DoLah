@@ -12,9 +12,9 @@ namespace DoLah {
 
 
     void CommandParser::parseAdd(std::vector<std::string> inputArr) {
-        std::string description = tokenizer.findDescription(inputArr);
-        std::vector<std::string> tags = tokenizer.findTags(inputArr);
-        std::vector<std::tm> dueDate = tokenizer.findDate(inputArr);
+        std::vector<std::tm> dueDate = CommandTokenizer::findDate(inputArr);
+        std::vector<std::string> tags = CommandTokenizer::findTags(inputArr);
+        std::string description = CommandTokenizer::findDescription(inputArr);
 
         if (dueDate.size() == 0) {
             // FloatingTask
@@ -43,10 +43,6 @@ namespace DoLah {
 
     void CommandParser::parseEdit(std::vector<std::string> inputArr) {
         int arg = std::stoi(inputArr.at(1));
-        /*int id = tokenizer.findTaskID(inputArr);*/
-        std::string description = tokenizer.findDescription(inputArr);
-        std::vector<std::string> tags = tokenizer.findTags(inputArr);
-        std::vector<std::tm> dueDate = tokenizer.findDate(inputArr);
 
         //make ITaskCommand
     }
@@ -71,7 +67,7 @@ namespace DoLah {
 
     void CommandParser::parse(std::string input) {
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
-        std::string command = tokenizer.findCommand(inputArr);
+        std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
         if (command == ADD) {
             if (inputArr.size() == 1) {
                 throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);

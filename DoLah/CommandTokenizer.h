@@ -17,20 +17,20 @@ namespace DoLah {
         CommandTokenizer();
         ~CommandTokenizer();
 
-        std::string findCommand(std::vector<std::string>);
+        static std::string findCommand(std::vector<std::string>);
 
-        std::string findDescription(std::vector<std::string>);
-        std::vector<std::string> findTags(std::vector<std::string>);
-        std::vector<std::tm> findDate(std::vector<std::string>);
-        int findTaskID(std::vector<std::string>);
+        static std::string findDescription(std::vector<std::string>);
+        static std::vector<std::string> findTags(std::vector<std::string>);
+        static std::vector<std::tm> findDate(std::vector<std::string>);
+        static int findTaskID(std::vector<std::string>);
 
     private:
-        std::vector<std::string> commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort" };
-        std::vector<std::string> timeSubCommandList = { "on" };
+        static std::vector<std::string> commandList;
+        static std::vector<std::string> timeSubCommandList;
 
-        std::string tag = "#";
+        static std::string tag;
 
-        std::string UNKNOWN_COMMAND_MESSAGE = "command not recognized";
+        static std::string UNKNOWN_COMMAND_MESSAGE;
     };
 
 }
