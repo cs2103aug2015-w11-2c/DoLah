@@ -26,8 +26,20 @@ namespace DoLah {
 
 	}
 
-	void Calendar::updateTask(AbstractTask*) {
-		//TODO
+	void Calendar::updateTask(int index, AbstractTask* task) {
+		AbstractTask* storedInfo = taskList[index];
+		
+		if (!task->getName().empty()) {
+			storedInfo->setName(task->getName());
+		}
+
+		if (!task->getDescription().empty()) {
+			storedInfo->setDescription(task->getDescription());
+		}
+
+		if (storedInfo->isDone() != task->isDone()) {
+			storedInfo->setDone(!storedInfo->isDone());
+		}
 	}
 
 	void Calendar::clearTasks() {

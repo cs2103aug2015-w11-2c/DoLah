@@ -2,7 +2,9 @@
 
 namespace DoLah {
 
-    AbstractTask::AbstractTask() {}
+    AbstractTask::AbstractTask() {
+		this->done = false;
+	}
     AbstractTask::~AbstractTask() {}
 
     void AbstractTask::setName(std::string name) {
