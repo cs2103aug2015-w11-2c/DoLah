@@ -4,6 +4,7 @@ DoLahUI::DoLahUI(QWidget *parent)
     : QMainWindow(parent)
 {
     this->setupUI();
+    //this->eventHandler();
 }
 
 DoLahUI::~DoLahUI()
@@ -20,14 +21,11 @@ void DoLahUI::setupUI() {
     centralWidget->setObjectName(QStringLiteral("centralWidget"));
 
     initDisplayArea();
-
-    lineEdit = new QLineEdit(centralWidget);
-    lineEdit->setObjectName(QStringLiteral("lineEdit"));
-    lineEdit->setGeometry(QRect(0, 400, 491, 31));
+    initInputArea();
 
     pushButton = new QPushButton(centralWidget);
     pushButton->setObjectName(QStringLiteral("pushButton"));
-    pushButton->setGeometry(QRect(500, 400, 31, 31));
+    pushButton->setGeometry(QRect(495, 420, 31, 31));
 
     this->setCentralWidget(centralWidget);
 
@@ -44,7 +42,7 @@ void DoLahUI::retranslateUI() {
 
 void DoLahUI::initDisplayArea() {
     scrollArea = new QScrollArea(centralWidget);
-    scrollArea->setObjectName(QStringLiteral("scrollArea"));
+    scrollArea->setObjectName(QStringLiteral("Scrollable Area"));
     scrollArea->setGeometry(QRect(0, 0, 531, 391));
     scrollArea->setWidgetResizable(true);
 
@@ -56,3 +54,13 @@ void DoLahUI::initDisplayArea() {
     tasksLabel->setMargin(10);
     scrollArea->setWidget(tasksLabel);
 }
+
+void DoLahUI::initInputArea() {
+    lineEdit = new QLineEdit(centralWidget);
+    lineEdit->setObjectName(QStringLiteral("User Input Area"));
+    lineEdit->setGeometry(QRect(5, 420, 485, 31));
+}
+
+//void DoLahUI::eventHandler() {
+//  Qt::Key_Enter
+//}

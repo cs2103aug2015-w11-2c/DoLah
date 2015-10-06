@@ -41,6 +41,8 @@ private:
     void setupUI();
     void retranslateUI();
     void initDisplayArea();
+    void initInputArea();
+    //void eventHandler();
 };
 
 #endif // DOLAHUI_H
