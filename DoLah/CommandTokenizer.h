@@ -14,15 +14,15 @@ public:
     CommandTokenizer();
     ~CommandTokenizer();
 
-    std::string findCommand(std::vector<std::string> lineArr);
+    std::string findCommand(std::vector<std::string>);
 
-    std::string findDescription(std::vector<std::string> lineArr);
-    std::vector<std::string> findTags(std::vector<std::string> lineArr);
-    std::vector<std::tm> findDate(std::vector<std::string> lineArr);
+    std::string findDescription(std::vector<std::string>);
+    std::vector<std::string> findTags(std::vector<std::string>);
+    std::vector<std::tm> findDate(std::vector<std::string>);
+    int findTaskID(std::vector<std::string>);
 
     // decision tree to classify the input as dateformat or not
     // accepts DD, DD-MM, DD-MM-YYYY, MM-DD, MM-DD-YYYY
-    // consider changing into toDateFormat to do everything at once
     std::tm toDateFormat(std::vector<std::string>);
     int getDay(std::string);
     int getMonth(std::string);

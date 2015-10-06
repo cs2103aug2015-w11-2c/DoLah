@@ -150,12 +150,21 @@ std::vector<std::tm> CommandTokenizer::findDate(std::vector<std::string> lineArr
             try {
                 output.push_back(ct.toDateFormat(subVec));
             } catch (std::invalid_argument e) {
-                throw std::invalid_argument(ParserLibrary::implode(subVec, " "));
+                throw std::invalid_argument("");
             }
         }
         dateFlag = false;
     }
+    if (output.size() == 0) {
+        throw std::invalid_argument("");
+    }
 
     return output;
+}
+
+int CommandTokenizer::findTaskID(std::vector<std::string>) {
+
+
+    return 0;
 }
 
