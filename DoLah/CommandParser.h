@@ -6,8 +6,11 @@
 
 #include "ParserLibrary.h"
 #include "CommandTokenizer.h"
-#include "Models/Task.h"
+
 #include "Commands/Command.h"
+#include "Models/Task.h"
+
+#include "Models/Calendar.h"
 
 
 namespace DoLah {
@@ -19,7 +22,7 @@ namespace DoLah {
 
         // needs to use Calendar parameter later
         static void parse(std::string);
-        static void parseAdd(std::vector<std::string>);
+        static AddTaskCommand parseAdd(std::vector<std::string>);
         static void parseSearch(std::string);
         static void parseEdit(std::vector<std::string>);
         static void parseDelete(std::vector<std::string>);
