@@ -26,8 +26,8 @@ namespace DoLah {
 		
 	}
 
-	void Calendar::updateTask(AbstractTask*) {
-		//TODO
+	void Calendar::updateTask(AbstractTask* task) {
+
 	}
 
 	void Calendar::clearTasks() {
