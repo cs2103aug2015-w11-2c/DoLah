@@ -39,11 +39,11 @@ namespace DoLahTest
 			testVector.push_back(task2);
 			testVector.push_back(task3);
 
-			for (int i = 0; i < testVector.size(); i++) {
-				testCal.addTask(testVector.at(i));
-			}
-
 			testCal = DoLah::Calendar();
+
+			for (int i = 0; i < testVector.size(); i++) {
+				testCal.addTask(testVector[i]);
+			}
 		}
 
 		TEST_METHOD(AddTask) {
@@ -55,6 +55,25 @@ namespace DoLahTest
 		TEST_METHOD(ClearTask) {
 			testCal.clearTasks();
 			Assert::IsTrue(testCal.getTaskList().empty());
+		}
+
+		TEST_METHOD(SearchTask1) {
+			testVector.erase(testVector.begin()+2);
+			std::vector<DoLah::AbstractTask*> resultVector = testCal.search("homework");
+
+			for (int i = 0; i < testVector.size(); i++) {
+				Assert::AreEqual(testVector[i]->getName(), resultVector[i]->getName());
+			}
+		}
+
+		TEST_METHOD(SearchTask2) {
+			testVector.erase(testVector.begin() + 1);
+			testVector.erase(testVector.begin());
+			std::vector<DoLah::AbstractTask*> resultVector = testCal.search("practice");
+
+			for (int i = 0; i < testVector.size(); i++) {
+				Assert::AreEqual(testVector[i]->getName(), resultVector[i]->getName());
+			}
 		}
 
 	};

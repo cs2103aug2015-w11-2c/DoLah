@@ -26,7 +26,7 @@ namespace DoLah {
 		//TODO
 	}
 
-	void Calendar::updateTask(AbstractTask*) {
+	void Calendar::updateTask(AbstractTask* task) {
 		//TODO
 	}
 
@@ -38,7 +38,7 @@ namespace DoLah {
 		std::vector<AbstractTask*> results;
 
 		for (int i = 0; i < taskList.size(); i++) {
-			if (taskList.at(i)->getName().find(query) != std::string::npos) {
+			if (taskList[i]->getName().find(query) != std::string::npos) {
 				results.push_back(taskList.at(i));
 			}
 		}
