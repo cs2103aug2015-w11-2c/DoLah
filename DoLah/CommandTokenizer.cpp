@@ -47,9 +47,6 @@ namespace DoLah {
 
     std::vector<std::tm> CommandTokenizer::findDate(std::vector<std::string> lineArr) {
         CommandTokenizer ct;
-
-        std::vector<std::string> timeSubCommandList = { "on" };
-
         std::vector<std::tm> output;
 
         bool dateFlag = false;
@@ -73,11 +70,4 @@ namespace DoLah {
 
         return output;
     }
-
-    int CommandTokenizer::findTaskID(std::vector<std::string>) {
-
-
-        return 0;
-    }
-
 }

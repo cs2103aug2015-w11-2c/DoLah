@@ -26,22 +26,26 @@ namespace DoLah {
         std::vector<std::string> tags = CommandTokenizer::findTags(inputArr);
         std::string description = CommandTokenizer::findDescription(inputArr);
 
+        AddTaskCommand command;
+        AbstractTask* task;
         if (dueDate.size() == 0) {
             // FloatingTask
-            FloatingTask task;
-            task.setName(description);
-            
-            Calendar cal;
-            AddTaskCommand command(&task);
-            return command;
+            task = new FloatingTask();
+            task->setName(description);
         } else if (dueDate.size() == 1) {
             // DeadlineTask
-            DeadlineTask task;
-            task.setName(description);
+            task = new DeadlineTask();
+            task->setName(description);
             //task.setDueDate(dueDate);
+            
         } else if (dueDate.size() == 2) {
-            // EventTask !to be implemented later
+            // EventTask to be implemented later
+            //task = new EventTask();
+            //task->setName(description);
         }
+
+        command = AddTaskCommand(task);
+        return command;
     }
 
 
@@ -56,6 +60,7 @@ namespace DoLah {
     EditTaskCommand CommandParser::parseEdit(std::vector<std::string> inputArr) {
         int arg = std::stoi(inputArr.at(1));
 
+        // needs implementation
     }
 
 

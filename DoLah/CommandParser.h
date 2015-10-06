@@ -10,8 +10,6 @@
 #include "Commands/Command.h"
 #include "Models/Task.h"
 
-#include "Models/Calendar.h"
-
 
 namespace DoLah {
     class CommandParser {
