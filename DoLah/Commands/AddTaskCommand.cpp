@@ -15,18 +15,6 @@ namespace DoLah {
 
 	}
 
-	DoLah::AbstractTask* AddTaskCommand::getTask() {
-		return task;
-	}
-
-	DoLah::Calendar AddTaskCommand::getCalendar() {
-		return calendar;
-	}
-
-	void AddTaskCommand::setTask(DoLah::AbstractTask* task) {
-		task = task;
-	}
-
 	void AddTaskCommand::setCalendar(DoLah::Calendar cal) {
 		calendar = cal;
 	}

@@ -14,18 +14,6 @@ namespace DoLah {
 
 	}
 
-	std::string SearchTaskCommand::getQuery() {
-		return query;
-	}
-
-	DoLah::Calendar SearchTaskCommand::getCalendar() {
-		return calendar;
-	}
-
-	void SearchTaskCommand::setQuery(std::string newQuery) {
-		query = newQuery;
-	}
-
 	void SearchTaskCommand::setCalendar(DoLah::Calendar cal) {
 		calendar = cal;
 	}

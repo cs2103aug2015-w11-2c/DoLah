@@ -6,24 +6,12 @@ namespace DoLah {
 
 	}
 
-	DeleteTaskCommand::DeleteTaskCommand(int id) {
-		targetId = id;
+	DeleteTaskCommand::DeleteTaskCommand(int index) {
+		taskIndex = index;
 	}
 
 	DeleteTaskCommand::~DeleteTaskCommand() {
 
-	}
-
-	int DeleteTaskCommand::getTargetId() {
-		return targetId;
-	}
-
-	DoLah::Calendar DeleteTaskCommand::getCalendar() {
-		return calendar;
-	}
-
-	void DeleteTaskCommand::setTargetId(int id) {
-		targetId = id;
 	}
 
 	void DeleteTaskCommand::setCalendar(DoLah::Calendar cal) {
@@ -31,7 +19,7 @@ namespace DoLah {
 	}
 
 	void DeleteTaskCommand::execute() {
-		calendar.deleteTask(targetId);
+		calendar.deleteTask(taskIndex);
 	}
 
 	//private

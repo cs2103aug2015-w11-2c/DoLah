@@ -17,14 +17,10 @@ namespace DoLah {
 	class AddTaskCommand : public ITaskCommand {
 	public:
 		AddTaskCommand();
-		AddTaskCommand(DoLah::AbstractTask* task);
+		AddTaskCommand(DoLah::AbstractTask*);
 		~AddTaskCommand();
 
-		DoLah::AbstractTask* getTask();
-		DoLah::Calendar getCalendar();
-
-		void setTask(DoLah::AbstractTask *);
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar);
 
 		void execute();
 
@@ -36,14 +32,10 @@ namespace DoLah {
 	class EditTaskCommand : public ITaskCommand {
 	public:
 		EditTaskCommand();
-		EditTaskCommand(int targetIndex, DoLah::AbstractTask * tk);
+		EditTaskCommand(int, DoLah::AbstractTask *);
 		~EditTaskCommand();
 
-		DoLah::AbstractTask* getTargetTask();
-		DoLah::Calendar getCalendar();
-
-		void setTargetTask(DoLah::AbstractTask *);
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar);
 
 		void execute();
 
@@ -56,19 +48,15 @@ namespace DoLah {
 	class DeleteTaskCommand : public ITaskCommand {
 	public:
 		DeleteTaskCommand();
-		DeleteTaskCommand(int id);
+		DeleteTaskCommand(int);
 		~DeleteTaskCommand();
 
-		int getTargetId();
-		DoLah::Calendar getCalendar();
-
-		void setTargetId(int);
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar);
 
 		void execute();
 
 	private:
-		int targetId;
+		int taskIndex;
 		DoLah::Calendar calendar;
 	};
 
@@ -77,9 +65,7 @@ namespace DoLah {
 		ClearTaskCommand();
 		~ClearTaskCommand();
 
-		DoLah::Calendar getCalendar();
-
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar);
 
 		void execute();
 
@@ -90,14 +76,10 @@ namespace DoLah {
 	class SearchTaskCommand : public ITaskCommand {
 	public:
 		SearchTaskCommand();
-		SearchTaskCommand(std::string searchString);
+		SearchTaskCommand(std::string);
 		~SearchTaskCommand();
 
-		std::string getQuery();
-		DoLah::Calendar getCalendar();
-
-		void setQuery(std::string);
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar);
 
 		void execute();
 

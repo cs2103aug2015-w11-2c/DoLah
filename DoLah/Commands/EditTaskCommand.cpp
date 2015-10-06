@@ -7,25 +7,13 @@ namespace DoLah {
 
 	}
 
-	EditTaskCommand::EditTaskCommand(int taskIndex, DoLah::AbstractTask* targetTask) {
+	EditTaskCommand::EditTaskCommand(int index, DoLah::AbstractTask* targetTask) {
+		taskIndex = index;
 		task = targetTask;
-
 	}
 
 	EditTaskCommand::~EditTaskCommand() {
 
-	}
-
-	DoLah::AbstractTask* EditTaskCommand::getTargetTask() {
-		return task;
-	}
-
-	DoLah::Calendar EditTaskCommand::getCalendar() {
-		return calendar;
-	}
-
-	void EditTaskCommand::setTargetTask(DoLah::AbstractTask* targetTask) {
-		task = task;
 	}
 
 	void EditTaskCommand::setCalendar(DoLah::Calendar cal) {
