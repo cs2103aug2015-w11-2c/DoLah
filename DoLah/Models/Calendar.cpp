@@ -17,7 +17,7 @@ namespace DoLah {
 			task->setId(1);
 		}
 		else {
-			task->setId(taskList.back()->getId()+1);
+			task->setId(taskList.back()->getId() + 1);
 		}
 		taskList.push_back(task);
 	}
@@ -27,7 +27,7 @@ namespace DoLah {
 	}
 
 	void Calendar::updateTask(AbstractTask* task) {
-
+		//TODO
 	}
 
 	void Calendar::clearTasks() {
@@ -36,6 +36,12 @@ namespace DoLah {
 	
 	std::vector<AbstractTask*> Calendar::search(std::string query) {
 		std::vector<AbstractTask*> results;
+
+		for (int i = 0; i < taskList.size(); i++) {
+			if (taskList[i]->getName().find(query) != std::string::npos) {
+				results.push_back(taskList.at(i));
+			}
+		}
 
 		return results;
 	}
