@@ -22,8 +22,8 @@ namespace DoLah {
 		taskList.push_back(task);
 	}
 
-	void Calendar::deleteTask(int id) {
-		
+	void Calendar::deleteTask(int index) {
+
 	}
 
 	void Calendar::updateTask(AbstractTask*) {
@@ -34,11 +34,9 @@ namespace DoLah {
 
 	}
 
-	AbstractTask* Calendar::getTask(int id) {
-		return *(std::find(taskList.begin(), taskList.end(), id));
-	}
-	
 	std::vector<AbstractTask*> Calendar::search(std::string query) {
-		
+		std::vector<AbstractTask*> results;
+
+		return results;
 	}
 }
