@@ -26,14 +26,14 @@ namespace DoLah {
 		taskList.erase(taskList.begin() + index);
 	}
 
-	void Calendar::updateTask(AbstractTask*) {
-		//TODO
+	void Calendar::updateTask(AbstractTask* task) {
+
 	}
 
 	void Calendar::clearTasks() {
-
+		taskList.clear();
 	}
-
+	
 	std::vector<AbstractTask*> Calendar::search(std::string query) {
 		std::vector<AbstractTask*> results;
 

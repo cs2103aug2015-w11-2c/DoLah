@@ -61,5 +61,10 @@ namespace DoLahTest
 			}
 		}
 
+		TEST_METHOD(ClearTask) {
+			testCal.clearTasks();
+			Assert::IsTrue(testCal.getTaskList().empty());
+		}
+
 	};
 }
