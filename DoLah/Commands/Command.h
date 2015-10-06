@@ -55,6 +55,7 @@ namespace DoLah {
 	class DeleteTaskCommand : public ITaskCommand {
 	public:
 		DeleteTaskCommand();
+		DeleteTaskCommand(DoLah::Calendar cal, int id);
 		~DeleteTaskCommand();
 
 		int getTargetId();
@@ -73,6 +74,7 @@ namespace DoLah {
 	class ClearTaskCommand : public ITaskCommand {
 	public:
 		ClearTaskCommand();
+		ClearTaskCommand(DoLah::Calendar cal);
 		~ClearTaskCommand();
 
 		DoLah::Calendar getCalendar();
@@ -88,6 +90,7 @@ namespace DoLah {
 	class SearchTaskCommand : public ITaskCommand {
 	public:
 		SearchTaskCommand();
+		SearchTaskCommand(DoLah::Calendar cal, std::string searchString);
 		~SearchTaskCommand();
 
 		std::string getQuery();

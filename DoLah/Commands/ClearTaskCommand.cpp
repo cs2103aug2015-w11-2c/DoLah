@@ -5,6 +5,10 @@ namespace DoLah {
 	ClearTaskCommand::ClearTaskCommand() {
 
 	}
+
+	ClearTaskCommand::ClearTaskCommand(DoLah::Calendar cal) {
+		calendar = cal;
+	}
 	
 	ClearTaskCommand::~ClearTaskCommand() {
 

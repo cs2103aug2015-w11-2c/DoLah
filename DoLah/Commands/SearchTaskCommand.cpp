@@ -6,6 +6,11 @@ namespace DoLah {
 
 	}
 
+	SearchTaskCommand::SearchTaskCommand(DoLah::Calendar cal, std::string searchString) {
+		calendar = cal;
+		query = q;
+	}
+
 	SearchTaskCommand::~SearchTaskCommand() {
 
 	}
