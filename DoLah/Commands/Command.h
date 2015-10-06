@@ -17,26 +17,26 @@ namespace DoLah {
 	class AddTaskCommand : public ITaskCommand {
 	public:
 		AddTaskCommand();
-		AddTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task);
+		AddTaskCommand(DoLah::AbstractTask* task);
 		~AddTaskCommand();
 
-		DoLah::AbstractTask* getNewTask();
+		DoLah::AbstractTask* getTask();
 		DoLah::Calendar getCalendar();
 
-		void setNewTask(DoLah::AbstractTask *);
+		void setTask(DoLah::AbstractTask *);
 		void setCalendar(DoLah::Calendar cal);
 
 		void execute();
 
 	private:
-		DoLah::AbstractTask* newTask;
+		DoLah::AbstractTask* task;
 		DoLah::Calendar calendar;
 	};
 
 	class EditTaskCommand : public ITaskCommand {
 	public:
 		EditTaskCommand();
-		EditTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask * tk);
+		EditTaskCommand(int targetIndex, DoLah::AbstractTask * tk);
 		~EditTaskCommand();
 
 		DoLah::AbstractTask* getTargetTask();
@@ -48,14 +48,15 @@ namespace DoLah {
 		void execute();
 
 	private:
-		DoLah::AbstractTask* targetTask;
+		int taskIndex;
+		DoLah::AbstractTask* task;
 		DoLah::Calendar calendar;
 	};
 
 	class DeleteTaskCommand : public ITaskCommand {
 	public:
 		DeleteTaskCommand();
-		DeleteTaskCommand(DoLah::Calendar cal, int id);
+		DeleteTaskCommand(int id);
 		~DeleteTaskCommand();
 
 		int getTargetId();
@@ -74,7 +75,6 @@ namespace DoLah {
 	class ClearTaskCommand : public ITaskCommand {
 	public:
 		ClearTaskCommand();
-		ClearTaskCommand(DoLah::Calendar cal);
 		~ClearTaskCommand();
 
 		DoLah::Calendar getCalendar();
@@ -90,7 +90,7 @@ namespace DoLah {
 	class SearchTaskCommand : public ITaskCommand {
 	public:
 		SearchTaskCommand();
-		SearchTaskCommand(DoLah::Calendar cal, std::string searchString);
+		SearchTaskCommand(std::string searchString);
 		~SearchTaskCommand();
 
 		std::string getQuery();

@@ -6,8 +6,7 @@ namespace DoLah {
 
 	}
 
-	DeleteTaskCommand::DeleteTaskCommand(DoLah::Calendar cal, int id) {
-		calendar = cal;
+	DeleteTaskCommand::DeleteTaskCommand(int id) {
 		targetId = id;
 	}
 

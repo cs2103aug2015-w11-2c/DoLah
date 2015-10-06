@@ -7,9 +7,9 @@ namespace DoLah {
 
 	}
 
-	EditTaskCommand::EditTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task) {
-		targetTask = task;
-		calendar = cal;
+	EditTaskCommand::EditTaskCommand(int taskIndex, DoLah::AbstractTask* targetTask) {
+		task = targetTask;
+
 	}
 
 	EditTaskCommand::~EditTaskCommand() {
@@ -17,15 +17,15 @@ namespace DoLah {
 	}
 
 	DoLah::AbstractTask* EditTaskCommand::getTargetTask() {
-		return targetTask;
+		return task;
 	}
 
 	DoLah::Calendar EditTaskCommand::getCalendar() {
 		return calendar;
 	}
 
-	void EditTaskCommand::setTargetTask(DoLah::AbstractTask* task) {
-		targetTask = task;
+	void EditTaskCommand::setTargetTask(DoLah::AbstractTask* targetTask) {
+		task = task;
 	}
 
 	void EditTaskCommand::setCalendar(DoLah::Calendar cal) {
@@ -33,7 +33,7 @@ namespace DoLah {
 	}
 
 	void EditTaskCommand::execute() {
-		calendar.updateTask(targetTask);
+		calendar.updateTask(task);
 	}
 
 	//protected

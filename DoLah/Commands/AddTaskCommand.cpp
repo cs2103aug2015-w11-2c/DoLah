@@ -7,25 +7,24 @@ namespace DoLah {
 
 	}
 
-	AddTaskCommand::AddTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task) {
-		newTask = task;
-		calendar = cal;
+	AddTaskCommand::AddTaskCommand(DoLah::AbstractTask* task) {
+		task = task;
 	}
 
 	AddTaskCommand::~AddTaskCommand() {
 
 	}
 
-	DoLah::AbstractTask* AddTaskCommand::getNewTask() {
-		return newTask;
+	DoLah::AbstractTask* AddTaskCommand::getTask() {
+		return task;
 	}
 
 	DoLah::Calendar AddTaskCommand::getCalendar() {
 		return calendar;
 	}
 
-	void AddTaskCommand::setNewTask(DoLah::AbstractTask* task) {
-		newTask = task;
+	void AddTaskCommand::setTask(DoLah::AbstractTask* task) {
+		task = task;
 	}
 
 	void AddTaskCommand::setCalendar(DoLah::Calendar cal) {
@@ -33,7 +32,7 @@ namespace DoLah {
 	}
 
 	void AddTaskCommand::execute() {
-		calendar.addTask(newTask);
+		calendar.addTask(task);
 	}
 
 	//protected
