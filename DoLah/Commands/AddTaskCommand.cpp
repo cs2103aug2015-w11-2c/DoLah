@@ -7,13 +7,13 @@ namespace DoLah {
 
 	}
 
-	AddTaskCommand::~AddTaskCommand() {
-
-	}
-
 	AddTaskCommand::AddTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task) {
 		newTask = task;
 		calendar = cal;
+	}
+
+	AddTaskCommand::~AddTaskCommand() {
+
 	}
 
 	DoLah::AbstractTask* AddTaskCommand::getNewTask() {

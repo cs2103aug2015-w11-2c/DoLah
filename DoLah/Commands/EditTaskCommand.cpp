@@ -7,13 +7,13 @@ namespace DoLah {
 
 	}
 
-	EditTaskCommand::~EditTaskCommand() {
-
-	}
-
 	EditTaskCommand::EditTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task) {
 		targetTask = task;
 		calendar = cal;
+	}
+
+	EditTaskCommand::~EditTaskCommand() {
+
 	}
 
 	DoLah::AbstractTask* EditTaskCommand::getTargetTask() {
