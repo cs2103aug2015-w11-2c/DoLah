@@ -1,7 +1,7 @@
 #ifndef DOLAHUI_H
 #define DOLAHUI_H
 
-//#include "..\DoLah\DoLahClient.h"
+#include "..\DoLah\DoLahClient.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -36,13 +36,16 @@ public:
     QPushButton *pushButton;
 
 private:
-    //DoLahClient appClient;
-
     void setupUI();
     void retranslateUI();
     void initDisplayArea();
     void initInputArea();
     //void eventHandler();
 };
+
+DoLahClient appClient;
+
+// Console Mode functions
+void startConsole();
 
 #endif // DOLAHUI_H

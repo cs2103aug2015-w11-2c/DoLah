@@ -10,12 +10,7 @@ int main(int argc, char *argv[])
         return app.exec();
     }
     else {
-        while (true) {
-            std::cout << "command: ";
-            std::string command;
-            getline(std::cin, command);
-            std::cout << command << " has been executed." << std::endl;
-        }
+        startConsole();
         return 0;
     }
 }
