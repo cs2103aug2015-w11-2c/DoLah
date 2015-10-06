@@ -21,31 +21,32 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
-class DoLahUI : public QMainWindow
-{
-    Q_OBJECT
+namespace DoLah {
+    class DoLahUI : public QMainWindow
+    {
+        Q_OBJECT
 
-public:
-    DoLahUI(QWidget *parent = 0);
-    ~DoLahUI();
+    public:
+        DoLahUI(QWidget *parent = 0);
+        ~DoLahUI();
 
-    QWidget *centralWidget;
-    QScrollArea *scrollArea;
-    QLabel *tasksLabel;
-    QLineEdit *lineEdit;
-    QPushButton *pushButton;
+        QWidget *centralWidget;
+        QScrollArea *scrollArea;
+        QLabel *tasksLabel;
+        QLineEdit *lineEdit;
+        QPushButton *pushButton;
 
-private:
-    void setupUI();
-    void retranslateUI();
-    void initDisplayArea();
-    void initInputArea();
-    //void eventHandler();
-};
+    private:
+        void setupUI();
+        void retranslateUI();
+        void initDisplayArea();
+        void initInputArea();
+        //void eventHandler();
+    };
 
-DoLahClient appClient;
+    DoLahClient appClient;
 
-// Console Mode functions
-void startConsole();
-
+    // Console Mode functions
+    void startConsole();
+}
 #endif // DOLAHUI_H
