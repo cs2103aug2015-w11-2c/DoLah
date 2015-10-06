@@ -22,26 +22,28 @@ namespace DoLah {
 
 
     AddTaskCommand CommandParser::parseAdd(std::vector<std::string> inputArr) {
-        std::vector<std::tm> dueDate = CommandTokenizer::findDate(inputArr);
+        std::vector<std::tm> dates = CommandTokenizer::findDate(inputArr);
         std::vector<std::string> tags = CommandTokenizer::findTags(inputArr);
         std::string description = CommandTokenizer::findDescription(inputArr);
 
         AddTaskCommand command;
         AbstractTask* task = new FloatingTask();
-        if (dueDate.size() == 0) {
+        if (dates.size() == 0) {
             // FloatingTask
             task = new FloatingTask();
             task->setName(description);
-        } else if (dueDate.size() == 1) {
+        } else if (dates.size() == 1) {
             // DeadlineTask
             task = new DeadlineTask();
             task->setName(description);
-            //task.setDueDate(dueDate);
+            //task->setDueDate(dates.at(0));
             
-        } else if (dueDate.size() == 2) {
+        } else if (dates.size() == 2) {
             // EventTask to be implemented later
-            //task = new EventTask();
-            //task->setName(description);
+            task = new EventTask();
+            task->setName(description);
+            //task->setStartDate(dates.at(0));
+            //task->setEndDate(dates.at(1));
         }
 
         command = AddTaskCommand(task);

@@ -20,6 +20,7 @@ namespace DoLah {
         static int getDay(std::string);
         static int getMonth(std::string);
         static int getYear(std::string);
+        static std::string tmToString(std::tm);
 
     private:
         static  std::string relativePattern;

@@ -54,16 +54,14 @@ namespace DoLah {
             if (dateFlag) {
                 std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
                 try {
-                    output.push_back(DateTimeParser::toDateFormat(subVec));
+                    std::tm time = DateTimeParser::toDateFormat(subVec);
+                    output.push_back(time);
                     lineArr.erase(lineArr.begin() + i, lineArr.end());
                 } catch (std::invalid_argument e) {
-                    throw std::invalid_argument("");
+                    // Don't recognize it as date and ignore
                 }
             }
             dateFlag = false;
-        }
-        if (output.size() == 0) {
-            throw std::invalid_argument("");
         }
 
         return output;

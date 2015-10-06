@@ -126,4 +126,7 @@ namespace DoLah {
         }
     }
 
+    std::string DateTimeParser::tmToString(std::tm time) {
+        return std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
+    }
 }
