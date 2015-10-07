@@ -1,7 +1,7 @@
 #ifndef DOLAHUI_H
 #define DOLAHUI_H
 
-//#include "..\DoLah\DoLahClient.h"
+#include "..\DoLah\DoLahClient.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -21,26 +21,32 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
-class DoLahUI : public QMainWindow
-{
-    Q_OBJECT
+namespace DoLah {
+    class DoLahUI : public QMainWindow
+    {
+        Q_OBJECT
 
-public:
-    DoLahUI(QWidget *parent = 0);
-    ~DoLahUI();
+    public:
+        DoLahUI(QWidget *parent = 0);
+        ~DoLahUI();
 
-    QWidget *centralWidget;
-    QScrollArea *scrollArea;
-    QLabel *tasksLabel;
-    QLineEdit *lineEdit;
-    QPushButton *pushButton;
+        QWidget *centralWidget;
+        QScrollArea *scrollArea;
+        QLabel *tasksLabel;
+        QLineEdit *lineEdit;
+        QPushButton *pushButton;
 
-private:
-    //DoLahClient appClient;
+    private:
+        void setupUI();
+        void retranslateUI();
+        void initDisplayArea();
+        void initInputArea();
+        //void eventHandler();
+    };
 
-    void setupUI();
-    void retranslateUI();
-    void initDisplayArea();
-};
+    DoLahClient appClient;
 
+    // Console Mode functions
+    void startConsole();
+}
 #endif // DOLAHUI_H

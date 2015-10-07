@@ -1,12 +1,19 @@
-#pragma once
+
+#include <stdio.h>
+#include <iostream>
 #include "Commands/Command.h"
 
-class CommandInvoker
-{
-public:
-    CommandInvoker();
-    ~CommandInvoker();
+namespace DoLah {
 
-    static void process(DoLah::ITaskCommand&);
+    class CommandInvoker
+    {
+    public:
+        CommandInvoker();
+        ~CommandInvoker();
+        static void process(DoLah::ITaskCommand*);
+
+    private:
+        CommandHistory history;
+    };
+
 };
-

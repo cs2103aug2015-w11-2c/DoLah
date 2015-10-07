@@ -1,16 +1,17 @@
 #include "CommandInvoker.h"
 
+namespace DoLah {
+
+    CommandInvoker::CommandInvoker() {
+
+    }
 
 
-CommandInvoker::CommandInvoker()
-{
-}
+    CommandInvoker::~CommandInvoker() {
 
+    }
 
-CommandInvoker::~CommandInvoker()
-{
-}
-
-void CommandInvoker::process(DoLah::ITaskCommand& command) {
-    command.execute();
+    static void CommandInvoker::process(ITaskCommand* command) {
+        command->execute();
+    }
 }

@@ -7,8 +7,9 @@ namespace DoLah {
     DoLahClient::~DoLahClient() {  }
 
     void DoLahClient::parseAndProcessCommand(std::string userinput) {
-        //DoLah::ITaskCommand command = DoLah::CommandParser::parse(userinput);
-        //DoLah::CommandInvoker::process(command);
+        DoLah::ITaskCommand* command = DoLah::CommandParser::parse(userinput);
+	command.setCalendar(calendar);
+        DoLah::CommandInvoker::process(command);
     }
 
     void DoLahClient::save() {

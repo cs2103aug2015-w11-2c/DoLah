@@ -50,6 +50,9 @@
     <ClCompile Include="GeneratedFiles\qrc_DoLahUI.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="CLI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="DoLahUI.h">

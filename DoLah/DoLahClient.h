@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdio.h>
+#include <iostream>
 #include <vector>
 #include <fstream>
 #include "Commands/Command.h"
@@ -7,6 +9,9 @@
 #include <iostream>
 #include <string>
 #include "Models/Calendar.h"
+#include "CommandParser.h"
+#include "Models/Calendar.h"
+#include "CommandInvoker.h"
 
 namespace DoLah{
     class DoLahClient

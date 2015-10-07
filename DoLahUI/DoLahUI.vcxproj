@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CLI.cpp" />
     <ClCompile Include="DoLahUI.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_DoLahUI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
