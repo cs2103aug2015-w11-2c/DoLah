@@ -23,7 +23,7 @@ namespace DoLah {
         static std::string tmToString(std::tm);
 
     private:
-        static  std::string relativePattern;
+        static std::string relativePattern;
         static std::string datePattern;
         static std::string dayPattern;
         static std::string dayAppendixPattern;
