@@ -20,56 +20,54 @@ namespace DoLah {
     CommandParser::~CommandParser() {
     }
 
-
-    AddTaskCommand CommandParser::parseAdd(std::vector<std::string> inputArr) {
+    
+    AbstractTask* CommandParser::parseTask(std::vector<std::string> inputArr) {
         std::vector<std::tm> dates = CommandTokenizer::findDate(inputArr);
         std::vector<std::string> tags = CommandTokenizer::findTags(inputArr);
         std::string description = CommandTokenizer::findDescription(inputArr);
 
-        AddTaskCommand command;
         AbstractTask* task = new FloatingTask();
         if (dates.size() == 0) {
-            // FloatingTask
             task = new FloatingTask();
             task->setName(description);
         } else if (dates.size() == 1) {
-            // DeadlineTask
             task = new DeadlineTask();
             task->setName(description);
             //task->setDueDate(dates.at(0));
-            
+
         } else if (dates.size() == 2) {
-            // EventTask to be implemented later
             task = new EventTask();
             task->setName(description);
             //task->setStartDate(dates.at(0));
             //task->setEndDate(dates.at(1));
         }
 
-        command = AddTaskCommand(task);
-        return command;
+        return task;
+    }
+
+
+    AddTaskCommand CommandParser::parseAdd(std::vector<std::string> inputArr) {
+        return AddTaskCommand(parseTask(inputArr));
     }
 
 
     SearchTaskCommand CommandParser::parseSearch(std::vector<std::string> inputArr) {
         std::string arg = ParserLibrary::implode(inputArr, " ");
-        SearchTaskCommand command(arg);
-        return command;
+        return SearchTaskCommand(arg);
     }
 
 
     EditTaskCommand CommandParser::parseEdit(std::vector<std::string> inputArr) {
-        int arg = std::stoi(inputArr.at(0));
-
-        // needs implementation
-        return EditTaskCommand();
+        int taskID = std::stoi(inputArr.at(0));
+        std::vector<std::string> subVec(inputArr.begin() + 1, inputArr.end());
+        AbstractTask* task = parseTask(subVec);
+        return EditTaskCommand(taskID, task);
     }
 
 
     DeleteTaskCommand CommandParser::parseDelete(std::vector<std::string> inputArr) {
-        int arg = std::stoi(inputArr.at(0));
-        DeleteTaskCommand command(arg);
-        return command;
+        int taskID = std::stoi(inputArr.at(0));
+        return DeleteTaskCommand(taskID);
     }
 
 

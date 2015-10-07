@@ -26,6 +26,7 @@ namespace DoLah {
         static DeleteTaskCommand parseDelete(std::vector<std::string>);
         static ClearTaskCommand parseClear();
         static UndoTaskCommand parseUndo();
+        static AbstractTask* parseTask(std::vector<std::string>);
     private:
         static std::string ADD;
         static std::string SEARCH;

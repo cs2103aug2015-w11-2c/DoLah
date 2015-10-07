@@ -60,8 +60,15 @@ public:
 
     TEST_METHOD(parseAddTest3) {
         parseAddTestMethod((std::string)
-            "addd #cs2103 #homework on 300th",
-            { "command not recognized" }
+            "add #cs2103 #homework on December 25th 2015",
+            { "add", "25/12/2015", "{ homework, cs2103 }", "#cs2103 #homework" }
+        );
+    }
+
+    TEST_METHOD(parseAddTest4) {
+        parseAddTestMethod((std::string)
+            "add #cs2103 #homework on the #stage",
+            { "add", "", "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
         );
     }
 
