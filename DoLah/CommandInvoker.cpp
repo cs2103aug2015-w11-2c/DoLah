@@ -11,7 +11,7 @@ namespace DoLah {
 
     }
 
-    static void CommandInvoker::process(ITaskCommand* command) {
+    void CommandInvoker::process(ITaskCommand* command) {
         command->execute();
     }
 }

@@ -12,8 +12,6 @@ namespace DoLah {
         ~CommandInvoker();
         static void process(DoLah::ITaskCommand*);
 
-    private:
-        CommandHistory history;
     };
 
 };
