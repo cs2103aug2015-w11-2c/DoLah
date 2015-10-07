@@ -6,8 +6,17 @@ namespace DoLah {
 
 	}
 
+
 	void DoLahClient::parseAndProcessCommand(std::string line) {
-		//TODO
+        DoLah::ITaskCommand* command = DoLah::CommandParser::parse(line);
+        command->execute();
 	}
 
+
+    void DoLahClient::save() {
+    }
+
+
+    void DoLahClient::load() {
+    }
 }
