@@ -15,9 +15,12 @@ namespace DoLah {
     }
 
     std::string CommandTokenizer::findCommand(std::vector<std::string> &lineArr) {
-        std::string output = lineArr.at(0);
+        std::string command = lineArr.at(0);
+        if (!ParserLibrary::inStringArray(commandList, command)) {
+            return std::string();
+        }
         lineArr.erase(lineArr.begin());
-        return output;   
+        return command;
     }
 
     std::vector<std::string> CommandTokenizer::findTags(std::vector<std::string> lineArr) {

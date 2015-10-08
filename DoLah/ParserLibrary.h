@@ -11,6 +11,7 @@ namespace DoLah {
         ParserLibrary();
         ~ParserLibrary();
 
+        static std::string strip(std::string);
         static std::vector<std::string> explode(std::string line, std::string delimeter);
         static std::string implode(std::vector<std::string> line, std::string delimeter);
         static std::string vectorToString(std::vector<std::string> vec);

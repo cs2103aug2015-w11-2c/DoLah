@@ -8,9 +8,11 @@ namespace DoLah {
     std::string CommandParser::CLEAR = "clear";
     std::string CommandParser::UNDO = "undo";
 
-    std::string CommandParser::UNKNOWN_COMMAND_MESSAGE = "command not recognized";
+    std::string CommandParser::UNHANDLED_COMMAND_MESSAGE = "Command not handled";
+    std::string CommandParser::UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
     std::string CommandParser::TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
     std::string CommandParser::TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
+    std::string CommandParser::INVALID_TASK_ID_ARGUMENT = "Invalid edit argument";
 
 
     CommandParser::CommandParser() {
@@ -71,11 +73,15 @@ namespace DoLah {
     EditTaskCommand CommandParser::parseEdit(std::vector<std::string> inputArr) {
         if (inputArr.size() == 0) {
             throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
-        } else if (inputArr.size() > 1) {
-            throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
         }
 
-        int taskID = std::stoi(inputArr.at(0));
+        int taskID;
+        try {
+            taskID = std::stoi(inputArr.at(0));
+        } catch (std::invalid_argument e) {
+            throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
+        }
+
         std::vector<std::string> subVec(inputArr.begin() + 1, inputArr.end());
         AbstractTask* task = parseTask(subVec);
         return EditTaskCommand(taskID, task);
@@ -89,7 +95,12 @@ namespace DoLah {
             throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
         }
 
-        int taskID = std::stoi(inputArr.at(0));
+        int taskID;
+        try {
+            taskID = std::stoi(inputArr.at(0));
+        } catch (std::invalid_argument e) {
+            throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
+        }
         return DeleteTaskCommand(taskID);
     }
 
@@ -117,6 +128,11 @@ namespace DoLah {
     ITaskCommand* CommandParser::parse(std::string input) {
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
         std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
+
+        if (command.empty()) {
+            throw std::invalid_argument(UNKNOWN_COMMAND_MESSAGE);
+        }
+
         if (command == ADD) {
             AddTaskCommand* command = new AddTaskCommand(parseAdd(inputArr));
             return command;
@@ -136,7 +152,7 @@ namespace DoLah {
             UndoTaskCommand* command = new UndoTaskCommand(parseUndo(inputArr));
             return command;
         } else {
-            throw std::invalid_argument(UNKNOWN_COMMAND_MESSAGE);
+            throw std::invalid_argument(UNHANDLED_COMMAND_MESSAGE);
         }
     }
 }

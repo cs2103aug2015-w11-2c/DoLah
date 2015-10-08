@@ -1,6 +1,5 @@
 #include "ParserLibrary.h"
 
-
 namespace DoLah {
 
     ParserLibrary::ParserLibrary() {
@@ -11,7 +10,23 @@ namespace DoLah {
     }
 
 
-    std::vector<std::string> ParserLibrary::explode(std::string line, std::string delimeter) {
+    std::string ParserLibrary::strip(std::string str) {
+        std::string out = str;
+        size_t from = 0;
+        for (; from < out.length() && out.at(from) == ' '; from++) {
+        }
+
+        size_t to = out.length() - 1;
+        for (; to > from && out.at(to) == ' '; to--) {
+        }
+
+        out = out.substr(from, to - from + 1);
+        return out;
+    }
+
+
+    std::vector<std::string> ParserLibrary::explode(std::string input, std::string delimeter) {
+        std::string line = strip(input);
         std::vector<std::string> out;
         int from = 0;
         int to;

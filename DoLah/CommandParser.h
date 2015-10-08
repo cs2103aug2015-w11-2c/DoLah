@@ -36,8 +36,10 @@ namespace DoLah {
         static std::string CLEAR;
         static std::string UNDO;
 
+        static std::string UNHANDLED_COMMAND_MESSAGE;
         static std::string UNKNOWN_COMMAND_MESSAGE;
         static std::string TOO_MANY_ARGUMENTS_MESSAGE;
         static std::string TOO_LITTLE_ARGUMENTS_MESSAGE;
+        static std::string INVALID_TASK_ID_ARGUMENT;
     };
 }
