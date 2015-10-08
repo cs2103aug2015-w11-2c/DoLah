@@ -12,9 +12,9 @@ namespace DoLah {
     }
 
     void DoLahClient::parseAndProcessCommand(std::string userinput) {
-        ITaskCommand *command = CommandParser::parse(userinput);
+        //DoLah::ITaskCommand *command = CommandParser::parse(userinput);
         //injectCalendar(command); ???
-        processor.process(command);
+        //processor.process(command);
     }
 
     void DoLahClient::save() {

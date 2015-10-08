@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="basic.cpp" />
     <ClCompile Include="Models\Calendar.cpp" />
-    <ClCompile Include="Models\CalendarHistory.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
     <ClCompile Include="Commands\ClearTaskCommand.cpp" />
     <ClCompile Include="Commands\Command.cpp" />
@@ -17,11 +15,9 @@
     <ClCompile Include="Models\EventTask.cpp" />
     <ClCompile Include="Models\Task.cpp" />
     <ClCompile Include="CommandInvoker.cpp" />
+    <ClCompile Include="Models\CommandHistory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="basic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CommandTokenizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,9 +74,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CommandTokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -111,7 +104,7 @@
     <ClInclude Include="DateTimeParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CommandInvoker.h" />
+    <ClInclude Include="CommandInvoker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

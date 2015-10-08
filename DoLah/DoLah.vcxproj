@@ -128,20 +128,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="basic.cpp" />
     <ClCompile Include="CommandParser.cpp" />
     <ClCompile Include="CommandTokenizer.cpp" />
     <ClCompile Include="DateTimeParser.cpp" />
     <ClCompile Include="ParserLibrary.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CommandParser.h" />
-    <ClInclude Include="CommandTokenizer.h" />
-    <ClInclude Include="DateTimeParser.h" />
-    <ClInclude Include="ParserLibrary.h" />
     <ClCompile Include="CommandInvoker.cpp" />
     <ClCompile Include="Models\Calendar.cpp" />
-    <ClCompile Include="Models\CalendarHistory.cpp" />
+    <ClCompile Include="Models\CommandHistory.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
     <ClCompile Include="Commands\ClearTaskCommand.cpp" />
     <ClCompile Include="Commands\Command.cpp" />
@@ -156,10 +149,13 @@
     <ClCompile Include="Models\Task.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic.h" />
+    <ClInclude Include="CommandParser.h" />
+    <ClInclude Include="CommandTokenizer.h" />
+    <ClInclude Include="DateTimeParser.h" />
+    <ClInclude Include="ParserLibrary.h" />
     <ClInclude Include="CommandInvoker.h" />
     <ClInclude Include="Models\Calendar.h" />
-    <ClInclude Include="Models\CalendarHistory.h" />
+    <ClInclude Include="Models\CommandHistory.h" />
     <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
