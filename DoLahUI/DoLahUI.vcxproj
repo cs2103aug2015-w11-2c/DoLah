@@ -153,7 +153,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DoLahCLI.cpp" />
     <ClCompile Include="DoLahUI.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_DoLahUI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -222,9 +221,6 @@
     <ProjectReference Include="..\DoLah\DoLah.vcxproj">
       <Project>{bf14da17-0c75-4425-ab45-473bf55f916b}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DoLahCLI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

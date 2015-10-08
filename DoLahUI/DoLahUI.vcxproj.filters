@@ -50,9 +50,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DoLahUI.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="DoLahCLI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="DoLahUI.h">
@@ -64,10 +61,5 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DoLahUI.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="DoLahCLI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
