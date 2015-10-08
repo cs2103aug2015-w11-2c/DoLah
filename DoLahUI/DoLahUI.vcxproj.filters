@@ -41,16 +41,16 @@
     <ClCompile Include="DoLahUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_DoLahUI.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_DoLahUI.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_DoLahUI.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\qrc_DoLahUI.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CLI.cpp">
+    <ClCompile Include="DoLahCLI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -64,5 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DoLahUI.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DoLahCLI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Commands/Command.h"
-#include <models/CommandHistory.h>
+#include "Models/CommandHistory.h"
 
 namespace DoLah {
 

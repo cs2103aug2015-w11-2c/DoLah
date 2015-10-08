@@ -1,7 +1,6 @@
 #include "DoLahUI.h"
 
 namespace DoLah {
-
     DoLahUI::DoLahUI(QWidget *parent)
         : QMainWindow(parent)
     {
@@ -66,5 +65,4 @@ namespace DoLah {
     //void DoLahUI::eventHandler() {
     //  Qt::Key_Enter
     //}
-
 }
