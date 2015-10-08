@@ -16,17 +16,12 @@
     <ClCompile Include="Models\Task.cpp" />
     <ClCompile Include="CommandInvoker.cpp" />
     <ClCompile Include="Models\CommandHistory.cpp" />
+    <ClCompile Include="CommandParser.cpp" />
+    <ClCompile Include="CommandTokenizer.cpp" />
+    <ClCompile Include="DateTimeParser.cpp" />
+    <ClCompile Include="ParserLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CommandTokenizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ParserLibrary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Models\DeadlineTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,47 +61,19 @@
     <ClCompile Include="Models\Calendar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Models\CalendarHistory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DateTimeParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommandTokenizer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ParserLibrary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Task.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\TaskFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Commands\Command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DoLahClient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Calendar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\CalendarHistory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DateTimeParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandInvoker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="CommandParser.h" />
+    <ClInclude Include="CommandTokenizer.h" />
+    <ClInclude Include="DateTimeParser.h" />
+    <ClInclude Include="ParserLibrary.h" />
+    <ClInclude Include="CommandInvoker.h" />
+    <ClInclude Include="Models\Calendar.h" />
+    <ClInclude Include="Models\CommandHistory.h" />
+    <ClInclude Include="Commands\Command.h" />
+    <ClInclude Include="DoLahClient.h" />
+    <ClInclude Include="Models\Task.h" />
+    <ClInclude Include="Models\TaskFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
