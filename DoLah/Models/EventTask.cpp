@@ -7,19 +7,19 @@ namespace DoLah {
     EventTask::EventTask() {}
     EventTask::~EventTask() {}
 
-    void EventTask::setEndDate(system_clock::time_point datetime) {
+    void EventTask::setEndDate(std::tm datetime) {
         this->endDate = datetime;
     }
 
-    system_clock::time_point EventTask::getEndDate() {
+    std::tm EventTask::getEndDate() {
         return this->endDate;
     }
 
-    void EventTask::setStartDate(system_clock::time_point datetime) {
+    void EventTask::setStartDate(std::tm datetime) {
         this->startDate = datetime;
     }
 
-    system_clock::time_point EventTask::getStartDate() {
+    std::tm EventTask::getStartDate() {
         return this->startDate;
     }
 }

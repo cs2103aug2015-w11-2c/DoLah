@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <chrono>
+#include "assert.h"
 
 #include "ParserLibrary.h"
 #include "CommandTokenizer.h"
@@ -24,8 +25,8 @@ namespace DoLah {
         static SearchTaskCommand parseSearch(std::vector<std::string>);
         static EditTaskCommand parseEdit(std::vector<std::string>);
         static DeleteTaskCommand parseDelete(std::vector<std::string>);
-        static ClearTaskCommand parseClear();
-        static UndoTaskCommand parseUndo();
+        static ClearTaskCommand parseClear(std::vector<std::string>);
+        static UndoTaskCommand parseUndo(std::vector<std::string>);
         static AbstractTask* parseTask(std::vector<std::string>);
     private:
         static std::string ADD;
