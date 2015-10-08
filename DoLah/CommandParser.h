@@ -19,7 +19,6 @@ namespace DoLah {
         CommandParser();
         ~CommandParser();
 
-        // needs to use Calendar parameter later
         static ITaskCommand* parse(std::string);
         static AddTaskCommand parseAdd(std::vector<std::string>);
         static SearchTaskCommand parseSearch(std::vector<std::string>);
@@ -27,6 +26,7 @@ namespace DoLah {
         static DeleteTaskCommand parseDelete(std::vector<std::string>);
         static ClearTaskCommand parseClear(std::vector<std::string>);
         static UndoTaskCommand parseUndo(std::vector<std::string>);
+        // parseTask is used by parseAdd and parseEdit
         static AbstractTask* parseTask(std::vector<std::string>);
     private:
         static std::string ADD;
