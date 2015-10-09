@@ -137,6 +137,7 @@
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />
     <ClCompile Include="Models\Task.cpp" />
+    <ClCompile Include="Storage\TaskSerialization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Storage\CalendarStorage.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
     <ClInclude Include="Models\ISerializable.h" />
+    <ClInclude Include="Storage\TaskSerialization.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
