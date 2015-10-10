@@ -28,8 +28,8 @@ namespace DoLah {
     std::vector<std::string> ParserLibrary::explode(std::string input, std::string delimeter) {
         std::string line = strip(input);
         std::vector<std::string> out;
-        int from = 0;
-        int to;
+        size_t from = 0;
+        size_t to;
 
         while ((to = line.find(delimeter, from)) != -1) {
             out.push_back(line.substr(from, to - from));
