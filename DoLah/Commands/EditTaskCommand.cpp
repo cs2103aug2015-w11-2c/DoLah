@@ -16,12 +16,12 @@ namespace DoLah {
 
 	}
 
-	void EditTaskCommand::setCalendar(DoLah::Calendar cal) {
+	void EditTaskCommand::setCalendar(DoLah::Calendar* cal) {
 		calendar = cal;
 	}
 
 	void EditTaskCommand::execute() {
-		calendar.updateTask(task);
+		calendar->updateTask(task);
 	}
 
 	//protected
