@@ -15,9 +15,8 @@ namespace DoLah {
 	void Calendar::addTask(AbstractTask* task) {
 		if (taskList.empty()) {
 			task->setId(1);
-		}
-		else {
-			task->setId(taskList.back()->getId()+1);
+		} else {
+			task->setId(taskList.size());
 		}
 		taskList.push_back(task);
 	}
@@ -43,7 +42,7 @@ namespace DoLah {
 	}
 
 	void Calendar::clearTasks() {
-
+		taskList.clear();
 	}
 
 	std::vector<AbstractTask*> Calendar::search(std::string query) {

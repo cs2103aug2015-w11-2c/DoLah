@@ -102,5 +102,52 @@ namespace DoLahTest
 			Assert::AreEqual(newTask->isDone(), testCal.getTaskList()[0]->isDone());
 		}
 
+		TEST_METHOD(EditTaskDescription) {
+			DoLah::FloatingTask* newTask = new DoLah::FloatingTask;
+			newTask->setDescription("finish v0.1.1");
+
+			testCal.updateTask(0, newTask);
+
+			newTask->setName("CS2103 homework");
+
+			Assert::AreEqual(newTask->getName(), testCal.getTaskList()[0]->getName());
+			Assert::AreEqual(newTask->getDescription(), testCal.getTaskList()[0]->getDescription());
+			Assert::AreEqual(newTask->isDone(), testCal.getTaskList()[0]->isDone());
+		}
+
+		TEST_METHOD(EditTaskStatus) {
+			DoLah::FloatingTask* newTask = new DoLah::FloatingTask;
+			newTask->setName("CS2103 homework");
+			newTask->setDescription("draft v0.1");
+			newTask->setDone(true);
+
+			testCal.updateTask(0, newTask);
+
+			Assert::AreEqual(newTask->getName(), testCal.getTaskList()[0]->getName());
+			Assert::AreEqual(newTask->getDescription(), testCal.getTaskList()[0]->getDescription());
+			Assert::AreEqual(newTask->isDone(), testCal.getTaskList()[0]->isDone());
+		}
+	};
+
+	TEST_CLASS(COMMAND_TESTER) {
+	private:
+		DoLah::Calendar testCal = DoLah::Calendar();
+		std::vector<DoLah::AbstractTask*> testVector;
+	
+	public:
+		TEST_METHOD(AddCommand) {
+			DoLah::FloatingTask* task = new DoLah::FloatingTask;
+			task->setName("CS2103 homework");
+			task->setDescription("draft v0.1");
+			testVector.push_back(task);
+
+			DoLah::AddTaskCommand adder = DoLah::AddTaskCommand(task);
+			adder.setCalendar(&testCal);
+			adder.execute();
+
+			for (int i = 0; i < testVector.size(); i++) {
+				Assert::AreEqual(testVector[i]->getName(), testCal.getTaskList()[i]->getName());
+			}
+		}
 	};
 }
