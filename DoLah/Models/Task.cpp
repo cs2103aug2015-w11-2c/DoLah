@@ -2,7 +2,9 @@
 
 namespace DoLah {
 
-    AbstractTask::AbstractTask() {}
+    AbstractTask::AbstractTask() {
+		this->done = false;
+	}
     AbstractTask::~AbstractTask() {}
 
     void AbstractTask::setName(std::string name) {
@@ -28,6 +30,7 @@ namespace DoLah {
     bool AbstractTask::isDone() {
         return this->done;
     }
+
 
     void AbstractTask::setId(int id) {
         this->id = id;

@@ -2,71 +2,63 @@
 
 #include <vector>
 #include <string>
-#include "Models/Task.h"
-#include "Models/Calendar.h"
+#include <Models/Task.h>
+#include <Models/Calendar.h>
 
 namespace DoLah {
 
 	class ITaskCommand {
 	public:
-		virtual ~ITaskCommand() = 0;
+		virtual ~ITaskCommand();
 
-		virtual void execute() = 0;
+		virtual void execute();
 	};
 
 	class AddTaskCommand : public ITaskCommand {
 	public:
 		AddTaskCommand();
-		AddTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask* task);
+		AddTaskCommand(DoLah::AbstractTask*);
 		~AddTaskCommand();
 
-		DoLah::AbstractTask* getNewTask();
-		DoLah::Calendar getCalendar();
+		AbstractTask * getTask();
 
-		void setNewTask(DoLah::AbstractTask *);
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar*);
 
 		void execute();
 
 	private:
-		DoLah::AbstractTask* newTask;
-		DoLah::Calendar calendar;
+		DoLah::AbstractTask* task;
+		DoLah::Calendar* calendar;
 	};
 
 	class EditTaskCommand : public ITaskCommand {
 	public:
 		EditTaskCommand();
-		EditTaskCommand(DoLah::Calendar cal, DoLah::AbstractTask * tk);
+		EditTaskCommand(int, DoLah::AbstractTask *);
 		~EditTaskCommand();
 
-		DoLah::AbstractTask* getTargetTask();
-		DoLah::Calendar getCalendar();
-
-		void setTargetTask(DoLah::AbstractTask *);
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar*);
 
 		void execute();
 
 	private:
-		DoLah::AbstractTask* targetTask;
-		DoLah::Calendar calendar;
+		int taskIndex;
+		DoLah::AbstractTask* task;
+		DoLah::Calendar * calendar;
 	};
 
 	class DeleteTaskCommand : public ITaskCommand {
 	public:
 		DeleteTaskCommand();
+		DeleteTaskCommand(int);
 		~DeleteTaskCommand();
 
-		int getTargetId();
-		DoLah::Calendar getCalendar();
-
-		void setTargetId(int);
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar);
 
 		void execute();
 
 	private:
-		int targetId;
+		int taskIndex;
 		DoLah::Calendar calendar;
 	};
 
@@ -75,26 +67,21 @@ namespace DoLah {
 		ClearTaskCommand();
 		~ClearTaskCommand();
 
-		DoLah::Calendar getCalendar();
-
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar*);
 
 		void execute();
 
 	private:
-		DoLah::Calendar calendar;
+		DoLah::Calendar* calendar;
 	};
 
 	class SearchTaskCommand : public ITaskCommand {
 	public:
 		SearchTaskCommand();
+		SearchTaskCommand(std::string);
 		~SearchTaskCommand();
 
-		std::string getQuery();
-		DoLah::Calendar getCalendar();
-
-		void setQuery(std::string);
-		void setCalendar(DoLah::Calendar cal);
+		void setCalendar(DoLah::Calendar);
 
 		void execute();
 

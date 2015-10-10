@@ -17,6 +17,7 @@ namespace DoLah {
         std::string getDescription(); ///< get the Task description
         void setDone(bool); ///< set the Task done flag
         bool isDone(); ///< get the Task done flag
+
     private:
         std::string description; ///< A Detailed explanation about the task.
         std::string name; ///< Task name is the header of the task.
