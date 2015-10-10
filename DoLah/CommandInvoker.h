@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Commands/Command.h"
-#include <models/CommandHistory.h>
+#include "Models/CommandHistory.h"
 
 namespace DoLah {
 
@@ -11,7 +11,7 @@ namespace DoLah {
     public:
         CommandInvoker();
         ~CommandInvoker();
-        void process(ITaskCommand*);
+        static void process(ITaskCommand*);
 
     private:
         CommandHistory history;

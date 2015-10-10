@@ -14,10 +14,6 @@ namespace DoLah {
 
 	}
 
-	void DeleteTaskCommand::setCalendar(DoLah::Calendar cal) {
-		calendar = cal;
-	}
-
 	void DeleteTaskCommand::execute() {
 		calendar.deleteTask(taskIndex);
 	}

@@ -12,7 +12,6 @@ namespace DoLah {
     }
 
     void CommandInvoker::process(ITaskCommand *command) {
-        history.add(command);
         command->execute();
     }
 }

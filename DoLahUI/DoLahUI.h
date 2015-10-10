@@ -1,7 +1,7 @@
 #ifndef DOLAHUI_H
 #define DOLAHUI_H
 
-#include "..\DoLah\DoLahClient.h"
+#include "DoLahClient.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -42,11 +42,7 @@ namespace DoLah {
         void initDisplayArea();
         void initInputArea();
         //void eventHandler();
+        DoLah::DoLahClient appClient;
     };
-
-    DoLahClient appClient;
-
-    // Console Mode functions
-    void startConsole();
 }
 #endif // DOLAHUI_H

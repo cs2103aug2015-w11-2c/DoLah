@@ -1,16 +1,11 @@
 #pragma once
 
 #include <stdio.h>
-#include <iostream>
 #include <vector>
 #include <stack>
-#include <string>
 #include <fstream>
-#include "Models/Task.h"
-#include "Commands/Command.h"
-#include "CommandParser.h"
+//#include "Models/Task.h"
 #include "Models/Calendar.h"
-#include "CommandInvoker.h"
 
 namespace DoLah {
 
@@ -25,8 +20,7 @@ namespace DoLah {
     private:
         std::string settingsFile;
         std::string storageFile;
-        Calendar calendar;
-        CommandInvoker processor;
+        DoLah::Calendar calendar;
 	};
 }
 

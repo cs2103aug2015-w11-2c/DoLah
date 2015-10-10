@@ -15,10 +15,6 @@ namespace DoLah {
 
 	}
 
-	void AddTaskCommand::setCalendar(DoLah::Calendar cal) {
-		calendar = cal;
-	}
-
 	void AddTaskCommand::execute() {
 		calendar.addTask(task);
 	}

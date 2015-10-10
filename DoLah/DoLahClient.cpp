@@ -1,4 +1,7 @@
 #include "DoLahClient.h"
+#include "Commands/Command.h"
+#include "CommandParser.h"
+#include "CommandInvoker.h"
 
 namespace DoLah {
 
@@ -12,9 +15,9 @@ namespace DoLah {
     }
 
     void DoLahClient::parseAndProcessCommand(std::string userinput) {
-        ITaskCommand *command = CommandParser::parse(userinput);
-        //injectCalendar(command); ???
-        processor.process(command);
+        DoLah::ITaskCommand *command = CommandParser::parse(userinput);
+        command->setCalendar(calendar);
+        DoLah::CommandInvoker::process(command);
     }
 
     void DoLahClient::save() {
