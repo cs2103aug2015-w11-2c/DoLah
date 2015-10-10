@@ -121,7 +121,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
-    <ClCompile Include="CommandInvoker.cpp" />
     <ClCompile Include="Models\Calendar.cpp" />
     <ClCompile Include="Models\CalendarHistory.cpp" />
     <ClCompile Include="Commands\AddTaskCommand.cpp" />
@@ -139,7 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic.h" />
-    <ClInclude Include="CommandInvoker.h" />
     <ClInclude Include="Models\Calendar.h" />
     <ClInclude Include="Models\CalendarHistory.h" />
     <ClInclude Include="Commands\Command.h" />
