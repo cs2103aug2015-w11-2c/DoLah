@@ -3,10 +3,12 @@
 #include "regex"
 #include <iterator>
 
-#include "CommandTokenizer.h"
 #include "ParserLibrary.h"
-#include "DateTimeParser.h"
 #include "CommandParser.h"
+#include "CommandTokenizer.h"
+#include "TaskParser.h"
+#include "TaskTokenizer.h"
+#include "DateTimeParser.h"
 
 #include "Commands/Command.h"
 #include "Models/Task.h"
@@ -19,20 +21,18 @@ public:
     void parseAddTestMethod(std::string input, std::vector<std::string> expected) {
         try {
             std::vector<std::string> inputArr = DoLah::ParserLibrary::explode(input, " ");
-            std::vector<std::tm> datesVector = DoLah::CommandTokenizer::findDate(inputArr);
+            std::vector<std::tm> datesVector = DoLah::TaskTokenizer::findDate(inputArr);
             std::string dates = "";
             if (!datesVector.empty()) {
                 dates = DoLah::DateTimeParser::tmToString(datesVector.at(0));
             }
-            std::string tags = DoLah::ParserLibrary::vectorToString(DoLah::CommandTokenizer::findTags(inputArr));
-            std::string description = DoLah::CommandTokenizer::findDescription(inputArr);
+            std::string tags = DoLah::ParserLibrary::vectorToString(DoLah::TaskTokenizer::findTags(inputArr));
+            std::string description = DoLah::TaskTokenizer::findDescription(inputArr);
 
             std::vector<std::string> actual = { dates, tags, description };
             AreEqualStringVectors(expected, actual);
         } catch (std::exception e) {
             throw e;
-            //std::string message = e.what();
-            //Assert::AreEqual(message, expected.at(0));
         }
     }
 
