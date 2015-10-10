@@ -7,6 +7,7 @@
 
 #include "ParserLibrary.h"
 #include "CommandTokenizer.h"
+#include "TaskParser.h"
 
 #include "Commands/Command.h"
 #include "Models/Task.h"
@@ -26,8 +27,6 @@ namespace DoLah {
         static DeleteTaskCommand parseDelete(std::vector<std::string>);
         static ClearTaskCommand parseClear(std::vector<std::string>);
         static UndoTaskCommand parseUndo(std::vector<std::string>);
-        // parseTask is used by parseAdd and parseEdit
-        static AbstractTask* parseTask(std::vector<std::string>);
     private:
         static std::string ADD;
         static std::string SEARCH;

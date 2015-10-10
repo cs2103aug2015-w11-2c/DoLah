@@ -20,6 +20,8 @@
     <ClCompile Include="CommandTokenizer.cpp" />
     <ClCompile Include="DateTimeParser.cpp" />
     <ClCompile Include="ParserLibrary.cpp" />
+    <ClCompile Include="TaskParser.cpp" />
+    <ClCompile Include="TaskTokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Models\DeadlineTask.cpp">
@@ -74,6 +76,8 @@
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
+    <ClInclude Include="TaskParser.h" />
+    <ClInclude Include="TaskTokenizer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

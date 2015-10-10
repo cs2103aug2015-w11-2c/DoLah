@@ -22,40 +22,12 @@ namespace DoLah {
     CommandParser::~CommandParser() {
     }
 
-    
-    AbstractTask* CommandParser::parseTask(std::vector<std::string> inputArr) {
-        std::vector<std::tm> dates = CommandTokenizer::findDate(inputArr);
-        std::vector<std::string> tags = CommandTokenizer::findTags(inputArr);
-        std::string description = CommandTokenizer::findDescription(inputArr);
-
-        if (dates.size() == 1) {
-            DeadlineTask* task = new DeadlineTask();
-            task->setName(description);
-            task->setTags(tags);
-            task->setDueDate(dates.at(0));
-            return task;
-        } else if (dates.size() == 2) {
-            EventTask* task = new EventTask();
-            task->setName(description);
-            task->setTags(tags);
-            task->setStartDate(dates.at(0));
-            task->setEndDate(dates.at(1));
-            return task;
-        }
-
-        FloatingTask* task = new FloatingTask();
-        task->setName(description);
-        task->setTags(tags);
-        return task;
-    }
-
-
     AddTaskCommand CommandParser::parseAdd(std::vector<std::string> inputArr) {
         if (inputArr.size() == 0) {
             throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
         }
 
-        AbstractTask* task = parseTask(inputArr);
+        AbstractTask* task = TaskParser::parseTask(inputArr);
         return AddTaskCommand(task);
     }
 
@@ -83,7 +55,7 @@ namespace DoLah {
         }
 
         std::vector<std::string> subVec(inputArr.begin() + 1, inputArr.end());
-        AbstractTask* task = parseTask(subVec);
+        AbstractTask* task = TaskParser::parseTask(subVec);
         return EditTaskCommand(taskID, task);
     }
 

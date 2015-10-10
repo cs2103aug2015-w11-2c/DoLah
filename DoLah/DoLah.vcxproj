@@ -147,6 +147,8 @@
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />
     <ClCompile Include="Models\Task.cpp" />
+    <ClCompile Include="TaskParser.cpp" />
+    <ClCompile Include="TaskTokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandParser.h" />
@@ -160,6 +162,8 @@
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
+    <ClInclude Include="TaskParser.h" />
+    <ClInclude Include="TaskTokenizer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

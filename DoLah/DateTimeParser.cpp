@@ -56,7 +56,7 @@ namespace DoLah {
         std::string out;
         for (size_t m = 0; m < monthPattern.size(); m++) {
             if (std::regex_match(str, std::regex(monthPattern.at(m), std::regex_constants::icase))) {
-                return m;
+                return (int) m;
             }
         }
 
@@ -82,7 +82,7 @@ namespace DoLah {
         int month;
         int year;
 
-        int size = strArr.size();
+        size_t size = strArr.size();
         if ((day = getDay(strArr.at(0))) != NULL) {
             output.tm_mday = day;
             if (size <= 1) {
