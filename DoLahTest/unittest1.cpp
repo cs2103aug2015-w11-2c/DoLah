@@ -5,7 +5,6 @@
 
 #include "Models/Task.h"
 #include "Commands/Command.h"
-#include "Models/Calendar.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -14,7 +13,8 @@ namespace DoLahTest
 	TEST_CLASS(UnitTest1){
 	public:
 		
-		TEST_METHOD(TestMethod1) {
+		TEST_METHOD(TestMethod1)
+		{
             int result = add(1, 1);
             Assert::AreEqual(result, 2);
 		}
@@ -130,24 +130,11 @@ namespace DoLahTest
 	};
 
 	TEST_CLASS(COMMAND_TESTER) {
-	private:
-		DoLah::Calendar testCal = DoLah::Calendar();
-		std::vector<DoLah::AbstractTask*> testVector;
-	
 	public:
-		TEST_METHOD(AddCommand) {
-			DoLah::FloatingTask* task = new DoLah::FloatingTask;
-			task->setName("CS2103 homework");
-			task->setDescription("draft v0.1");
-			testVector.push_back(task);
 
-			DoLah::AddTaskCommand adder = DoLah::AddTaskCommand(task);
-			adder.setCalendar(&testCal);
-			adder.execute();
-
-			for (int i = 0; i < testVector.size(); i++) {
-				Assert::AreEqual(testVector[i]->getName(), testCal.getTaskList()[i]->getName());
-			}
+		TEST_METHOD(TestTask) {
+			
 		}
+
 	};
 }
