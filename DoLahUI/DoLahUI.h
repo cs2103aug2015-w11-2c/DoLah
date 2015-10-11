@@ -12,6 +12,8 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -20,6 +22,7 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
+#include <QtWidgets/QSizePolicy>
 
 namespace DoLah {
     class DoLahUI : public QMainWindow
@@ -32,9 +35,16 @@ namespace DoLah {
 
         QWidget *centralWidget;
         QScrollArea *scrollArea;
-        QLabel *tasksLabel;
+        QWidget *tasksContainer;
+        QVBoxLayout *tasksLayout;
+        QTextBrowser *taskBox;
+        QTextBrowser *taskBox1;
+        QTextBrowser *taskBox2;
+        QTextBrowser *taskBox3;
+        QTextBrowser *taskBox4;
+        QTextBrowser *taskBox5;
+        QTextBrowser *taskBox6;
         QLineEdit *lineEdit;
-        QPushButton *pushButton;
 
     private:
         void setupUI();
