@@ -3,6 +3,7 @@
 #include <chrono>
 #include <yaml-cpp/yaml.h>
 #include "ISerializable.h"
+#include <vector>
 
 namespace DoLah {
     class AbstractTask : public ISerializable {
@@ -15,11 +16,14 @@ namespace DoLah {
         std::string getName();
         void setDescription(std::string);
         std::string getDescription();
+        void setTags(std::vector<std::string>);
+        std::vector<std::string> getTags();
         void setDone(bool);
         bool isDone();
     private:
         std::string description;
         std::string name;
+        std::vector<std::string> tags;
         int id;
         bool done;
     };
@@ -33,27 +37,27 @@ namespace DoLah {
     public:
         EventTask();
         ~EventTask();
-        std::chrono::system_clock::time_point getStartDate();
-        void setStartDate(std::chrono::system_clock::time_point);
-        std::chrono::system_clock::time_point getEndDate();
-        void setEndDate(std::chrono::system_clock::time_point);
         ISerializable* serialize(const std::string&);
         std::string deserialize();
+        std::tm getStartDate();
+        void setStartDate(std::tm);
+        std::tm getEndDate();
+        void setEndDate(std::tm);
     private:
-        std::chrono::system_clock::time_point startDate;
-        std::chrono::system_clock::time_point endDate;
+        std::tm startDate;
+        std::tm endDate;
     };
 
     class DeadlineTask : public AbstractTask {
     public:
         DeadlineTask();
         ~DeadlineTask();
-        std::chrono::system_clock::time_point getDueDate();
-        void setDueDate(std::chrono::system_clock::time_point);
         ISerializable* serialize(const std::string&);
         std::string deserialize();
+        std::tm getDueDate();
+        void setDueDate(std::tm);
     private:
-        std::chrono::system_clock::time_point dueDate;
+        std::tm dueDate;
     };
 }
 

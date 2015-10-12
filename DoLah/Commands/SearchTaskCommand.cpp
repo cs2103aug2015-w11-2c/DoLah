@@ -14,10 +14,6 @@ namespace DoLah {
 
 	}
 
-	void SearchTaskCommand::setCalendar(DoLah::Calendar cal) {
-		calendar = cal;
-	}
-
 	void SearchTaskCommand::execute() {
 		calendar.search(query);
 	}

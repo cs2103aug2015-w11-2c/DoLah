@@ -10,8 +10,11 @@ namespace DoLah {
 	class ITaskCommand {
 	public:
 		virtual ~ITaskCommand() = 0;
-
+        void setCalendar(DoLah::Calendar calendar);
 		virtual void execute() = 0;
+
+    private:
+        Calendar calendar;
 	};
 
 	class AddTaskCommand : public ITaskCommand {
@@ -19,8 +22,6 @@ namespace DoLah {
 		AddTaskCommand();
 		AddTaskCommand(DoLah::AbstractTask*);
 		~AddTaskCommand();
-
-		void setCalendar(DoLah::Calendar);
 
 		void execute();
 
@@ -34,8 +35,6 @@ namespace DoLah {
 		EditTaskCommand();
 		EditTaskCommand(int, DoLah::AbstractTask *);
 		~EditTaskCommand();
-
-		void setCalendar(DoLah::Calendar);
 
 		void execute();
 
@@ -51,8 +50,6 @@ namespace DoLah {
 		DeleteTaskCommand(int);
 		~DeleteTaskCommand();
 
-		void setCalendar(DoLah::Calendar);
-
 		void execute();
 
 	private:
@@ -65,8 +62,6 @@ namespace DoLah {
 		ClearTaskCommand();
 		~ClearTaskCommand();
 
-		void setCalendar(DoLah::Calendar);
-
 		void execute();
 
 	private:
@@ -78,8 +73,6 @@ namespace DoLah {
 		SearchTaskCommand();
 		SearchTaskCommand(std::string);
 		~SearchTaskCommand();
-
-		void setCalendar(DoLah::Calendar);
 
 		void execute();
 

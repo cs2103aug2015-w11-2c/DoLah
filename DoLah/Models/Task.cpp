@@ -22,6 +22,14 @@ namespace DoLah {
         return this->description;
     }
 
+    void AbstractTask::setTags(std::vector<std::string> tags) {
+        this->tags = tags;
+    }
+
+    std::vector<std::string> AbstractTask::getTags() {
+        return this->tags;
+    }
+
     void AbstractTask::setDone(bool done) {
         this->done = done;
     }

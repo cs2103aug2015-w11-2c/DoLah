@@ -11,7 +11,7 @@ namespace DoLah {
     public:
         CommandInvoker();
         ~CommandInvoker();
-        void process(ITaskCommand*);
+        static void process(ITaskCommand*);
 
     private:
         CommandHistory history;
