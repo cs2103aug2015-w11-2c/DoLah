@@ -12,10 +12,10 @@ namespace DoLah {
 
 		void addTask(AbstractTask*);
 		void deleteTask(int);
-		void updateTask(AbstractTask*);
+		void updateTask(int, AbstractTask*);
 		void clearTasks();
-		AbstractTask* getTask(int);
-		std::vector<AbstractTask> search(std::string);
+		std::vector<AbstractTask*> getTaskList();
+		std::vector<AbstractTask*> search(std::string);
 
 	private:
 		std::vector<AbstractTask*> taskList;

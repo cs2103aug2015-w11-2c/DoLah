@@ -15,17 +15,18 @@ namespace DoLah {
     void Calendar::deleteTask(int) {
     }
 
-    void Calendar::updateTask(AbstractTask *) {
+    void Calendar::updateTask(int id, AbstractTask *) {
+		
     }
 
     void Calendar::clearTasks() {
     }
 
-    AbstractTask * Calendar::getTask(int) {
-        return nullptr;
+	std::vector<AbstractTask*> Calendar::getTaskList() {
+        return taskList;
     }
 
-    std::vector<AbstractTask> Calendar::search(std::string) {
-        return std::vector<AbstractTask>();
+    std::vector<AbstractTask*> Calendar::search(std::string) {
+        return std::vector<AbstractTask*>();
     }
 }

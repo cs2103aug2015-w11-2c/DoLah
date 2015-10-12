@@ -17,7 +17,7 @@ namespace DoLah {
 	}
 
 	void EditTaskCommand::execute() {
-		calendar.updateTask(task);
+		calendar.updateTask(taskIndex, task);
 	}
 
 	//protected
