@@ -18,6 +18,7 @@ namespace DoLah {
         std::vector<std::string> getTags();
         void setDone(bool);
         bool isDone();
+
     private:
         std::string description;
         std::string name;
