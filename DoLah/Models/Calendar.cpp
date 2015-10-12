@@ -9,29 +9,36 @@ namespace DoLah {
 	}
 
 	void Calendar::addTask(AbstractTask* task) {
-		//TODO
+		if (taskList.empty()) {
+			task->setId(1);
+		}
+		else {
+			task->setId(taskList.back()->getId() + 1);
+		}
+		taskList.push_back(task);
 	}
 
-	void Calendar::deleteTask(int index) {
-		taskList.erase(taskList.begin() + index);
-	}
-
-	void Calendar::updateTask(AbstractTask*) {
-		//TODO
-	}
-
-    void Calendar::clearTasks() {
+    void Calendar::deleteTask(int index) {
+        taskList.erase(taskList.begin() + index);
     }
 
-	AbstractTask* Calendar::getTask(int id) {
+	void Calendar::updateTask(AbstractTask* task) {
 		//TODO
+	}
 
-		return new FloatingTask;
+	void Calendar::clearTasks() {
+		taskList.clear();
 	}
 	
-    std::vector<AbstractTask*> Calendar::search(std::string query) {
-        std::vector<AbstractTask*> results;
+	std::vector<AbstractTask*> Calendar::search(std::string query) {
+		std::vector<AbstractTask*> results;
 
-        return results;
-    }
+		for (int i = 0; i < taskList.size(); i++) {
+			if (taskList[i]->getName().find(query) != std::string::npos) {
+				results.push_back(taskList.at(i));
+			}
+		}
+
+		return results;
+	}
 }
