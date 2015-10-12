@@ -23,7 +23,7 @@ namespace DoLah {
 	}
 
 	void Calendar::deleteTask(int index) {
-
+		taskList.erase(taskList.begin() + index);
 	}
 
 	void Calendar::updateTask(AbstractTask*) {
