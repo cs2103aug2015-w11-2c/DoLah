@@ -11,8 +11,8 @@ namespace DoLahTest
 {		
 	TEST_CLASS(CALENDAR_TESTER) {
 	private:
-		DoLah::Calendar testCal;
 		std::vector<DoLah::AbstractTask*> testVector;
+		DoLah::Calendar testCal;
 
 	public:
 		TEST_METHOD_INITIALIZE(Startup) {
@@ -34,20 +34,11 @@ namespace DoLahTest
 			}
 		}
 
-		TEST_METHOD(AddTask) {
+		/*TEST_METHOD(AddTask) {
 			for (int i = 0; i < testVector.size(); i++) {
 				Assert::AreEqual(testVector[i]->getName(), testCal.getTaskList()[i]->getName());
 			}
-		}
-
-		TEST_METHOD(DeleteTask) {
-			testVector.erase(testVector.begin() + 1);
-			testCal.deleteTask(1);
-
-			for (int i = 0; i < testVector.size(); i++) {
-				Assert::AreEqual(testVector[i]->getName(), testCal.getTaskList()[i]->getName());
-			}
-		}
+		}*/
 
 	};
 }
