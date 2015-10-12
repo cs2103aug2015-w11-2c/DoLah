@@ -22,8 +22,9 @@ namespace DoLah {
         taskList.erase(taskList.begin() + index);
     }
 
-	void Calendar::updateTask(AbstractTask* task) {
-		//TODO
+	void Calendar::updateTask(int taskIndex, AbstractTask* task) {
+        size_t index = taskIndex;
+        taskList.at(index) = task;
 	}
 
 	void Calendar::clearTasks() {
