@@ -10,12 +10,8 @@ namespace DoLah {
 
 	}
 
-	void ClearTaskCommand::setCalendar(DoLah::Calendar* cal) {
-		calendar = cal;
-	}
-
 	void ClearTaskCommand::execute() {
-		calendar->clearTasks();
+		calendar.clearTasks();
 	}
 
 	//private

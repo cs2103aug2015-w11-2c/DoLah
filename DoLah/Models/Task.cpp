@@ -2,9 +2,7 @@
 
 namespace DoLah {
 
-    AbstractTask::AbstractTask() {
-		this->done = false;
-	}
+    AbstractTask::AbstractTask() {}
     AbstractTask::~AbstractTask() {}
 
     void AbstractTask::setName(std::string name) {
@@ -23,6 +21,14 @@ namespace DoLah {
         return this->description;
     }
 
+    void AbstractTask::setTags(std::vector<std::string> tags) {
+        this->tags = tags;
+    }
+
+    std::vector<std::string> AbstractTask::getTags() {
+        return this->tags;
+    }
+
     void AbstractTask::setDone(bool done) {
         this->done = done;
     }
@@ -30,7 +36,6 @@ namespace DoLah {
     bool AbstractTask::isDone() {
         return this->done;
     }
-
 
     void AbstractTask::setId(int id) {
         this->id = id;

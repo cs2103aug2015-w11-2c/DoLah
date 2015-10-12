@@ -7,11 +7,11 @@ namespace DoLah {
     DeadlineTask::DeadlineTask() {}
     DeadlineTask::~DeadlineTask() {}
 
-    void DeadlineTask::setDueDate(system_clock::time_point datetime) {
+    void DeadlineTask::setDueDate(std::tm datetime) {
         this->dueDate = datetime;
     }
 
-    system_clock::time_point DeadlineTask::getDueDate() {
+    std::tm DeadlineTask::getDueDate() {
         return this->dueDate;
     }
 }

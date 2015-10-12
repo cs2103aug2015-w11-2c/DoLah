@@ -2,16 +2,19 @@
 
 #include <vector>
 #include <string>
-#include <Models/Task.h>
-#include <Models/Calendar.h>
+#include "Models/Task.h"
+#include "Models/Calendar.h"
 
 namespace DoLah {
 
 	class ITaskCommand {
 	public:
-		virtual ~ITaskCommand();
+		virtual ~ITaskCommand() = 0;
+        void setCalendar(DoLah::Calendar calendar);
+		virtual void execute() = 0;
 
-		virtual void execute();
+    private:
+        Calendar calendar;
 	};
 
 	class AddTaskCommand : public ITaskCommand {
@@ -20,15 +23,11 @@ namespace DoLah {
 		AddTaskCommand(DoLah::AbstractTask*);
 		~AddTaskCommand();
 
-		AbstractTask * getTask();
-
-		void setCalendar(DoLah::Calendar*);
-
 		void execute();
 
 	private:
 		DoLah::AbstractTask* task;
-		DoLah::Calendar* calendar;
+		DoLah::Calendar calendar;
 	};
 
 	class EditTaskCommand : public ITaskCommand {
@@ -37,14 +36,12 @@ namespace DoLah {
 		EditTaskCommand(int, DoLah::AbstractTask *);
 		~EditTaskCommand();
 
-		void setCalendar(DoLah::Calendar*);
-
 		void execute();
 
 	private:
 		int taskIndex;
 		DoLah::AbstractTask* task;
-		DoLah::Calendar * calendar;
+		DoLah::Calendar calendar;
 	};
 
 	class DeleteTaskCommand : public ITaskCommand {
@@ -52,8 +49,6 @@ namespace DoLah {
 		DeleteTaskCommand();
 		DeleteTaskCommand(int);
 		~DeleteTaskCommand();
-
-		void setCalendar(DoLah::Calendar);
 
 		void execute();
 
@@ -67,12 +62,10 @@ namespace DoLah {
 		ClearTaskCommand();
 		~ClearTaskCommand();
 
-		void setCalendar(DoLah::Calendar*);
-
 		void execute();
 
 	private:
-		DoLah::Calendar* calendar;
+		DoLah::Calendar calendar;
 	};
 
 	class SearchTaskCommand : public ITaskCommand {
@@ -80,8 +73,6 @@ namespace DoLah {
 		SearchTaskCommand();
 		SearchTaskCommand(std::string);
 		~SearchTaskCommand();
-
-		void setCalendar(DoLah::Calendar);
 
 		void execute();
 

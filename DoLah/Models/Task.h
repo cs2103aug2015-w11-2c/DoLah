@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <chrono>
+#include <vector>
 
 namespace DoLah {
 
@@ -17,12 +18,15 @@ namespace DoLah {
         std::string getDescription(); ///< get the Task description
         void setDone(bool); ///< set the Task done flag
         bool isDone(); ///< get the Task done flag
+		void setTags(std::vector<std::string>); ///< set the vector of tags assigned to the task.
+		std::vector<std::string> getTags(); ///< get the vector of tags assigned to the task.
 
     private:
         std::string description; ///< A Detailed explanation about the task.
         std::string name; ///< Task name is the header of the task.
         int id; ///< Task identifier is used for the storage tracking.
         bool done; ///< a flag that mark whether a task has finished, and may be hide or cleared later.
+		std::vector<std::string> tags; ///< Vector holding tags assigned to the task.
     };
 
     /// A floating task is a task without any time specified.
@@ -33,13 +37,13 @@ namespace DoLah {
     public:
         EventTask(); ///< default constructor
         ~EventTask(); ///< destructor
-        std::chrono::system_clock::time_point getStartDate(); ///< get the starting datetime
-        void setStartDate(std::chrono::system_clock::time_point); ///< set the starting datetime
-        std::chrono::system_clock::time_point getEndDate(); ///< get the ending datetime
-        void setEndDate(std::chrono::system_clock::time_point); ///< set the ending datetime
+        std::tm getStartDate(); ///< get the starting datetime
+        void setStartDate(std::tm); ///< set the starting datetime
+        std::tm getEndDate(); ///< get the ending datetime
+        void setEndDate(std::tm); ///< set the ending datetime
     private:
-        std::chrono::system_clock::time_point startDate; ///< Task starting datetime
-        std::chrono::system_clock::time_point endDate; ///< Task ending datetime
+        std::tm startDate; ///< Task starting datetime
+        std::tm endDate; ///< Task ending datetime
     };
 
     /// DeadlineTask is a task that have a specific due datetime.
@@ -47,11 +51,11 @@ namespace DoLah {
     public:
         DeadlineTask(); ///< default constructor
         ~DeadlineTask(); ///< destructor
-        std::chrono::system_clock::time_point getDueDate(); ///< get the due date
-        void setDueDate(std::chrono::system_clock::time_point); ///< set the due date
+        std::tm getDueDate(); ///< get the due date
+        void setDueDate(std::tm); ///< set the due date
 
     private:
-        std::chrono::system_clock::time_point dueDate; ///< Task due datetime
+        std::tm dueDate; ///< Task due datetime
     };
 }
 

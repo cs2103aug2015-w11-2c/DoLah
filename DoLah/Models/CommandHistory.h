@@ -3,10 +3,10 @@
 #include <stack>
 
 namespace DoLah {
-	class CalendarHistory {
+	class CommandHistory {
 	public:
-		CalendarHistory();
-		~CalendarHistory();
+        CommandHistory();
+		~CommandHistory();
 
 		void redo();
 		void undo();

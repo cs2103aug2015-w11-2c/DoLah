@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "Models/Task.h"
-#include "Commands/Command.h"
-#include "Models/Calendar.h"
+#include <Models/Task.h>
+#include <Commands/Command.h>
+#include <Models/Calendar.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -30,14 +30,14 @@ namespace DoLahTest
 
 			testCal = DoLah::Calendar();
 
-			for (int i = 0; i < testVector.size(); i++) {
+			for (unsigned int i = 0; i < testVector.size(); i++) {
 				testCal.addTask(testVector[i]);
 			}
 		}
 
 		TEST_METHOD(AddTask) {
-			for (int i = 0; i < testVector.size(); i++) {
-				Assert::AreEqual(testVector[i]->getName(), testCal.getTaskList()[i]->getName());
+			for (unsigned int i = 0; i < testVector.size(); i++) {
+				Assert::AreEqual(testVector[i]->getName(), (testCal.getTaskList())[i]->getName());
 			}
 		}
 
@@ -46,9 +46,9 @@ namespace DoLahTest
 
 			testCal.updateTask(0, nullTask);
 
-			Assert::AreEqual(testVector[0]->getName(), testCal.getTaskList()[0]->getName());
-			Assert::AreEqual(testVector[0]->getDescription(), testCal.getTaskList()[0]->getDescription());
-			Assert::AreEqual(testVector[0]->isDone(), testCal.getTaskList()[0]->isDone());
+			Assert::AreEqual(testVector[0]->getName(), (testCal.getTaskList())[0]->getName());
+			Assert::AreEqual(testVector[0]->getDescription(), (testCal.getTaskList())[0]->getDescription());
+			Assert::AreEqual(testVector[0]->isDone(), (testCal.getTaskList()[0])->isDone());
 		}
 
 		TEST_METHOD(EditTaskName) {
@@ -59,9 +59,9 @@ namespace DoLahTest
 
 			newTask->setDescription("draft v0.1");
 
-			Assert::AreEqual(newTask->getName(), testCal.getTaskList()[0]->getName());
-			Assert::AreEqual(newTask->getDescription(), testCal.getTaskList()[0]->getDescription());
-			Assert::AreEqual(newTask->isDone(), testCal.getTaskList()[0]->isDone());
+			Assert::AreEqual(newTask->getName(), (testCal.getTaskList())[0]->getName());
+			Assert::AreEqual(newTask->getDescription(), (testCal.getTaskList())[0]->getDescription());
+			Assert::AreEqual(newTask->isDone(), (testCal.getTaskList())[0]->isDone());
 		}
 
 		TEST_METHOD(EditTaskDescription) {
@@ -72,9 +72,9 @@ namespace DoLahTest
 
 			newTask->setName("CS2103 homework");
 
-			Assert::AreEqual(newTask->getName(), testCal.getTaskList()[0]->getName());
-			Assert::AreEqual(newTask->getDescription(), testCal.getTaskList()[0]->getDescription());
-			Assert::AreEqual(newTask->isDone(), testCal.getTaskList()[0]->isDone());
+			Assert::AreEqual(newTask->getName(), (testCal.getTaskList())[0]->getName());
+			Assert::AreEqual(newTask->getDescription(), ((testCal.getTaskList()))[0]->getDescription());
+			Assert::AreEqual(newTask->isDone(), (testCal.getTaskList())[0]->isDone());
 		}
 
 		TEST_METHOD(EditTaskStatus) {
@@ -85,31 +85,18 @@ namespace DoLahTest
 
 			testCal.updateTask(0, newTask);
 
-			Assert::AreEqual(newTask->getName(), testCal.getTaskList()[0]->getName());
-			Assert::AreEqual(newTask->getDescription(), testCal.getTaskList()[0]->getDescription());
-			Assert::AreEqual(newTask->isDone(), testCal.getTaskList()[0]->isDone());
+			Assert::AreEqual(newTask->getName(), testCal.getTaskList().at(0)->getName());
+			Assert::AreEqual(newTask->getDescription(), (testCal.getTaskList())[0]->getDescription());
+			Assert::AreEqual(newTask->isDone(), (testCal.getTaskList())[0]->isDone());
 		}
 	};
 
 	TEST_CLASS(COMMAND_TESTER) {
-	private:
-		DoLah::Calendar testCal = DoLah::Calendar();
-		std::vector<DoLah::AbstractTask*> testVector;
-	
 	public:
-		TEST_METHOD(AddCommand) {
-			DoLah::FloatingTask* task = new DoLah::FloatingTask;
-			task->setName("CS2103 homework");
-			task->setDescription("draft v0.1");
-			testVector.push_back(task);
 
-			DoLah::AddTaskCommand adder = DoLah::AddTaskCommand(task);
-			adder.setCalendar(&testCal);
-			adder.execute();
-
-			for (int i = 0; i < testVector.size(); i++) {
-				Assert::AreEqual(testVector[i]->getName(), testCal.getTaskList()[i]->getName());
-			}
+		TEST_METHOD(TestTask) {
+			
 		}
+
 	};
 }
