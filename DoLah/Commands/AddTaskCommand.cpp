@@ -7,8 +7,8 @@ namespace DoLah {
 
 	}
 
-	AddTaskCommand::AddTaskCommand(DoLah::AbstractTask* task) {
-		task = task;
+	AddTaskCommand::AddTaskCommand(DoLah::AbstractTask* newTask) {
+		task = newTask;
 	}
 
 	AddTaskCommand::~AddTaskCommand() {
