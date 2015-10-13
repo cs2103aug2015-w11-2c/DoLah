@@ -39,5 +39,23 @@ namespace DoLahTest
             Assert::AreEqual(calendar.getTaskList().size(), calNode["todo"].size() + calNode["done"].size());
         }
 
+
+        TEST_METHOD(TestLoadCalendar) {
+            // Arrange
+            DoLah::Calendar calendar;
+
+            // Act
+            DoLah::CalendarStorage::load(calendar);
+
+            // Assert
+            YAML::Node calNode = YAML::LoadFile("calendar.yaml");
+            Assert::AreEqual(
+                std::string(calendar.getTaskList()[0]->getName()),
+                calNode["todo"][0]["task"].as<std::string>());
+            Assert::AreEqual(
+                std::string(calendar.getTaskList()[0]->getDescription()),
+                calNode["todo"][0]["description"].as<std::string>());
+            Assert::AreEqual(calendar.getTaskList().size(), calNode["todo"].size() + calNode["done"].size());
+        }
     };
 }

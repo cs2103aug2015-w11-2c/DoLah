@@ -1,7 +1,10 @@
 #include "Storage/CalendarStorage.h"
 #include "Models/Task.h"
 #include <ctime>
+#include <iostream>
 #include <time.h>
+#include <boost/date_time/posix_time/posix_time.hpp>
+
 
 namespace YAML {
     template<>
@@ -15,9 +18,12 @@ namespace YAML {
         }
 
         static bool decode(const Node& node, std::tm& rhs) {
-            if (!node.IsSequence() || node.size() != 3) {
+            if (!node.IsScalar()) {
                 return false;
             }
+            std::string s_datetime = node.as<std::string>();
+            boost::posix_time::ptime t(boost::posix_time::time_from_string(s_datetime));
+            rhs = boost::posix_time::to_tm(t);
             return true;
         }
     };
@@ -93,10 +99,47 @@ namespace DoLah {
         YAML::Node node = YAML::LoadFile("calendar.yaml");
 
         if (node.IsMap()) {
-            for (auto it = node.begin(); it != node.end(); it++) {
+            for (auto it = node["todo"].begin(); it != node["todo"].end(); it++) {
+                YAML::Node taskNode = *it;
                 const std::string text;
-                DoLah::AbstractTask* task = new FloatingTask;
-                task->setName(it->as<std::string>());
+                DoLah::AbstractTask* task = NULL;
+                if (taskNode["due"].IsDefined()) {
+                    DeadlineTask* d_task = new DeadlineTask;
+                    d_task->setDueDate(taskNode["due"].as<std::tm>());
+                    task = d_task;
+                } else if (taskNode["start"].IsDefined() && taskNode["end"].IsDefined()) {
+                    EventTask* e_task = new EventTask;
+                    e_task->setStartDate(taskNode["start"].as<std::tm>());
+                    e_task->setEndDate(taskNode["end"].as<std::tm>());
+                    task = e_task;
+                } else {
+                    task = new FloatingTask;
+                }
+                task->setDone(false);
+                task->setName(taskNode["task"].as<std::string>());
+                task->setDescription(taskNode["description"].as<std::string>());
+                calendar.addTask(task);
+            }
+
+            for (auto it = node["done"].begin(); it != node["done"].end(); it++) {
+                YAML::Node taskNode = *it;
+                const std::string text;
+                DoLah::AbstractTask* task = NULL;
+                if (taskNode["due"].IsDefined()) {
+                    DeadlineTask* d_task = new DeadlineTask;
+                    d_task->setDueDate(taskNode["due"].as<std::tm>());
+                    task = d_task;
+                } else if (taskNode["start"].IsDefined() && taskNode["end"].IsDefined()) {
+                    EventTask* e_task = new EventTask;
+                    e_task->setStartDate(taskNode["start"].as<std::tm>());
+                    e_task->setEndDate(taskNode["end"].as<std::tm>());
+                    task = e_task;
+                } else {
+                    task = new FloatingTask;
+                }
+                task->setDone(true);
+                task->setName(taskNode["task"].as<std::string>());
+                task->setDescription(taskNode["description"].as<std::string>());
                 calendar.addTask(task);
             }
         }

@@ -13,6 +13,7 @@ in team shared drive, "vendor-libs" folder into project "Library" folder.
 This includes:
 - libyaml-cppmd.lib
 - libyaml-cppmdd.lib
+- libboost_date_time-vc140-mt-gd-1_59.lib
 
 
 ## Branch Naming:
