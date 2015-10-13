@@ -18,9 +18,25 @@ namespace DoLahTest
     public:
 
         TEST_METHOD(TestSaveCalendar) {
+            // Arrange
             DoLah::Calendar calendar = CalendarBuilder::buildSimpleCalendar();
-            Assert::AreEqual(std::to_string(calendar.getTaskList().size()), std::string("15"));
+            assert(calendar.getTaskList().size() != 0);
+
+            // Act
             DoLah::CalendarStorage::save(calendar);
+
+            // Assert
+            YAML::Node calNode = YAML::LoadFile("calendar.yaml");
+            Assert::IsTrue(calNode.IsMap());
+            Assert::IsTrue(calNode["todo"].IsSequence());
+            Assert::IsTrue(calNode["todo"][0].IsMap());
+            Assert::AreEqual(
+                std::string(calendar.getTaskList()[0]->getName()),
+                calNode["todo"][0]["task"].as<std::string>());
+            Assert::AreEqual(
+                std::string(calendar.getTaskList()[0]->getDescription()),
+                calNode["todo"][0]["description"].as<std::string>());
+            Assert::AreEqual(calendar.getTaskList().size(), calNode["todo"].size() + calNode["done"].size());
         }
 
     };

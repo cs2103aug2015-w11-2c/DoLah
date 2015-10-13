@@ -149,7 +149,6 @@
     <ClCompile Include="Models\DeadlineTask.cpp" />
     <ClCompile Include="Models\EventTask.cpp" />
     <ClCompile Include="Models\Task.cpp" />
-    <ClCompile Include="Storage\TaskSerialization.cpp" />
     <ClCompile Include="TaskParser.cpp" />
     <ClCompile Include="TaskTokenizer.cpp" />
   </ItemGroup>
@@ -167,7 +166,6 @@
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
     <ClInclude Include="Models\ISerializable.h" />
-    <ClInclude Include="Storage\TaskSerialization.h" />
     <ClInclude Include="TaskParser.h" />
     <ClInclude Include="TaskTokenizer.h" />
   </ItemGroup>

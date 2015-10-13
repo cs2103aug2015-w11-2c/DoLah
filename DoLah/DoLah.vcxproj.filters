@@ -22,11 +22,9 @@
     <ClCompile Include="ParserLibrary.cpp" />
     <ClCompile Include="TaskParser.cpp" />
     <ClCompile Include="TaskTokenizer.cpp" />
+    <ClCompile Include="Storage\CalendarStorage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="basic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Models\DeadlineTask.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,48 +64,9 @@
     <ClCompile Include="Models\Calendar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Models\CalendarHistory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Storage\CalendarStorage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Storage\TaskSerialization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="basic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Task.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\TaskFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\ISerializable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Commands\Command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DoLahClient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\Calendar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\CalendarHistory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Storage\CalendarStorage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CommandInvoker.h" />
-    <ClInclude Include="Storage\TaskSerialization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CommandParser.h" />
     <ClInclude Include="CommandTokenizer.h" />
     <ClInclude Include="DateTimeParser.h" />
@@ -121,6 +80,13 @@
     <ClInclude Include="Models\TaskFactory.h" />
     <ClInclude Include="TaskParser.h" />
     <ClInclude Include="TaskTokenizer.h" />
+    <ClInclude Include="Storage\CalendarStorage.h" />
+    <ClInclude Include="Models\Calendar.h" />
+    <ClInclude Include="Commands\Command.h" />
+    <ClInclude Include="DoLahClient.h" />
+    <ClInclude Include="Models\Task.h" />
+    <ClInclude Include="Models\TaskFactory.h" />
+    <ClInclude Include="Models\ISerializable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
