@@ -45,6 +45,9 @@ namespace DoLah {
         QTextBrowser *taskBox5;
         QLineEdit *lineEdit;
 
+    private slots:
+        void handleUserInput();
+
     private:
         void setupUI();
         void retranslateUI();

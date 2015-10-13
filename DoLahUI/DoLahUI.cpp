@@ -94,8 +94,12 @@ namespace DoLah {
         lineEdit->setObjectName(QStringLiteral("User Input Area"));
         lineEdit->setGeometry(QRect(5, 460, 340, 25));
 
-        QObject::connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(appClient.parseAndProcessCommand(lineEdit->text())));
+        QObject::connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(handleUserInput()));
         QObject::connect(lineEdit, SIGNAL(returnPressed()), lineEdit, SLOT(clear()));
+    }
+
+    void DoLahUI::handleUserInput() {
+        this->appClient.parseAndProcessCommand(lineEdit->text().toStdString());
     }
 
     void DoLahUI::createTaskBox(AbstractTask *task) {
