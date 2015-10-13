@@ -36,12 +36,13 @@ namespace DoLah {
 		EditTaskCommand(int, DoLah::AbstractTask *);
 		~EditTaskCommand();
 
+		void setCalendar(DoLah::Calendar*);
 		void execute();
 
 	private:
 		int taskIndex;
 		DoLah::AbstractTask* task;
-		DoLah::Calendar calendar;
+		DoLah::Calendar* calendar;
 	};
 
 	class DeleteTaskCommand : public ITaskCommand {

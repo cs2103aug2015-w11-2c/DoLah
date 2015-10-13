@@ -16,8 +16,12 @@ namespace DoLah {
 
 	}
 
-	void EditTaskCommand::execute() {
-		calendar.updateTask(taskIndex, task);
+	void EditTaskCommand::setCalendar(DoLah::Calendar* cal) {
+		calendar = cal;
+	}
+
+    void EditTaskCommand::execute() {
+		calendar->updateTask(taskIndex, task);
 	}
 
 	//protected
