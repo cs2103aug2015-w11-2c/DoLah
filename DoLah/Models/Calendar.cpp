@@ -16,6 +16,8 @@ namespace DoLah {
 			task->setId(taskList.back()->getId() + 1);
 		}
 		taskList.push_back(task);
+
+        std::cout << taskList.size() << "\n";
 	}
 
     void Calendar::deleteTask(int index) {
@@ -47,8 +49,10 @@ namespace DoLah {
     }
 
     void Calendar::printTaskList() {
+        std::cout << "task list (" << taskList.size() << ")";
         for (size_t i = 0; i < taskList.size(); i++) {
             std::cout << i << ": " << taskList.at(i)->getDescription() << "\n";
         }
+        std::cout << "\n";
     }
 }
