@@ -1,8 +1,9 @@
 #pragma once
 
 #include <vector>
-#include "Models/Task.h"
+#include <iostream>
 
+#include "Models/Task.h"
 
 namespace DoLah {
 	class Calendar {
@@ -17,6 +18,7 @@ namespace DoLah {
 		AbstractTask* getTask(int);
 		std::vector<AbstractTask> search(std::string);
 
+        void printTaskList();
 	private:
 		std::vector<AbstractTask*> taskList;
 	};

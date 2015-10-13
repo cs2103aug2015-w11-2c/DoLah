@@ -28,4 +28,10 @@ namespace DoLah {
     std::vector<AbstractTask> Calendar::search(std::string) {
         return std::vector<AbstractTask>();
     }
+
+    void Calendar::printTaskList() {
+        for (size_t i = 0; i < taskList.size(); i++) {
+            std::cout << i << ": " << this->taskList.at(i).getDescription();
+        }
+    }
 }
