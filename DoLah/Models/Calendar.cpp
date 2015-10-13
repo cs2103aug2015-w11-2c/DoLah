@@ -1,7 +1,12 @@
 #include "Calendar.h"
 
 namespace DoLah {
-	Calendar::Calendar() {
+    Calendar& Calendar::getInstance() {
+        static Calendar instance;
+        return instance;
+    }
+
+    Calendar::Calendar() {
 	}
 	
 	Calendar::~Calendar() {
@@ -44,5 +49,13 @@ namespace DoLah {
 	}
     std::vector<AbstractTask*> Calendar::getTaskList() {
         return this->taskList;
+    }
+
+    void Calendar::printTaskList() {
+        std::cout << "task list (" << taskList.size() << ")\n";
+        for (size_t i = 0; i < taskList.size(); i++) {
+            std::cout << i << ": " << taskList.at(i)->getName() << "\n";
+        }
+        std::cout << "\n";
     }
 }

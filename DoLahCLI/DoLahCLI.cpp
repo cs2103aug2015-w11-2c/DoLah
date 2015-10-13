@@ -8,5 +8,6 @@ void startConsole() {
         getline(std::cin, command);
         client.parseAndProcessCommand(command);
         std::cout << "Your command \"" << command << "\" has been executed." << std::endl;
+
     }
 }
