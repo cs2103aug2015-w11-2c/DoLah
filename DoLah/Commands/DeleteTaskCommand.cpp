@@ -15,7 +15,7 @@ namespace DoLah {
 	}
 
 	void DeleteTaskCommand::execute() {
-		this->calendar.deleteTask(taskIndex);
+		this->calendar->deleteTask(taskIndex);
 	}
 
 	//private

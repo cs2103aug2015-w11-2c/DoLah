@@ -17,7 +17,7 @@ namespace DoLah {
 	}
 
     void EditTaskCommand::execute() {
-		this->calendar.updateTask(taskIndex, task);
+		this->calendar->updateTask(taskIndex, task);
 	}
 
 	//protected

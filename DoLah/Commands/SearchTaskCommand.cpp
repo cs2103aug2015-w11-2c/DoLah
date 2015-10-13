@@ -15,7 +15,7 @@ namespace DoLah {
 	}
 
 	void SearchTaskCommand::execute() {
-		this->calendar.search(query);
+		this->calendar->search(query);
 	}
 
 	//private

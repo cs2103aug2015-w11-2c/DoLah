@@ -10,11 +10,11 @@ namespace DoLah {
 	class ITaskCommand {
 	public:
 		virtual ~ITaskCommand() = 0;
-        void setCalendar(DoLah::Calendar& calendar);
+        void setCalendar(DoLah::Calendar*);
 		virtual void execute() = 0;
 
     protected:
-        Calendar calendar;
+        Calendar* calendar;
 	};
 
 	class AddTaskCommand : public ITaskCommand {
