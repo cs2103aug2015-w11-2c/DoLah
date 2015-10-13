@@ -63,7 +63,7 @@ namespace DoLah {
     void Calendar::printTaskList(std::vector<AbstractTask*> taskList) {
         std::cout << "<<<<< TASK LIST >>>>> " << std::endl << "(size: " << taskList.size() << ")" << std::endl;
         for (size_t i = 0; i < taskList.size(); i++) {
-            std::cout << (i+1) << ": ";
+            std::cout << (i) << ": ";
             std::string out = taskList.at(i)->toString();
             
             std::vector<std::tm> dates = taskList.at(i)->getDates();
