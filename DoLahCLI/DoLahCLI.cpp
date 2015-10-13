@@ -7,6 +7,11 @@ void startConsole() {
         std::string command;
         std::cout << "Please enter a command: ";
         getline(std::cin, command);
+        
+        if (command == "") {
+            continue;
+        }
+
         if (DoLah::ParserLibrary::tolowercase(DoLah::ParserLibrary::strip(command)) == "exit") {
             std::cout << "Press Enter to exit." << std::endl;
             getline(std::cin, command);
