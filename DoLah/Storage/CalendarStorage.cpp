@@ -19,11 +19,13 @@ namespace DoLah {
             out << (*it)->getName();
             out << YAML::EndSeq;
         }
+        out << "HELLO";
     
         std::ofstream ofstream("storage.yaml");
         if (ofstream.is_open()) {
             ofstream << out.c_str();
         }
+        ofstream.close();
     }
 
     void CalendarStorage::load(DoLah::Calendar& calendar) {
@@ -37,5 +39,6 @@ namespace DoLah {
                 calendar.addTask(task);
             }
         }
+        
     }
 }
