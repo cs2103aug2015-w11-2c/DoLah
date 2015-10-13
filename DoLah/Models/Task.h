@@ -2,6 +2,7 @@
 #include <string>
 #include <chrono>
 #include <vector>
+#include <iostream>
 
 namespace DoLah {
     class AbstractTask {
@@ -18,6 +19,9 @@ namespace DoLah {
         std::vector<std::string> getTags();
         void setDone(bool);
         bool isDone();
+
+        std::string toString();
+        virtual std::vector<std::tm> getDates();
     private:
         std::string description;
         std::string name;
@@ -36,6 +40,9 @@ namespace DoLah {
         void setStartDate(std::tm);
         std::tm getEndDate();
         void setEndDate(std::tm);
+
+        using AbstractTask::getDates;
+        std::vector<std::tm> getDates();
     private:
         std::tm startDate;
         std::tm endDate;
@@ -48,6 +55,8 @@ namespace DoLah {
         std::tm getDueDate();
         void setDueDate(std::tm);
 
+        using AbstractTask::getDates;
+        std::vector<std::tm> getDates();
     private:
         std::tm dueDate;
     };

@@ -11,6 +11,10 @@ namespace DoLah {
         this->endDate = datetime;
     }
 
+    std::vector<std::tm> EventTask::getDates() {
+        return {this->startDate, this->endDate};
+    }
+
     std::tm EventTask::getEndDate() {
         return this->endDate;
     }

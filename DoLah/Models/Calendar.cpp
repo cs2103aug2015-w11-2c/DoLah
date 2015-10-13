@@ -21,19 +21,27 @@ namespace DoLah {
 			task->setId(taskList.back()->getId() + 1);
 		}
 		taskList.push_back(task);
+
+        printTaskList(this->taskList);
 	}
 
     void Calendar::deleteTask(int index) {
         taskList.erase(taskList.begin() + index);
+
+        printTaskList(this->taskList);
     }
 
 	void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
         taskList.at(index) = task;
+
+        printTaskList(this->taskList);
 	}
 
 	void Calendar::clearTasks() {
 		taskList.clear();
+
+        printTaskList(this->taskList);
 	}
 	
 	std::vector<AbstractTask*> Calendar::search(std::string query) {
@@ -45,17 +53,29 @@ namespace DoLah {
 			}
 		}
 
+        printTaskList(results);
 		return results;
 	}
     std::vector<AbstractTask*> Calendar::getTaskList() {
         return this->taskList;
     }
 
-    void Calendar::printTaskList() {
-        std::cout << "task list (" << taskList.size() << ")\n";
+    void Calendar::printTaskList(std::vector<AbstractTask*> taskList) {
+        std::cout << "<<<<< TASK LIST >>>>> " << std::endl << "(size: " << taskList.size() << ")" << std::endl;
         for (size_t i = 0; i < taskList.size(); i++) {
-            std::cout << i << ": " << taskList.at(i)->getName() << "\n";
+            std::cout << i << ": ";
+            std::string out = taskList.at(i)->toString();
+            
+            std::vector<std::tm> dates = taskList.at(i)->getDates();
+            if (dates.size() == 1) {
+                std::string dateString = "; " + std::to_string(dates.at(0).tm_mday) + "/"
+                    + std::to_string(dates.at(0).tm_mon + 1) + "/"
+                    + std::to_string(dates.at(0).tm_year + 1900);
+                out += dateString;
+            }
+
+            std::cout << out << std::endl;
         }
-        std::cout << "\n";
+        std::cout << std::endl;
     }
 }

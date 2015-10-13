@@ -19,7 +19,7 @@ namespace DoLah {
 		std::vector<AbstractTask*> search(std::string);
         std::vector<AbstractTask*> getTaskList();
 
-        void printTaskList();
+        void printTaskList(std::vector<AbstractTask*>);
 	private:
         Calendar::Calendar(Calendar const&) = delete;
         void operator=(Calendar const&) = delete;

@@ -37,6 +37,23 @@ namespace DoLah {
         return this->done;
     }
 
+    std::vector<std::tm> AbstractTask::getDates() {
+        return {};
+    }
+
+    std::string AbstractTask::toString() {
+        std::string out = "";
+        out += this->name + "; [";
+        for (size_t i = 0; i < tags.size(); i++) {
+            out += tags.at(i);
+            if (i < tags.size()-1) {
+                out += ",";
+            }
+        }
+        out += "]";
+        return out;
+    }
+
     void AbstractTask::setId(int id) {
         this->id = id;
     }
@@ -44,5 +61,6 @@ namespace DoLah {
     int AbstractTask::getId() {
         return this->id;
     }
+
 
 }

@@ -17,8 +17,6 @@ namespace DoLah {
     void DoLahClient::parseAndProcessCommand(std::string userinput) {
         DoLah::ITaskCommand *command = CommandParser::parse(userinput);
         DoLah::CommandInvoker::process(command);
-
-        calendar.printTaskList();
     }
 
     void DoLahClient::save() {

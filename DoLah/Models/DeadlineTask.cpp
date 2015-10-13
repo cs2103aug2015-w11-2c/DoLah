@@ -11,6 +11,10 @@ namespace DoLah {
         this->dueDate = datetime;
     }
 
+    std::vector<std::tm> DeadlineTask::getDates() {
+        return {this->dueDate};
+    }
+
     std::tm DeadlineTask::getDueDate() {
         return this->dueDate;
     }
