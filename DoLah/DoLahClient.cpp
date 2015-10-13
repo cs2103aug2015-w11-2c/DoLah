@@ -18,6 +18,8 @@ namespace DoLah {
         DoLah::ITaskCommand *command = CommandParser::parse(userinput);
         command->setCalendar(calendar);
         DoLah::CommandInvoker::process(command);
+
+        calendar.printTaskList();
     }
 
     void DoLahClient::save() {
