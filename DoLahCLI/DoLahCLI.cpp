@@ -2,12 +2,17 @@
 
 void startConsole() {
     DoLah::DoLahClient client;
+    std::cout << "Welcome to DoLah!" << std::endl;
     while (true) {
-        std::cout << "Welcome to DoLah! Please enter a command: ";
         std::string command;
+        std::cout << "Please enter a command: ";
         getline(std::cin, command);
-        client.parseAndProcessCommand(command);
-        std::cout << "Your command \"" << command << "\" has been executed." << std::endl;
-
+        try {
+            client.parseAndProcessCommand(command);
+            std::cout << "Your command \"" << command << "\" has been executed." << std::endl;
+            std::cout << std::endl;
+        } catch (std::invalid_argument e) {
+            std::cout << "Invalid command: " << e.what() << "\n";
+        }
     }
 }
