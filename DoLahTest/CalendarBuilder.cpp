@@ -16,9 +16,9 @@ DoLah::Calendar CalendarBuilder::buildSimpleCalendar()
 {
     DoLah::Calendar calendar;
     for (int i = 0; i < 5; i++) {
-        calendar.addTask(&TaskBuilder::buildFloatingTask());
-        calendar.addTask(&TaskBuilder::buildEventTask());
-        calendar.addTask(&TaskBuilder::buildDeadlineTask());
+        calendar.addTask(TaskBuilder::buildFloatingTask());
+        calendar.addTask(TaskBuilder::buildEventTask());
+        calendar.addTask(TaskBuilder::buildDeadlineTask());
     }
     return calendar;
 }

@@ -19,7 +19,7 @@ namespace DoLahTest
 
         TEST_METHOD(TestSaveCalendar) {
             DoLah::Calendar calendar = CalendarBuilder::buildSimpleCalendar();
-            Assert::AreEqual(std::to_string(calendar.getAllTask().size()), std::string("15"));
+            Assert::AreEqual(std::to_string(calendar.getTaskList().size()), std::string("15"));
             DoLah::CalendarStorage::save(calendar);
         }
 

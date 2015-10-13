@@ -12,14 +12,13 @@ namespace DoLah {
     }
 
     void CalendarStorage::save(const DoLah::Calendar& calendar) {
-        std::vector<DoLah::AbstractTask*> taskList = calendar.getAllTask();
+        std::vector<DoLah::AbstractTask*> taskList = calendar.getTaskList();
         YAML::Emitter out;
         for (auto it = taskList.begin(); it != taskList.end(); it++) {
             out << YAML::BeginSeq;
             out << (*it)->getName();
             out << YAML::EndSeq;
         }
-        out << "HELLO";
     
         std::ofstream ofstream("storage.yaml");
         if (ofstream.is_open()) {

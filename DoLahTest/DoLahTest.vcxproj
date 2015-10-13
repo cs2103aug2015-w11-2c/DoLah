@@ -175,7 +175,7 @@
     </ClCompile>
     <ClCompile Include="storagetest.cpp" />
     <ClCompile Include="TaskBuilder.cpp" />
-    <ClCompile Include="unittest1.cpp">
+    <ClCompile Include="CalendarUnitTest.cpp">
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\User\Documents\GitHub\DoLah\DoLah;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemGroup>

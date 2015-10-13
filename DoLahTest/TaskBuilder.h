@@ -7,9 +7,9 @@ public:
     TaskBuilder();
     ~TaskBuilder();
 
-    static DoLah::FloatingTask buildFloatingTask();
-    static DoLah::DeadlineTask buildDeadlineTask();
-    static DoLah::EventTask buildEventTask();
+    static DoLah::FloatingTask* buildFloatingTask();
+    static DoLah::DeadlineTask* buildDeadlineTask();
+    static DoLah::EventTask* buildEventTask();
 private:
     static int buildIndex;
 };
