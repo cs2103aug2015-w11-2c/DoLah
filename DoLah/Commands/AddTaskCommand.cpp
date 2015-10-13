@@ -17,7 +17,6 @@ namespace DoLah {
 
 	void AddTaskCommand::execute() {
 		calendar.addTask(task);
-        calendar.printTaskList();
 	}
 
 	//protected
