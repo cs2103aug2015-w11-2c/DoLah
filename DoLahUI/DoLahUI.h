@@ -43,7 +43,6 @@ namespace DoLah {
         QTextBrowser *taskBox3;
         QTextBrowser *taskBox4;
         QTextBrowser *taskBox5;
-        QTextBrowser *taskBox6;
         QLineEdit *lineEdit;
 
     private:
@@ -51,7 +50,8 @@ namespace DoLah {
         void retranslateUI();
         void initDisplayArea();
         void initInputArea();
-        //void eventHandler();
+        void createTaskBox(AbstractTask*);
+
         DoLah::DoLahClient appClient;
     };
 }
