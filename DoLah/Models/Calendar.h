@@ -8,7 +8,8 @@
 namespace DoLah {
 	class Calendar {
 	public:
-		Calendar();
+        static Calendar& getInstance();
+
 		~Calendar();
 
 		void addTask(AbstractTask*);
@@ -20,6 +21,11 @@ namespace DoLah {
 
         void printTaskList();
 	private:
+        Calendar::Calendar(Calendar const&) = delete;
+        void operator=(Calendar const&) = delete;
+
+        Calendar();
+
 		std::vector<AbstractTask*> taskList;
 	};
 }

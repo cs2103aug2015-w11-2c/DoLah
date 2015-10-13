@@ -14,7 +14,7 @@ namespace DoLah {
 		virtual void execute() = 0;
 
     private:
-        Calendar& calendar = Calendar();
+        Calendar& calendar = Calendar::getInstance();
 	};
 
 	class AddTaskCommand : public ITaskCommand {
@@ -27,8 +27,8 @@ namespace DoLah {
 
 	private:
 		DoLah::AbstractTask* task;
-		DoLah::Calendar calendar;
-	};
+        Calendar& calendar = Calendar::getInstance();
+    };
 
 	class EditTaskCommand : public ITaskCommand {
 	public:
@@ -42,8 +42,8 @@ namespace DoLah {
 	private:
 		int taskIndex;
 		DoLah::AbstractTask* task;
-		DoLah::Calendar* calendar;
-	};
+        Calendar& calendar = Calendar::getInstance();
+    };
 
 	class DeleteTaskCommand : public ITaskCommand {
 	public:
@@ -55,8 +55,8 @@ namespace DoLah {
 
 	private:
 		int taskIndex;
-		DoLah::Calendar calendar;
-	};
+        Calendar& calendar = Calendar::getInstance();
+    };
 
 	class ClearTaskCommand : public ITaskCommand {
 	public:
@@ -66,8 +66,8 @@ namespace DoLah {
 		void execute();
 
 	private:
-		DoLah::Calendar calendar;
-	};
+        Calendar& calendar = Calendar::getInstance();
+    };
 
 	class SearchTaskCommand : public ITaskCommand {
 	public:
@@ -79,8 +79,8 @@ namespace DoLah {
 
 	private:
 		std::string query;
-		DoLah::Calendar calendar;
-	};
+        Calendar& calendar = Calendar::getInstance();
+    };
 
 	class UndoTaskCommand : public ITaskCommand {
 	public:
@@ -90,8 +90,8 @@ namespace DoLah {
 		void execute();
 	
 	private:
-		DoLah::Calendar calendar;
-	};
+        Calendar& calendar = Calendar::getInstance();
+    };
 
 	class RedoTaskCommand : public ITaskCommand {
 	public:
@@ -101,7 +101,7 @@ namespace DoLah {
 		void execute();
 
 	private:
-		DoLah::Calendar calendar;
-	};
+        Calendar& calendar = Calendar::getInstance();
+    };
 
 }

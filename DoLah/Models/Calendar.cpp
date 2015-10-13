@@ -1,7 +1,12 @@
 #include "Calendar.h"
 
 namespace DoLah {
-	Calendar::Calendar() {
+    Calendar& Calendar::getInstance() {
+        static Calendar instance;
+        return instance;
+    }
+
+    Calendar::Calendar() {
 	}
 	
 	Calendar::~Calendar() {

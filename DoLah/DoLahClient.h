@@ -20,7 +20,7 @@ namespace DoLah {
     private:
         std::string settingsFile;
         std::string storageFile;
-        DoLah::Calendar calendar = DoLah::Calendar();
+        Calendar& calendar = Calendar::getInstance();
 	};
 }
 
