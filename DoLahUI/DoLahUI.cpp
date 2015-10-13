@@ -20,6 +20,7 @@ namespace DoLah {
         }
         this->resize(350, 500);
         this->setFixedSize(this->size());
+        this->setStyleSheet("background-color: #B4EEB4;");
         centralWidget = new QWidget(this);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
 
@@ -35,7 +36,7 @@ namespace DoLah {
 
     void DoLahUI::retranslateUI() {
         this->setWindowTitle(QApplication::translate("window", "DoLah", 0));
-        taskBox->setText(QApplication::translate("window", "Label???ahsdkfhlakshdflkhjalskdjhfkjahslkdhjflkahjsdlkfjhlasdfiuiudfhiahsoidfhiuahifuhaisufhiuhsdfiuhawieufhqieufhiquwhid", 0));
+        taskBox->setText(QApplication::translate("window", "<font size=4><b>1. polish GUI</b></font><br><font size=3><font color=#20B2AA>today</font></font>", 0));
     }
 
     // DISPLAY AREA
@@ -44,14 +45,15 @@ namespace DoLah {
         scrollArea = new QScrollArea(centralWidget);
         scrollArea->setObjectName(QStringLiteral("Scrollable Area"));
         scrollArea->setGeometry(QRect(0, 0, 350, 450));
-        scrollArea->setMinimumHeight(500);
 
         scrollArea->setWidgetResizable(true);
 
         taskBox = new QTextBrowser();
         taskBox->setObjectName(QStringLiteral("Task List"));
-        taskBox->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
-        taskBox1->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        taskBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        taskBox->setFixedHeight(40);
+        taskBox->setStyleSheet("background-color: white;");
+        taskBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         taskBox1 = new QTextBrowser();
         taskBox1->setObjectName(QStringLiteral("Task List"));
@@ -74,18 +76,18 @@ namespace DoLah {
         taskBox4->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         tasksContainer = new QWidget(scrollArea);
-        tasksContainer->setMaximumWidth(330);
-        tasksContainer->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+        tasksContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         tasksLayout = new QVBoxLayout(tasksContainer);
+        tasksLayout->setAlignment(Qt::AlignTop);
         tasksLayout->addWidget(taskBox);
-        tasksLayout->addWidget(taskBox1);
-        tasksLayout->addWidget(taskBox2);
-        tasksLayout->addWidget(taskBox3);
-        tasksLayout->addWidget(taskBox4);
+        //tasksLayout->addWidget(taskBox1);
+        //tasksLayout->addWidget(taskBox2);
+        //tasksLayout->addWidget(taskBox3);
+        //tasksLayout->addWidget(taskBox4);
         tasksLayout->setSpacing(5);
         tasksLayout->setMargin(5);
-        loadTasks();
+        //loadTasks();
 
         scrollArea->setWidget(tasksContainer);
     }
@@ -114,7 +116,8 @@ namespace DoLah {
     void DoLahUI::initInputArea() {
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("User Input Area"));
-        lineEdit->setGeometry(QRect(5, 460, 340, 25));
+        lineEdit->setGeometry(QRect(5, 465, 340, 25));
+        lineEdit->setStyleSheet("background-color: white;");
         
         // handles events when enter key is pressed
         //QObject::connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(handleUserInput()));
