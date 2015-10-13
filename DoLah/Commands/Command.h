@@ -10,7 +10,6 @@ namespace DoLah {
 	class ITaskCommand {
 	public:
 		virtual ~ITaskCommand() = 0;
-        void setCalendar(DoLah::Calendar&);
 		virtual void execute() = 0;
 
     private:
@@ -36,7 +35,6 @@ namespace DoLah {
 		EditTaskCommand(int, DoLah::AbstractTask *);
 		~EditTaskCommand();
 
-		void setCalendar(DoLah::Calendar*);
 		void execute();
 
 	private:
