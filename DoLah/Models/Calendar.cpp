@@ -49,9 +49,9 @@ namespace DoLah {
     }
 
     void Calendar::printTaskList() {
-        std::cout << "task list (" << taskList.size() << ")";
+        std::cout << "task list (" << taskList.size() << ")\n";
         for (size_t i = 0; i < taskList.size(); i++) {
-            std::cout << i << ": " << taskList.at(i)->getDescription() << "\n";
+            std::cout << i << ": " << taskList.at(i)->getName() << "\n";
         }
         std::cout << "\n";
     }
