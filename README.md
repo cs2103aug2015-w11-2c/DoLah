@@ -1,7 +1,15 @@
 # DoLah
 
+## Setup
 
-Branch Naming:
+Please download all dependencies libraries which is available 
+in team shared drive, "vendor-libs" folder into project "Library" folder.
+This includes:
+- libyaml-cppmd.lib
+- libyaml-cppmdd.lib
+
+
+## Branch Naming:
 
     # Specific Feature or Functionality
     feature/<feature-label>
