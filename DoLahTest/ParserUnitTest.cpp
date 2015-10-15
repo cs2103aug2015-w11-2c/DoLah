@@ -82,6 +82,13 @@ public:
         );
     }
 
+    TEST_METHOD(parseAddDetailedTest6) {
+        parseAddTestMethod((std::string)
+            "workout from 15th Nov to 21st Dec",
+            { "15/11/2015 ~ 21/12/2015", "{  }", "workout" }
+        );
+    }
+
 
     std::string UNHANDLED_COMMAND_MESSAGE = "Command not handled";
     std::string UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
