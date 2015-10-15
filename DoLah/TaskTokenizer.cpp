@@ -2,8 +2,9 @@
 
 
 namespace DoLah {
-
-    std::vector<std::string> TaskTokenizer::timeSubCommandList = { "on" };
+    std::string TaskTokenizer::DEADLINE_INDICATOR = "on";
+    std::string TaskTokenizer::SCHEDULE_INDICATOR = "from";
+    std::string TaskTokenizer::SCHEDULE_SEPARATOR = "to";
     std::string TaskTokenizer::tag = "#";
 
     TaskTokenizer::TaskTokenizer() {
@@ -39,22 +40,36 @@ namespace DoLah {
         TaskTokenizer ct;
         std::vector<std::tm> output;
 
-        bool dateFlag = false;
-        for (size_t i = lineArr.size() - 1; i > 0; i--) {
-            if (ParserLibrary::inStringArray(timeSubCommandList, lineArr.at(i))) {
-                dateFlag = true;
-            }
-            if (dateFlag) {
-                std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
-                try {
+        try {
+            for (size_t i = lineArr.size() - 1; i > 0; i--) {
+                if (DEADLINE_INDICATOR == ParserLibrary::tolowercase(lineArr.at(i))) {
+                    std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
+
                     std::tm time = DateTimeParser::toDateFormat(subVec);
+
                     output.push_back(time);
                     lineArr.erase(lineArr.begin() + i, lineArr.end());
-                } catch (std::invalid_argument e) {
-                    // Don't recognize it as date and ignore
+                    return output;
+                } else if (SCHEDULE_INDICATOR == ParserLibrary::tolowercase(lineArr.at(i))) {
+                    std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
+                    for (size_t j = 0; j < subVec.size(); j++) {
+                        if (SCHEDULE_SEPARATOR == ParserLibrary::tolowercase(subVec.at(j))) {
+                            std::vector<std::string> startdateArr(subVec.begin(), subVec.begin() + j);
+                            std::vector<std::string> enddateArr(subVec.begin() + j + 1, subVec.end());
+
+                            std::tm startdate = DateTimeParser::toDateFormat(startdateArr);
+                            std::tm enddate = DateTimeParser::toDateFormat(enddateArr);
+
+                            output.push_back(startdate);
+                            output.push_back(enddate);
+                            lineArr.erase(lineArr.begin() + i, lineArr.end());
+                            return output;
+                        }
+                    }
                 }
             }
-            dateFlag = false;
+        } catch (std::invalid_argument e) {
+            // do nothing
         }
 
         return output;
