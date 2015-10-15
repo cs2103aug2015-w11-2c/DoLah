@@ -11,7 +11,7 @@ namespace DoLah {
 	}
 
 	void ClearTaskCommand::execute() {
-		calendar.clearTasks();
+		this->calendar->clearTasks();
 	}
 
 	//private
