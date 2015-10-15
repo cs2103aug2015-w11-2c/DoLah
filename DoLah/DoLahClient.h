@@ -9,13 +9,11 @@
 
 namespace DoLah {
 
-	class DoLahClient {
-	public:
-		DoLahClient();
+    class DoLahClient {
+    public:
+        DoLahClient();
         ~DoLahClient();
         void parseAndProcessCommand(std::string);
-        void save();
-        void load();
 
     private:
         std::string settingsFile;

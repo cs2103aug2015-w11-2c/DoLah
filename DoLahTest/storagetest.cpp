@@ -73,6 +73,7 @@ done:  # Completed Tasks
 
         TEST_METHOD(TestLoadCalendar) {
             // Arrange
+            // Create a temporary fixture file
             if (!std::ifstream(TEST_FIXTURE_FILENAME)) {
                 std::ofstream out(TEST_FIXTURE_FILENAME);
                 out << SAMPLE_FIXTURE_CONTENT;
@@ -80,6 +81,7 @@ done:  # Completed Tasks
             }
 
             // Act
+            // load the temporary fixture file
             DoLah::Calendar calendar = DoLah::CalendarStorage::load(TEST_FIXTURE_FILENAME);
 
             // Assert
