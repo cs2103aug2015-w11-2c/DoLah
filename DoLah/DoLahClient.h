@@ -14,6 +14,7 @@ namespace DoLah {
 		DoLahClient();
         ~DoLahClient();
         void parseAndProcessCommand(std::string);
+        Calendar getCalendar() const;
         void save();
         void load();
 
