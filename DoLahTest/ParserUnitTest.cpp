@@ -84,7 +84,7 @@ public:
 
     TEST_METHOD(parseAddDetailedTest6) {
         parseAddTestMethod((std::string)
-            "workout from 15th Nov to 21st Dec",
+            "workout from 15th of Nov to 21st of Dec",
             { "15/11/2015 ~ 21/12/2015", "{  }", "workout" }
         );
     }

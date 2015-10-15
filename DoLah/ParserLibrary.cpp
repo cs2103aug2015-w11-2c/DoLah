@@ -99,4 +99,15 @@ namespace DoLah {
         return str;
     }
 
+    std::vector<std::string> ParserLibrary::removeElementsFromStringVector(std::vector<std::string> origin, std::vector<std::string> list) {
+        for (size_t i = 0; i < origin.size(); i++) {
+            for (size_t j = 0; j < list.size(); j++) {
+                if (tolowercase(origin.at(i)) == tolowercase(list.at(j))) {
+                    origin.erase(origin.begin() + i);
+                }
+            }
+        }
+        return origin;
+    }
+
 }
