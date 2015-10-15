@@ -4,7 +4,7 @@
 #include <iostream>
 #include <time.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
-
+//#include <boost/filesystem.hpp>
 
 namespace YAML {
     template<>
@@ -39,7 +39,7 @@ namespace DoLah {
     {
     }
 
-    void CalendarStorage::save(const DoLah::Calendar& calendar) {
+    void CalendarStorage::save(const DoLah::Calendar& calendar, const std::string & filename) {
         std::vector<DoLah::AbstractTask*> taskList = calendar.getTaskList();
         YAML::Emitter out;
 
@@ -88,15 +88,20 @@ namespace DoLah {
         out << YAML::EndMap;
         out << YAML::EndDoc;
 
-        std::ofstream ofstream("calendar.yaml");
+        std::ofstream ofstream(filename);
         if (ofstream.is_open()) {
             ofstream << out.c_str();
         }
         ofstream.close();
     }
 
-    void CalendarStorage::load(DoLah::Calendar& calendar) {
-        YAML::Node node = YAML::LoadFile("calendar.yaml");
+    Calendar CalendarStorage::load(const std::string& filename) {
+        Calendar calendar;
+        if (!std::ifstream(filename)) {
+            std::ofstream out(filename);
+            out.close();
+        }
+        YAML::Node node = YAML::LoadFile(filename);
 
         if (node.IsMap()) {
             for (auto it = node["todo"].begin(); it != node["todo"].end(); it++) {
@@ -143,6 +148,7 @@ namespace DoLah {
                 calendar.addTask(task);
             }
         }
+        return calendar;
         
     }
 }

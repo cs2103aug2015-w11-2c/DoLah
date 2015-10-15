@@ -9,8 +9,8 @@ namespace DoLah {
         CalendarStorage();
         ~CalendarStorage();
 
-        static void save(const DoLah::Calendar &);
-        static void load(DoLah::Calendar&);
+        static void save(const DoLah::Calendar &, const std::string &);
+        static Calendar load(const std::string &);
     };
 }
 
