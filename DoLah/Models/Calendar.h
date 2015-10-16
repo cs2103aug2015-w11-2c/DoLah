@@ -17,8 +17,6 @@ namespace DoLah {
 		AbstractTask* getTask(int);
 		std::vector<AbstractTask*> search(std::string);
         	std::vector<AbstractTask*> getTaskList() const;
-
-        void printTaskList();
 	private:
 		std::vector<AbstractTask*> taskList;
 	};
