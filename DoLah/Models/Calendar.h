@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <iostream>
-
 #include "Models/Task.h"
 
 namespace DoLah {
@@ -15,8 +14,9 @@ namespace DoLah {
 		void deleteTask(int);
 		void updateTask(int, AbstractTask*);
 		void clearTasks();
+		AbstractTask* getTask(int);
 		std::vector<AbstractTask*> search(std::string);
-        std::vector<AbstractTask*> getTaskList();
+        	std::vector<AbstractTask*> getTaskList() const;
 
         void printTaskList();
 	private:

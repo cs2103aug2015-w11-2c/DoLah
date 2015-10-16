@@ -2,13 +2,14 @@
 #include "Commands/Command.h"
 #include "CommandParser.h"
 #include "CommandInvoker.h"
+#include "Storage/CalendarStorage.h"
 
 namespace DoLah {
+    static const std::string DEFAULT_CALENDAR_FILENAME = "calendar.yaml";
 
     DoLahClient::DoLahClient() {
-
+        this->calendar = DoLah::CalendarStorage::load(DEFAULT_CALENDAR_FILENAME);
     }
-
 
     DoLahClient::~DoLahClient() {
 
@@ -16,15 +17,12 @@ namespace DoLah {
 
     void DoLahClient::parseAndProcessCommand(std::string userinput) {
         DoLah::ITaskCommand *command = CommandParser::parse(userinput);
-        command->setCalendar(calendar);
+        command->setCalendar(&calendar);
         DoLah::CommandInvoker::process(command);
+        DoLah::CalendarStorage::save(calendar, DEFAULT_CALENDAR_FILENAME);
     }
 
-    void DoLahClient::save() {
-        // save to storageFile
-    }
-
-    void DoLahClient::load() {
-        // load settingsFile and storageFile
+    Calendar DoLahClient::getCalendar() const {
+        return this->calendar;
     }
 }

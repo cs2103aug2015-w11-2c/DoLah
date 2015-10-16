@@ -69,7 +69,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)DoLah;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)DoLah;$(IncludePath)</IncludePath>
@@ -93,6 +94,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)DoLah;$(SolutionDir)Library\yaml-cpp\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -128,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Storage\CalendarStorage.cpp" />
     <ClCompile Include="CommandParser.cpp" />
     <ClCompile Include="CommandTokenizer.cpp" />
     <ClCompile Include="DateTimeParser.cpp" />
@@ -151,6 +154,7 @@
     <ClCompile Include="TaskTokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Storage\CalendarStorage.h" />
     <ClInclude Include="CommandParser.h" />
     <ClInclude Include="CommandTokenizer.h" />
     <ClInclude Include="DateTimeParser.h" />
