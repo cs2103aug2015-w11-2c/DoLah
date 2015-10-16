@@ -20,6 +20,10 @@ namespace DoLah {
         DoLah::CommandInvoker::process(command);
     }
 
+    Calendar DoLahClient::getCalendar() const {
+        return this->calendar;
+    }
+
     void DoLahClient::save() {
         // save to storageFile
     }
