@@ -21,4 +21,8 @@ namespace DoLah {
         DoLah::CommandInvoker::process(command);
         DoLah::CalendarStorage::save(calendar, DEFAULT_CALENDAR_FILENAME);
     }
+
+    Calendar DoLahClient::getCalendar() const {
+        return this->calendar;
+    }
 }
