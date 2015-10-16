@@ -2,11 +2,10 @@
 #include <string>
 #include <chrono>
 #include <yaml-cpp/yaml.h>
-#include "ISerializable.h"
 #include <vector>
 
 namespace DoLah {
-    class AbstractTask : public ISerializable {
+    class AbstractTask {
     public:
         AbstractTask();
         virtual ~AbstractTask() = 0;
@@ -28,17 +27,12 @@ namespace DoLah {
         bool done;
     };
 
-    class FloatingTask : public AbstractTask {
-        ISerializable* serialize(const std::string&);
-        std::string deserialize();
-    };
+    class FloatingTask : public AbstractTask { };
 
     class EventTask : public AbstractTask {
     public:
         EventTask();
         ~EventTask();
-        ISerializable* serialize(const std::string&);
-        std::string deserialize();
         std::tm getStartDate();
         void setStartDate(std::tm);
         std::tm getEndDate();
@@ -52,8 +46,6 @@ namespace DoLah {
     public:
         DeadlineTask();
         ~DeadlineTask();
-        ISerializable* serialize(const std::string&);
-        std::string deserialize();
         std::tm getDueDate();
         void setDueDate(std::tm);
     private:

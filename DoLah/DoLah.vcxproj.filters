@@ -86,7 +86,6 @@
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
-    <ClInclude Include="Models\ISerializable.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

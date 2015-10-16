@@ -166,7 +166,6 @@
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
     <ClInclude Include="Models\TaskFactory.h" />
-    <ClInclude Include="Models\ISerializable.h" />
     <ClInclude Include="TaskParser.h" />
     <ClInclude Include="TaskTokenizer.h" />
   </ItemGroup>
