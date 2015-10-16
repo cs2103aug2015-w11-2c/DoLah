@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <chrono>
+#include <yaml-cpp/yaml.h>
 #include <vector>
 
 namespace DoLah {
@@ -26,7 +27,7 @@ namespace DoLah {
         bool done;
     };
 
-    class FloatingTask : public AbstractTask {};
+    class FloatingTask : public AbstractTask { };
 
     class EventTask : public AbstractTask {
     public:
@@ -47,7 +48,6 @@ namespace DoLah {
         ~DeadlineTask();
         std::tm getDueDate();
         void setDueDate(std::tm);
-
     private:
         std::tm dueDate;
     };

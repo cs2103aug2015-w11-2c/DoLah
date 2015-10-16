@@ -39,10 +39,11 @@ namespace DoLah {
 				results.push_back(taskList.at(i));
 			}
 		}
-
 		return results;
 	}
-    std::vector<AbstractTask*> Calendar::getTaskList() {
+
+    std::vector<AbstractTask*> Calendar::getTaskList() const
+    {
         return this->taskList;
     }
 }
