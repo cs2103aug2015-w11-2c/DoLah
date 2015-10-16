@@ -11,3 +11,10 @@ void startConsole() {
 
     }
 }
+
+void printTaskList(const Calendar& calendar){
+    std::vector<DoLah::AbstractTask*> taskList = calendar.getTaskList();
+    for (size_t i = 0; i < taskList.size(); i++) {
+        std::cout << i << ": " << taskList[i]->getDescription() << "\n";
+    }
+}

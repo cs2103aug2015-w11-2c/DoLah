@@ -4,3 +4,4 @@
 #include "DoLahClient.h"
 
 void startConsole();
+void displayTaskList(const DoLah::Calendar&);

@@ -45,10 +45,4 @@ namespace DoLah {
     std::vector<AbstractTask*> Calendar::getTaskList() {
         return this->taskList;
     }
-
-    void Calendar::printTaskList() {
-        for (size_t i = 0; i < taskList.size(); i++) {
-            std::cout << i << ": " << taskList.at(i)->getDescription() << "\n";
-        }
-    }
 }
