@@ -1,6 +1,6 @@
 #include "DoLahClient.h"
 #include "Commands/Command.h"
-#include "CommandParser.h"
+#include "Parser/CommandParser.h"
 #include "CommandInvoker.h"
 
 namespace DoLah {

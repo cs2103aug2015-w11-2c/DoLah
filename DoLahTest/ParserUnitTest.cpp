@@ -3,12 +3,12 @@
 #include "regex"
 #include <iterator>
 
-#include "ParserLibrary.h"
-#include "CommandParser.h"
-#include "CommandTokenizer.h"
-#include "TaskParser.h"
-#include "TaskTokenizer.h"
-#include "DateTimeParser.h"
+#include "Parser/ParserLibrary.h"
+#include "Parser/CommandParser.h"
+#include "Parser/CommandTokenizer.h"
+#include "Parser/TaskParser.h"
+#include "Parser/TaskTokenizer.h"
+#include "Parser/DateTimeParser.h"
 
 #include "Commands/Command.h"
 #include "Models/Task.h"
