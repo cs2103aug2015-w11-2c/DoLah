@@ -29,5 +29,6 @@ namespace DoLah {
         static std::string dayAppendixPattern;
         static std::vector<std::string> monthPattern;
         static std::vector<std::string> monthFormat;
+        static std::vector<std::string> decorators;
     };
 }

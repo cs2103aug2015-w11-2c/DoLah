@@ -3,12 +3,12 @@
 #include "regex"
 #include <iterator>
 
-#include "ParserLibrary.h"
-#include "CommandParser.h"
-#include "CommandTokenizer.h"
-#include "TaskParser.h"
-#include "TaskTokenizer.h"
-#include "DateTimeParser.h"
+#include "Parser/ParserLibrary.h"
+#include "Parser/CommandParser.h"
+#include "Parser/CommandTokenizer.h"
+#include "Parser/TaskParser.h"
+#include "Parser/TaskTokenizer.h"
+#include "Parser/DateTimeParser.h"
 
 #include "Commands/Command.h"
 #include "Models/Task.h"
@@ -24,7 +24,12 @@ public:
             std::vector<std::tm> datesVector = DoLah::TaskTokenizer::findDate(inputArr);
             std::string dates = "";
             if (!datesVector.empty()) {
-                dates = DoLah::DateTimeParser::tmToString(datesVector.at(0));
+                for (size_t i = 0; i < datesVector.size(); i++) {
+                    dates += DoLah::DateTimeParser::tmToString(datesVector.at(i));
+                    if (i < datesVector.size() - 1) {
+                        dates += " ~ ";
+                    }
+                }
             }
             std::string tags = DoLah::ParserLibrary::vectorToString(DoLah::TaskTokenizer::findTags(inputArr));
             std::string description = DoLah::TaskTokenizer::findDescription(inputArr);
@@ -69,6 +74,21 @@ public:
             { "", "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
         );
     }
+
+    TEST_METHOD(parseAddDetailedTest5) {
+        parseAddTestMethod((std::string)
+            "#cs2103 #homework on the #stage from 15th to 21st",
+            { "15/10/2015 ~ 21/10/2015", "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
+        );
+    }
+
+    TEST_METHOD(parseAddDetailedTest6) {
+        parseAddTestMethod((std::string)
+            "workout from 15th of Nov to 21st of Dec",
+            { "15/11/2015 ~ 21/12/2015", "{  }", "workout" }
+        );
+    }
+
 
     std::string UNHANDLED_COMMAND_MESSAGE = "Command not handled";
     std::string UNKNOWN_COMMAND_MESSAGE = "Command not recognized";

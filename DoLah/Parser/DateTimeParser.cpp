@@ -2,6 +2,8 @@
 
 namespace DoLah {
 
+    std::vector<std::string> DateTimeParser::decorators = { "of" };
+
     std::string DateTimeParser::relativePattern = "this|next";
     std::string DateTimeParser::datePattern = "^("
         "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
@@ -82,18 +84,20 @@ namespace DoLah {
         int month;
         int year;
 
-        size_t size = strArr.size();
-        if ((day = getDay(strArr.at(0))) != NULL) {
+        std::vector<std::string> cleanArr = ParserLibrary::removeElementsFromStringVector(strArr, decorators);
+
+        size_t size = cleanArr.size();
+        if ((day = getDay(cleanArr.at(0))) != NULL) {
             output.tm_mday = day;
             if (size <= 1) {
                 return output;
             }
-            if ((month = getMonth(strArr.at(1))) != NULL) {
+            if ((month = getMonth(cleanArr.at(1))) != NULL) {
                 output.tm_mon = month;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(strArr.at(2))) != NULL) {
+                if ((year = getYear(cleanArr.at(2))) != NULL) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {
@@ -102,17 +106,17 @@ namespace DoLah {
             } else {
                 throw std::invalid_argument("");
             }
-        } else if ((month = getMonth(strArr.at(0))) != NULL) {
+        } else if ((month = getMonth(cleanArr.at(0))) != NULL) {
             output.tm_mon = month;
             if (size <= 1) {
                 throw std::invalid_argument("");
             }
-            if ((day = getDay(strArr.at(1))) != NULL) {
+            if ((day = getDay(cleanArr.at(1))) != NULL) {
                 output.tm_mday = day;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(strArr.at(2))) != NULL) {
+                if ((year = getYear(cleanArr.at(2))) != NULL) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {

@@ -23,7 +23,9 @@ namespace DoLah {
         static std::vector<std::string> findTags(std::vector<std::string>);
         
     private:
-        static std::vector<std::string> timeSubCommandList;
+        static std::string DEADLINE_INDICATOR;
+        static std::string SCHEDULE_INDICATOR;
+        static std::string SCHEDULE_SEPARATOR;
         static std::string tag;
     };
 }
