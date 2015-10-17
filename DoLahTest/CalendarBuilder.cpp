@@ -3,17 +3,14 @@
 #include "TaskBuilder.h"
 
 
-CalendarBuilder::CalendarBuilder()
-{
+CalendarBuilder::CalendarBuilder() {
 }
 
 
-CalendarBuilder::~CalendarBuilder()
-{
+CalendarBuilder::~CalendarBuilder() {
 }
 
-DoLah::Calendar CalendarBuilder::buildSimpleCalendar()
-{
+DoLah::Calendar CalendarBuilder::buildSimpleCalendar() {
     DoLah::Calendar calendar;
     for (int i = 0; i < 5; i++) {
         calendar.addTask(TaskBuilder::buildFloatingTask());

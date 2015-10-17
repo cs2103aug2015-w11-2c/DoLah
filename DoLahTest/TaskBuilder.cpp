@@ -3,13 +3,11 @@
 #include <string>
 #include <ctime>
 
-TaskBuilder::TaskBuilder()
-{
+TaskBuilder::TaskBuilder(){
 }
 
 
-TaskBuilder::~TaskBuilder()
-{
+TaskBuilder::~TaskBuilder(){
 }
 
 DoLah::FloatingTask* TaskBuilder::buildFloatingTask() {
