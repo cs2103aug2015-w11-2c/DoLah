@@ -3,31 +3,8 @@
 #include <ctime>
 #include <iostream>
 #include <time.h>
-#include <boost/date_time/posix_time/posix_time.hpp>
 //#include <boost/filesystem.hpp>
 
-namespace YAML {
-    template<>
-    struct convert<std::tm> {
-        static Node encode(const std::tm& rhs) {
-            Node node;
-            char s_dt[sizeof "2011-10-20 20:30:40"];
-            std::strftime(s_dt, sizeof s_dt, "%F %T", &rhs);
-            node = s_dt;
-            return node;
-        }
-
-        static bool decode(const Node& node, std::tm& rhs) {
-            if (!node.IsScalar()) {
-                return false;
-            }
-            std::string s_datetime = node.as<std::string>();
-            boost::posix_time::ptime t(boost::posix_time::time_from_string(s_datetime));
-            rhs = boost::posix_time::to_tm(t);
-            return true;
-        }
-    };
-}
 
 namespace DoLah {
     CalendarStorage::CalendarStorage()
@@ -104,48 +81,35 @@ namespace DoLah {
         YAML::Node node = YAML::LoadFile(filename);
 
         if (node.IsMap()) {
-            for (auto it = node["todo"].begin(); it != node["todo"].end(); it++) {
-                YAML::Node taskNode = *it;
-                const std::string text;
-                DoLah::AbstractTask* task = NULL;
-                if (taskNode["due"].IsDefined()) {
-                    DeadlineTask* d_task = new DeadlineTask;
-                    d_task->setDueDate(taskNode["due"].as<std::tm>());
-                    task = d_task;
-                } else if (taskNode["start"].IsDefined() && taskNode["end"].IsDefined()) {
-                    EventTask* e_task = new EventTask;
-                    e_task->setStartDate(taskNode["start"].as<std::tm>());
-                    e_task->setEndDate(taskNode["end"].as<std::tm>());
-                    task = e_task;
-                } else {
-                    task = new FloatingTask;
-                }
-                task->setDone(false);
-                task->setName(taskNode["task"].as<std::string>());
-                task->setDescription(taskNode["description"].as<std::string>());
-                calendar.addTask(task);
-            }
+            for (auto taskGroupIterator = node.begin(); taskGroupIterator != node.end(); ++taskGroupIterator) {
+                std::string taskStatus = taskGroupIterator->first.as<std::string>();
 
-            for (auto it = node["done"].begin(); it != node["done"].end(); it++) {
-                YAML::Node taskNode = *it;
-                const std::string text;
-                DoLah::AbstractTask* task = NULL;
-                if (taskNode["due"].IsDefined()) {
-                    DeadlineTask* d_task = new DeadlineTask;
-                    d_task->setDueDate(taskNode["due"].as<std::tm>());
-                    task = d_task;
-                } else if (taskNode["start"].IsDefined() && taskNode["end"].IsDefined()) {
-                    EventTask* e_task = new EventTask;
-                    e_task->setStartDate(taskNode["start"].as<std::tm>());
-                    e_task->setEndDate(taskNode["end"].as<std::tm>());
-                    task = e_task;
-                } else {
-                    task = new FloatingTask;
+                for (auto taskIterator = taskGroupIterator->second.begin(); taskIterator != taskGroupIterator->second.end(); ++taskIterator) {                    
+                    YAML::Node taskNode = *taskIterator;
+                    const std::string text;
+                    DoLah::AbstractTask* task = NULL;
+                    if (taskNode["due"].IsDefined()) {
+                        DeadlineTask* d_task = new DeadlineTask;
+                        d_task->setDueDate(taskNode["due"].as<std::tm>());
+                        task = d_task;
+                    } else if (taskNode["start"].IsDefined() && taskNode["end"].IsDefined()) {
+                        EventTask* e_task = new EventTask;
+                        e_task->setStartDate(taskNode["start"].as<std::tm>());
+                        e_task->setEndDate(taskNode["end"].as<std::tm>());
+                        task = e_task;
+                    } else {
+                        task = new FloatingTask;
+                    }
+
+                    if (taskStatus == "todo") {
+                        task->setDone(false);
+                    } else if (taskStatus == "done") {
+                        task->setDone(true);
+                    }
+                    task->setName(taskNode["task"].as<std::string>());
+                    task->setDescription(taskNode["description"].as<std::string>());
+                    calendar.addTask(task);
                 }
-                task->setDone(true);
-                task->setName(taskNode["task"].as<std::string>());
-                task->setDescription(taskNode["description"].as<std::string>());
-                calendar.addTask(task);
             }
         }
         return calendar;
