@@ -30,6 +30,7 @@ void printCalendar(const DoLah::Calendar& calendar){
             for (size_t j = 0; j < tags.size(); j++) {
                 std::cout << "#" << tags[j] << " ";
             }
+            std::cout << std::endl;
         }
 
         DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(taskList[i]);
