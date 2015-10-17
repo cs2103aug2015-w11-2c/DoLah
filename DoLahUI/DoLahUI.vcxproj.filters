@@ -62,4 +62,7 @@
   <ItemGroup>
     <ResourceCompile Include="DoLahUI.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

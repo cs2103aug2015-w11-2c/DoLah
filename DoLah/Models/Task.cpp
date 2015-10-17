@@ -1,4 +1,5 @@
 #include "Task.h"
+#include "TaskFactory.h"
 
 namespace DoLah {
 
@@ -44,5 +45,4 @@ namespace DoLah {
     int AbstractTask::getId() {
         return this->id;
     }
-
 }

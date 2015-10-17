@@ -22,6 +22,7 @@
     <ClCompile Include="Parser\DateTimeParser.cpp" />
     <ClCompile Include="Parser\CommandTokenizer.cpp" />
     <ClCompile Include="Parser\CommandParser.cpp" />
+    <ClCompile Include="Storage\CalendarStorage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Models\DeadlineTask.cpp">
@@ -78,6 +79,12 @@
     <ClInclude Include="Parser\DateTimeParser.h" />
     <ClInclude Include="Parser\CommandTokenizer.h" />
     <ClInclude Include="Parser\CommandParser.h" />
+    <ClInclude Include="Storage\CalendarStorage.h" />
+    <ClInclude Include="Models\Calendar.h" />
+    <ClInclude Include="Commands\Command.h" />
+    <ClInclude Include="DoLahClient.h" />
+    <ClInclude Include="Models\Task.h" />
+    <ClInclude Include="Models\TaskFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
