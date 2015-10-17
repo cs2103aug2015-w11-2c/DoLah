@@ -21,7 +21,9 @@ namespace DoLah {
         static int getMonth(std::string);
         static int getYear(std::string);
         static std::string tmToString(std::tm);
-
+        static std::tm classifyDate(std::vector<std::string>);
+        static std::tm checkDMY(std::vector<std::string>);
+        static std::tm checkMDY(std::vector<std::string>);
     private:
         static std::string relativePattern;
         static std::string datePattern;

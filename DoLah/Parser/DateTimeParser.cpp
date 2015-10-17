@@ -75,29 +75,59 @@ namespace DoLah {
         return std::stoi(str);
     }
 
+    
+
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
+        std::vector<std::string> cleanArr = strArr;
+        if (cleanArr.size() == 1) {
+            std::string str = cleanArr.at(0);
+            cleanArr = ParserLibrary::explode(str, "-");
+        } else {
+            cleanArr = ParserLibrary::removeElementsFromStringVector(strArr, decorators);
+        }
+
+        return classifyDate(cleanArr);
+    }
+
+    std::string DateTimeParser::tmToString(std::tm time) {
+        return std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
+    }
+
+    std::tm DateTimeParser::classifyDate(std::vector<std::string> strArr) {
+        std::tm output;
+        try {
+            output = checkDMY(strArr);
+        } catch (std::invalid_argument e) {
+            try {
+                output = checkMDY(strArr);
+            } catch (std::invalid_argument e) {
+                throw e;
+            }
+        }
+        return output;
+    }
+
+    std::tm DateTimeParser::checkDMY(std::vector<std::string> strArr) {
         time_t t = time(0);
-        struct tm output;
+        std::tm output;
         localtime_s(&output, &t);
 
         int day;
         int month;
         int year;
 
-        std::vector<std::string> cleanArr = ParserLibrary::removeElementsFromStringVector(strArr, decorators);
-
-        size_t size = cleanArr.size();
-        if ((day = getDay(cleanArr.at(0))) != NULL) {
+        size_t size = strArr.size();
+        if ((day = getDay(strArr.at(0))) != NULL) {
             output.tm_mday = day;
             if (size <= 1) {
                 return output;
             }
-            if ((month = getMonth(cleanArr.at(1))) != NULL) {
+            if ((month = getMonth(strArr.at(1))) != NULL) {
                 output.tm_mon = month;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(cleanArr.at(2))) != NULL) {
+                if ((year = getYear(strArr.at(2))) != NULL) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {
@@ -106,17 +136,31 @@ namespace DoLah {
             } else {
                 throw std::invalid_argument("");
             }
-        } else if ((month = getMonth(cleanArr.at(0))) != NULL) {
+        }
+        return std::tm();
+    }
+
+    std::tm DateTimeParser::checkMDY(std::vector<std::string> strArr) {
+        time_t t = time(0);
+        std::tm output;
+        localtime_s(&output, &t);
+
+        int day;
+        int month;
+        int year;
+
+        size_t size = strArr.size();
+        if ((month = getMonth(strArr.at(0))) != NULL) {
             output.tm_mon = month;
             if (size <= 1) {
                 throw std::invalid_argument("");
             }
-            if ((day = getDay(cleanArr.at(1))) != NULL) {
+            if ((day = getDay(strArr.at(1))) != NULL) {
                 output.tm_mday = day;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(cleanArr.at(2))) != NULL) {
+                if ((year = getYear(strArr.at(2))) != NULL) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {
@@ -128,9 +172,6 @@ namespace DoLah {
         } else {
             throw std::invalid_argument("");
         }
-    }
-
-    std::string DateTimeParser::tmToString(std::tm time) {
-        return std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
+        return std::tm();
     }
 }
