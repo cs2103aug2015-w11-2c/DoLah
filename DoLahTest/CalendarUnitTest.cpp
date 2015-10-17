@@ -43,7 +43,7 @@ namespace DoLahTest
 			testVector.erase(testVector.begin()+2);
 			std::vector<DoLah::AbstractTask*> resultVector = testCal.search("homework");
 
-			for (int i = 0; i < testVector.size(); i++) {
+			for (unsigned int i = 0; i < testVector.size(); i++) {
 				Assert::AreEqual(testVector[i]->getName(), resultVector[i]->getName());
 			}
 		}
