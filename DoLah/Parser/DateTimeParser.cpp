@@ -2,6 +2,7 @@
 
 namespace DoLah {
     int DateTimeParser::REJECT = -1;
+    std::string DateTimeParser::CENTURY = "20";
 
     std::vector<std::string> DateTimeParser::decorators = { "of" };
 
@@ -65,13 +66,18 @@ namespace DoLah {
     }
 
     int DateTimeParser::getYear(std::string str) {
-        if (str.length() != 2 && str.length() != 4) {
+        std::string year = str;
+        if (year.length() != 2 && year.length() != 4) {
             return REJECT;
-        } else if (!ParserLibrary::isDecimal(str)) {
+        } else if (!ParserLibrary::isDecimal(year)) {
             return REJECT;
         }
 
-        return std::stoi(str);
+        if (year.length() == 2) {
+            year += CENTURY + year;
+        }
+
+        return std::stoi(year);
     }
 
 

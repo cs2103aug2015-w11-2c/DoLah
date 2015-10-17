@@ -28,6 +28,8 @@ namespace DoLah {
         static std::tm checkMDY(std::vector<std::string>);
     private:
         static int REJECT;
+        static std::string CENTURY;
+
         // this week, next week (not implemented)
         static std::string relativePattern;
         static std::string datePattern;
