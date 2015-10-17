@@ -8,13 +8,14 @@
 #include "Storage/CalendarStorage.h"
 
 #include "CalendarBuilder.h"
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace DoLahTest
 {
     const char* TEST_FIXTURE_FILENAME = "test_calendar.yaml";
-    const std::string SAMPLE_FIXTURE_CONTENT = R"(---
+    const std::string SAMPLE_FIXTURE_COMPLEX_CONTENT = R"(---
 todo:  # Todo Tasks
     - task: Floating Task 0
       description: A task description for floating task 0
@@ -36,6 +37,19 @@ done:  # Completed Tasks
       due: 2016-08-16 03:10:15
       description: A task description for deadline task 5
 ...)";
+    const std::string SAMPLE_FIXTURE_SIMPLE_CONTENT = R"(---
+todo:  # Todo Tasks
+    - task: Floating Task 0
+      description: A task description for floating task 0
+    - task: Deadline Task 1
+      due: 2016-08-16 03:10:15
+      description: A task description for deadline task 1
+    - description: A task description for event task 2
+      end: 2015-10-18 00:10:15
+      start: 2015-10-16 23:10:15
+      task: Event Task 2
+...)";
+
 
     TEST_CLASS(Storage) {
     public:
@@ -67,16 +81,16 @@ done:  # Completed Tasks
             Assert::AreEqual(
                 std::string(calendar.getTaskList()[0]->getDescription()),
                 calNode["todo"][0]["description"].as<std::string>());
-            Assert::AreEqual(calendar.getTaskList().size(), calNode["todo"].size() + calNode["done"].size());
+            Assert::AreEqual(calNode["todo"].size() + calNode["done"].size(), calendar.getTaskList().size());
         }
 
 
-        TEST_METHOD(TestLoadCalendar) {
+        TEST_METHOD(TestLoadCalendarAllTask) {
             // Arrange
             // Create a temporary fixture file
             if (!std::ifstream(TEST_FIXTURE_FILENAME)) {
                 std::ofstream out(TEST_FIXTURE_FILENAME);
-                out << SAMPLE_FIXTURE_CONTENT;
+                out << SAMPLE_FIXTURE_COMPLEX_CONTENT;
                 out.close();
             }
 
@@ -86,13 +100,51 @@ done:  # Completed Tasks
 
             // Assert
             YAML::Node calNode = YAML::LoadFile(TEST_FIXTURE_FILENAME);
-            Assert::AreEqual(
-                std::string(calendar.getTaskList()[0]->getName()),
-                calNode["todo"][0]["task"].as<std::string>());
-            Assert::AreEqual(
-                std::string(calendar.getTaskList()[0]->getDescription()),
-                calNode["todo"][0]["description"].as<std::string>());
-            Assert::AreEqual(calendar.getTaskList().size(), calNode["todo"].size() + calNode["done"].size());
+            Assert::AreEqual(calNode["todo"].size() + calNode["done"].size(), calendar.getTaskList().size());
+        }
+
+        TEST_METHOD(TestLoadCalendarTaskDetail) {
+            // Arrange
+            // Create a temporary fixture file
+            if (!std::ifstream(TEST_FIXTURE_FILENAME)) {
+                std::ofstream out(TEST_FIXTURE_FILENAME);
+                out << SAMPLE_FIXTURE_SIMPLE_CONTENT;
+                out.close();
+            }
+
+            // Act
+            // load the temporary fixture file
+            DoLah::Calendar calendar = DoLah::CalendarStorage::load(TEST_FIXTURE_FILENAME);
+
+            // Assert
+            YAML::Node calNode = YAML::LoadFile(TEST_FIXTURE_FILENAME);
+            std::vector<DoLah::AbstractTask*> taskList = calendar.getTaskList();
+
+            // Assert Task Details
+            for (size_t i = 0; i < taskList.size(); ++i) {
+                Assert::AreEqual(calNode["todo"][i]["task"].as<std::string>(), taskList[i]->getName());
+                Assert::AreEqual(calNode["todo"][i]["description"].as<std::string>(), taskList[i]->getDescription());
+            }
+
+            // Assert Floating Task Details
+            DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(taskList[0]);
+            Assert::IsNotNull(floatingTask);
+
+
+            // Assert Deadline Task Details
+            DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(taskList[1]);
+            std::tm due = calNode["todo"][1]["due"].as<std::tm>();
+            Assert::IsNotNull(deadlineTask);
+            Assert::AreEqual(0.0, difftime(mktime(&due), mktime(&deadlineTask->getDueDate())));
+
+
+            // Assert Event Task Details
+            DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(taskList[2]);
+            std::tm start = calNode["todo"][2]["start"].as<std::tm>();
+            std::tm end = calNode["todo"][2]["end"].as<std::tm>();
+            Assert::IsNotNull(eventTask);
+            Assert::AreEqual(0.0, difftime(mktime(&start), mktime(&eventTask->getStartDate())));
+            Assert::AreEqual(0.0, difftime(mktime(&end), mktime(&eventTask->getEndDate())));
         }
     };
 }
