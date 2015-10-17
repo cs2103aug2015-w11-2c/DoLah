@@ -74,7 +74,7 @@ namespace DoLah {
         }
 
         if (year.length() == 2) {
-            year += CENTURY + year;
+            year = CENTURY + year;
         }
 
         return std::stoi(year);
