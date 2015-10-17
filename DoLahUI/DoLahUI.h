@@ -2,6 +2,7 @@
 #define DOLAHUI_H
 
 #include "DoLahClient.h"
+#include "UITaskBox.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -13,6 +14,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -34,14 +36,15 @@ namespace DoLah {
         ~DoLahUI();
 
         QWidget *centralWidget;
+
+        QHBoxLayout *menu;
+
         QScrollArea *scrollArea;
         QWidget *tasksContainer;
         QVBoxLayout *tasksLayout;
         QTextBrowser *taskBox;
-        QTextBrowser *taskBox1;
-        QTextBrowser *taskBox2;
-        QTextBrowser *taskBox3;
-        QTextBrowser *taskBox4;
+
+        QLabel *message;
         QLineEdit *lineEdit;
 
     private slots:
@@ -51,6 +54,7 @@ namespace DoLah {
     private:
         void setupUI();
         void retranslateUI();
+        void initMenu();
         void initDisplayArea();
         void initInputArea();
         void createTaskBox(AbstractTask*);
