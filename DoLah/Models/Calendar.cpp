@@ -8,7 +8,11 @@ namespace DoLah {
 		//TODO
 	}
 
-	std::vector<AbstractTask*> Calendar::getTaskList() {
+	AbstractTask* Calendar::getTask(int index) const {
+		return taskList.at(index);
+	}
+
+	std::vector<AbstractTask*> Calendar::getTaskList() const {
 		return taskList;
 	}
 
@@ -43,8 +47,6 @@ namespace DoLah {
 				results.push_back(taskList.at(i));
 			}
 		}
-
 		return results;
 	}
- 
 }

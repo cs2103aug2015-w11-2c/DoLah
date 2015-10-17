@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <chrono>
+#include <yaml-cpp/yaml.h>
 #include <vector>
 
 namespace DoLah {
@@ -53,7 +54,6 @@ namespace DoLah {
         ~DeadlineTask(); ///< destructor
         std::tm getDueDate(); ///< get the due date
         void setDueDate(std::tm); ///< set the due date
-
     private:
         std::tm dueDate; ///< Task due datetime
     };

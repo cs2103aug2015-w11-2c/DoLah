@@ -1,10 +1,22 @@
 # DoLah
 
-DoLah is a simple todo app.
+## Setup
 
-To contribute please visit our [documentation page](https://cs2103aug2015-w11-2c.github.io/docs/).
+    # Clone Repository
+    git clone git@github.com:cs2103aug2015-w11-2c/DoLah.git dolah
 
-Branch Naming:
+    # Clone Dependencies Repository
+    git submodule update --init --recursive
+
+Please download all dependencies libraries which is available 
+in team shared drive, "vendor-libs" folder into project "Library" folder.
+This includes:
+- libyaml-cppmd.lib
+- libyaml-cppmdd.lib
+- libboost_date_time-vc140-mt-gd-1_59.lib
+
+
+## Branch Naming:
 
     # Specific Feature or Functionality
     feature/<feature-label>

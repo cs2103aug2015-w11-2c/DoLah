@@ -8,21 +8,21 @@ public:
 
 class FloatingTaskFactory {
 public:
-    DoLah::AbstractTask* makeTask() {
+    static DoLah::AbstractTask* makeTask() {
         return new DoLah::FloatingTask;
     }
 };
 
 class DeadlineTaskFactory {
 public:
-    DoLah::AbstractTask* makeTask() {
+    static DoLah::AbstractTask* makeTask() {
         return new DoLah::DeadlineTask;
     }
 };
 
 class EventTaskFactory {
 public:
-    DoLah::AbstractTask* makeTask() {
+    static DoLah::AbstractTask* makeTask() {
         return new DoLah::EventTask;
     }
 };
