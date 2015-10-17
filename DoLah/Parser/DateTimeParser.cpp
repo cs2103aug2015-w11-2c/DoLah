@@ -78,15 +78,22 @@ namespace DoLah {
     
 
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
+        std::tm output;
+
         std::vector<std::string> cleanArr = strArr;
         if (cleanArr.size() == 1) {
             std::string str = cleanArr.at(0);
             cleanArr = ParserLibrary::explode(str, "-");
-        } else {
-            cleanArr = ParserLibrary::removeElementsFromStringVector(strArr, decorators);
+        }
+        cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
+
+        try {
+            output = classifyDate(cleanArr);
+        } catch (std::invalid_argument e) {
+            throw e;
         }
 
-        return classifyDate(cleanArr);
+        return output;
     }
 
     std::string DateTimeParser::tmToString(std::tm time) {
@@ -136,8 +143,10 @@ namespace DoLah {
             } else {
                 throw std::invalid_argument("");
             }
+        } else {
+            throw std::invalid_argument("");
         }
-        return std::tm();
+        return output;
     }
 
     std::tm DateTimeParser::checkMDY(std::vector<std::string> strArr) {
@@ -172,6 +181,6 @@ namespace DoLah {
         } else {
             throw std::invalid_argument("");
         }
-        return std::tm();
+        return output;
     }
 }
