@@ -1,6 +1,7 @@
 #include "DateTimeParser.h"
 
 namespace DoLah {
+    int DateTimeParser::REJECT = -1;
 
     std::vector<std::string> DateTimeParser::decorators = { "of" };
 
@@ -27,11 +28,9 @@ namespace DoLah {
         "^(november|nov|11)$",
         "^(december|dec|12)$"
     };
-
-    std::vector<std::string> DateTimeParser::monthFormat = {
-        "^(january|jan|1|01)$",
+    std::vector<std::string> DateTimeParser::dateDividers = {
+        "/", "-", "."
     };
-
 
     DateTimeParser::DateTimeParser() {
     }
@@ -46,9 +45,9 @@ namespace DoLah {
         str = std::regex_replace(str, std::regex(dayAppendixPattern), "");
 
         if (str.length() > 2) {
-            return NULL;
+            return REJECT;
         } else if (!ParserLibrary::isDecimal(str)) {
-            return NULL;
+            return REJECT;
         }
 
         return std::stoi(str);
@@ -58,24 +57,24 @@ namespace DoLah {
         std::string out;
         for (size_t m = 0; m < monthPattern.size(); m++) {
             if (std::regex_match(str, std::regex(monthPattern.at(m), std::regex_constants::icase))) {
-                return (int) m;
+                return (int)m;
             }
         }
 
-        return NULL;
+        return REJECT;
     }
 
     int DateTimeParser::getYear(std::string str) {
         if (str.length() != 2 && str.length() != 4) {
-            return NULL;
+            return REJECT;
         } else if (!ParserLibrary::isDecimal(str)) {
-            return NULL;
+            return REJECT;
         }
 
         return std::stoi(str);
     }
 
-    
+
 
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
         std::tm output;
@@ -83,7 +82,12 @@ namespace DoLah {
         std::vector<std::string> cleanArr = strArr;
         if (cleanArr.size() == 1) {
             std::string str = cleanArr.at(0);
-            cleanArr = ParserLibrary::explode(str, "-");
+            for (size_t i = 0; i < dateDividers.size(); i++) {
+                cleanArr = ParserLibrary::explode(str, dateDividers.at(i));
+                if (cleanArr.size() > 1) {
+                    break;
+                }
+            }
         }
         cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
 
@@ -119,22 +123,22 @@ namespace DoLah {
         std::tm output;
         localtime_s(&output, &t);
 
-        int day;
-        int month;
-        int year;
+        int day = -1;
+        int month = -1;
+        int year = -1;
 
         size_t size = strArr.size();
-        if ((day = getDay(strArr.at(0))) != NULL) {
+        if ((day = getDay(strArr.at(0))) != REJECT) {
             output.tm_mday = day;
             if (size <= 1) {
                 return output;
             }
-            if ((month = getMonth(strArr.at(1))) != NULL) {
+            if ((month = getMonth(strArr.at(1))) != REJECT) {
                 output.tm_mon = month;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(strArr.at(2))) != NULL) {
+                if ((year = getYear(strArr.at(2))) != REJECT) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {
@@ -154,22 +158,22 @@ namespace DoLah {
         std::tm output;
         localtime_s(&output, &t);
 
-        int day;
-        int month;
-        int year;
+        int day = -1;
+        int month = -1;
+        int year = -1;
 
         size_t size = strArr.size();
-        if ((month = getMonth(strArr.at(0))) != NULL) {
+        if ((month = getMonth(strArr.at(0))) != REJECT) {
             output.tm_mon = month;
             if (size <= 1) {
                 throw std::invalid_argument("");
             }
-            if ((day = getDay(strArr.at(1))) != NULL) {
+            if ((day = getDay(strArr.at(1))) != REJECT) {
                 output.tm_mday = day;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(strArr.at(2))) != NULL) {
+                if ((year = getYear(strArr.at(2))) != REJECT) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {

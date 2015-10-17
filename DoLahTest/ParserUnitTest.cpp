@@ -96,6 +96,10 @@ public:
         );
     }
 
+    TEST_METHOD(getMonthTest1) {
+        Assert::AreEqual((std::string) "1", std::to_string(DoLah::DateTimeParser::getMonth("feb")));
+    }
+
     std::string UNHANDLED_COMMAND_MESSAGE = "Command not handled";
     std::string UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
     std::string TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
