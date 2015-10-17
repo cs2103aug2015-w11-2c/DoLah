@@ -2,7 +2,7 @@
 
 
 namespace DoLah {
-    std::string TaskTokenizer::DEADLINE_INDICATOR = "on";
+    std::vector<std::string> TaskTokenizer::DEADLINE_INDICATOR = { "on", "by" };
     std::string TaskTokenizer::SCHEDULE_INDICATOR = "from";
     std::vector<std::string> TaskTokenizer::SCHEDULE_SEPARATOR = { "to", "until" };
     std::string TaskTokenizer::tag = "#";
@@ -42,7 +42,7 @@ namespace DoLah {
 
         try {
             for (size_t i = lineArr.size() - 1; i > 0; i--) {
-                if (DEADLINE_INDICATOR == ParserLibrary::tolowercase(lineArr.at(i))) {
+                if (ParserLibrary::inStringArray(DEADLINE_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
                     std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
 
                     std::tm time = DateTimeParser::toDateFormat(subVec);
