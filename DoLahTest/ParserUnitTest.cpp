@@ -21,11 +21,13 @@ public:
     void parseAddTestMethod(std::string input, std::vector<std::string> expected) {
         try {
             std::vector<std::string> inputArr = DoLah::ParserLibrary::explode(input, " ");
-            std::vector<std::tm> datesVector = DoLah::TaskTokenizer::findDate(inputArr);
+            std::vector<std::tm> datesVector = DoLah::TaskTokenizer::findAndRemoveDate(inputArr);
             std::string dates = "";
             if (!datesVector.empty()) {
                 for (size_t i = 0; i < datesVector.size(); i++) {
-                    dates += DoLah::DateTimeParser::tmToString(datesVector.at(i));
+                    dates += std::to_string(datesVector.at(i).tm_mday) + "/" 
+                        + std::to_string(datesVector.at(i).tm_mon + 1) + "/" 
+                        + std::to_string(datesVector.at(i).tm_year + 1900);
                     if (i < datesVector.size() - 1) {
                         dates += " ~ ";
                     }

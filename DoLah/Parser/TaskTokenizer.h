@@ -13,7 +13,7 @@ namespace DoLah {
 
         // Fixed format ~ date is at the end of command indicated by subcommand 'on'.
         // It will prune the date part from the input
-        static std::vector<std::tm> findDate(std::vector<std::string>&);
+        static std::vector<std::tm> findAndRemoveDate(std::vector<std::string>&);
 
         // The input should not have date already, and thus findDate always come before this.
         // Tag is ignored and the hashes remain in description.

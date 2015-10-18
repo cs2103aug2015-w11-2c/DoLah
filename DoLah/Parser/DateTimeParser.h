@@ -20,12 +20,12 @@ namespace DoLah {
         static int getDay(std::string);
         static int getMonth(std::string);
         static int getYear(std::string);
-        static std::string tmToString(std::tm);
+
         static std::tm classifyDate(std::vector<std::string>);
         // 25th December 2015
-        static std::tm checkDMY(std::vector<std::string>);
+        static std::tm checkDMYformat(std::vector<std::string>);
         // December 25th 2015
-        static std::tm checkMDY(std::vector<std::string>);
+        static std::tm checkMDYformat(std::vector<std::string>);
     private:
         static int REJECT;
         static std::string CENTURY;

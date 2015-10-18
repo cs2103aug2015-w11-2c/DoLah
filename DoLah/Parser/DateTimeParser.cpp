@@ -65,8 +65,7 @@ namespace DoLah {
         return REJECT;
     }
 
-    int DateTimeParser::getYear(std::string str) {
-        std::string year = str;
+    int DateTimeParser::getYear(std::string year) {
         if (year.length() != 2 && year.length() != 4) {
             return REJECT;
         } else if (!ParserLibrary::isDecimal(year)) {
@@ -106,17 +105,13 @@ namespace DoLah {
         return output;
     }
 
-    std::string DateTimeParser::tmToString(std::tm time) {
-        return std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
-    }
-
     std::tm DateTimeParser::classifyDate(std::vector<std::string> strArr) {
         std::tm output;
         try {
-            output = checkDMY(strArr);
+            output = checkDMYformat(strArr);
         } catch (std::invalid_argument e) {
             try {
-                output = checkMDY(strArr);
+                output = checkMDYformat(strArr);
             } catch (std::invalid_argument e) {
                 throw e;
             }
@@ -124,7 +119,7 @@ namespace DoLah {
         return output;
     }
 
-    std::tm DateTimeParser::checkDMY(std::vector<std::string> strArr) {
+    std::tm DateTimeParser::checkDMYformat(std::vector<std::string> strArr) {
         time_t t = time(0);
         std::tm output;
         localtime_s(&output, &t);
@@ -159,7 +154,7 @@ namespace DoLah {
         return output;
     }
 
-    std::tm DateTimeParser::checkMDY(std::vector<std::string> strArr) {
+    std::tm DateTimeParser::checkMDYformat(std::vector<std::string> strArr) {
         time_t t = time(0);
         std::tm output;
         localtime_s(&output, &t);

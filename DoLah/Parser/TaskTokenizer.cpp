@@ -36,7 +36,7 @@ namespace DoLah {
         return ParserLibrary::implode(lineArr, " ");
     }
 
-    std::vector<std::tm> TaskTokenizer::findDate(std::vector<std::string> &lineArr) {
+    std::vector<std::tm> TaskTokenizer::findAndRemoveDate(std::vector<std::string> &lineArr) {
         TaskTokenizer ct;
         std::vector<std::tm> output;
 
@@ -54,11 +54,11 @@ namespace DoLah {
                     std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
                     for (size_t j = 0; j < subVec.size(); j++) {
                         if (ParserLibrary::inStringArray(SCHEDULE_SEPARATOR, ParserLibrary::tolowercase(subVec.at(j)))) {
-                            std::vector<std::string> startdateArr(subVec.begin(), subVec.begin() + j);
-                            std::vector<std::string> enddateArr(subVec.begin() + j + 1, subVec.end());
+                            std::vector<std::string> startDateArr(subVec.begin(), subVec.begin() + j);
+                            std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
 
-                            std::tm startdate = DateTimeParser::toDateFormat(startdateArr);
-                            std::tm enddate = DateTimeParser::toDateFormat(enddateArr);
+                            std::tm startdate = DateTimeParser::toDateFormat(startDateArr);
+                            std::tm enddate = DateTimeParser::toDateFormat(endDateArr);
 
                             output.push_back(startdate);
                             output.push_back(enddate);
