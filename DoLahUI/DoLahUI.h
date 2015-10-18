@@ -18,13 +18,11 @@
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QSizePolicy>
+#include <QFile>
+#include <QMouseEvent>
 
 namespace DoLah {
     class DoLahUI : public QMainWindow
@@ -35,6 +33,7 @@ namespace DoLah {
         DoLahUI(QWidget *parent = 0);
         ~DoLahUI();
 
+        QFile stylesheet;
         QWidget *centralWidget;
 
         QHBoxLayout *menu;
@@ -54,6 +53,8 @@ namespace DoLah {
     private:
         void setupUI();
         void retranslateUI();
+        void mousePressEvent(QMouseEvent*);
+        void mouseMoveEvent(QMouseEvent*);
         void initMenu();
         void initDisplayArea();
         void initInputArea();
@@ -61,6 +62,7 @@ namespace DoLah {
         void loadTasks();
 
         DoLah::DoLahClient appClient;
+        QPoint dragPosition;
     };
 }
 #endif // DOLAHUI_H

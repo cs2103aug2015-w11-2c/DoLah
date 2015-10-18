@@ -5,6 +5,12 @@ namespace DoLah {
         : QMainWindow(parent)
     {
         this->setupUI();
+        QFile stylesheet("stylesheet.qss");
+        if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+        setStyleSheet(stylesheet.readAll());
+        stylesheet.close();
+        }
     }
 
     DoLahUI::~DoLahUI()
@@ -18,9 +24,9 @@ namespace DoLah {
         if (this->objectName().isEmpty()) {
             this->setObjectName(QStringLiteral("DoLahUIWindow"));
         }
+
         this->resize(350, 570);
         this->setFixedSize(this->size());
-        this->setStyleSheet("background-color: #2A934B;");
         this->setWindowFlags(Qt::CustomizeWindowHint);
         this->setWindowFlags(Qt::FramelessWindowHint);
         centralWidget = new QWidget(this);
@@ -37,8 +43,23 @@ namespace DoLah {
     }
 
     void DoLahUI::retranslateUI() {
-        this->setWindowTitle(QApplication::translate("window", "DoLah", 0));
-        taskBox->setText(QApplication::translate("window", "<font size=4><b>1. polish GUI</b></font><br><font size=3><font color=#20B2AA>today</font></font>", 0));
+        taskBox->setText(QApplication::translate("window", "<font size=4><b>1. polish GUI</b></font><br><font size=3><font color=#2fb6a7>today</font></font>", 0));
+    }
+
+    // HANDLE DRAGGING OF WINDOW
+
+    void DoLahUI::mousePressEvent(QMouseEvent *event) {
+        if (event->button() == Qt::LeftButton) {
+            dragPosition = event->globalPos() - frameGeometry().topLeft();
+            event->accept();
+        }
+    }
+
+    void DoLahUI::mouseMoveEvent(QMouseEvent *event) {
+        if (event->buttons() & Qt::LeftButton) {
+            move(event->globalPos() - dragPosition);
+            event->accept();
+        }
     }
 
     // MENU
@@ -52,18 +73,14 @@ namespace DoLah {
 
     void DoLahUI::initDisplayArea() {
         scrollArea = new QScrollArea(centralWidget);
-        scrollArea->setObjectName(QStringLiteral("Scrollable Area"));
         scrollArea->setGeometry(QRect(5, 70, 340, 450));
         scrollArea->setFrameStyle(QFrame::NoFrame);
-        scrollArea->setStyleSheet("background-color: #B4EEB4;");
 
         scrollArea->setWidgetResizable(true);
 
         taskBox = new QTextBrowser();
-        taskBox->setObjectName(QStringLiteral("Task List"));
         taskBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         taskBox->setFixedHeight(40);
-        taskBox->setStyleSheet("background-color: white;");
         taskBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
         tasksContainer = new QWidget(scrollArea);
@@ -73,7 +90,7 @@ namespace DoLah {
         tasksLayout->setAlignment(Qt::AlignTop);
         tasksLayout->addWidget(taskBox);
         tasksLayout->setSpacing(3);
-        tasksLayout->setMargin(0);
+        tasksLayout->setContentsMargins(0, 0, 0, 0);
         loadTasks();
 
         scrollArea->setWidget(tasksContainer);
@@ -107,8 +124,7 @@ namespace DoLah {
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("User Input Area"));
         lineEdit->setGeometry(QRect(5, 540, 340, 25));
-        lineEdit->setStyleSheet("background-color: white;");
-        
+
         // handles events when enter key is pressed
         QObject::connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(handleUserInput()));
         //QObject::connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(testUserInput()));
@@ -119,12 +135,8 @@ namespace DoLah {
         QString input = lineEdit->text();
         std::string inputline = input.toStdString();
         this->appClient.parseAndProcessCommand(inputline);
-        QTextBrowser *tempTaskBox = new QTextBrowser();
-        tempTaskBox->setObjectName(QStringLiteral("Task List"));
-        tempTaskBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        tempTaskBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        tempTaskBox->setText(input);
-        tasksLayout->insertWidget(0, tempTaskBox);
+        loadTasks();
+        message->setText("Done. Enter next command:");
     }
 
     void DoLahUI::testUserInput() {

@@ -1,0 +1,25 @@
+QMainWindow
+{
+	background-color: #9e3b36;
+}
+
+QScrollArea > QWidget > QWidget
+{ 
+	background-color: #a08d8f;
+} 
+
+QTextBrowser 
+{
+	background-color: #fcebbf; 
+	color: #4c3e3e; 
+}
+
+QLineEdit 
+{ 
+	background-color: white; 
+}
+
+QLabel
+{ 
+	color: white;
+}
