@@ -9,7 +9,7 @@ namespace DoLah {
     }
 
     AbstractTask* TaskParser::parseTask(std::vector<std::string> inputArr) {
-        std::vector<std::tm> dates = TaskTokenizer::findDate(inputArr);
+        std::vector<std::tm> dates = TaskTokenizer::findAndRemoveDate(inputArr);
         std::vector<std::string> tags = TaskTokenizer::findTags(inputArr);
         std::string description = TaskTokenizer::findDescription(inputArr);
 
