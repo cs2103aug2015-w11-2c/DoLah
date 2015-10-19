@@ -129,17 +129,20 @@ namespace DoLah {
         int year = -1;
 
         size_t size = strArr.size();
-        if ((day = getDay(strArr.at(0))) != REJECT) {
+        day = getDay(strArr.at(0));
+        if (day != REJECT) {
             output.tm_mday = day;
             if (size <= 1) {
                 return output;
             }
-            if ((month = getMonth(strArr.at(1))) != REJECT) {
+            month = getMonth(strArr.at(1));
+            if (month != REJECT) {
                 output.tm_mon = month;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(strArr.at(2))) != REJECT) {
+                year = getYear(strArr.at(2));
+                if (year != REJECT) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {
@@ -164,17 +167,20 @@ namespace DoLah {
         int year = -1;
 
         size_t size = strArr.size();
-        if ((month = getMonth(strArr.at(0))) != REJECT) {
+        month = getMonth(strArr.at(0));
+        if (month != REJECT) {
             output.tm_mon = month;
             if (size <= 1) {
                 throw std::invalid_argument("");
             }
-            if ((day = getDay(strArr.at(1))) != REJECT) {
+            day = getDay(strArr.at(1));
+            if (day != REJECT) {
                 output.tm_mday = day;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(strArr.at(2))) != REJECT) {
+                year = getYear(strArr.at(2));
+                if (year != REJECT) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {
