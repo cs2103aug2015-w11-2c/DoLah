@@ -29,6 +29,32 @@ namespace DoLahTest
             Assert::AreEqual(testCal.getTaskList()[0]->getDescription(), task->getDescription());
         }
 
+        TEST_METHOD(DeleteTask) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+            int oldLength = testCal.getTaskList().size();
+
+            //Act
+            testCal.deleteTask(4);
+
+            //Assert
+            Assert::AreEqual(testCal.getTaskList().size(), (size_t) oldLength - 1);
+        }
+
+        TEST_METHOD(EditTask) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+            DoLah::DeadlineTask* task = TaskBuilder::buildDeadlineTask();
+
+            //Act
+            testCal.updateTask(0, task);
+
+            //Assert
+            Assert::AreEqual(testCal.getTaskList()[0]->getName(), task->getName());
+            Assert::AreEqual(testCal.getTaskList()[0]->getDescription(), task->getDescription());
+            Assert::AreEqual(testCal.getTaskList()[0]->isDone(), task->isDone());
+        }
+
 		TEST_METHOD(ClearTask) {
             //Arrange
             DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
@@ -40,19 +66,26 @@ namespace DoLahTest
             Assert::IsTrue(testCal.getTaskList().empty());
 		}
 
-		TEST_METHOD(SearchTask1) {
-			testVector.erase(testVector.begin()+2);
-			std::vector<DoLah::AbstractTask*> resultVector = testCal.search("homework");
+		TEST_METHOD(FindTaskThatExists) {
+			//Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
 
-			for (unsigned int i = 0; i < testVector.size(); i++) {
-				Assert::AreEqual(testVector[i]->getName(), resultVector[i]->getName());
-			}
+            //Act
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("Floating");
+
+            //Assert
+            Assert::AreEqual(resultVector.size(), (size_t) 5);
 		}
 
-        TEST_METHOD(SearchTask2) {
-            testVector.erase(testVector.begin() + 1);
-            testVector.erase(testVector.begin());
-            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("practice");
+        TEST_METHOD(FindTaskThatDoesNotExist) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+
+            //Act
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("The quick brown fox");
+
+            //Assert
+            Assert::AreEqual(resultVector.size(), (size_t)0);
         }
 	};
 }
