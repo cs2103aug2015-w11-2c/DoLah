@@ -16,7 +16,11 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace DoLahTest {
-    TEST_CLASS(Tokenize) {
+    TEST_CLASS(Parser) {
+private:
+    std::string year;
+    std::string month;
+    std::string day;
 public:
     void parseAddTestMethod(std::string input, std::vector<std::string> expected) {
         try {
@@ -25,8 +29,8 @@ public:
             std::string dates = "";
             if (!datesVector.empty()) {
                 for (size_t i = 0; i < datesVector.size(); i++) {
-                    dates += std::to_string(datesVector.at(i).tm_mday) + "/" 
-                        + std::to_string(datesVector.at(i).tm_mon + 1) + "/" 
+                    dates += std::to_string(datesVector.at(i).tm_mday) + "/"
+                        + std::to_string(datesVector.at(i).tm_mon + 1) + "/"
                         + std::to_string(datesVector.at(i).tm_year + 1900);
                     if (i < datesVector.size() - 1) {
                         dates += " ~ ";
@@ -49,10 +53,19 @@ public:
         }
     }
 
+    TEST_METHOD_INITIALIZE(Startup) {
+        time_t t = time(0);
+        std::tm current;
+        localtime_s(&current, &t);
+        year = std::to_string(current.tm_year + 1900);
+        month = std::to_string(current.tm_mon + 1);
+        day = std::to_string(current.tm_mday);
+    }
+
     TEST_METHOD(parseAddDetailedTest1) {
         parseAddTestMethod((std::string)
             "#cs2103 #homework on 30th",
-            { "30/10/2015", "{ homework, cs2103 }", "#cs2103 #homework" }
+            { "30/" + month + "/" + year, "{ homework, cs2103 }", "#cs2103 #homework" }
         );
     }
 
@@ -80,14 +93,14 @@ public:
     TEST_METHOD(parseAddDetailedTest5) {
         parseAddTestMethod((std::string)
             "#cs2103 #homework on the #stage from 15th to 21st",
-            { "15/10/2015 ~ 21/10/2015", "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
+            { "15/" + month + "/" + year + " ~ 21/" + month + "/" + year, "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
         );
     }
 
     TEST_METHOD(parseAddDetailedTest6) {
         parseAddTestMethod((std::string)
             "workout from 15th of Nov to 21st of Dec",
-            { "15/11/2015 ~ 21/12/2015", "{  }", "workout" }
+            { "15/11/" + year + " ~ 21/12/" + year, "{  }", "workout" }
         );
     }
 
