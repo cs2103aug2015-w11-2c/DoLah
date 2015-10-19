@@ -6,16 +6,25 @@ namespace DoLah {
 
 	}
 
-	SearchTaskCommand::SearchTaskCommand(std::string searchString) {
+    SearchTaskCommand::SearchTaskCommand(std::string searchString) {
+        query = searchString;
+    }
+
+	SearchTaskCommand::SearchTaskCommand(std::string searchString, std::vector<AbstractTask*> * resVector) {
 		query = searchString;
+        resultVector = resVector;
 	}
 
 	SearchTaskCommand::~SearchTaskCommand() {
 
 	}
 
+    std::vector<AbstractTask*> SearchTaskCommand::getResultVector(std::vector<AbstractTask*> *) {
+        return *resultVector;
+    }
+
 	void SearchTaskCommand::execute() {
-		this->calendar->search(query);
+		resultVector = &(this->calendar->search(query));
 	}
 
 	//private
