@@ -14,6 +14,7 @@ namespace DoLah {
 
 		void addTask(AbstractTask*);
 		void deleteTask(int);
+        void setDoneTask(int, bool=true);
 		void updateTask(int, AbstractTask*);
 		void clearTasks();
 		std::vector<AbstractTask*> search(std::string);

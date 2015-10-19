@@ -41,6 +41,36 @@ namespace DoLahTest
             Assert::AreEqual(testCal.getTaskList().size(), (size_t) oldLength - 1);
         }
 
+        TEST_METHOD(SetDoneTask) {
+            // Arrange
+            DoLah::Calendar cal;
+            DoLah::AbstractTask * task = TaskBuilder::buildFloatingTask();
+            task->setDone(false);
+            cal.addTask(task);
+            assert(cal.getTask(0)->isDone() == false);
+
+            // Act
+            cal.setDoneTask(0);
+
+            // Assert
+            Assert::IsTrue(cal.getTask(0)->isDone());
+        }
+
+        TEST_METHOD(SetUnDoneTask) {
+            // Arrange
+            DoLah::Calendar cal;
+            DoLah::AbstractTask * task = TaskBuilder::buildFloatingTask();
+            task->setDone(true);
+            cal.addTask(task);
+            assert(cal.getTask(0)->isDone() == true);
+
+            // Act
+            cal.setDoneTask(0, false);
+
+            // Assert
+            Assert::IsFalse(cal.getTask(0)->isDone());
+        }
+
         TEST_METHOD(EditTask) {
             //Arrange
             DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();

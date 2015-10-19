@@ -30,6 +30,10 @@ namespace DoLah {
         taskList.erase(taskList.begin() + index);
     }
 
+    void Calendar::setDoneTask(int taskIndex, bool status) {
+        taskList.at(taskIndex)->setDone(status);
+    }
+
 	void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
         taskList.at(index) = task;
