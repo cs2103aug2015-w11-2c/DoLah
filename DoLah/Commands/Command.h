@@ -41,6 +41,15 @@ namespace DoLah {
 		DoLah::AbstractTask* task;
 	};
 
+    class SetDoneTaskCommand : public ITaskCommand {
+    public:
+        SetDoneTaskCommand(int);
+        ~SetDoneTaskCommand();
+        void execute();
+    private:
+        int taskIndex;
+    };
+
 	class DeleteTaskCommand : public ITaskCommand {
 	public:
 		DeleteTaskCommand();
