@@ -73,6 +73,8 @@ public:
         day = std::to_string(current.tm_mday);
     }
 
+    // From here, unit tests for time parsing
+
     TEST_METHOD(DateGivenDayAndMonth) {
         std::string input = "2st January";
         std::string expected = "2/1/" + year;
@@ -109,9 +111,8 @@ public:
     }
 
 
-    // parseAdd()
-    // input in string
-    // expect in { string date, vector<string> tags, string name }
+    // From here, integrated tests for task parsing
+
     TEST_METHOD(FloatingWithName) {
         parseTaskMethod((std::string)
             "task",
@@ -195,6 +196,9 @@ public:
             { "", "{  }", "task on December 24th 20150" }
         );
     }
+
+
+    // From here, integrated tests for command parsing
 
     TEST_METHOD(ParseWrongCommandTest) {
         std::string input = "eddard ";
