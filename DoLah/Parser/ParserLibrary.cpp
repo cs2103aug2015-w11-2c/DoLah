@@ -11,6 +11,8 @@ namespace DoLah {
 
 
     std::string ParserLibrary::strip(std::string str) {
+        if (str.length() == 0) return str;
+
         std::string out = str;
         size_t from = 0;
         for (; from < out.length() && out.at(from) == ' '; from++) {
@@ -27,6 +29,10 @@ namespace DoLah {
 
     std::vector<std::string> ParserLibrary::explode(std::string input, std::string delimeter) {
         std::string line = strip(input);
+        if (line.length() == 0) {
+            return {};
+        }
+
         std::vector<std::string> out;
         size_t from = 0;
         size_t to;
