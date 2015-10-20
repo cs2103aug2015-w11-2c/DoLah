@@ -73,7 +73,7 @@ public:
         day = std::to_string(current.tm_mday);
     }
 
-    TEST_METHOD(parseExceptionTest1) {
+    TEST_METHOD(ParseWrongCommandTest) {
         std::string input = "eddard ";
         try {
             DoLah::CommandParser::parse(input);
@@ -83,7 +83,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseExceptionTest2) {
+    TEST_METHOD(ParseUnimplementedCommandTest) {
         std::string input = "sort ";
         try {
             DoLah::CommandParser::parse(input);
@@ -93,7 +93,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseAddTest) {
+    TEST_METHOD(WellDefinedAddCommandWithDeadline) {
         std::string input = "add #cs2103 #homework on 30th December 2015";
         try {
             DoLah::CommandParser::parse(input);
@@ -103,7 +103,17 @@ public:
         }
     }
 
-    TEST_METHOD(parseAddExceptionTest) {
+    TEST_METHOD(WellDefinedAddCommandWithEvent) {
+        std::string input = "add #cs2103 #homework from 30th Dec 2015 to 31st Dec 2015";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(true);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(AddCommandWithoutDescription) {
         std::string input = "add ";
         try {
             DoLah::CommandParser::parse(input);
@@ -113,7 +123,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseEditTest) {
+    TEST_METHOD(WellDeginedEditCommand) {
         std::string input = "edit 100 #cs2103 #homework on the #stage";
         try {
             DoLah::CommandParser::parse(input);
@@ -123,7 +133,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseEditExceptionTest1) {
+    TEST_METHOD(EditCommandWithoutTaskIndex) {
         std::string input = "edit #cs2103 #homework on the #stage";
         try {
             DoLah::CommandParser::parse(input);
@@ -133,7 +143,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseEditExceptionTest2) {
+    TEST_METHOD(EditCommandWithoutTaskDescription) {
         std::string input = "edit 100";
         try {
             DoLah::CommandParser::parse(input);
@@ -143,7 +153,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseSearchTest) {
+    TEST_METHOD(WellDefinedSearchCommand) {
         std::string input = "search me";
         try {
             DoLah::CommandParser::parse(input);
@@ -153,7 +163,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseSearchExceptionTest) {
+    TEST_METHOD(SearchCommandWithoutDescription) {
         std::string input = "search ";
         try {
             DoLah::CommandParser::parse(input);
@@ -163,7 +173,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseDeleteTest) {
+    TEST_METHOD(WellDefinedDeleteCommand) {
         std::string input = "delete 100";
         try {
             DoLah::CommandParser::parse(input);
@@ -173,7 +183,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseDeleteExceptionTest1) {
+    TEST_METHOD(DeleteCommandWithTooManyArguments) {
         std::string input = "delete 100 wow";
         try {
             DoLah::CommandParser::parse(input);
@@ -183,7 +193,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseDeleteExceptionTest2) {
+    TEST_METHOD(DeleteCommandWithWrongTaskIndex) {
         std::string input = "delete wow";
         try {
             DoLah::CommandParser::parse(input);
@@ -193,7 +203,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseDeleteExceptionTest3) {
+    TEST_METHOD(DeleteCommandWithoutTaskIndex) {
         std::string input = "delete ";
         try {
             DoLah::CommandParser::parse(input);
@@ -203,7 +213,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseClearTest) {
+    TEST_METHOD(WellDefinedClearCommand) {
         std::string input = "clear ";
         try {
             DoLah::CommandParser::parse(input);
@@ -213,7 +223,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseClearExceptionTest) {
+    TEST_METHOD(ClearCommandWithTooManyArguments) {
         std::string input = "clear wow";
         try {
             DoLah::CommandParser::parse(input);
@@ -223,7 +233,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseUndoTest) {
+    TEST_METHOD(WellDefinedUndoCommand) {
         std::string input = "undo ";
         try {
             DoLah::CommandParser::parse(input);
@@ -233,7 +243,7 @@ public:
         }
     }
 
-    TEST_METHOD(parseUndoExceptionTest) {
+    TEST_METHOD(UndoCommandWithTooManyArguments) {
         std::string input = "undo wow";
         try {
             DoLah::CommandParser::parse(input);
@@ -246,222 +256,123 @@ public:
     // parseAdd()
     // input in string
     // expect in { string date, vector<string> tags, string name }
-    TEST_METHOD(parseAddDetailedTest1) {
+    TEST_METHOD(FloatingWithName) {
         parseAddTestMethod((std::string)
             "task",
             { "", "{  }", "task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest2) {
+    TEST_METHOD(DeadlineWithName) {
         parseAddTestMethod((std::string)
             "task on 24.12.2015",
             { "24/12/2015", "{  }", "task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest3) {
-        parseAddTestMethod((std::string)
-            "task by 24.12.2015",
-            { "24/12/2015", "{  }", "task" }
-        );
-    }
-
-    TEST_METHOD(parseAddDetailedTest4) {
+    TEST_METHOD(EventWithName) {
         parseAddTestMethod((std::string)
             "task from 24.12.2015 to 25.12.2015",
             { "24/12/2015 ~ 25/12/2015", "{  }", "task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest5) {
-        parseAddTestMethod((std::string)
-            "task from 24.12.2015 until 25.12.2015",
-            { "24/12/2015 ~ 25/12/2015", "{  }", "task" }
-        );
-    }
-
-    TEST_METHOD(parseAddDetailedTest6) {
+    TEST_METHOD(EventWithNameAndTag) {
         parseAddTestMethod((std::string)
             "#task from 24.12.2015 until 25.12.2015",
             { "24/12/2015 ~ 25/12/2015", "{ task }", "#task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest7) {
+    TEST_METHOD(EventWithNameAndMultipleTags) {
         parseAddTestMethod((std::string)
             "#cs2103 #task from 24.12.2015 until 25.12.2015",
             { "24/12/2015 ~ 25/12/2015", "{ task, cs2103 }", "#cs2103 #task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest8) {
+    TEST_METHOD(WrongYearInDMY) {
         parseAddTestMethod((std::string)
             "task on 24th of December 20150",
             { "", "{  }", "task on 24th of December 20150" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest9) {
+    TEST_METHOD(WrongMonthInDMY) {
         parseAddTestMethod((std::string)
             "task on 24th of Decemberu",
             { "", "{  }", "task on 24th of Decemberu" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest10) {
+    TEST_METHOD(WrongDayInDMY) {
         parseAddTestMethod((std::string)
             "task on 24the",
             { "", "{  }", "task on 24the" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest11) {
+    TEST_METHOD(MonthWithoutDayInMDY) {
         parseAddTestMethod((std::string)
             "task on December",
             { "", "{  }", "task on December" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest12) {
+    TEST_METHOD(WrongMonthInMDY) {
         parseAddTestMethod((std::string)
-            "task on Decemberu",
-            { "", "{  }", "task on Decemberu" }
+            "task on Decemberu 24th",
+            { "", "{  }", "task on Decemberu 24th" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest13) {
+    TEST_METHOD(WrongDayInMDY) {
         parseAddTestMethod((std::string)
             "task on December 24the",
             { "", "{  }", "task on December 24the" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest14) {
+    TEST_METHOD(WrongYearInMDY) {
         parseAddTestMethod((std::string)
             "task on December 24th 20150",
             { "", "{  }", "task on December 24th 20150" }
         );
     }
 
-    TEST_METHOD(toDateFormatTest1) {
-        std::string input = "1st January 2015";
-        std::string expected = "1/1/2015";
+    TEST_METHOD(DateGivenDayAndMonth) {
+        std::string input = "2st January";
+        std::string expected = "2/1/" + year;
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
 
-    TEST_METHOD(toDateFormatTest2) {
-        std::string input = "1st January";
-        std::string expected = "1/1/" + year;
-        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
-        Assert::AreEqual(expected, actual);
-    }
-
-    TEST_METHOD(toDateFormatTest3) {
+    TEST_METHOD(DateGivenDay) {
         std::string input = "1st";
         std::string expected = "1/" + month + "/" + year;
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
 
-    TEST_METHOD(toDateFormatTest4) {
-        std::string input = "January 1st 2015";
-        std::string expected = "1/1/2015";
+    TEST_METHOD(DateGivenMonthAndDay) {
+        std::string input = "January 2st";
+        std::string expected = "2/1/" + year;
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
 
-    TEST_METHOD(toDateFormatTest5) {
-        std::string input = "January 1st";
-        std::string expected = "1/1/" + year;
-        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
-        Assert::AreEqual(expected, actual);
-    }
-
-    TEST_METHOD(toDateFormatTest6) {
-        std::string input = "1st Jan 2015";
-        std::string expected = "1/1/2015";
-        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
-        Assert::AreEqual(expected, actual);
-    }
-
-    TEST_METHOD(toDateFormatTest7) {
+    TEST_METHOD(DateInDifferentFormat1) {
         std::string input = "24.12.2015";
         std::string expected = "24/12/2015";
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
 
-    TEST_METHOD(toDateFormatTest8) {
-        std::string input = "12.24.2015";
+    TEST_METHOD(DateInDifferentFormat2) {
+        std::string input = "24-12-2015";
         std::string expected = "24/12/2015";
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
-    }
-
-    TEST_METHOD(toDateFormatTest9) {
-        std::string input = "12.24.15";
-        std::string expected = "24/12/2015";
-        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
-        Assert::AreEqual(expected, actual);
-    }
-
-    std::string REJECT = "-1";
-
-    TEST_METHOD(getDayExceptionTest1) {
-        std::string input = "1str";
-        std::string expected = REJECT;
-        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getDay(input)));
-    }
-
-    TEST_METHOD(getDayExceptionTest2) {
-        std::string input = "me";
-        std::string expected = REJECT;
-        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getDay(input)));
-    }
-
-    TEST_METHOD(getDayExceptionTest3) {
-        std::string input = "10000";
-        std::string expected = REJECT;
-        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getDay(input)));
-    }
-
-    TEST_METHOD(getMonthExceptionTest1) {
-        std::string input = "christmas";
-        std::string expected = REJECT;
-        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getMonth(input)));
-    }
-
-    TEST_METHOD(getMonthExceptionTest2) {
-        std::string input = "10000";
-        std::string expected = REJECT;
-        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getMonth(input)));
-    }
-
-    TEST_METHOD(getYearExceptionTest1) {
-        std::string input = "10000";
-        std::string expected = REJECT;
-        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getYear(input)));
-    }
-
-    TEST_METHOD(getYearExceptionTest2) {
-        std::string input = "four";
-        std::string expected = REJECT;
-        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getYear(input)));
-    }
-
-
-    TEST_METHOD(stripTest) {
-        std::string input = " search ";
-        std::string expected = "search";
-        std::string actual = DoLah::ParserLibrary::strip(input);
-        Assert::AreEqual(expected, actual);
-    }
-
-    TEST_METHOD(equalitytest) {
-        std::string input = " search ";
-        Assert::IsTrue(input.at(0) == ' ');
     }
 
     };
