@@ -20,5 +20,7 @@ namespace DoLah {
 
 	private:
 		std::vector<AbstractTask*> taskList;
+
+        std::string TASK_INDEX_OUT_OF_RANGE_MESSAGE = "Task index out of range";
 	};
 }

@@ -27,6 +27,9 @@ namespace DoLah {
 	}
 
     void Calendar::deleteTask(int index) {
+        if (index > taskList.size()) {
+            throw std::out_of_range(TASK_INDEX_OUT_OF_RANGE_MESSAGE);
+        }
         taskList.erase(taskList.begin() + index);
     }
 
