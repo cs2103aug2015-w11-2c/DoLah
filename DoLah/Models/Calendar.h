@@ -21,8 +21,10 @@ namespace DoLah {
 		void clearTasks();
 		std::vector<AbstractTask*> search(std::string);
 
-	private:
-		std::vector<AbstractTask*> taskList;
+    private:
+        std::vector<AbstractTask*> taskList;
         std::vector<AbstractTask*> doneList;
-	};
+
+        std::string TASK_INDEX_OUT_OF_RANGE_MESSAGE = "Task index out of range";
+    };
 }
