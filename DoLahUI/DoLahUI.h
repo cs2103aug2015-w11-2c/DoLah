@@ -3,6 +3,7 @@
 
 #include "DoLahClient.h"
 #include "UITaskBox.h"
+#include "MenuLabel.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -12,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -36,7 +38,9 @@ namespace DoLah {
         QFile stylesheet;
         QWidget *centralWidget;
 
-        QHBoxLayout *menu;
+        QWidget *menu;
+        QHBoxLayout *menuLayout;
+        MenuLabel *exitButton;
 
         QScrollArea *scrollArea;
         QWidget *tasksContainer;
@@ -48,6 +52,7 @@ namespace DoLah {
 
     private slots:
         void handleUserInput();
+        void menuExit();
 
     private:
         void setupUI();

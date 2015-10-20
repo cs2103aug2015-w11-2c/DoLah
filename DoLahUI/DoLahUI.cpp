@@ -65,8 +65,21 @@ namespace DoLah {
     // MENU
 
     void DoLahUI::initMenu() {
-        menu = new QHBoxLayout(centralWidget);
+        menu = new QWidget(centralWidget);
         menu->setGeometry(QRect(0, 0, 350, 70));
+
+        menuLayout = new QHBoxLayout(menu);
+        menuLayout->setAlignment(Qt::AlignRight);
+        menuLayout->setContentsMargins(5, 5, 5, 5);
+
+        exitButton = new MenuLabel;
+        exitButton->setObjectName(QStringLiteral("exitButton"));
+        exitButton->setMinimumHeight(65);
+        QPixmap exitIcon("exit.png");
+        exitButton->setPixmap(exitIcon);
+        menuLayout->addWidget(exitButton);
+
+        QObject::connect(exitButton, SIGNAL(clicked()), this, SLOT(menuExit()));
     }
 
     // DISPLAY AREA
@@ -138,11 +151,14 @@ namespace DoLah {
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("User Input Area"));
         lineEdit->setGeometry(QRect(5, 540, 340, 25));
+        lineEdit->setFocus();
 
         // handles events when enter key is pressed
         QObject::connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(handleUserInput()));
         QObject::connect(lineEdit, SIGNAL(returnPressed()), lineEdit, SLOT(clear()));
     }
+
+    // SLOTS
 
     void DoLahUI::handleUserInput() {
         QString input = lineEdit->text();
@@ -150,6 +166,10 @@ namespace DoLah {
         this->appClient.parseAndProcessCommand(inputline);
         refreshTasks();
         message->setText("Done. Enter next command:");
+    }
+
+    void DoLahUI::menuExit() {
+        exit(0);
     }
 
 }

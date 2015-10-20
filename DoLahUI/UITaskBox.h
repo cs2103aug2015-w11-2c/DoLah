@@ -5,6 +5,8 @@
 namespace DoLah {
     class UITaskBox : public QTextBrowser
     {
+        Q_OBJECT
+
     public:
         UITaskBox();
         ~UITaskBox();

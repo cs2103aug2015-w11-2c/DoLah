@@ -8,7 +8,7 @@ QScrollArea > QWidget > QWidget
 	background-color: #a08d8f;
 } 
 
-QTextBrowser 
+QTextBrowser#UITaskBox
 {
 	background-color: #fcebbf; 
 	color: #4c3e3e; 
@@ -22,4 +22,14 @@ QLineEdit
 QLabel
 { 
 	color: white;
+}
+
+QLabel#exitButton
+{
+	background-color: transparent;
+}
+
+QLabel#exitButton:hover
+{
+	background-color: rgba(0, 0, 0, 0.2);
 }
