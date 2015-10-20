@@ -10,7 +10,7 @@ TaskBuilder::TaskBuilder(){
 TaskBuilder::~TaskBuilder(){
 }
 
-DoLah::FloatingTask* TaskBuilder::buildFloatingTask() {
+DoLah::FloatingTask* TaskBuilder::buildFloatingTask(bool isDone) {
     std::stringstream name;
     name << "Floating Task " << TaskBuilder::buildIndex;
     std::stringstream desc;
@@ -20,17 +20,11 @@ DoLah::FloatingTask* TaskBuilder::buildFloatingTask() {
     task->setId(TaskBuilder::buildIndex);
     task->setName(name.str());
     task->setDescription(desc.str());
-    task->setDone(false);
-    if (TaskBuilder::buildIndex % 2 == 0) {
-        task->setDone(false);
-    } else {
-        task->setDone(true);
-    }
-    TaskBuilder::buildIndex++;
+    task->setDone(isDone);
     return task;
 }
 
-DoLah::EventTask* TaskBuilder::buildEventTask() {
+DoLah::EventTask* TaskBuilder::buildEventTask(bool isDone) {
     std::stringstream name;
     name << "Event Task " << TaskBuilder::buildIndex;
     std::stringstream desc;
@@ -51,16 +45,11 @@ DoLah::EventTask* TaskBuilder::buildEventTask() {
     task->setDescription(desc.str());
     task->setStartDate(later);
     task->setEndDate(tomorrow);
-    if (TaskBuilder::buildIndex % 2 == 0) {
-        task->setDone(false);
-    } else {
-        task->setDone(true);
-    }
-    TaskBuilder::buildIndex++;
+    task->setDone(isDone);
     return task;
 }
 
-DoLah::DeadlineTask* TaskBuilder::buildDeadlineTask() {
+DoLah::DeadlineTask* TaskBuilder::buildDeadlineTask(bool isDone) {
     std::stringstream name;
     name << "Deadline Task " << TaskBuilder::buildIndex;
     std::stringstream desc;
@@ -77,12 +66,7 @@ DoLah::DeadlineTask* TaskBuilder::buildDeadlineTask() {
     task->setName(name.str());
     task->setDescription(desc.str());
     task->setDueDate(dueDate);
-    if (TaskBuilder::buildIndex % 2 == 0) {
-        task->setDone(false);
-    } else {
-        task->setDone(true);
-    }
-    TaskBuilder::buildIndex++;
+    task->setDone(isDone);
     return task;
 }
 

@@ -17,7 +17,7 @@ namespace DoLah {
     }
 
     void CalendarStorage::save(const DoLah::Calendar& calendar, const std::string & filename) {
-        std::vector<DoLah::AbstractTask*> taskList = calendar.getTaskList();
+        std::vector<DoLah::AbstractTask*> taskList = calendar.getAllTaskList();
         YAML::Emitter out;
 
 

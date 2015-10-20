@@ -53,7 +53,8 @@ namespace DoLahTest
             cal.setDoneTask(0);
 
             // Assert
-            Assert::IsTrue(cal.getTask(0)->isDone());
+            Assert::IsTrue(cal.getDone(0)->isDone());
+            Assert::IsTrue(cal.getTaskList().empty());
         }
 
         TEST_METHOD(SetUnDoneTask) {
@@ -62,13 +63,14 @@ namespace DoLahTest
             DoLah::AbstractTask * task = TaskBuilder::buildFloatingTask();
             task->setDone(true);
             cal.addTask(task);
-            assert(cal.getTask(0)->isDone() == true);
+            assert(cal.getDone(0)->isDone() == true);
 
             // Act
             cal.setDoneTask(0, false);
 
             // Assert
             Assert::IsFalse(cal.getTask(0)->isDone());
+            Assert::IsTrue(cal.getDoneList().empty());
         }
 
         TEST_METHOD(EditTask) {

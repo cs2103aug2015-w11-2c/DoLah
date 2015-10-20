@@ -10,8 +10,10 @@ namespace DoLah {
 		~Calendar();
 
 		AbstractTask* getTask(int) const;
+        AbstractTask* getDone(int) const;
 		std::vector<AbstractTask*> getTaskList() const;
-
+        std::vector<AbstractTask*> Calendar::getDoneList() const;
+        std::vector<AbstractTask*> Calendar::getAllTaskList() const;
 		void addTask(AbstractTask*);
 		void deleteTask(int);
         void setDoneTask(int, bool=true);
@@ -21,5 +23,6 @@ namespace DoLah {
 
 	private:
 		std::vector<AbstractTask*> taskList;
+        std::vector<AbstractTask*> doneList;
 	};
 }

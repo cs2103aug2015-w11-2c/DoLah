@@ -12,10 +12,14 @@ CalendarBuilder::~CalendarBuilder() {
 
 DoLah::Calendar CalendarBuilder::buildSimpleCalendar() {
     DoLah::Calendar calendar;
+    bool toggleDone = false;
     for (int i = 0; i < 5; i++) {
-        calendar.addTask(TaskBuilder::buildFloatingTask());
-        calendar.addTask(TaskBuilder::buildEventTask());
-        calendar.addTask(TaskBuilder::buildDeadlineTask());
+        calendar.addTask(TaskBuilder::buildFloatingTask(toggleDone));
+        toggleDone = !toggleDone;
+        calendar.addTask(TaskBuilder::buildEventTask(toggleDone));
+        toggleDone = !toggleDone;
+        calendar.addTask(TaskBuilder::buildDeadlineTask(toggleDone));
+        toggleDone = !toggleDone;
     }
     return calendar;
 }
