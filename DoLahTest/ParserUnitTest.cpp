@@ -3,12 +3,12 @@
 #include "regex"
 #include <iterator>
 
-#include "ParserLibrary.h"
-#include "CommandParser.h"
-#include "CommandTokenizer.h"
-#include "TaskParser.h"
-#include "TaskTokenizer.h"
-#include "DateTimeParser.h"
+#include "Parser/ParserLibrary.h"
+#include "Parser/CommandParser.h"
+#include "Parser/CommandTokenizer.h"
+#include "Parser/TaskParser.h"
+#include "Parser/TaskTokenizer.h"
+#include "Parser/DateTimeParser.h"
 
 #include "Commands/Command.h"
 #include "Models/Task.h"
@@ -16,15 +16,26 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace DoLahTest {
-    TEST_CLASS(Tokenize) {
+    TEST_CLASS(Parser) {
+private:
+    std::string year;
+    std::string month;
+    std::string day;
 public:
     void parseAddTestMethod(std::string input, std::vector<std::string> expected) {
         try {
             std::vector<std::string> inputArr = DoLah::ParserLibrary::explode(input, " ");
-            std::vector<std::tm> datesVector = DoLah::TaskTokenizer::findDate(inputArr);
+            std::vector<std::tm> datesVector = DoLah::TaskTokenizer::findAndRemoveDate(inputArr);
             std::string dates = "";
             if (!datesVector.empty()) {
-                dates = DoLah::DateTimeParser::tmToString(datesVector.at(0));
+                for (size_t i = 0; i < datesVector.size(); i++) {
+                    dates += std::to_string(datesVector.at(i).tm_mday) + "/"
+                        + std::to_string(datesVector.at(i).tm_mon + 1) + "/"
+                        + std::to_string(datesVector.at(i).tm_year + 1900);
+                    if (i < datesVector.size() - 1) {
+                        dates += " ~ ";
+                    }
+                }
             }
             std::string tags = DoLah::ParserLibrary::vectorToString(DoLah::TaskTokenizer::findTags(inputArr));
             std::string description = DoLah::TaskTokenizer::findDescription(inputArr);
@@ -42,10 +53,19 @@ public:
         }
     }
 
+    TEST_METHOD_INITIALIZE(Startup) {
+        time_t t = time(0);
+        std::tm current;
+        localtime_s(&current, &t);
+        year = std::to_string(current.tm_year + 1900);
+        month = std::to_string(current.tm_mon + 1);
+        day = std::to_string(current.tm_mday);
+    }
+
     TEST_METHOD(parseAddDetailedTest1) {
         parseAddTestMethod((std::string)
             "#cs2103 #homework on 30th",
-            { "30/10/2015", "{ homework, cs2103 }", "#cs2103 #homework" }
+            { "30/" + month + "/" + year, "{ homework, cs2103 }", "#cs2103 #homework" }
         );
     }
 
@@ -68,6 +88,31 @@ public:
             "#cs2103 #homework on the #stage",
             { "", "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
         );
+    }
+
+    TEST_METHOD(parseAddDetailedTest5) {
+        parseAddTestMethod((std::string)
+            "#cs2103 #homework on the #stage from 15th to 21st",
+            { "15/" + month + "/" + year + " ~ 21/" + month + "/" + year, "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
+        );
+    }
+
+    TEST_METHOD(parseAddDetailedTest6) {
+        parseAddTestMethod((std::string)
+            "workout from 15th of Nov to 21st of Dec",
+            { "15/11/" + year + " ~ 21/12/" + year, "{  }", "workout" }
+        );
+    }
+
+    TEST_METHOD(parseAddDetailedTest7) {
+        parseAddTestMethod((std::string)
+            "workout from 10-18-2015 to 10-25-2015",
+            { "18/10/2015 ~ 25/10/2015", "{  }", "workout" }
+        );
+    }
+
+    TEST_METHOD(getMonthTest1) {
+        Assert::AreEqual((std::string) "1", std::to_string(DoLah::DateTimeParser::getMonth("feb")));
     }
 
     std::string UNHANDLED_COMMAND_MESSAGE = "Command not handled";
