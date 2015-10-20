@@ -68,13 +68,15 @@ namespace DoLah {
 		SearchTaskCommand(std::string, std::vector<AbstractTask*> *);
 		~SearchTaskCommand();
 
-        std::vector<AbstractTask*> getResultVector(std::vector<AbstractTask*> *);
+        std::vector<AbstractTask*> getResultVector();
+
+        void setResultVector(std::vector<AbstractTask*>*);
 
 		void execute();
 
 	private:
 		std::string query;
-        std::vector<AbstractTask*> * resultVector;
+        std::vector<AbstractTask*> ** resultVector;
 	};
 
 	class UndoTaskCommand : public ITaskCommand {

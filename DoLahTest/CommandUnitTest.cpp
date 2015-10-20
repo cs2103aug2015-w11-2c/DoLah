@@ -77,14 +77,16 @@ namespace DoLahTest
         TEST_METHOD(SearchTaskCommand) {
             //Arrange
             DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
-            std::vector<DoLah::AbstractTask*> resultVector;
-            DoLah::SearchTaskCommand searchCommand = DoLah::SearchTaskCommand("Floating", &resultVector);
-
+            DoLah::SearchTaskCommand searchCommand = DoLah::SearchTaskCommand("Floating");
+            searchCommand.setCalendar(&testCal);
+            std::vector<DoLah::AbstractTask*> * resultVector = new std::vector<DoLah::AbstractTask*>;
+            searchCommand.setResultVector(resultVector);
+            
             //Act
             searchCommand.execute();
 
             //Assert
-            Assert::AreEqual(resultVector.size(), (size_t)5);
+            Assert::AreEqual(resultVector->size(), (size_t) 5);
         }
     };
 }
