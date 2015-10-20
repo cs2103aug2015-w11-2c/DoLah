@@ -4,6 +4,8 @@
 #include "Models/Task.h"
 #include "Commands/Command.h"
 #include "Models/Calendar.h"
+#include "CalendarBuilder.h"
+#include "TaskBuilder.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -11,53 +13,79 @@ namespace DoLahTest
 {		
 	TEST_CLASS(CALENDAR_TESTER) {
 	private:
-		DoLah::Calendar testCal;
-		std::vector<DoLah::AbstractTask*> testVector;
 
-	public:
-		TEST_METHOD_INITIALIZE(Startup) {
-			DoLah::FloatingTask* task1 = new DoLah::FloatingTask;
-			task1->setName("CS2103 homework");
-			DoLah::FloatingTask* task2 = new DoLah::FloatingTask;
-			task2->setName("CS2101 homework");
-			DoLah::FloatingTask* task3 = new DoLah::FloatingTask;
-			task3->setName("singing practice");
+    public:
+        TEST_METHOD(AddTask) {
+            //Arrange
+            DoLah::Calendar testCal = DoLah::Calendar();
+            DoLah::FloatingTask* task = TaskBuilder::buildFloatingTask();
 
-			testVector.push_back(task1);
-			testVector.push_back(task2);
-			testVector.push_back(task3);
+            //Act
+            testCal.addTask(task);
 
-			testCal = DoLah::Calendar();
-
-			for (int i = 0; i < testVector.size(); i++) {
-				testCal.addTask(testVector[i]);
-			}
-		}
-
-		TEST_METHOD(ClearTask) {
-			testCal.clearTasks();
-			Assert::IsTrue(testCal.getTaskList().empty());
-		}
-
-		TEST_METHOD(SearchTask1) {
-			testVector.erase(testVector.begin()+2);
-			std::vector<DoLah::AbstractTask*> resultVector = testCal.search("homework");
-
-			for (int i = 0; i < testVector.size(); i++) {
-				Assert::AreEqual(testVector[i]->getName(), resultVector[i]->getName());
-			}
-		}
-
-        TEST_METHOD(SearchTask2) {
-            testVector.erase(testVector.begin() + 1);
-            testVector.erase(testVector.begin());
-            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("practice");
+            //Assert
+            Assert::AreEqual(testCal.getTaskList().size(), (size_t) 1); 
+            Assert::AreEqual(testCal.getTaskList()[0]->getName(), task->getName());
+            Assert::AreEqual(testCal.getTaskList()[0]->getDescription(), task->getDescription());
         }
 
-        TEST_METHOD(AddTask) {
-            for (int i = 0; i < testVector.size(); i++) {
-                Assert::AreEqual(testVector[i]->getName(), testCal.getTaskList()[i]->getName());
-            }
+        TEST_METHOD(DeleteTask) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+            int oldLength = testCal.getTaskList().size();
+
+            //Act
+            testCal.deleteTask(4);
+
+            //Assert
+            Assert::AreEqual(testCal.getTaskList().size(), (size_t) oldLength - 1);
+        }
+
+        TEST_METHOD(EditTask) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+            DoLah::DeadlineTask* task = TaskBuilder::buildDeadlineTask();
+
+            //Act
+            testCal.updateTask(0, task);
+
+            //Assert
+            Assert::AreEqual(testCal.getTaskList()[0]->getName(), task->getName());
+            Assert::AreEqual(testCal.getTaskList()[0]->getDescription(), task->getDescription());
+            Assert::AreEqual(testCal.getTaskList()[0]->isDone(), task->isDone());
+        }
+
+		TEST_METHOD(ClearTask) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+			
+            //Act
+            testCal.clearTasks();
+			
+            //Assert
+            Assert::IsTrue(testCal.getTaskList().empty());
+		}
+
+		TEST_METHOD(FindTaskThatExists) {
+			//Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+
+            //Act
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("Floating");
+
+            //Assert
+            Assert::AreEqual(resultVector.size(), (size_t) 5);
+		}
+
+        TEST_METHOD(FindTaskThatDoesNotExist) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+
+            //Act
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("The quick brown fox");
+
+            //Assert
+            Assert::AreEqual(resultVector.size(), (size_t)0);
         }
 	};
 }

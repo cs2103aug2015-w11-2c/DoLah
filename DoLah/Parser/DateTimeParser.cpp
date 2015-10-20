@@ -1,6 +1,10 @@
 #include "DateTimeParser.h"
 
 namespace DoLah {
+    int DateTimeParser::REJECT = -1;
+    std::string DateTimeParser::CENTURY = "20";
+
+    std::vector<std::string> DateTimeParser::decorators = { "of" };
 
     std::string DateTimeParser::relativePattern = "this|next";
     std::string DateTimeParser::datePattern = "^("
@@ -25,11 +29,9 @@ namespace DoLah {
         "^(november|nov|11)$",
         "^(december|dec|12)$"
     };
-
-    std::vector<std::string> DateTimeParser::monthFormat = {
-        "^(january|jan|1|01)$",
+    std::vector<std::string> DateTimeParser::dateDividers = {
+        "/", "-", "."
     };
-
 
     DateTimeParser::DateTimeParser() {
     }
@@ -44,9 +46,9 @@ namespace DoLah {
         str = std::regex_replace(str, std::regex(dayAppendixPattern), "");
 
         if (str.length() > 2) {
-            return NULL;
+            return REJECT;
         } else if (!ParserLibrary::isDecimal(str)) {
-            return NULL;
+            return REJECT;
         }
 
         return std::stoi(str);
@@ -56,63 +58,91 @@ namespace DoLah {
         std::string out;
         for (size_t m = 0; m < monthPattern.size(); m++) {
             if (std::regex_match(str, std::regex(monthPattern.at(m), std::regex_constants::icase))) {
-                return (int) m;
+                return (int)m;
             }
         }
 
-        return NULL;
+        return REJECT;
     }
 
-    int DateTimeParser::getYear(std::string str) {
-        if (str.length() != 2 && str.length() != 4) {
-            return NULL;
-        } else if (!ParserLibrary::isDecimal(str)) {
-            return NULL;
+    int DateTimeParser::getYear(std::string year) {
+        if (year.length() != 2 && year.length() != 4) {
+            return REJECT;
+        } else if (!ParserLibrary::isDecimal(year)) {
+            return REJECT;
         }
 
-        return std::stoi(str);
+        if (year.length() == 2) {
+            year = CENTURY + year;
+        }
+
+        return std::stoi(year);
     }
 
+
+
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
+        std::tm output;
+
+        std::vector<std::string> cleanArr = strArr;
+        if (cleanArr.size() == 1) {
+            std::string str = cleanArr.at(0);
+            for (size_t i = 0; i < dateDividers.size(); i++) {
+                cleanArr = ParserLibrary::explode(str, dateDividers.at(i));
+                if (cleanArr.size() > 1) {
+                    break;
+                }
+            }
+        }
+        cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
+
+        try {
+            output = classifyDate(cleanArr);
+        } catch (std::invalid_argument e) {
+            throw e;
+        }
+
+        return output;
+    }
+
+    std::tm DateTimeParser::classifyDate(std::vector<std::string> strArr) {
+        std::tm output;
+        try {
+            output = checkDMYformat(strArr);
+        } catch (std::invalid_argument e) {
+            try {
+                output = checkMDYformat(strArr);
+            } catch (std::invalid_argument e) {
+                throw e;
+            }
+        }
+        return output;
+    }
+
+    std::tm DateTimeParser::checkDMYformat(std::vector<std::string> strArr) {
         time_t t = time(0);
-        struct tm output;
+        std::tm output;
         localtime_s(&output, &t);
 
-        int day;
-        int month;
-        int year;
+        int day = -1;
+        int month = -1;
+        int year = -1;
 
         size_t size = strArr.size();
-        if ((day = getDay(strArr.at(0))) != NULL) {
+        day = getDay(strArr.at(0));
+        if (day != REJECT) {
             output.tm_mday = day;
             if (size <= 1) {
                 return output;
             }
-            if ((month = getMonth(strArr.at(1))) != NULL) {
+            month = getMonth(strArr.at(1));
+            if (month != REJECT) {
                 output.tm_mon = month;
                 if (size <= 2) {
                     return output;
                 }
-                if ((year = getYear(strArr.at(2))) != NULL) {
-                    output.tm_year = year - 1900;
-                    return output;
-                } else {
-                    throw std::invalid_argument("");
-                }
-            } else {
-                throw std::invalid_argument("");
-            }
-        } else if ((month = getMonth(strArr.at(0))) != NULL) {
-            output.tm_mon = month;
-            if (size <= 1) {
-                throw std::invalid_argument("");
-            }
-            if ((day = getDay(strArr.at(1))) != NULL) {
-                output.tm_mday = day;
-                if (size <= 2) {
-                    return output;
-                }
-                if ((year = getYear(strArr.at(2))) != NULL) {
+                year = getYear(strArr.at(2));
+                if (year != REJECT) {
                     output.tm_year = year - 1900;
                     return output;
                 } else {
@@ -124,9 +154,44 @@ namespace DoLah {
         } else {
             throw std::invalid_argument("");
         }
+        return output;
     }
 
-    std::string DateTimeParser::tmToString(std::tm time) {
-        return std::to_string(time.tm_mday) + "/" + std::to_string(time.tm_mon + 1) + "/" + std::to_string(time.tm_year + 1900);
+    std::tm DateTimeParser::checkMDYformat(std::vector<std::string> strArr) {
+        time_t t = time(0);
+        std::tm output;
+        localtime_s(&output, &t);
+
+        int day = -1;
+        int month = -1;
+        int year = -1;
+
+        size_t size = strArr.size();
+        month = getMonth(strArr.at(0));
+        if (month != REJECT) {
+            output.tm_mon = month;
+            if (size <= 1) {
+                throw std::invalid_argument("");
+            }
+            day = getDay(strArr.at(1));
+            if (day != REJECT) {
+                output.tm_mday = day;
+                if (size <= 2) {
+                    return output;
+                }
+                year = getYear(strArr.at(2));
+                if (year != REJECT) {
+                    output.tm_year = year - 1900;
+                    return output;
+                } else {
+                    throw std::invalid_argument("");
+                }
+            } else {
+                throw std::invalid_argument("");
+            }
+        } else {
+            throw std::invalid_argument("");
+        }
+        return output;
     }
 }
