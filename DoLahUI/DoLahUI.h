@@ -48,7 +48,6 @@ namespace DoLah {
 
     private slots:
         void handleUserInput();
-        void testUserInput();
 
     private:
         void setupUI();
@@ -60,6 +59,7 @@ namespace DoLah {
         void initInputArea();
         void createTaskBox(AbstractTask*);
         void loadTasks();
+        void refreshTasks();
 
         DoLah::DoLahClient appClient;
         QPoint dragPosition;

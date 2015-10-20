@@ -103,6 +103,20 @@ namespace DoLah {
         }
     }
 
+    void DoLahUI::refreshTasks() {
+        QLayoutItem* child;
+        while ((child = tasksLayout->takeAt(0)) != 0)
+        {
+            QWidget* widget = child->widget();
+            if (widget)
+            {
+                delete child->widget();
+                delete child;
+            }
+        }
+        loadTasks();
+    }
+
     void DoLahUI::createTaskBox(AbstractTask *task) {
         std::string name = task->getName();
         int id = task->getId();
@@ -127,7 +141,6 @@ namespace DoLah {
 
         // handles events when enter key is pressed
         QObject::connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(handleUserInput()));
-        //QObject::connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(testUserInput()));
         QObject::connect(lineEdit, SIGNAL(returnPressed()), lineEdit, SLOT(clear()));
     }
 
@@ -135,18 +148,8 @@ namespace DoLah {
         QString input = lineEdit->text();
         std::string inputline = input.toStdString();
         this->appClient.parseAndProcessCommand(inputline);
-        loadTasks();
+        refreshTasks();
         message->setText("Done. Enter next command:");
-    }
-
-    void DoLahUI::testUserInput() {
-        QString input = lineEdit->text();
-        QTextBrowser *tempTaskBox = new QTextBrowser();
-        tempTaskBox->setObjectName(QStringLiteral("Task List"));
-        tempTaskBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        tempTaskBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        tempTaskBox->setText(input);
-        tasksLayout->insertWidget(0, tempTaskBox);
     }
 
 }

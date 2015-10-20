@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/DoLahUI">
-        <file>bg.GIF</file>
         <file>stylesheet.qss</file>
     </qresource>
 </RCC>
