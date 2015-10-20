@@ -1,4 +1,6 @@
 <RCC>
-    <qresource prefix="DoLahUI">
+    <qresource prefix="/DoLahUI">
+        <file>stylesheet.qss</file>
+        <file>exit.png</file>
     </qresource>
 </RCC>
