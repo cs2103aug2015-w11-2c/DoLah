@@ -62,7 +62,7 @@ namespace DoLah {
         void initMenu();
         void initDisplayArea();
         void initInputArea();
-        void createTaskBox(AbstractTask*);
+        void createTaskBox(int, AbstractTask*);
         void loadTasks();
         void refreshTasks();
 
