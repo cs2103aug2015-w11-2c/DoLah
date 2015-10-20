@@ -74,6 +74,7 @@ public:
     }
 
     // From here, unit tests for time parsing
+    // Test for corner cases.
 
     TEST_METHOD(DateGivenDayAndMonth) {
         std::string input = "2st January";
@@ -112,6 +113,7 @@ public:
 
 
     // From here, integrated tests for task parsing
+    // Does test for combination of multiple inputs
 
     TEST_METHOD(FloatingWithName) {
         parseTaskMethod((std::string)
@@ -199,6 +201,8 @@ public:
 
 
     // From here, integrated tests for command parsing
+    // Will check boundary cases and exceptions.
+    // The actual content of the commands are hidden as black box.
 
     TEST_METHOD(ParseWrongCommandTest) {
         std::string input = "eddard ";
