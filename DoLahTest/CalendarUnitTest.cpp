@@ -23,9 +23,9 @@ namespace DoLahTest
             testCal.addTask(task);
 
             //Assert
-            Assert::AreEqual(testCal.getTaskList().size(), (size_t) 1); 
-            Assert::AreEqual(testCal.getTaskList()[0]->getName(), task->getName());
-            Assert::AreEqual(testCal.getTaskList()[0]->getDescription(), task->getDescription());
+            Assert::AreEqual((size_t)1, testCal.getTaskList().size());
+            Assert::AreEqual(task->getName(), testCal.getTaskList()[0]->getName());
+            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[0]->getDescription());
         }
 
         TEST_METHOD(DeleteTask) {
@@ -37,7 +37,7 @@ namespace DoLahTest
             testCal.deleteTask(4);
 
             //Assert
-            Assert::AreEqual(testCal.getTaskList().size(), (size_t) oldLength - 1);
+            Assert::AreEqual((size_t)oldLength - 1, testCal.getTaskList().size());
         }
 
         TEST_METHOD(EditTask) {
@@ -49,9 +49,9 @@ namespace DoLahTest
             testCal.updateTask(0, task);
 
             //Assert
-            Assert::AreEqual(testCal.getTaskList()[0]->getName(), task->getName());
-            Assert::AreEqual(testCal.getTaskList()[0]->getDescription(), task->getDescription());
-            Assert::AreEqual(testCal.getTaskList()[0]->isDone(), task->isDone());
+            Assert::AreEqual(task->getName(), testCal.getTaskList()[0]->getName());
+            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[0]->getDescription());
+            Assert::AreEqual(task->isDone(), testCal.getTaskList()[0]->isDone());
         }
 
 		TEST_METHOD(ClearTask) {
@@ -73,7 +73,7 @@ namespace DoLahTest
             std::vector<DoLah::AbstractTask*> resultVector = testCal.search("Floating");
 
             //Assert
-            Assert::AreEqual(resultVector.size(), (size_t) 5);
+            Assert::AreEqual((size_t)5, resultVector.size());
 		}
 
         TEST_METHOD(FindTaskThatDoesNotExist) {
@@ -84,7 +84,7 @@ namespace DoLahTest
             std::vector<DoLah::AbstractTask*> resultVector = testCal.search("The quick brown fox");
 
             //Assert
-            Assert::AreEqual(resultVector.size(), (size_t)0);
+            Assert::AreEqual((size_t)0, resultVector.size());
         }
 	};
 }
