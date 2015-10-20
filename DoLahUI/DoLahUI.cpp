@@ -37,13 +37,7 @@ namespace DoLah {
 
         this->setCentralWidget(centralWidget);
 
-        this->retranslateUI();
-
         QMetaObject::connectSlotsByName(this);
-    }
-
-    void DoLahUI::retranslateUI() {
-        taskBox->setText(QApplication::translate("window", "<font size=4><b>1. polish GUI</b></font><br><font size=3><font color=#2fb6a7>today</font></font>", 0));
     }
 
     // HANDLE DRAGGING OF WINDOW
@@ -95,13 +89,14 @@ namespace DoLah {
         taskBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         taskBox->setFixedHeight(40);
         taskBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        taskBox->setText("<font size=4><b>1. polish GUI</b></font><br><font size=3><font color=#2fb6a7>today</font></font>");
 
         tasksContainer = new QWidget(scrollArea);
         tasksContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         tasksLayout = new QVBoxLayout(tasksContainer);
         tasksLayout->setAlignment(Qt::AlignTop);
-        tasksLayout->addWidget(taskBox);
+        //tasksLayout->addWidget(taskBox);
         tasksLayout->setSpacing(3);
         tasksLayout->setContentsMargins(0, 0, 0, 0);
         loadTasks();
@@ -163,9 +158,16 @@ namespace DoLah {
     void DoLahUI::handleUserInput() {
         QString input = lineEdit->text();
         std::string inputline = input.toStdString();
-        this->appClient.parseAndProcessCommand(inputline);
-        refreshTasks();
-        message->setText("Done. Enter next command:");
+        try {
+            this->appClient.parseAndProcessCommand(inputline);
+            refreshTasks();
+            message->setText("Done. Enter next command:");
+        }
+        catch(std::exception e) {
+            QString text = QString(e.what());
+            message->setText(text);
+            
+        }
     }
 
     void DoLahUI::menuExit() {

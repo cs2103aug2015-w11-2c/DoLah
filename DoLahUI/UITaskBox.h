@@ -10,6 +10,7 @@ namespace DoLah {
     public:
         UITaskBox();
         ~UITaskBox();
+        QSize sizeHint() const;
     };
 
 }
