@@ -81,7 +81,7 @@ todo:  # Todo Tasks
             Assert::AreEqual(
                 std::string(calendar.getTaskList()[0]->getDescription()),
                 calNode["todo"][0]["description"].as<std::string>());
-            Assert::AreEqual(calNode["todo"].size() + calNode["done"].size(), calendar.getTaskList().size());
+            Assert::AreEqual(calNode["todo"].size() + calNode["done"].size(), calendar.getAllTaskList().size());
         }
 
 
@@ -100,7 +100,8 @@ todo:  # Todo Tasks
 
             // Assert
             YAML::Node calNode = YAML::LoadFile(TEST_FIXTURE_FILENAME);
-            Assert::AreEqual(calNode["todo"].size() + calNode["done"].size(), calendar.getTaskList().size());
+            Assert::AreEqual(calNode["done"].size(), calendar.getDoneList().size());
+            Assert::AreEqual(calNode["todo"].size(), calendar.getTaskList().size());
         }
 
         TEST_METHOD(TestLoadCalendarTaskDetail) {
@@ -118,7 +119,7 @@ todo:  # Todo Tasks
 
             // Assert
             YAML::Node calNode = YAML::LoadFile(TEST_FIXTURE_FILENAME);
-            std::vector<DoLah::AbstractTask*> taskList = calendar.getTaskList();
+            std::vector<DoLah::AbstractTask*> taskList = calendar.getAllTaskList();
 
             // Assert Task Details
             for (size_t i = 0; i < taskList.size(); ++i) {

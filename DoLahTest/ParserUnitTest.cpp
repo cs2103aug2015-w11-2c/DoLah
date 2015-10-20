@@ -2,6 +2,8 @@
 #include "CppUnitTest.h"
 #include "regex"
 #include <iterator>
+#include <functional>
+#include <stdexcept>
 
 #include "Parser/ParserLibrary.h"
 #include "Parser/CommandParser.h"
@@ -12,6 +14,9 @@
 
 #include "Commands/Command.h"
 #include "Models/Task.h"
+
+#include "CalendarBuilder.h"
+#include "TaskBuilder.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -225,6 +230,60 @@ public:
         if (!flag) {
             Assert::IsFalse(true);
         }
+    }
+
+    TEST_METHOD(ParseSetDoneCommand) {
+
+        // Arrange
+        std::string input = "done 1";
+
+        // Act
+        DoLah::ITaskCommand* cmd = DoLah::CommandParser::parse(input);
+
+        // Assert
+        Assert::AreEqual(typeid(DoLah::SetDoneTaskCommand).name(), typeid(*cmd).name());
+    }
+
+    TEST_METHOD(ParseIncompleteSetDoneCommand) {
+
+        // Arrange
+        std::string input = "done";
+
+        // Act
+        std::function<DoLah::ITaskCommand* (void)> func = [input] {
+            return DoLah::CommandParser::parse(input);
+        };
+
+        // Assert
+        Assert::ExpectException<std::invalid_argument>(func);
+    }
+
+    TEST_METHOD(ParseTooManyArgumentSetDoneCommand) {
+
+        // Arrange
+        std::string input = "done task 1";
+
+        // Act
+        std::function<DoLah::ITaskCommand* (void)> func = [input] {
+            return DoLah::CommandParser::parse(input);
+        };
+
+        // Assert
+        Assert::ExpectException<std::invalid_argument>(func);
+    }
+
+    TEST_METHOD(ParseInvalidArgumentSetDoneCommand) {
+
+        // Arrange
+        std::string input = "done -1";
+
+        // Act
+        std::function<DoLah::ITaskCommand* (void)> func = [input] {
+            return DoLah::CommandParser::parse(input);
+        };
+
+        // Assert
+        Assert::ExpectException<std::invalid_argument>(func);
     }
 
     TEST_METHOD(stripTest) {

@@ -2,7 +2,7 @@
 
 namespace DoLah {
 
-    std::vector<std::string> CommandTokenizer::commandList = { "add", "display", "undo", "delete", "edit", "clear", "search", "sort" };
+    std::vector<std::string> CommandTokenizer::commandList = { "add", "done", "display", "undo", "delete", "edit", "clear", "search", "sort" };
 
     CommandTokenizer::CommandTokenizer() {
     }

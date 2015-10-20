@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Commands\SetDoneTaskCommand.cpp" />
     <ClCompile Include="Parser\CommandParser.cpp" />
     <ClCompile Include="Parser\CommandTokenizer.cpp" />
     <ClCompile Include="Parser\DateTimeParser.cpp" />
