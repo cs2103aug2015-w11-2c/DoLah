@@ -98,8 +98,8 @@ namespace DoLah {
 
     void DoLahUI::loadTasks() {
         std::vector<AbstractTask*> taskList = (appClient.getCalendar()).getTaskList();
-        for (auto it = taskList.begin(); it != taskList.end(); it++) {
-            createTaskBox(*it);
+        for (int i = 0; i < taskList.size(); ++i) {
+            createTaskBox(i, taskList[i]);
         }
     }
 
@@ -117,11 +117,11 @@ namespace DoLah {
         loadTasks();
     }
 
-    void DoLahUI::createTaskBox(AbstractTask *task) {
+    void DoLahUI::createTaskBox(int index, AbstractTask *task) {
         std::string name = task->getName();
-        int id = task->getId();
+
         // dynamic casting??
-        QString tasktitle = "<font size=4><b>" + QString::number(id) + ". " + QString::fromStdString(name);
+        QString tasktitle = "<font size=4><b>" + QString::number(index) + ". " + QString::fromStdString(name);
         QTextBrowser *tempTaskBox = new UITaskBox();
         tempTaskBox->setObjectName(QStringLiteral("Task"));
         tempTaskBox->setText(tasktitle);
