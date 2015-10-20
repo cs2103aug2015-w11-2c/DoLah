@@ -22,6 +22,11 @@ private:
     std::string month;
     std::string day;
 public:
+    std::string tmToString(std::tm time) {
+        return std::to_string(time.tm_mday) + "/"
+            + std::to_string(time.tm_mon + 1) + "/"
+            + std::to_string(time.tm_year + 1900);
+    }
     void parseAddTestMethod(std::string input, std::vector<std::string> expected) {
         try {
             std::vector<std::string> inputArr = DoLah::ParserLibrary::explode(input, " ");
@@ -29,9 +34,7 @@ public:
             std::string dates = "";
             if (!datesVector.empty()) {
                 for (size_t i = 0; i < datesVector.size(); i++) {
-                    dates += std::to_string(datesVector.at(i).tm_mday) + "/"
-                        + std::to_string(datesVector.at(i).tm_mon + 1) + "/"
-                        + std::to_string(datesVector.at(i).tm_year + 1900);
+                    dates += tmToString(datesVector.at(i));
                     if (i < datesVector.size() - 1) {
                         dates += " ~ ";
                     }
@@ -240,58 +243,214 @@ public:
         }
     }
 
+    // parseAdd()
+    // input in string
+    // expect in { string date, vector<string> tags, string name }
     TEST_METHOD(parseAddDetailedTest1) {
         parseAddTestMethod((std::string)
-            "#cs2103 #homework on 30th",
-            { "30/" + month + "/" + year, "{ homework, cs2103 }", "#cs2103 #homework" }
+            "task",
+            { "", "{  }", "task" }
         );
     }
 
     TEST_METHOD(parseAddDetailedTest2) {
         parseAddTestMethod((std::string)
-            "#cs2103 #homework on 300th",
-            { "", "{ homework, cs2103 }", "#cs2103 #homework on 300th" }
+            "task on 24.12.2015",
+            { "24/12/2015", "{  }", "task" }
         );
     }
 
     TEST_METHOD(parseAddDetailedTest3) {
         parseAddTestMethod((std::string)
-            "#cs2103 #homework on December 25th 2015",
-            { "25/12/2015", "{ homework, cs2103 }", "#cs2103 #homework" }
+            "task by 24.12.2015",
+            { "24/12/2015", "{  }", "task" }
         );
     }
 
     TEST_METHOD(parseAddDetailedTest4) {
         parseAddTestMethod((std::string)
-            "#cs2103 #homework on the #stage",
-            { "", "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
+            "task from 24.12.2015 to 25.12.2015",
+            { "24/12/2015 ~ 25/12/2015", "{  }", "task" }
         );
     }
 
     TEST_METHOD(parseAddDetailedTest5) {
         parseAddTestMethod((std::string)
-            "#cs2103 #homework on the #stage from 15th to 21st",
-            { "15/" + month + "/" + year + " ~ 21/" + month + "/" + year, "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
+            "task from 24.12.2015 until 25.12.2015",
+            { "24/12/2015 ~ 25/12/2015", "{  }", "task" }
         );
     }
 
     TEST_METHOD(parseAddDetailedTest6) {
         parseAddTestMethod((std::string)
-            "workout from 15th of Nov to 21st of Dec",
-            { "15/11/" + year + " ~ 21/12/" + year, "{  }", "workout" }
+            "#task from 24.12.2015 until 25.12.2015",
+            { "24/12/2015 ~ 25/12/2015", "{ task }", "#task" }
         );
     }
 
     TEST_METHOD(parseAddDetailedTest7) {
         parseAddTestMethod((std::string)
-            "workout from 10-18-2015 to 10-25-2015",
-            { "18/10/2015 ~ 25/10/2015", "{  }", "workout" }
+            "#cs2103 #task from 24.12.2015 until 25.12.2015",
+            { "24/12/2015 ~ 25/12/2015", "{ task, cs2103 }", "#cs2103 #task" }
         );
     }
 
-    TEST_METHOD(getMonthTest1) {
-        Assert::AreEqual((std::string) "1", std::to_string(DoLah::DateTimeParser::getMonth("feb")));
+    TEST_METHOD(parseAddDetailedTest8) {
+        parseAddTestMethod((std::string)
+            "task on 24th of December 20150",
+            { "", "{  }", "task on 24th of December 20150" }
+        );
     }
+
+    TEST_METHOD(parseAddDetailedTest9) {
+        parseAddTestMethod((std::string)
+            "task on 24th of Decemberu",
+            { "", "{  }", "task on 24th of Decemberu" }
+        );
+    }
+
+    TEST_METHOD(parseAddDetailedTest10) {
+        parseAddTestMethod((std::string)
+            "task on 24the",
+            { "", "{  }", "task on 24the" }
+        );
+    }
+
+    TEST_METHOD(parseAddDetailedTest11) {
+        parseAddTestMethod((std::string)
+            "task on December",
+            { "", "{  }", "task on December" }
+        );
+    }
+
+    TEST_METHOD(parseAddDetailedTest12) {
+        parseAddTestMethod((std::string)
+            "task on Decemberu",
+            { "", "{  }", "task on Decemberu" }
+        );
+    }
+
+    TEST_METHOD(parseAddDetailedTest13) {
+        parseAddTestMethod((std::string)
+            "task on December 24the",
+            { "", "{  }", "task on December 24the" }
+        );
+    }
+
+    TEST_METHOD(parseAddDetailedTest14) {
+        parseAddTestMethod((std::string)
+            "task on December 24th 20150",
+            { "", "{  }", "task on December 24th 20150" }
+        );
+    }
+
+    TEST_METHOD(toDateFormatTest1) {
+        std::string input = "1st January 2015";
+        std::string expected = "1/1/2015";
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(toDateFormatTest2) {
+        std::string input = "1st January";
+        std::string expected = "1/1/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(toDateFormatTest3) {
+        std::string input = "1st";
+        std::string expected = "1/" + month + "/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(toDateFormatTest4) {
+        std::string input = "January 1st 2015";
+        std::string expected = "1/1/2015";
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(toDateFormatTest5) {
+        std::string input = "January 1st";
+        std::string expected = "1/1/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(toDateFormatTest6) {
+        std::string input = "1st Jan 2015";
+        std::string expected = "1/1/2015";
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(toDateFormatTest7) {
+        std::string input = "24.12.2015";
+        std::string expected = "24/12/2015";
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(toDateFormatTest8) {
+        std::string input = "12.24.2015";
+        std::string expected = "24/12/2015";
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(toDateFormatTest9) {
+        std::string input = "12.24.15";
+        std::string expected = "24/12/2015";
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    std::string REJECT = "-1";
+
+    TEST_METHOD(getDayExceptionTest1) {
+        std::string input = "1str";
+        std::string expected = REJECT;
+        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getDay(input)));
+    }
+
+    TEST_METHOD(getDayExceptionTest2) {
+        std::string input = "me";
+        std::string expected = REJECT;
+        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getDay(input)));
+    }
+
+    TEST_METHOD(getDayExceptionTest3) {
+        std::string input = "10000";
+        std::string expected = REJECT;
+        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getDay(input)));
+    }
+
+    TEST_METHOD(getMonthExceptionTest1) {
+        std::string input = "christmas";
+        std::string expected = REJECT;
+        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getMonth(input)));
+    }
+
+    TEST_METHOD(getMonthExceptionTest2) {
+        std::string input = "10000";
+        std::string expected = REJECT;
+        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getMonth(input)));
+    }
+
+    TEST_METHOD(getYearExceptionTest1) {
+        std::string input = "10000";
+        std::string expected = REJECT;
+        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getYear(input)));
+    }
+
+    TEST_METHOD(getYearExceptionTest2) {
+        std::string input = "four";
+        std::string expected = REJECT;
+        Assert::AreEqual(expected, std::to_string(DoLah::DateTimeParser::getYear(input)));
+    }
+
 
     TEST_METHOD(stripTest) {
         std::string input = " search ";
