@@ -3,6 +3,7 @@
 namespace DoLah {
     std::string CommandParser::ADD = "add";
     std::string CommandParser::SEARCH = "search";
+    std::string CommandParser::DONE = "done";
     std::string CommandParser::EDIT = "edit";
     std::string CommandParser::DELETE = "delete";
     std::string CommandParser::CLEAR = "clear";
@@ -31,6 +32,24 @@ namespace DoLah {
         return AddTaskCommand(task);
     }
 
+    SetDoneTaskCommand CommandParser::parseSetDone(std::vector<std::string> inputArr) {
+        if (inputArr.size() == 0) {
+            throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
+        } else if (inputArr.size() > 1) {
+            throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
+        }
+
+        int taskID;
+        try {
+            taskID = std::stoi(inputArr.at(0));
+            if (taskID < 0) {
+                throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
+            }
+        } catch (std::invalid_argument e) {
+            throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
+        }
+        return SetDoneTaskCommand(taskID);
+    }
 
     SearchTaskCommand CommandParser::parseSearch(std::vector<std::string> inputArr) {
         if (inputArr.size() == 0) {
@@ -110,6 +129,9 @@ namespace DoLah {
             return command;
         } else if (command == SEARCH) {
             SearchTaskCommand* command = new SearchTaskCommand(parseSearch(inputArr));
+            return command;
+        } else if (command == DONE){
+            SetDoneTaskCommand* command = new SetDoneTaskCommand(parseSetDone(inputArr));
             return command;
         } else if (command == EDIT) {
             EditTaskCommand* command = new EditTaskCommand(parseEdit(inputArr));
