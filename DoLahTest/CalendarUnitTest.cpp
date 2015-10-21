@@ -40,6 +40,21 @@ namespace DoLahTest
             Assert::AreEqual((size_t)oldLength - 1, testCal.getTaskList().size());
         }
 
+        // TESTING FOR BOUNDARY CASE WHERE TASK TO BE DELETED DOES NOT EXIST
+        TEST_METHOD(DeleteTaskOutOfRange) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+            int Length = testCal.getTaskList().size();
+
+            //Act
+            std::function<void(void)> func = [&testCal, Length] {
+                testCal.deleteTask(Length + 2);
+            };
+            //Assert
+            Assert::ExpectException<std::out_of_range>(func);
+            Assert::AreEqual((size_t)Length, testCal.getTaskList().size());
+        }
+
         TEST_METHOD(SetDoneTask) {
             // Arrange
             DoLah::Calendar cal;
@@ -84,6 +99,20 @@ namespace DoLahTest
             Assert::AreEqual(task->getName(), testCal.getTaskList()[0]->getName());
             Assert::AreEqual(task->getDescription(), testCal.getTaskList()[0]->getDescription());
             Assert::AreEqual(task->isDone(), testCal.getTaskList()[0]->isDone());
+        }
+
+        // TESTING FOR BOUNDARY CASE WHERE TASK TO BE EDITED DOES NOT EXIST
+        TEST_METHOD(EditTaskOutOfRange) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+            DoLah::DeadlineTask* task = TaskBuilder::buildDeadlineTask();
+
+            //Act
+            std::function<void(void)> func = [&testCal, task] {
+                testCal.updateTask(-1, task);
+            };
+            //Assert
+            Assert::ExpectException<std::out_of_range>(func);
         }
 
 		TEST_METHOD(ClearTask) {
