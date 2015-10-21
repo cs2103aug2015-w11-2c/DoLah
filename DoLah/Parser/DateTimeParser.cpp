@@ -4,6 +4,8 @@ namespace DoLah {
     int DateTimeParser::REJECT = -1;
     std::string DateTimeParser::CENTURY = "20";
     int DateTimeParser::DAYINSECS = 86400;
+    int DateTimeParser::WEEKINSECS = 604800;
+    int DateTimeParser::MONTHINSECS = 2592000;
 
     std::vector<std::string> DateTimeParser::decorators = { "of" };
 
@@ -102,9 +104,9 @@ namespace DoLah {
         std::tm current;
         localtime_s(&current, &t);
 
-        int diff = date - current.tm_wday;
+        int diff = date - current.tm_wday + 1;
         if (diff < 0) {
-            diff = 6 + diff;
+            diff = 7 + diff;
         } else if (notThisWeek) {
             diff += 7;
         }
@@ -116,14 +118,32 @@ namespace DoLah {
         std::tm output;
         int dayDiff = 0;
         int weekDiff = 0;
+        int monthDiff = 0;
 
         int size = strArr.size();
 
         int index = 0;
         std::string element;
         
-        element = strArr.at(0);
-        if (element == "next") {
+        element = strArr.at(index);
+        if (ParserLibrary::isDecimal(element) || element == "a") {
+            int n;
+            if (element == "a") {
+                n = 1;
+            } else {
+                n = stoi(element);
+            }
+
+            element = strArr.at(++index);
+            
+            if (ParserLibrary::inStringArray({ "day", "days" }, element)) {
+                dayDiff = n;
+            } else if (ParserLibrary::inStringArray({ "week", "weeks" }, element)) {
+                weekDiff = n;
+            } else if (ParserLibrary::inStringArray({ "month", "months" }, element)) {
+                monthDiff = n; // month length is not fixed!!
+            }
+        } else if (element == "next") {
             if (size < 2) {
                 throw std::invalid_argument("");
             }
@@ -142,7 +162,7 @@ namespace DoLah {
             throw std::invalid_argument("");
         }
 
-        int modifer = (dayDiff + 1) * DAYINSECS;
+        int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
         time_t t = time(NULL) + modifer;
         localtime_s(&output, &t);
 

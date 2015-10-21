@@ -2,7 +2,7 @@
 
 
 namespace DoLah {
-    std::vector<std::string> TaskTokenizer::DEADLINE_INDICATOR = { "on", "by" };
+    std::vector<std::string> TaskTokenizer::DEADLINE_INDICATOR = { "in", "on", "by" };
     std::string TaskTokenizer::SCHEDULE_INDICATOR = "from";
     std::vector<std::string> TaskTokenizer::SCHEDULE_SEPARATOR = { "to", "until" };
     std::string TaskTokenizer::tag = "#";

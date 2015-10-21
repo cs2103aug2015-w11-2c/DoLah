@@ -34,6 +34,8 @@ namespace DoLah {
         static int REJECT;
         static std::string CENTURY;
         static int DAYINSECS;
+        static int WEEKINSECS;
+        static int MONTHINSECS;
 
         // this week, next week (not implemented)
         static std::string relativePattern;
