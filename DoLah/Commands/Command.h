@@ -7,9 +7,9 @@
 
 namespace DoLah {
 
-	class ITaskCommand {
+	class AbstractCommand {
 	public:
-		virtual ~ITaskCommand() = 0;
+		virtual ~AbstractCommand() = 0;
         void setCalendar(DoLah::Calendar*);
 		virtual void execute() = 0;
 
@@ -17,7 +17,7 @@ namespace DoLah {
         DoLah::Calendar* calendar;
 	};
 
-	class AddTaskCommand : public ITaskCommand {
+	class AddTaskCommand : public AbstractCommand {
 	public:
 		AddTaskCommand();
 		AddTaskCommand(DoLah::AbstractTask*);
@@ -29,7 +29,7 @@ namespace DoLah {
 		DoLah::AbstractTask* task;
 	};
 
-	class EditTaskCommand : public ITaskCommand {
+	class EditTaskCommand : public AbstractCommand {
 	public:
 		EditTaskCommand();
 		EditTaskCommand(int, DoLah::AbstractTask *);
@@ -41,7 +41,7 @@ namespace DoLah {
 		DoLah::AbstractTask* task;
 	};
 
-    class SetDoneTaskCommand : public ITaskCommand {
+    class SetDoneTaskCommand : public AbstractCommand {
     public:
         SetDoneTaskCommand(int);
         ~SetDoneTaskCommand();
@@ -50,7 +50,7 @@ namespace DoLah {
         int taskIndex;
     };
 
-	class DeleteTaskCommand : public ITaskCommand {
+	class DeleteTaskCommand : public AbstractCommand {
 	public:
 		DeleteTaskCommand();
 		DeleteTaskCommand(int);
@@ -62,7 +62,7 @@ namespace DoLah {
 		int taskIndex;
 	};
 
-	class ClearTaskCommand : public ITaskCommand {
+	class ClearTaskCommand : public AbstractCommand {
 	public:
 		ClearTaskCommand();
 		~ClearTaskCommand();
@@ -70,7 +70,7 @@ namespace DoLah {
 		void execute();
 	};
 
-	class SearchTaskCommand : public ITaskCommand {
+	class SearchTaskCommand : public AbstractCommand {
 	public:
 		SearchTaskCommand();
         SearchTaskCommand(std::string);
@@ -88,7 +88,7 @@ namespace DoLah {
         std::vector<AbstractTask*> ** resultVector;
 	};
 
-	class UndoTaskCommand : public ITaskCommand {
+	class UndoTaskCommand : public AbstractCommand {
 	public:
 		UndoTaskCommand();
 		~UndoTaskCommand();
@@ -96,7 +96,7 @@ namespace DoLah {
 		void execute();
 	};
 
-	class RedoTaskCommand : public ITaskCommand {
+	class RedoTaskCommand : public AbstractCommand {
 	public:
 		RedoTaskCommand();
 		~RedoTaskCommand();

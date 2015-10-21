@@ -20,7 +20,7 @@ namespace DoLah {
         CommandParser();
         ~CommandParser();
 
-        static ITaskCommand* parse(std::string);
+        static AbstractCommand* parse(std::string);
         static AddTaskCommand parseAdd(std::vector<std::string>);
         static SearchTaskCommand parseSearch(std::vector<std::string>);
         static SetDoneTaskCommand parseSetDone(std::vector<std::string>);

@@ -116,7 +116,7 @@ namespace DoLah {
     }
 
 
-    ITaskCommand* CommandParser::parse(std::string input) {
+    AbstractCommand* CommandParser::parse(std::string input) {
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
         std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
 

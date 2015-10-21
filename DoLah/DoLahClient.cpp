@@ -16,7 +16,7 @@ namespace DoLah {
     }
 
     void DoLahClient::parseAndProcessCommand(std::string userinput) {
-        DoLah::ITaskCommand *command = CommandParser::parse(userinput);
+        DoLah::AbstractCommand *command = CommandParser::parse(userinput);
         command->setCalendar(&calendar);
         DoLah::CommandInvoker::process(command);
         DoLah::CalendarStorage::save(calendar, DEFAULT_CALENDAR_FILENAME);
