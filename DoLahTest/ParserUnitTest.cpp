@@ -259,7 +259,7 @@ public:
         }
     }
 
-    TEST_METHOD(WellDeginedEditCommand) {
+    TEST_METHOD(WellDefinedEditCommand) {
         std::string input = "edit 100 #cs2103 #homework on the #stage";
         try {
             DoLah::CommandParser::parse(input);
