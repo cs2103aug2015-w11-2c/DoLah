@@ -124,7 +124,6 @@ public:
         Assert::AreEqual(expected, actual);
     }
 
-
     // From here, integrated tests for task parsing
     // Does test for combination of multiple inputs
 

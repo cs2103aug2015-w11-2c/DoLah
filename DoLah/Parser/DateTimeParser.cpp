@@ -138,6 +138,8 @@ namespace DoLah {
                 dayDiff = getDateModifier(date, false);
             } else if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
                 dayDiff = 1;
+            } else {
+                throw std::invalid_argument("");
             }
         } else if (ParserLibrary::inStringArray(nextPattern, element)) {
             element = strArr.at(index++);
