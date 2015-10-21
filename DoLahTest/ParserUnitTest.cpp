@@ -385,7 +385,7 @@ public:
         std::string input = "done 1";
 
         // Act
-        DoLah::ITaskCommand* cmd = DoLah::CommandParser::parse(input);
+        DoLah::AbstractCommand* cmd = DoLah::CommandParser::parse(input);
 
         // Assert
         Assert::AreEqual(typeid(DoLah::SetDoneTaskCommand).name(), typeid(*cmd).name());
@@ -397,7 +397,7 @@ public:
         std::string input = "done";
 
         // Act
-        std::function<DoLah::ITaskCommand* (void)> func = [input] {
+        std::function<DoLah::AbstractCommand* (void)> func = [input] {
             return DoLah::CommandParser::parse(input);
         };
 
@@ -411,7 +411,7 @@ public:
         std::string input = "done task 1";
 
         // Act
-        std::function<DoLah::ITaskCommand* (void)> func = [input] {
+        std::function<DoLah::AbstractCommand* (void)> func = [input] {
             return DoLah::CommandParser::parse(input);
         };
 
@@ -425,7 +425,7 @@ public:
         std::string input = "done -1";
 
         // Act
-        std::function<DoLah::ITaskCommand* (void)> func = [input] {
+        std::function<DoLah::AbstractCommand* (void)> func = [input] {
             return DoLah::CommandParser::parse(input);
         };
 

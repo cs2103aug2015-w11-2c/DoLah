@@ -2,10 +2,10 @@
 
 namespace DoLah {
 
-	ITaskCommand::~ITaskCommand() {
+	AbstractCommand::~AbstractCommand() {
 	}
 
-    void ITaskCommand::setCalendar(DoLah::Calendar * calendar)
+    void AbstractCommand::setCalendar(DoLah::Calendar * calendar)
     {
         this->calendar = calendar;
     }
