@@ -50,5 +50,11 @@ namespace DoLah {
         static std::vector<std::string> decorators;
         // 25/12/2015, 25-12-2015, 25.12.2015,
         static std::vector<std::string> dateDividers;
+
+        static std::vector<std::string> articlePattern;
+        static std::vector<std::string> dayDescriptionPattern;
+        static std::vector<std::string> weekDescriptionPattern;
+        static std::vector<std::string> monthDescriptionPattern;
+        static std::vector<std::string> nextPattern;
     };
 }

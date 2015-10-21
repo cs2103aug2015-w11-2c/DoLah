@@ -38,9 +38,13 @@ namespace DoLah {
         "^(november|nov|11)$",
         "^(december|dec|12)$"
     };
-    std::vector<std::string> DateTimeParser::dateDividers = {
-        "/", "-", "."
-    };
+    std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
+    std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };
+    std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "day", "days" };
+    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "week", "weeks" };
+    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "month", "months" };
+    std::vector<std::string> DateTimeParser::nextPattern = { "next", "coming" };
+
 
     DateTimeParser::DateTimeParser() {
     }
@@ -125,38 +129,36 @@ namespace DoLah {
         int index = 0;
         std::string element;
         
-        element = strArr.at(index);
-        if (ParserLibrary::isDecimal(element) || element == "a") {
+        element = strArr.at(index++);
+        if (strArr.size() == 1) {
+            int date = getDate(element);
+            if (date != REJECT) {
+                dayDiff = getDateModifier(date, false);
+            }
+        } else if (ParserLibrary::inStringArray(nextPattern, element)) {
+            if (size < 2) {
+                throw std::invalid_argument("");
+            }
+            element = strArr.at(index++);
+            int date = getDate(element);
+            if (date != REJECT) {
+                dayDiff = getDateModifier(date, true);
+            }
+        } else if (ParserLibrary::isDecimal(element) || ParserLibrary::inStringArray(articlePattern, element)) {
             int n;
-            if (element == "a") {
+            if (ParserLibrary::inStringArray(articlePattern, element)) {
                 n = 1;
             } else {
                 n = stoi(element);
             }
 
-            element = strArr.at(++index);
-            
-            if (ParserLibrary::inStringArray({ "day", "days" }, element)) {
+            element = strArr.at(index++);
+            if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
                 dayDiff = n;
-            } else if (ParserLibrary::inStringArray({ "week", "weeks" }, element)) {
+            } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
                 weekDiff = n;
-            } else if (ParserLibrary::inStringArray({ "month", "months" }, element)) {
+            } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
                 monthDiff = n; // month length is not fixed!!
-            }
-        } else if (element == "next") {
-            if (size < 2) {
-                throw std::invalid_argument("");
-            }
-            element = strArr.at(1);
-            int date = getDate(element);
-            if (date != REJECT) {
-                dayDiff = getDateModifier(date, true);
-            }
-        } else if (strArr.size() == 1) {
-            element = strArr.at(0);
-            int date = getDate(element);
-            if (date != REJECT) {
-                dayDiff = getDateModifier(date, false);
             }
         } else {
             throw std::invalid_argument("");
