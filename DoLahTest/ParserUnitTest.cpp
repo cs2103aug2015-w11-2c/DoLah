@@ -79,12 +79,34 @@ public:
     }
 
     // 
-    TEST_METHOD(Tomorrow) {
+    TEST_METHOD(Tomorrow) { // will fail on the last day of the month
         std::string input = "tomorrow";
         std::string expected = std::to_string(current.tm_mday + 1) + "/" + month + "/" + year;
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
+
+    TEST_METHOD(NextWeek) { // will fail on the last week of the month
+        std::string input = "next week";
+        std::string expected = std::to_string(current.tm_mday + 7) + "/" + month + "/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(In10Days) { // will fail in the last 10 days of the month
+        std::string input = "10 days";
+        std::string expected = std::to_string(current.tm_mday + 10) + "/" + month + "/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(In2Weeks) { // will fail in the last 2 weeks of the month
+        std::string input = "2 weeks";
+        std::string expected = std::to_string(current.tm_mday + 14) + "/" + month + "/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
 
     // From here, unit tests for time parsing
     // Test for corner cases.
