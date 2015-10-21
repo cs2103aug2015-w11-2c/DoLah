@@ -27,16 +27,19 @@ private:
     std::string month;
     std::string day;
 public:
-    void parseAddTestMethod(std::string input, std::vector<std::string> expected) {
+    std::string tmToString(std::tm time) {
+        return std::to_string(time.tm_mday) + "/"
+            + std::to_string(time.tm_mon + 1) + "/"
+            + std::to_string(time.tm_year + 1900);
+    }
+    void parseTaskMethod(std::string input, std::vector<std::string> expected) {
         try {
             std::vector<std::string> inputArr = DoLah::ParserLibrary::explode(input, " ");
             std::vector<std::tm> datesVector = DoLah::TaskTokenizer::findAndRemoveDate(inputArr);
             std::string dates = "";
             if (!datesVector.empty()) {
                 for (size_t i = 0; i < datesVector.size(); i++) {
-                    dates += std::to_string(datesVector.at(i).tm_mday) + "/"
-                        + std::to_string(datesVector.at(i).tm_mon + 1) + "/"
-                        + std::to_string(datesVector.at(i).tm_year + 1900);
+                    dates += tmToString(datesVector.at(i));
                     if (i < datesVector.size() - 1) {
                         dates += " ~ ";
                     }
@@ -58,6 +61,14 @@ public:
         }
     }
 
+    std::string UNHANDLED_COMMAND_MESSAGE = "Command not handled";
+    std::string UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
+    std::string TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
+    std::string TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
+    std::string INVALID_TASK_ID_ARGUMENT = "Invalid task ID given";
+
+    std::string UNEXPECTED_EXCEPTION = "This is an unexpected exception.";
+
     TEST_METHOD_INITIALIZE(Startup) {
         time_t t = time(0);
         std::tm current;
@@ -67,168 +78,304 @@ public:
         day = std::to_string(current.tm_mday);
     }
 
-    TEST_METHOD(parseAddDetailedTest1) {
-        parseAddTestMethod((std::string)
-            "#cs2103 #homework on 30th",
-            { "30/" + month + "/" + year, "{ homework, cs2103 }", "#cs2103 #homework" }
+    // From here, unit tests for time parsing
+    // Test for corner cases.
+
+    TEST_METHOD(DateGivenDayAndMonth) {
+        std::string input = "2st January";
+        std::string expected = "2/1/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(DateGivenDay) {
+        std::string input = "1st";
+        std::string expected = "1/" + month + "/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(DateGivenMonthAndDay) {
+        std::string input = "January 2st";
+        std::string expected = "2/1/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(DateInDifferentFormat1) {
+        std::string input = "24.12.2015";
+        std::string expected = "24/12/2015";
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+    TEST_METHOD(DateInDifferentFormat2) {
+        std::string input = "24-12-2015";
+        std::string expected = "24/12/2015";
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
+    }
+
+
+    // From here, integrated tests for task parsing
+    // Does test for combination of multiple inputs
+
+    TEST_METHOD(FloatingWithName) {
+        parseTaskMethod((std::string)
+            "task",
+            { "", "{  }", "task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest2) {
-        parseAddTestMethod((std::string)
-            "#cs2103 #homework on 300th",
-            { "", "{ homework, cs2103 }", "#cs2103 #homework on 300th" }
+    TEST_METHOD(DeadlineWithName) {
+        parseTaskMethod((std::string)
+            "task on 24.12.2015",
+            { "24/12/2015", "{  }", "task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest3) {
-        parseAddTestMethod((std::string)
-            "#cs2103 #homework on December 25th 2015",
-            { "25/12/2015", "{ homework, cs2103 }", "#cs2103 #homework" }
+    TEST_METHOD(EventWithName) {
+        parseTaskMethod((std::string)
+            "task from 24.12.2015 to 25.12.2015",
+            { "24/12/2015 ~ 25/12/2015", "{  }", "task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest4) {
-        parseAddTestMethod((std::string)
-            "#cs2103 #homework on the #stage",
-            { "", "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
+    TEST_METHOD(EventWithNameAndTag) {
+        parseTaskMethod((std::string)
+            "#task from 24.12.2015 until 25.12.2015",
+            { "24/12/2015 ~ 25/12/2015", "{ task }", "#task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest5) {
-        parseAddTestMethod((std::string)
-            "#cs2103 #homework on the #stage from 15th to 21st",
-            { "15/" + month + "/" + year + " ~ 21/" + month + "/" + year, "{ stage, homework, cs2103 }", "#cs2103 #homework on the #stage" }
+    TEST_METHOD(EventWithNameAndMultipleTags) {
+        parseTaskMethod((std::string)
+            "#cs2103 #task from 24.12.2015 until 25.12.2015",
+            { "24/12/2015 ~ 25/12/2015", "{ task, cs2103 }", "#cs2103 #task" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest6) {
-        parseAddTestMethod((std::string)
-            "workout from 15th of Nov to 21st of Dec",
-            { "15/11/" + year + " ~ 21/12/" + year, "{  }", "workout" }
+    TEST_METHOD(WrongYearInDMY) {
+        parseTaskMethod((std::string)
+            "task on 24th of December 20150",
+            { "", "{  }", "task on 24th of December 20150" }
         );
     }
 
-    TEST_METHOD(parseAddDetailedTest7) {
-        parseAddTestMethod((std::string)
-            "workout from 10-18-2015 to 10-25-2015",
-            { "18/10/2015 ~ 25/10/2015", "{  }", "workout" }
+    TEST_METHOD(WrongMonthInDMY) {
+        parseTaskMethod((std::string)
+            "task on 24th of Decemberu",
+            { "", "{  }", "task on 24th of Decemberu" }
         );
     }
 
-    TEST_METHOD(getMonthTest1) {
-        Assert::AreEqual((std::string) "1", std::to_string(DoLah::DateTimeParser::getMonth("feb")));
+    TEST_METHOD(WrongDayInDMY) {
+        parseTaskMethod((std::string)
+            "task on 24the",
+            { "", "{  }", "task on 24the" }
+        );
     }
 
-    std::string UNHANDLED_COMMAND_MESSAGE = "Command not handled";
-    std::string UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
-    std::string TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
-    std::string TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
-    std::string INVALID_TASK_ID_ARGUMENT = "Invalid edit argument";
+    TEST_METHOD(MonthWithoutDayInMDY) {
+        parseTaskMethod((std::string)
+            "task on December",
+            { "", "{  }", "task on December" }
+        );
+    }
 
-    TEST_METHOD(parseAddTest1) {
-        std::string input = "added #cs2103 #homework on the #stage";
+    TEST_METHOD(WrongMonthInMDY) {
+        parseTaskMethod((std::string)
+            "task on Decemberu 24th",
+            { "", "{  }", "task on Decemberu 24th" }
+        );
+    }
 
-        bool flag = false;
+    TEST_METHOD(WrongDayInMDY) {
+        parseTaskMethod((std::string)
+            "task on December 24the",
+            { "", "{  }", "task on December 24the" }
+        );
+    }
+
+    TEST_METHOD(WrongYearInMDY) {
+        parseTaskMethod((std::string)
+            "task on December 24th 20150",
+            { "", "{  }", "task on December 24th 20150" }
+        );
+    }
+
+
+    // From here, integrated tests for command parsing
+    // Will check boundary cases and exceptions.
+    // The actual content of the commands are hidden as black box.
+
+    TEST_METHOD(ParseWrongCommandTest) {
+        std::string input = "eddard ";
         try {
             DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
         } catch (std::invalid_argument e) {
-            std::string message = e.what();
-            Assert::AreEqual(UNKNOWN_COMMAND_MESSAGE, message);
-            flag = true;
-        }
-        if (!flag) {
-            Assert::IsFalse(true);
+            Assert::AreEqual(UNKNOWN_COMMAND_MESSAGE, (std::string) e.what());
         }
     }
 
-    TEST_METHOD(parseEditTest1) {
-        std::string input = "edit #cs2103 #homework on the #stage";
-
-        bool flag = false;
+    TEST_METHOD(ParseUnimplementedCommandTest) {
+        std::string input = "sort ";
         try {
             DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
         } catch (std::invalid_argument e) {
-            std::string message = e.what();
-            Assert::AreEqual(INVALID_TASK_ID_ARGUMENT, message);
-            flag = true;
-        }
-        if (!flag) {
-            Assert::IsFalse(true);
+            Assert::AreEqual(UNHANDLED_COMMAND_MESSAGE, (std::string) e.what());
         }
     }
 
-    TEST_METHOD(parseEditTest2) {
+    TEST_METHOD(WellDefinedAddCommandWithDeadline) {
+        std::string input = "add #cs2103 #homework on 30th December 2015";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(true);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(WellDefinedAddCommandWithEvent) {
+        std::string input = "add #cs2103 #homework from 30th Dec 2015 to 31st Dec 2015";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(true);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(AddCommandWithoutDescription) {
+        std::string input = "add ";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(TOO_LITTLE_ARGUMENTS_MESSAGE, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(WellDefinedEditCommand) {
         std::string input = "edit 100 #cs2103 #homework on the #stage";
-
-        bool flag = false;
         try {
             DoLah::CommandParser::parse(input);
+            Assert::IsTrue(true);
         } catch (std::invalid_argument e) {
-            flag = true;
+            Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
         }
-        Assert::IsFalse(flag);
     }
 
-    TEST_METHOD(parseSearchTest1) {
+    TEST_METHOD(EditCommandWithoutTaskIndex) {
+        std::string input = "edit #cs2103 #homework on the #stage";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(INVALID_TASK_ID_ARGUMENT, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(EditCommandWithoutTaskDescription) {
+        std::string input = "edit 100";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(TOO_LITTLE_ARGUMENTS_MESSAGE, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(WellDefinedSearchCommand) {
         std::string input = "search me";
-
-        bool flag = false;
         try {
             DoLah::CommandParser::parse(input);
+            Assert::IsTrue(true);
         } catch (std::invalid_argument e) {
-            std::string message = e.what();
-            Assert::AreEqual(INVALID_TASK_ID_ARGUMENT, message);
-            flag = true;
+            Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
         }
-        Assert::IsFalse(flag);
     }
 
-    TEST_METHOD(parseSearchTest2) {
+    TEST_METHOD(SearchCommandWithoutDescription) {
         std::string input = "search ";
-
-        bool flag = false;
         try {
             DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
         } catch (std::invalid_argument e) {
-            std::string message = e.what();
-            Assert::AreEqual(TOO_LITTLE_ARGUMENTS_MESSAGE, message);
-            flag = true;
-        }
-        if (!flag) {
-            Assert::IsFalse(true);
+            Assert::AreEqual(TOO_LITTLE_ARGUMENTS_MESSAGE, (std::string) e.what());
         }
     }
 
-    TEST_METHOD(parseDeleteTest1) {
-        std::string input = "delete me";
-
-        bool flag = false;
+    TEST_METHOD(WellDefinedDeleteCommand) {
+        std::string input = "delete 100";
         try {
             DoLah::CommandParser::parse(input);
+            Assert::IsTrue(true);
         } catch (std::invalid_argument e) {
-            std::string message = e.what();
-            Assert::AreEqual(INVALID_TASK_ID_ARGUMENT, message);
-            flag = true;
-        }
-        if (!flag) {
-            Assert::IsFalse(true);
+            Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
         }
     }
 
-    TEST_METHOD(parseClearTest1) {
-        std::string input = "clear me";
-
-        bool flag = false;
+    TEST_METHOD(DeleteCommandWithTooManyArguments) {
+        std::string input = "delete 100 wow";
         try {
             DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
         } catch (std::invalid_argument e) {
-            std::string message = e.what();
-            Assert::AreEqual(TOO_MANY_ARGUMENTS_MESSAGE, message);
-            flag = true;
+            Assert::AreEqual(TOO_MANY_ARGUMENTS_MESSAGE, (std::string) e.what());
         }
-        if (!flag) {
-            Assert::IsFalse(true);
+    }
+
+    TEST_METHOD(DeleteCommandWithWrongTaskIndex) {
+        std::string input = "delete wow";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(INVALID_TASK_ID_ARGUMENT, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(DeleteCommandWithoutTaskIndex) {
+        std::string input = "delete ";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(TOO_LITTLE_ARGUMENTS_MESSAGE, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(WellDefinedClearCommand) {
+        std::string input = "clear ";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(true);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(ClearCommandWithTooManyArguments) {
+        std::string input = "clear wow";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(TOO_MANY_ARGUMENTS_MESSAGE, (std::string) e.what());
+        }
+    }
+
+    TEST_METHOD(WellDefinedUndoCommand) {
+        std::string input = "undo ";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(true);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
         }
     }
 
@@ -293,9 +440,14 @@ public:
         Assert::AreEqual(expected, actual);
     }
 
-    TEST_METHOD(equalitytest) {
-        std::string input = " search ";
-        Assert::IsTrue(input.at(0) == ' ');
+    TEST_METHOD(UndoCommandWithTooManyArguments) {
+        std::string input = "undo wow";
+        try {
+            DoLah::CommandParser::parse(input);
+            Assert::IsTrue(false);
+        } catch (std::invalid_argument e) {
+            Assert::AreEqual(TOO_MANY_ARGUMENTS_MESSAGE, (std::string) e.what());
+        }
     }
 
     };

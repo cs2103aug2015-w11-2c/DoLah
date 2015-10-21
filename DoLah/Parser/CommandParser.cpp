@@ -13,7 +13,7 @@ namespace DoLah {
     std::string CommandParser::UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
     std::string CommandParser::TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
     std::string CommandParser::TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
-    std::string CommandParser::INVALID_TASK_ID_ARGUMENT = "Invalid edit argument";
+    std::string CommandParser::INVALID_TASK_ID_ARGUMENT = "Invalid task ID given";
 
 
     CommandParser::CommandParser() {
@@ -62,7 +62,7 @@ namespace DoLah {
 
 
     EditTaskCommand CommandParser::parseEdit(std::vector<std::string> inputArr) {
-        if (inputArr.size() == 0) {
+        if (inputArr.size() < 2) {
             throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
         }
 
