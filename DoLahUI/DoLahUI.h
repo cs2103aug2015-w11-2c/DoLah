@@ -2,6 +2,8 @@
 #define DOLAHUI_H
 
 #include "DoLahClient.h"
+#include "UITaskBox.h"
+#include "MenuLabel.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -11,18 +13,18 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
-#include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QSizePolicy>
+#include <QFile>
+#include <QMouseEvent>
 
 namespace DoLah {
     class DoLahUI : public QMainWindow
@@ -33,30 +35,39 @@ namespace DoLah {
         DoLahUI(QWidget *parent = 0);
         ~DoLahUI();
 
+        QFile stylesheet;
         QWidget *centralWidget;
+
+        QWidget *menu;
+        QHBoxLayout *menuLayout;
+        MenuLabel *exitButton;
+
         QScrollArea *scrollArea;
         QWidget *tasksContainer;
         QVBoxLayout *tasksLayout;
         QTextBrowser *taskBox;
-        QTextBrowser *taskBox1;
-        QTextBrowser *taskBox2;
-        QTextBrowser *taskBox3;
-        QTextBrowser *taskBox4;
+
+        QLabel *message;
         QLineEdit *lineEdit;
 
     private slots:
         void handleUserInput();
-        void testUserInput();
+        void menuExit();
 
     private:
         void setupUI();
         void retranslateUI();
+        void mousePressEvent(QMouseEvent*);
+        void mouseMoveEvent(QMouseEvent*);
+        void initMenu();
         void initDisplayArea();
         void initInputArea();
-        void createTaskBox(AbstractTask*);
+        void createTaskBox(int, AbstractTask*);
         void loadTasks();
+        void refreshTasks();
 
         DoLah::DoLahClient appClient;
+        QPoint dragPosition;
     };
 }
 #endif // DOLAHUI_H

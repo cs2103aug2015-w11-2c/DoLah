@@ -14,7 +14,7 @@ namespace DoLah {
 		virtual void execute() = 0;
 
     protected:
-        Calendar* calendar;
+        DoLah::Calendar* calendar;
 	};
 
 	class AddTaskCommand : public ITaskCommand {
@@ -41,6 +41,15 @@ namespace DoLah {
 		DoLah::AbstractTask* task;
 	};
 
+    class SetDoneTaskCommand : public ITaskCommand {
+    public:
+        SetDoneTaskCommand(int);
+        ~SetDoneTaskCommand();
+        void execute();
+    private:
+        int taskIndex;
+    };
+
 	class DeleteTaskCommand : public ITaskCommand {
 	public:
 		DeleteTaskCommand();
@@ -64,13 +73,19 @@ namespace DoLah {
 	class SearchTaskCommand : public ITaskCommand {
 	public:
 		SearchTaskCommand();
-		SearchTaskCommand(std::string);
+        SearchTaskCommand(std::string);
+		SearchTaskCommand(std::string, std::vector<AbstractTask*> *);
 		~SearchTaskCommand();
+
+        std::vector<AbstractTask*> getResultVector();
+
+        void setResultVector(std::vector<AbstractTask*>*);
 
 		void execute();
 
 	private:
 		std::string query;
+        std::vector<AbstractTask*> ** resultVector;
 	};
 
 	class UndoTaskCommand : public ITaskCommand {

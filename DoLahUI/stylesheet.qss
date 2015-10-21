@@ -1,0 +1,35 @@
+QMainWindow
+{
+	background-color: #9e3b36;
+}
+
+QScrollArea > QWidget > QWidget
+{ 
+	background-color: #a08d8f;
+} 
+
+QTextBrowser#UITaskBox
+{
+	background-color: #fcebbf; 
+	color: #4c3e3e; 
+}
+
+QLineEdit 
+{ 
+	background-color: white; 
+}
+
+QLabel
+{ 
+	color: white;
+}
+
+QLabel#exitButton
+{
+	background-color: transparent;
+}
+
+QLabel#exitButton:hover
+{
+	background-color: rgba(0, 0, 0, 0.2);
+}
