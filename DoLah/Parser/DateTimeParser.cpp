@@ -3,14 +3,21 @@
 namespace DoLah {
     int DateTimeParser::REJECT = -1;
     std::string DateTimeParser::CENTURY = "20";
+    int DateTimeParser::DAYINSECS = 86400;
 
     std::vector<std::string> DateTimeParser::decorators = { "of" };
 
     std::string DateTimeParser::relativePattern = "this|next";
-    std::string DateTimeParser::datePattern = "^("
-        "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
-        "|mon|tue|wed|thu|fri|sat|sun"
-        ")$";
+    std::string DateTimeParser::modiferPattern = "^(next |coming |)";
+    std::vector<std::string> DateTimeParser::datePattern = {
+        "monday|mon",
+        "tuesday|tue",
+        "wednesday|wed",
+        "thursday|thu",
+        "friday|fri",
+        "saturday|sat",
+        "sunday|sun"
+    };
     std::string DateTimeParser::dayPattern = "^("
         "([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)"
         ")$";
@@ -79,14 +86,65 @@ namespace DoLah {
         return std::stoi(year);
     }
 
+    int DateTimeParser::getDate(std::string str) {
+        std::string out;
+        for (size_t d = 0; d < datePattern.size(); d++) {
+            if (std::regex_match(str, std::regex(datePattern.at(d), std::regex_constants::icase))) {
+                return (int)d;
+            }
+        }
 
+        return REJECT;
+    }
+
+    int DateTimeParser::getDateModifier(int date) {
+        time_t t = time(0);
+        std::tm current;
+        localtime_s(&current, &t);
+
+        int diff = date - current.tm_wday;
+        if (diff < 0) {
+            diff = 6 + diff;
+        }
+
+        return diff;
+    }
+
+    std::tm DateTimeParser::checkModifierFormat(std::vector<std::string> strArr) {
+        std::tm output;
+
+        int diff = 0;
+        if (strArr.size() == 1) {
+            std::string str = strArr.at(0);
+            int date = getDate(str);
+            if (date != REJECT) {
+                diff = getDateModifier(date);
+            }
+        } else {
+            throw std::invalid_argument("");
+        }
+
+        int modifer = (diff + 1) * DAYINSECS;
+        time_t t = time(NULL) + modifer;
+        localtime_s(&output, &t);
+
+        return output;
+    }
 
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
         std::tm output;
 
+        try {
+            output = checkModifierFormat(strArr);
+            return output;
+        } catch (std::invalid_argument e) {
+            // if not continue
+        }
+
         std::vector<std::string> cleanArr = strArr;
         if (cleanArr.size() == 1) {
             std::string str = cleanArr.at(0);
+            
             for (size_t i = 0; i < dateDividers.size(); i++) {
                 cleanArr = ParserLibrary::explode(str, dateDividers.at(i));
                 if (cleanArr.size() > 1) {

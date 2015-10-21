@@ -20,6 +20,10 @@ namespace DoLah {
         static int getDay(std::string);
         static int getMonth(std::string);
         static int getYear(std::string);
+        static int getDate(std::string);
+        
+        static int getDateModifier(int);
+        static std::tm checkModifierFormat(std::vector<std::string>);
 
         static std::tm classifyDate(std::vector<std::string>);
         // 25th December 2015
@@ -29,10 +33,12 @@ namespace DoLah {
     private:
         static int REJECT;
         static std::string CENTURY;
+        static int DAYINSECS;
 
         // this week, next week (not implemented)
         static std::string relativePattern;
-        static std::string datePattern;
+        static std::string modiferPattern;
+        static std::vector<std::string> datePattern;
         static std::string dayPattern;
         static std::vector<std::string> monthPattern;
 

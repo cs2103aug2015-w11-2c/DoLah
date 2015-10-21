@@ -23,6 +23,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace DoLahTest {
     TEST_CLASS(Parser) {
 private:
+    std::tm current;
     std::string year;
     std::string month;
     std::string day;
@@ -71,11 +72,18 @@ public:
 
     TEST_METHOD_INITIALIZE(Startup) {
         time_t t = time(0);
-        std::tm current;
         localtime_s(&current, &t);
         year = std::to_string(current.tm_year + 1900);
         month = std::to_string(current.tm_mon + 1);
         day = std::to_string(current.tm_mday);
+    }
+
+    // 
+    TEST_METHOD(Tomorrow) {
+        std::string input = "tomorrow";
+        std::string expected = std::to_string(current.tm_mday + 1) + "/" + month + "/" + year;
+        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+        Assert::AreEqual(expected, actual);
     }
 
     // From here, unit tests for time parsing
