@@ -10,13 +10,13 @@ namespace DoLah {
     std::string DateTimeParser::relativePattern = "this|next";
     std::string DateTimeParser::modiferPattern = "^(next |coming |)";
     std::vector<std::string> DateTimeParser::datePattern = {
-        "monday|mon",
-        "tuesday|tue",
-        "wednesday|wed",
-        "thursday|thu",
-        "friday|fri",
-        "saturday|sat",
-        "sunday|sun"
+        "monday|mon|mond",
+        "tuesday|tue|tues",
+        "wednesday|wed|weds",
+        "thursday|thu|thur",
+        "friday|fri|frid",
+        "saturday|sat|satu",
+        "sunday|sun|sund"
     };
     std::string DateTimeParser::dayPattern = "^("
         "([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)"
@@ -97,7 +97,7 @@ namespace DoLah {
         return REJECT;
     }
 
-    int DateTimeParser::getDateModifier(int date) {
+    int DateTimeParser::getDateModifier(int date, bool notThisWeek) {
         time_t t = time(0);
         std::tm current;
         localtime_s(&current, &t);
@@ -105,6 +105,8 @@ namespace DoLah {
         int diff = date - current.tm_wday;
         if (diff < 0) {
             diff = 6 + diff;
+        } else if (notThisWeek) {
+            diff += 7;
         }
 
         return diff;
@@ -112,19 +114,35 @@ namespace DoLah {
 
     std::tm DateTimeParser::checkModifierFormat(std::vector<std::string> strArr) {
         std::tm output;
+        int dayDiff = 0;
+        int weekDiff = 0;
 
-        int diff = 0;
-        if (strArr.size() == 1) {
-            std::string str = strArr.at(0);
-            int date = getDate(str);
+        int size = strArr.size();
+
+        int index = 0;
+        std::string element;
+        
+        element = strArr.at(0);
+        if (element == "next") {
+            if (size < 2) {
+                throw std::invalid_argument("");
+            }
+            element = strArr.at(1);
+            int date = getDate(element);
             if (date != REJECT) {
-                diff = getDateModifier(date);
+                dayDiff = getDateModifier(date, true);
+            }
+        } else if (strArr.size() == 1) {
+            element = strArr.at(0);
+            int date = getDate(element);
+            if (date != REJECT) {
+                dayDiff = getDateModifier(date, false);
             }
         } else {
             throw std::invalid_argument("");
         }
 
-        int modifer = (diff + 1) * DAYINSECS;
+        int modifer = (dayDiff + 1) * DAYINSECS;
         time_t t = time(NULL) + modifer;
         localtime_s(&output, &t);
 

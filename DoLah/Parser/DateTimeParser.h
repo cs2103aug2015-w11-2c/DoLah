@@ -22,7 +22,7 @@ namespace DoLah {
         static int getYear(std::string);
         static int getDate(std::string);
         
-        static int getDateModifier(int);
+        static int getDateModifier(int, bool);
         static std::tm checkModifierFormat(std::vector<std::string>);
 
         static std::tm classifyDate(std::vector<std::string>);
