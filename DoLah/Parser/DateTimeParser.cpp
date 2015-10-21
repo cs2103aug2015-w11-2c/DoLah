@@ -39,10 +39,12 @@ namespace DoLah {
         "^(december|dec|12)$"
     };
     std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
+
+    std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow" };
     std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };
-    std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "day", "days" };
-    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "week", "weeks" };
-    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "month", "months" };
+    std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };
+    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks" };
+    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months" };
     std::vector<std::string> DateTimeParser::nextPattern = { "next", "coming" };
 
 
@@ -134,18 +136,27 @@ namespace DoLah {
             int date = getDate(element);
             if (date != REJECT) {
                 dayDiff = getDateModifier(date, false);
+            } else if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
+                dayDiff = 1;
             }
         } else if (ParserLibrary::inStringArray(nextPattern, element)) {
-            if (size < 2) {
-                throw std::invalid_argument("");
-            }
             element = strArr.at(index++);
             int date = getDate(element);
             if (date != REJECT) {
                 dayDiff = getDateModifier(date, true);
+            } else {
+                if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
+                    dayDiff = 1;
+                } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
+                    weekDiff = 1;
+                } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
+                    monthDiff = 1; // month length is not fixed!!
+                } else {
+                    throw std::invalid_argument("");
+                }
             }
         } else if (ParserLibrary::isDecimal(element) || ParserLibrary::inStringArray(articlePattern, element)) {
-            int n;
+            int n = 0;
             if (ParserLibrary::inStringArray(articlePattern, element)) {
                 n = 1;
             } else {
@@ -159,6 +170,8 @@ namespace DoLah {
                 weekDiff = n;
             } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
                 monthDiff = n; // month length is not fixed!!
+            } else {
+                throw std::invalid_argument("");
             }
         } else {
             throw std::invalid_argument("");

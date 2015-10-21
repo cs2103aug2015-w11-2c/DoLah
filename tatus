@@ -1,0 +1,73 @@
+[1mdiff --git a/DoLah/Parser/DateTimeParser.cpp b/DoLah/Parser/DateTimeParser.cpp[m
+[1mindex 3daca2b..6332e1b 100644[m
+[1m--- a/DoLah/Parser/DateTimeParser.cpp[m
+[1m+++ b/DoLah/Parser/DateTimeParser.cpp[m
+[36m@@ -39,10 +39,12 @@[m [mnamespace DoLah {[m
+         "^(december|dec|12)$"[m
+     };[m
+     std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };[m
+[32m+[m
+[32m+[m[32m    std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow" };[m
+     std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };[m
+[31m-    std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "day", "days" };[m
+[31m-    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "week", "weeks" };[m
+[31m-    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "month", "months" };[m
+[32m+[m[32m    std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };[m
+[32m+[m[32m    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks" };[m
+[32m+[m[32m    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months" };[m
+     std::vector<std::string> DateTimeParser::nextPattern = { "next", "coming" };[m
+ [m
+ [m
+[36m@@ -134,18 +136,27 @@[m [mnamespace DoLah {[m
+             int date = getDate(element);[m
+             if (date != REJECT) {[m
+                 dayDiff = getDateModifier(date, false);[m
+[32m+[m[32m            } else if (ParserLibrary::inStringArray(tomorrowPattern, element)) {[m
+[32m+[m[32m                dayDiff = 1;[m
+             }[m
+         } else if (ParserLibrary::inStringArray(nextPattern, element)) {[m
+[31m-            if (size < 2) {[m
+[31m-                throw std::invalid_argument("");[m
+[31m-            }[m
+             element = strArr.at(index++);[m
+             int date = getDate(element);[m
+             if (date != REJECT) {[m
+                 dayDiff = getDateModifier(date, true);[m
+[32m+[m[32m            } else {[m
+[32m+[m[32m                if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {[m
+[32m+[m[32m                    dayDiff = 1;[m
+[32m+[m[32m                } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {[m
+[32m+[m[32m                    weekDiff = 1;[m
+[32m+[m[32m                } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {[m
+[32m+[m[32m                    monthDiff = 1; // month length is not fixed!![m
+[32m+[m[32m                } else {[m
+[32m+[m[32m                    throw std::invalid_argument("");[m
+[32m+[m[32m                }[m
+             }[m
+         } else if (ParserLibrary::isDecimal(element) || ParserLibrary::inStringArray(articlePattern, element)) {[m
+[31m-            int n;[m
+[32m+[m[32m            int n = 0;[m
+             if (ParserLibrary::inStringArray(articlePattern, element)) {[m
+                 n = 1;[m
+             } else {[m
+[36m@@ -159,6 +170,8 @@[m [mnamespace DoLah {[m
+                 weekDiff = n;[m
+             } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {[m
+                 monthDiff = n; // month length is not fixed!![m
+[32m+[m[32m            } else {[m
+[32m+[m[32m                throw std::invalid_argument("");[m
+             }[m
+         } else {[m
+             throw std::invalid_argument("");[m
+[1mdiff --git a/DoLah/Parser/DateTimeParser.h b/DoLah/Parser/DateTimeParser.h[m
+[1mindex 4a5db9f..fba8aaf 100644[m
+[1m--- a/DoLah/Parser/DateTimeParser.h[m
+[1m+++ b/DoLah/Parser/DateTimeParser.h[m
+[36m@@ -51,6 +51,7 @@[m [mnamespace DoLah {[m
+         // 25/12/2015, 25-12-2015, 25.12.2015,[m
+         static std::vector<std::string> dateDividers;[m
+ [m
+[32m+[m[32m        static std::vector<std::string> tomorrowPattern;[m
+         static std::vector<std::string> articlePattern;[m
+         static std::vector<std::string> dayDescriptionPattern;[m
+         static std::vector<std::string> weekDescriptionPattern;[m
