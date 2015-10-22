@@ -158,15 +158,21 @@ namespace DoLah {
     void DoLahUI::handleUserInput() {
         QString input = lineEdit->text();
         std::string inputline = input.toStdString();
-        try {
-            this->appClient.parseAndProcessCommand(inputline);
-            refreshTasks();
-            message->setText("Done. Enter next command:");
+        if (inputline.length() != 0) {
+            try {
+                this->appClient.parseAndProcessCommand(inputline);
+                refreshTasks();
+                message->setText("Done. Enter next command:");
+            }
+            catch (std::exception e) {
+                QString text = QString(e.what());
+                message->setText(text);
+                refreshTasks();
+            }
         }
-        catch(std::exception e) {
-            QString text = QString(e.what());
-            message->setText(text);
-            
+        else {
+            message->setText("NOPE");
+            refreshTasks();
         }
     }
 
