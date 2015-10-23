@@ -106,6 +106,45 @@ namespace DoLah {
         return REJECT;
     }
 
+    int DateTimeParser::getTime(std::string str) {
+        int time = 0;
+        bool isTime = false;
+        if (str.find("pm") != std::string::npos) {
+            ParserLibrary::stringRemove(str, "pm");
+
+            std::vector<std::string> strArr = ParserLibrary::explode(str, ":");
+
+            int hour = std::stoi(strArr.at(0));
+            time = hour * 60;
+            if (hour < 12) {
+                time += 12 * 60;
+            }
+            if (strArr.size() > 1) {
+                isTime = true;
+                time += std::stoi(strArr.at(1));
+            }
+
+            return time;
+        } else if (str.find("am") != std::string::npos) {
+            ParserLibrary::stringRemove(str, "am");
+            isTime = true;
+        }
+        
+        std::vector<std::string> strArr = ParserLibrary::explode(str, ":");
+
+        time += std::stoi(strArr.at(0)) * 60;
+        if (strArr.size() > 1) {
+            isTime = true;
+            time += std::stoi(strArr.at(1));
+        }
+
+        if (!isTime) {
+            throw std::invalid_argument("");
+        }
+
+        return time;
+    }
+
     int DateTimeParser::getDateModifier(int date, bool notThisWeek) {
         time_t t = time(0);
         std::tm current;
@@ -228,12 +267,37 @@ namespace DoLah {
     }
 
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
+        time_t t = time(0);
         std::tm output;
+        localtime_s(&output, &t);
 
         std::vector<std::string> cleanArr = formatArr(strArr);
 
+        bool hasTime = false;
+        int time = 0;
+        for (size_t i = 0; i < cleanArr.size(); i++) {
+            try {
+                time = getTime(cleanArr.at(i));
+                cleanArr.erase(cleanArr.begin() + i);
+                hasTime = true;
+                break;
+            } catch (std::invalid_argument e) {
+                // if not continue
+            }
+        }
+
+        if (cleanArr.size() == 0) {
+            if (hasTime) {
+                output.tm_hour = time / 60;
+                output.tm_min = time % 60;
+                return output;
+            }
+        }
+
         try {
             output = checkModifierFormat(cleanArr);
+            output.tm_hour = time / 60;
+            output.tm_min = time % 60;
             return output;
         } catch (std::invalid_argument e) {
             // if not continue
@@ -241,10 +305,15 @@ namespace DoLah {
 
         try {
             output = classifyDate(cleanArr);
+            hasTime = true;
         } catch (std::invalid_argument e) {
-            throw e;
+            if (!hasTime) {
+                throw e;
+            }
         }
 
+        output.tm_hour = time / 60;
+        output.tm_min = time % 60;
         return output;
     }
 

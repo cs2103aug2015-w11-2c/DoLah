@@ -2,7 +2,7 @@
 
 
 namespace DoLah {
-    std::vector<std::string> TaskTokenizer::DEADLINE_INDICATOR = { "in", "on", "by", "due" };
+    std::vector<std::string> TaskTokenizer::DEADLINE_INDICATOR = { "in", "on", "by", "due", "at" };
     std::vector<std::string> TaskTokenizer::EVENT_INDICATOR = {
         "from",
         "between"

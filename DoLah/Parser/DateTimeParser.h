@@ -23,6 +23,7 @@ namespace DoLah {
         static int getMonth(std::string);
         static int getYear(std::string);
         static int getDate(std::string);
+        static int getTime(std::string);
         
         static std::vector<std::string> formatArr(std::vector<std::string>);
         static int getDateModifier(int, bool);
