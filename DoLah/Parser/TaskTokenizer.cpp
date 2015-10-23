@@ -46,45 +46,62 @@ namespace DoLah {
         TaskTokenizer ct;
         std::vector<std::tm> output;
 
-        try {
-            for (size_t i = lineArr.size() - 1; i > 0; i--) {
-                if (ParserLibrary::inStringArray(DEADLINE_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
-                    std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
+        std::vector<std::string> prunedArr = lineArr;
 
-                    std::tm time = DateTimeParser::toDateFormat(subVec);
+        for (size_t i = 0; i < lineArr.size(); i++) {
+            if (ParserLibrary::inStringArray(DEADLINE_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
+                std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
+                
+                std::tm time;
+                try {
+                    time = DateTimeParser::toDateFormat(subVec);
+                } catch (std::invalid_argument e) {
+                    continue;
+                }
 
-                    output.push_back(time);
-                    lineArr.erase(lineArr.begin() + i, lineArr.end());
-                    return output;
-                } else if (ParserLibrary::inStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
-                    size_t indicatorIndex = ParserLibrary::getIndexInStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)));
-                    std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
-                    for (size_t j = 0; j < subVec.size(); j++) {
-                        if (ParserLibrary::inStringArray(EVENT_SEPARATOR.at(indicatorIndex), ParserLibrary::tolowercase(subVec.at(j)))) {
-                            std::vector<std::string> startDateArr(subVec.begin(), subVec.begin() + j);
-                            std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
+                if (output.size() > 0 && difftime(mktime(&time), mktime(&output.at(0))) == 0) {
+                    continue;
+                }
 
-                            std::tm startdate = DateTimeParser::toDateFormat(startDateArr);
-                            std::tm enddate = DateTimeParser::toDateFormat(endDateArr, startdate);
+                output.clear();
+                output.push_back(time);
 
-                            // time cannot backflow!
-                            if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
-                                throw std::invalid_argument("");
-                            }
+                prunedArr = lineArr;
+                prunedArr.erase(prunedArr.begin() + i, prunedArr.end());
+            } else if (ParserLibrary::inStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
+                size_t indicatorIndex = ParserLibrary::getIndexInStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)));
+                std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
+                for (size_t j = 0; j < subVec.size(); j++) {
+                    if (ParserLibrary::inStringArray(EVENT_SEPARATOR.at(indicatorIndex), ParserLibrary::tolowercase(subVec.at(j)))) {
+                        std::vector<std::string> startDateArr(subVec.begin(), subVec.begin() + j);
+                        std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
 
-                            output.push_back(startdate);
-                            output.push_back(enddate);
-
-                            lineArr.erase(lineArr.begin() + i, lineArr.end());
-                            return output;
+                        std::tm startdate;
+                        std::tm enddate;
+                        try {
+                            startdate = DateTimeParser::toDateFormat(startDateArr);
+                            enddate = DateTimeParser::toDateFormat(endDateArr, startdate);
+                        } catch (std::invalid_argument e) {
+                            continue;
                         }
+
+                        // time cannot backflow!
+                        if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
+                            throw std::invalid_argument("");
+                        }
+
+                        output.clear();
+                        output.push_back(startdate);
+                        output.push_back(enddate);
+
+                        prunedArr = lineArr;
+                        prunedArr.erase(prunedArr.begin() + i, prunedArr.end());
                     }
                 }
             }
-        } catch (std::invalid_argument e) {
-            return {};
         }
 
+        lineArr = prunedArr;
         return output;
     }
 }

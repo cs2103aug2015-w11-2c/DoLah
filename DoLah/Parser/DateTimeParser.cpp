@@ -1,5 +1,7 @@
 #include "DateTimeParser.h"
 
+#include <iostream>
+
 namespace DoLah {
     int DateTimeParser::REJECT = -1;
     std::string DateTimeParser::CENTURY = "20";
@@ -7,7 +9,7 @@ namespace DoLah {
     int DateTimeParser::WEEKINSECS = 604800;
     int DateTimeParser::MONTHINSECS = 2592000;
 
-    std::vector<std::string> DateTimeParser::decorators = { "of" };
+    std::vector<std::string> DateTimeParser::decorators = { "of", "in", "on", "by", "due", "at" };
 
     std::string DateTimeParser::relativePattern = "this|next";
     std::string DateTimeParser::modiferPattern = "^(next |coming |)";
@@ -285,8 +287,8 @@ namespace DoLah {
         bool hasTime = false;
         bool hasDay = false;
 
-        bool givenLowerBound = lowerBound.tm_year != std::tm().tm_year;
-        if (givenLowerBound) {
+        bool hasLowerBound = (lowerBound.tm_year != std::tm().tm_year);
+        if (hasLowerBound) {
             output = lowerBound;
         } else {
             lowerBound = currTime;
