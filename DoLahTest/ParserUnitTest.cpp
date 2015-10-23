@@ -78,7 +78,6 @@ public:
         day = std::to_string(current.tm_mday);
     }
 
-    // 
     TEST_METHOD(Tomorrow) { // will fail on the last day of the month
         std::string input = "tomorrow";
         std::string expected = std::to_string(current.tm_mday + 1) + "/" + month + "/" + year;
