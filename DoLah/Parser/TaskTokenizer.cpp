@@ -67,12 +67,13 @@ namespace DoLah {
                             std::tm startdate = DateTimeParser::toDateFormat(startDateArr);
                             std::tm enddate = DateTimeParser::toDateFormat(endDateArr);
 
-                            output.push_back(startdate);
-                            output.push_back(enddate);
-
-                            if (difftime(mktime(&output.at(1)), mktime(&output.at(0))) < 0) {
+                            // time cannot backflow!
+                            if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
                                 throw std::invalid_argument("");
                             }
+
+                            output.push_back(startdate);
+                            output.push_back(enddate);
 
                             lineArr.erase(lineArr.begin() + i, lineArr.end());
                             return output;
