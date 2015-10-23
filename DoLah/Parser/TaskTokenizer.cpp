@@ -62,6 +62,11 @@ namespace DoLah {
 
                             output.push_back(startdate);
                             output.push_back(enddate);
+
+                            if (difftime(mktime(&output.at(1)), mktime(&output.at(0))) < 0) {
+                                throw std::invalid_argument("");
+                            }
+
                             lineArr.erase(lineArr.begin() + i, lineArr.end());
                             return output;
                         }
@@ -69,7 +74,7 @@ namespace DoLah {
                 }
             }
         } catch (std::invalid_argument e) {
-            // do nothing
+            return {};
         }
 
         return output;
