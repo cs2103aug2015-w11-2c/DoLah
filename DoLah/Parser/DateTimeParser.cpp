@@ -274,19 +274,22 @@ namespace DoLah {
         return cleanArr;
     }
 
-    std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr, std::tm defaultTime) {
+    std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr, std::tm lowerBound) {
         time_t t = time(0);
         std::tm currTime;
         localtime_s(&currTime, &t);
+
+        std::tm output = currTime;
 
         bool done = false;
         bool hasTime = false;
         bool hasDay = false;
 
-        std::tm output = currTime;
-        if (defaultTime.tm_year != std::tm().tm_year) {
-            output = defaultTime;
-            hasDay = true; // but not done yet
+        bool givenLowerBound = lowerBound.tm_year != std::tm().tm_year;
+        if (givenLowerBound) {
+            output = lowerBound;
+        } else {
+            lowerBound = currTime;
         }
 
         std::vector<std::string> cleanArr = formatArr(strArr);
@@ -335,8 +338,11 @@ namespace DoLah {
         output.tm_min = time % 60;
         output.tm_sec = 0; // default
 
+
+        // If only time is given and the time is behind the lowerBound,
+        // take it as the next day.
         if (!hasDay) {
-            if (difftime(mktime(&output), mktime(&currTime)) < 0) {
+            if (difftime(mktime(&output), mktime(&lowerBound)) < 0) {
                 output.tm_mday += 1;
                 std::mktime(&output);
             }

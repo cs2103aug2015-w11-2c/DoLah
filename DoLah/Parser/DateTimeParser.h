@@ -17,7 +17,7 @@ namespace DoLah {
         ~DateTimeParser();
 
         // Converts string array into std::tm.
-        // Second parameter is the time to initialize to.
+        // Second parameter is the lowerBound of the time.
         // By default, the current time will be used (done so inside the method).
         static std::tm toDateFormat(std::vector<std::string>, std::tm = std::tm());
         static int getDay(std::string);
