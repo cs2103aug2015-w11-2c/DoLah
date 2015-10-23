@@ -116,12 +116,14 @@ namespace DoLah {
         bool isTime = false;
 
         bool isPM = false;
+        bool isAM = false;
         if (str.find(PM) != std::string::npos) {
             ParserLibrary::stringRemove(str, PM);
             isPM = true;
             isTime = true;
         } else if (str.find(AM) != std::string::npos) {
             ParserLibrary::stringRemove(str, AM);
+            isAM = true;
             isTime = true;
         }
         
@@ -129,6 +131,10 @@ namespace DoLah {
 
         int hour = std::stoi(strArr.at(0));
         time = hour * 60;
+
+        if (isAM && hour >= 12) {
+            throw std::invalid_argument("");
+        }
 
         if (isPM && hour < 12) {
             time += 12 * 60;
@@ -321,6 +327,7 @@ namespace DoLah {
 
         output.tm_hour = time / 60;
         output.tm_min = time % 60;
+        output.tm_sec = 0; // default
 
         if (!hasDay) {
             if (difftime(mktime(&output), mktime(&currTime)) < 0) {
