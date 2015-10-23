@@ -39,6 +39,7 @@ namespace DoLah {
         "^(december|dec|12)$"
     };
     std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
+    std::vector<std::string> DateTimeParser::punctuations = { ",", "." };
 
     std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow" };
     std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };
@@ -132,15 +133,16 @@ namespace DoLah {
         std::string element;
         
         element = strArr.at(index++);
+        int date = getDate(element);
         if (strArr.size() == 1) {
-            int date = getDate(element);
-            if (date != REJECT) {
-                dayDiff = getDateModifier(date, false);
-            } else if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
+            if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
                 dayDiff = 1;
             } else {
                 throw std::invalid_argument("");
             }
+        } else if ((date = getDate(element) != REJECT)) {
+            dayDiff = getDateModifier(date, false);
+            // what about the rest?
         } else if (ParserLibrary::inStringArray(nextPattern, element)) {
             element = strArr.at(index++);
             int date = getDate(element);
@@ -189,14 +191,21 @@ namespace DoLah {
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
         std::tm output;
 
+        std::vector<std::string> cleanArr = strArr;
+        cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
+        for (size_t i = 0; i < cleanArr.size(); i++) {
+            for (size_t j = 0; j < punctuations.size(); j++) {
+                boost::erase_all(cleanArr.at(i), punctuations.at(j));
+            }
+        }
+
         try {
-            output = checkModifierFormat(strArr);
+            output = checkModifierFormat(cleanArr);
             return output;
         } catch (std::invalid_argument e) {
             // if not continue
         }
 
-        std::vector<std::string> cleanArr = strArr;
         if (cleanArr.size() == 1) {
             std::string str = cleanArr.at(0);
             
@@ -207,7 +216,6 @@ namespace DoLah {
                 }
             }
         }
-        cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
 
         try {
             output = classifyDate(cleanArr);

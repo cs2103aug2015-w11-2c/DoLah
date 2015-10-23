@@ -5,6 +5,8 @@
 #include <regex>
 #include <iterator>
 
+#include "boost/algorithm/string.hpp"
+
 #include "ParserLibrary.h"
 
 
@@ -48,6 +50,7 @@ namespace DoLah {
         static std::string dayAppendixPattern;
         // 25th of December 2015
         static std::vector<std::string> decorators;
+        static std::vector<std::string> punctuations;
         // 25/12/2015, 25-12-2015, 25.12.2015,
         static std::vector<std::string> dateDividers;
 
