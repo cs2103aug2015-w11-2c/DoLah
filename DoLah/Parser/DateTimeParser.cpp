@@ -269,6 +269,7 @@ namespace DoLah {
 
         std::vector<std::string> cleanArr = formatArr(strArr);
 
+        bool done = false;
         bool hasTime = false;
         int time = 0;
         for (size_t i = 0; i < cleanArr.size(); i++) {
@@ -284,27 +285,27 @@ namespace DoLah {
 
         if (cleanArr.size() == 0) {
             if (hasTime) {
-                output.tm_hour = time / 60;
-                output.tm_min = time % 60;
-                return output;
+                done = true;
             }
         }
 
-        try {
-            output = checkModifierFormat(cleanArr);
-            output.tm_hour = time / 60;
-            output.tm_min = time % 60;
-            return output;
-        } catch (std::invalid_argument e) {
-            // if not continue
+        if (!done) {
+            try {
+                output = checkModifierFormat(cleanArr);
+                done = true;
+            } catch (std::invalid_argument e) {
+                // if not continue
+            }
         }
 
-        try {
-            output = classifyDate(cleanArr);
-            hasTime = true;
-        } catch (std::invalid_argument e) {
-            if (!hasTime) {
-                throw e;
+        if (!done) {
+            try {
+                output = classifyDate(cleanArr);
+                hasTime = true;
+            } catch (std::invalid_argument e) {
+                if (!hasTime) {
+                    throw e;
+                }
             }
         }
 
