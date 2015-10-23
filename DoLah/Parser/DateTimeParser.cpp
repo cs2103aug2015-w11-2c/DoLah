@@ -167,7 +167,7 @@ namespace DoLah {
         return diff;
     }
 
-    std::tm DateTimeParser::checkModifierFormat(std::vector<std::string> strArr) {
+    std::tm DateTimeParser::checkRelativeDateFormat(std::vector<std::string> strArr) {
         std::tm output;
         int dayDiff = 0;
         int weekDiff = 0;
@@ -180,7 +180,7 @@ namespace DoLah {
         
         element = strArr.at(index++);
         int date = getDate(element);
-        if (strArr.size() == 1) {
+        if (strArr.size() == 1) { // singleton format
             if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
                 dayDiff = 1;
             } else if (date != REJECT) {
@@ -188,7 +188,7 @@ namespace DoLah {
             } else {
                 throw std::invalid_argument("");
             }
-        } else if (date != REJECT) {
+        } else if (date != REJECT) { // date with something more behind
             dayDiff = getDateModifier(date, false);
             std::vector<std::string> subVec(strArr.begin() + 1, strArr.end());
             
@@ -205,7 +205,7 @@ namespace DoLah {
             } else {
                 return specifiedDay;
             }
-        } else if (ParserLibrary::inStringArray(nextPattern, element)) {
+        } else if (ParserLibrary::inStringArray(nextPattern, element)) { // next pattern
             element = strArr.at(index++);
             int date = getDate(element);
             if (date != REJECT) {
@@ -221,7 +221,8 @@ namespace DoLah {
                     throw std::invalid_argument("");
                 }
             }
-        } else if (ParserLibrary::isDecimal(element) || ParserLibrary::inStringArray(articlePattern, element)) {
+        } else if (ParserLibrary::isDecimal(element) ||
+            ParserLibrary::inStringArray(articlePattern, element)) { // 10 days, a week, etc
             int n = 0;
             if (ParserLibrary::inStringArray(articlePattern, element)) {
                 n = 1;
@@ -305,7 +306,7 @@ namespace DoLah {
 
         if (!done) {
             try {
-                output = checkModifierFormat(cleanArr);
+                output = checkRelativeDateFormat(cleanArr);
                 done = true;
                 hasDay = true;
             } catch (std::invalid_argument e) {
