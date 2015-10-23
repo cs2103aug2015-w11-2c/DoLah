@@ -4,10 +4,8 @@
 namespace DoLah {
     UITaskBox::UITaskBox()
     {
-        this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
         this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        this->setFixedHeight(40);
-        this->setSizeAdjustPolicy(SizeAdjustPolicy::AdjustToContents);
         //this->setFrameStyle(QFrame::NoFrame);
     }
 
@@ -17,7 +15,14 @@ namespace DoLah {
     }
 
     QSize UITaskBox::sizeHint() const {
-        return QSize(350, 40);
+        return QSize(350, 20);
+    }
+
+    void UITaskBox::adjust() {
+        // Generate taskbox without displaying it so I can get content height
+        this->setAttribute(Qt::WA_DontShowOnScreen);
+        this->show();
+        this->setFixedHeight(this->document()->size().height() + 5);
     }
 
 }

@@ -1,6 +1,7 @@
-#pragma once
+#ifndef UITASKBOX_H
+#define UITASKBOX_H
+
 #include <QtWidgets/QTextBrowser>
-//#include "C:\Qt\Qt5.5.0\5.5\msvc2013_64\include\QtWidgets\qtextbrowser.h"
 
 namespace DoLah {
     class UITaskBox : public QTextBrowser
@@ -11,6 +12,9 @@ namespace DoLah {
         UITaskBox();
         ~UITaskBox();
         QSize sizeHint() const;
+        void adjust();
     };
 
 }
+
+#endif // UITASKBOX_H

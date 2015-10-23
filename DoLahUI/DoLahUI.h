@@ -17,7 +17,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QScrollArea>
@@ -46,10 +45,13 @@ namespace DoLah {
         QScrollArea *scrollArea;
         QWidget *tasksContainer;
         QVBoxLayout *tasksLayout;
-        QTextBrowser *taskBox;
 
         QLabel *message;
         QLineEdit *lineEdit;
+
+    protected:
+        void mousePressEvent(QMouseEvent*);
+        void mouseMoveEvent(QMouseEvent*);
 
     private slots:
         void handleUserInput();
@@ -59,8 +61,6 @@ namespace DoLah {
     private:
         void setupUI();
         void retranslateUI();
-        void mousePressEvent(QMouseEvent*);
-        void mouseMoveEvent(QMouseEvent*);
         void initMenu();
         void initDisplayArea();
         void initInputArea();

@@ -92,18 +92,11 @@ namespace DoLah {
 
         scrollArea->setWidgetResizable(true);
 
-        taskBox = new QTextBrowser();
-        taskBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        taskBox->setFixedHeight(40);
-        taskBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        taskBox->setText("<font size=4><b>1. polish GUI</b></font><br><font size=3><font color=#2fb6a7>today</font></font>");
-
         tasksContainer = new QWidget(scrollArea);
         tasksContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         tasksLayout = new QVBoxLayout(tasksContainer);
         tasksLayout->setAlignment(Qt::AlignTop);
-        //tasksLayout->addWidget(taskBox);
         tasksLayout->setSpacing(3);
         tasksLayout->setContentsMargins(0, 0, 0, 0);
         loadTasks();
@@ -135,7 +128,7 @@ namespace DoLah {
     void DoLahUI::createTaskBox(int index, AbstractTask *task) {
         std::string name = task->getName();
         QString tasktitle = "<font size=4><b>" + QString::number(index) + ". " + QString::fromStdString(name);
-        QTextBrowser *tempTaskBox = new UITaskBox();
+        UITaskBox *tempTaskBox = new UITaskBox();
 
         if (FloatingTask *fTask = dynamic_cast<FloatingTask*>(task)) {
             tempTaskBox->setObjectName(QStringLiteral("Floating"));
@@ -154,7 +147,7 @@ namespace DoLah {
             QString contents = tasktitle.append("</font><br><font size=3><font color=#2fb6a7>" + QString(start) + " to " + QString(end));
             tempTaskBox->setText(contents);
         }
-
+        tempTaskBox->adjust();
         tasksLayout->addWidget(tempTaskBox);
     }
 
