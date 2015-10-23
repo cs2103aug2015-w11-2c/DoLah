@@ -5,7 +5,7 @@
 #include <regex>
 #include <iterator>
 
-#include "boost/algorithm/string.hpp"
+#include "boost/algorithm/string/erase.hpp"
 
 #include "ParserLibrary.h"
 
@@ -28,6 +28,7 @@ namespace DoLah {
         static std::tm checkModifierFormat(std::vector<std::string>);
 
         static std::tm classifyDate(std::vector<std::string>);
+        static bool isValidDate(std::tm);
         // 25th December 2015
         static std::tm checkDMYformat(std::vector<std::string>);
         // December 25th 2015

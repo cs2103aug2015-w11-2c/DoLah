@@ -237,7 +237,23 @@ namespace DoLah {
                 throw e;
             }
         }
+
+        if (!isValidDate(output)) {
+            throw std::invalid_argument("");
+        }
+
         return output;
+    }
+
+    bool DateTimeParser::isValidDate(std::tm date) {
+        std::tm checkTime = date;
+        std::mktime(&checkTime);
+        if (date.tm_mday != checkTime.tm_mday
+            || date.tm_mon != checkTime.tm_mon
+            || date.tm_year != checkTime.tm_year) {
+            return false;
+        }
+        return true;
     }
 
     std::tm DateTimeParser::checkDMYformat(std::vector<std::string> strArr) {
