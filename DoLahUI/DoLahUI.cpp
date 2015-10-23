@@ -66,9 +66,16 @@ namespace DoLah {
         menuLayout->setAlignment(Qt::AlignRight);
         menuLayout->setContentsMargins(5, 5, 5, 5);
 
+        settingsButton = new MenuLabel;
+        settingsButton->setObjectName(QStringLiteral("settings"));
+        QPixmap settingsIcon("settings.png");
+        settingsButton->setPixmap(settingsIcon);
+        menuLayout->addWidget(settingsButton);
+
+        QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(changeTheme()));
+
         exitButton = new MenuLabel;
         exitButton->setObjectName(QStringLiteral("exitButton"));
-        exitButton->setMinimumHeight(65);
         QPixmap exitIcon("exit.png");
         exitButton->setPixmap(exitIcon);
         menuLayout->addWidget(exitButton);
@@ -173,6 +180,27 @@ namespace DoLah {
         else {
             message->setText("NOPE");
             refreshTasks();
+        }
+    }
+
+    void DoLahUI::changeTheme() {
+        if (themecounter == 0) {
+            QFile stylesheet("night_stylesheet.qss");
+            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                setStyleSheet(stylesheet.readAll());
+                stylesheet.close();
+                themecounter = 1;
+            }
+        }
+        else {
+            QFile stylesheet("stylesheet.qss");
+            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                setStyleSheet(stylesheet.readAll());
+                stylesheet.close();
+                themecounter = 0;
+            }
         }
     }
 

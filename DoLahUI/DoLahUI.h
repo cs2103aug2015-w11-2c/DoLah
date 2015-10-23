@@ -41,6 +41,7 @@ namespace DoLah {
         QWidget *menu;
         QHBoxLayout *menuLayout;
         MenuLabel *exitButton;
+        MenuLabel *settingsButton;
 
         QScrollArea *scrollArea;
         QWidget *tasksContainer;
@@ -53,6 +54,7 @@ namespace DoLah {
     private slots:
         void handleUserInput();
         void menuExit();
+        void changeTheme();
 
     private:
         void setupUI();
@@ -68,6 +70,7 @@ namespace DoLah {
 
         DoLah::DoLahClient appClient;
         QPoint dragPosition;
+        int themecounter = 0;
     };
 }
 #endif // DOLAHUI_H

@@ -3,7 +3,7 @@
 
 namespace DoLah {
     MenuLabel::MenuLabel() {
-
+        this->setMinimumHeight(65);
     }
 
 

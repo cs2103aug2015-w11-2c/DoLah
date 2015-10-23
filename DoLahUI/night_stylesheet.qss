@@ -1,6 +1,7 @@
 QMainWindow
 {
-	background-color: #9e3b36;
+	/*background-image: url("night_bg");*/
+	background-image: url("night_bg");
 }
 
 QScrollArea > QWidget > QWidget
@@ -10,6 +11,7 @@ QScrollArea > QWidget > QWidget
 
 QTextBrowser#UITaskBox
 {
+	font-family: Arial;
 	background-color: #fcebbf; 
 	color: #4c3e3e; 
 }
@@ -21,6 +23,7 @@ QLineEdit
 
 QLabel
 { 
+	font-family: times;
 	color: white;
 }
 
@@ -31,7 +34,7 @@ QLabel#exitButton
 
 QLabel#exitButton:hover
 {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 QLabel#settings
@@ -41,5 +44,5 @@ QLabel#settings
 
 QLabel#settings:hover
 {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }

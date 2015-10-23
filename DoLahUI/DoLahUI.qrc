@@ -2,5 +2,8 @@
     <qresource prefix="/DoLahUI">
         <file>stylesheet.qss</file>
         <file>exit.png</file>
+        <file>night_bg.jpg</file>
+        <file>night_stylesheet.qss</file>
+        <file>settings.png</file>
     </qresource>
 </RCC>
