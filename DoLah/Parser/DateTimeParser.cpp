@@ -43,7 +43,7 @@ namespace DoLah {
     std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
     std::vector<std::string> DateTimeParser::punctuations = { "," };
 
-    std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow" };
+    std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow", "tom" };
     std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };
     std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };
     std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks" };
@@ -277,11 +277,7 @@ namespace DoLah {
     }
 
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr, std::tm lowerBound) {
-        time_t t = time(0);
-        std::tm currTime;
-        localtime_s(&currTime, &t);
-
-        std::tm output = currTime;
+        std::tm output = std::tm();
 
         bool done = false;
         bool hasTime = false;
@@ -291,6 +287,9 @@ namespace DoLah {
         if (hasLowerBound) {
             output = lowerBound;
         } else {
+            time_t t = time(0);
+            std::tm currTime;
+            localtime_s(&currTime, &t);
             lowerBound = currTime;
         }
 

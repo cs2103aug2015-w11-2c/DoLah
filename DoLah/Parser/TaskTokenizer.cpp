@@ -12,6 +12,7 @@ namespace DoLah {
         { "to", "~", "and" }
     };
     std::string TaskTokenizer::tag = "#";
+    int TaskTokenizer::defaultTMYear = 0; // represents 1900
 
     TaskTokenizer::TaskTokenizer() {
     }
@@ -52,19 +53,28 @@ namespace DoLah {
             if (ParserLibrary::inStringArray(DEADLINE_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
                 std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
                 
-                std::tm time;
+                std::tm dueDate;
                 try {
-                    time = DateTimeParser::toDateFormat(subVec);
+                    dueDate = DateTimeParser::toDateFormat(subVec);
                 } catch (std::invalid_argument e) {
                     continue;
                 }
 
-                if (output.size() > 0 && difftime(mktime(&time), mktime(&output.at(0))) == 0) {
-                    continue;
+                time_t t = time(0);
+                std::tm current;
+                localtime_s(&current, &t);
+
+                if (dueDate.tm_year == defaultTMYear) {
+                    ParserLibrary::copyDay(current, dueDate);
+                }
+
+                if (difftime(mktime(&dueDate), mktime(&current)) < 0) {
+                    dueDate.tm_mday += 1;
+                    mktime(&dueDate);
                 }
 
                 output.clear();
-                output.push_back(time);
+                output.push_back(dueDate);
 
                 prunedArr = lineArr;
                 prunedArr.erase(prunedArr.begin() + i, prunedArr.end());
@@ -81,6 +91,30 @@ namespace DoLah {
                         try {
                             startdate = DateTimeParser::toDateFormat(startDateArr);
                             enddate = DateTimeParser::toDateFormat(endDateArr, startdate);
+
+                            if (startdate.tm_year == defaultTMYear && startdate.tm_year == defaultTMYear) {
+                                time_t t = time(0);
+                                std::tm current;
+                                localtime_s(&current, &t);
+
+                                ParserLibrary::copyDay(current, startdate);
+                                ParserLibrary::copyDay(current, enddate);
+                                if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
+                                    enddate.tm_mon += 1;
+                                    mktime(&enddate);
+                                }
+                            } else if (startdate.tm_year == defaultTMYear) {
+                                ParserLibrary::copyDay(enddate, startdate);
+                                if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
+                                    throw std::invalid_argument("");
+                                }
+                            } else if (enddate.tm_year == defaultTMYear) {
+                                ParserLibrary::copyDay(startdate, enddate);
+                                if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
+                                    enddate.tm_mon += 1;
+                                    mktime(&enddate);
+                                }
+                            }
                         } catch (std::invalid_argument e) {
                             continue;
                         }

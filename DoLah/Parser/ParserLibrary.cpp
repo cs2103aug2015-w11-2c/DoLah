@@ -121,4 +121,12 @@ namespace DoLah {
         return origin;
     }
 
+    std::tm ParserLibrary::copyDay(std::tm from, std::tm to) {
+        to.tm_year = from.tm_year;
+        to.tm_mon = from.tm_mon;
+        to.tm_mday = from.tm_mday;
+
+        return to;
+    }
+
 }

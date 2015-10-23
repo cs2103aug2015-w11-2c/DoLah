@@ -472,7 +472,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function at 11:59:00
             std::string input = "11:59PM";
-            std::string expected = strfyTime(23, 59, 0, day, month, year);
+            std::string expected = strfyTime(23, 59, 0, 0, 1, 1900);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
@@ -483,7 +483,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function at 11:59:00
             std::string input = "23:59PM";
-            std::string expected = strfyTime(23, 59, 0, day, month, year);
+            std::string expected = strfyTime(23, 59, 0, 0, 1, 1900);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
@@ -494,7 +494,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function at 11:59:00
             std::string input = "23:59";
-            std::string expected = strfyTime(23, 59, 0, day, month, year);
+            std::string expected = strfyTime(23, 59, 0, 0, 1, 1900);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }

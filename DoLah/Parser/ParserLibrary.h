@@ -22,6 +22,7 @@ namespace DoLah {
         static bool isDecimal(std::string str);
         static std::string stringRemove(std::string str, std::string substr);
         static std::vector<std::string> removeElementsFromStringVector(std::vector<std::string>, std::vector<std::string>);
+        static std::tm copyDay(std::tm, std::tm);
     };
 
 }
