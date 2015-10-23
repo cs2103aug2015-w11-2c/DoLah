@@ -8,14 +8,12 @@ namespace DoLah {
         QFile stylesheet("stylesheet.qss");
         if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
         {
-        setStyleSheet(stylesheet.readAll());
-        stylesheet.close();
+            setStyleSheet(stylesheet.readAll());
+            stylesheet.close();
         }
     }
 
-    DoLahUI::~DoLahUI()
-    {
-
+    DoLahUI::~DoLahUI() {
     }
 
     // MAIN WINDOW
@@ -61,17 +59,27 @@ namespace DoLah {
     void DoLahUI::initMenu() {
         menu = new QWidget(centralWidget);
         menu->setGeometry(QRect(0, 0, 350, 70));
-
         menuLayout = new QHBoxLayout(menu);
         menuLayout->setAlignment(Qt::AlignRight);
         menuLayout->setContentsMargins(5, 5, 5, 5);
+
+        homeButton = new MenuLabel;
+        homeButton->setObjectName(QStringLiteral("home"));
+        homeButton->setText("HOME");
+        menuLayout->addWidget(homeButton);
+        QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToHome()));
+
+        doneButton = new MenuLabel;
+        doneButton->setObjectName(QStringLiteral("done"));
+        doneButton->setText("DONE");
+        menuLayout->addWidget(doneButton);
+        QObject::connect(doneButton, SIGNAL(clicked()), this, SLOT(goToDone()));
 
         settingsButton = new MenuLabel;
         settingsButton->setObjectName(QStringLiteral("settings"));
         QPixmap settingsIcon("settings.png");
         settingsButton->setPixmap(settingsIcon);
         menuLayout->addWidget(settingsButton);
-
         QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(changeTheme()));
 
         exitButton = new MenuLabel;
@@ -79,41 +87,41 @@ namespace DoLah {
         QPixmap exitIcon("exit.png");
         exitButton->setPixmap(exitIcon);
         menuLayout->addWidget(exitButton);
-
         QObject::connect(exitButton, SIGNAL(clicked()), this, SLOT(menuExit()));
     }
 
     // DISPLAY AREA
 
     void DoLahUI::initDisplayArea() {
-        scrollArea = new QScrollArea(centralWidget);
-        scrollArea->setGeometry(QRect(5, 70, 340, 450));
-        scrollArea->setFrameStyle(QFrame::NoFrame);
-
-        scrollArea->setWidgetResizable(true);
-
-        tasksContainer = new QWidget(scrollArea);
-        tasksContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        tasksLayout = new QVBoxLayout(tasksContainer);
-        tasksLayout->setAlignment(Qt::AlignTop);
-        tasksLayout->setSpacing(3);
-        tasksLayout->setContentsMargins(0, 0, 0, 0);
+        viewPort = new DisplayArea(centralWidget);
+        tabOrganizer = viewPort->tabbedView;
+        home = viewPort->homeLayout;
+        done = viewPort->doneLayout;
         loadTasks();
-
-        scrollArea->setWidget(tasksContainer);
     }
 
     void DoLahUI::loadTasks() {
+        int i = 0;
         std::vector<AbstractTask*> taskList = (appClient.getCalendar()).getTaskList();
-        for (int i = 0; i < taskList.size(); ++i) {
-            createTaskBox(i, taskList[i]);
+        for (i; i < taskList.size(); ++i) {
+            createTaskBox(home, i, taskList[i]);
         }
+        std::vector<AbstractTask*> doneList = appClient.getCalendar().getDoneList();
+        for (int j = 0; j < doneList.size(); ++j) {
+            createTaskBox(done, i+j, doneList[j]);
+        }
+
     }
 
     void DoLahUI::refreshTasks() {
+        flushPage(home);
+        flushPage(done);
+        loadTasks();
+    }
+
+    void DoLahUI::flushPage(QVBoxLayout *page) {
         QLayoutItem* child;
-        while ((child = tasksLayout->takeAt(0)) != 0)
+        while ((child = page->takeAt(0)) != 0)
         {
             QWidget* widget = child->widget();
             if (widget)
@@ -122,10 +130,9 @@ namespace DoLah {
                 delete child;
             }
         }
-        loadTasks();
     }
 
-    void DoLahUI::createTaskBox(int index, AbstractTask *task) {
+    void DoLahUI::createTaskBox(QVBoxLayout *page, int index, AbstractTask *task) {
         std::string name = task->getName();
         QString tasktitle = "<font size=4><b>" + QString::number(index) + ". " + QString::fromStdString(name);
         UITaskBox *tempTaskBox = new UITaskBox();
@@ -148,7 +155,7 @@ namespace DoLah {
             tempTaskBox->setText(contents);
         }
         tempTaskBox->adjust();
-        tasksLayout->addWidget(tempTaskBox);
+        page->addWidget(tempTaskBox);
     }
 
     // INPUT AREA
@@ -189,6 +196,14 @@ namespace DoLah {
             message->setText("NOPE");
             refreshTasks();
         }
+    }
+
+    void DoLahUI::goToHome() {
+        tabOrganizer->setCurrentIndex(0);
+    }
+
+    void DoLahUI::goToDone() {
+        tabOrganizer->setCurrentIndex(1);
     }
 
     void DoLahUI::changeTheme() {

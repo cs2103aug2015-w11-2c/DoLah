@@ -4,6 +4,7 @@
 #include "DoLahClient.h"
 #include "UITaskBox.h"
 #include "MenuLabel.h"
+#include "DisplayArea.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -22,6 +23,7 @@
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QSizePolicy>
+#include <QtWidgets/QStackedWidget>
 #include <QFile>
 #include <QMouseEvent>
 
@@ -39,12 +41,17 @@ namespace DoLah {
 
         QWidget *menu;
         QHBoxLayout *menuLayout;
-        MenuLabel *exitButton;
+        MenuLabel *homeButton;
+        MenuLabel *doneButton;
         MenuLabel *settingsButton;
+        MenuLabel *exitButton;
 
-        QScrollArea *scrollArea;
-        QWidget *tasksContainer;
-        QVBoxLayout *tasksLayout;
+        DisplayArea *viewPort;
+        QStackedWidget *tabOrganizer;
+        QVBoxLayout *home;
+        QVBoxLayout *sort;
+        QVBoxLayout *tags;
+        QVBoxLayout *done;
 
         QLabel *message;
         QLineEdit *lineEdit;
@@ -57,6 +64,8 @@ namespace DoLah {
         void handleUserInput();
         void menuExit();
         void changeTheme();
+        void goToHome();
+        void goToDone();
 
     private:
         void setupUI();
@@ -64,9 +73,10 @@ namespace DoLah {
         void initMenu();
         void initDisplayArea();
         void initInputArea();
-        void createTaskBox(int, AbstractTask*);
+        void createTaskBox(QVBoxLayout*, int, AbstractTask*);
         void loadTasks();
         void refreshTasks();
+        void flushPage(QVBoxLayout*);
 
         DoLah::DoLahClient appClient;
         QPoint dragPosition;

@@ -57,3 +57,23 @@ QLabel#settings:hover
 {
 	background-color: rgba(255, 255, 255, 0.2);
 }
+
+QLabel#done
+{
+	background-color: transparent;
+}
+
+QLabel#done:hover
+{
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+QLabel#home
+{
+	background-color: transparent;
+}
+
+QLabel#home:hover
+{
+	background-color: rgba(255, 255, 255, 0.2);
+}
