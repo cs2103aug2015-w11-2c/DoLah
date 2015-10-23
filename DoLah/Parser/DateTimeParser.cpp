@@ -48,6 +48,9 @@ namespace DoLah {
     std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months" };
     std::vector<std::string> DateTimeParser::nextPattern = { "next", "coming" };
 
+    std::string DateTimeParser::AM = "am";
+    std::string DateTimeParser::PM = "pm";
+    std::string DateTimeParser::timeDivider = ":";
 
     DateTimeParser::DateTimeParser() {
     }
@@ -107,20 +110,22 @@ namespace DoLah {
     }
 
     int DateTimeParser::getTime(std::string str) {
+        str = ParserLibrary::tolowercase(str);
+
         int time = 0;
         bool isTime = false;
 
         bool isPM = false;
-        if (str.find("pm") != std::string::npos) {
-            ParserLibrary::stringRemove(str, "pm");
+        if (str.find(PM) != std::string::npos) {
+            ParserLibrary::stringRemove(str, PM);
             isPM = true;
             isTime = true;
-        } else if (str.find("am") != std::string::npos) {
-            ParserLibrary::stringRemove(str, "am");
+        } else if (str.find(AM) != std::string::npos) {
+            ParserLibrary::stringRemove(str, AM);
             isTime = true;
         }
         
-        std::vector<std::string> strArr = ParserLibrary::explode(str, ":");
+        std::vector<std::string> strArr = ParserLibrary::explode(str, timeDivider);
 
         int hour = std::stoi(strArr.at(0));
         time = hour * 60;

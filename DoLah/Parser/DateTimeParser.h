@@ -63,5 +63,9 @@ namespace DoLah {
         static std::vector<std::string> weekDescriptionPattern;
         static std::vector<std::string> monthDescriptionPattern;
         static std::vector<std::string> nextPattern;
+
+        static std::string AM;
+        static std::string PM;
+        static std::string timeDivider;
     };
 }
