@@ -1,6 +1,7 @@
 #ifndef UITASKBOX_H
 #define UITASKBOX_H
 
+#include "DoLahClient.h"
 #include <QtWidgets/QTextBrowser>
 
 namespace DoLah {
@@ -9,10 +10,13 @@ namespace DoLah {
         Q_OBJECT
 
     public:
-        UITaskBox();
+        UITaskBox(int, AbstractTask*);
         ~UITaskBox();
         QSize sizeHint() const;
         void adjust();
+
+    private:
+        void dynamicCast(int, AbstractTask*);
     };
 
 }

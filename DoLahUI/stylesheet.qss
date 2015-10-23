@@ -1,12 +1,24 @@
 QMainWindow
 {
-	background-color: #9e3b36;
+	background-image: url("dawn.jpg");
+	/*background-color: #9e3b36;*/
+}
+
+QWidget
+{
+	background-color: transparent;
 }
 
 QScrollArea > QWidget > QWidget
 { 
-	background-color: #a08d8f;
+	/*background-color: #a08d8f;*/
+	background-color: rgba(255, 255, 255, 0.5);
 } 
+
+QTextBrowser
+{
+	padding-left: 2px;
+}
 
 QTextBrowser#Floating
 {
@@ -24,6 +36,14 @@ QTextBrowser#Event
 {
 	background-color: #fcebbf;
 	color: #4c3e3e; 
+}
+
+QTextBrowser#Done
+{
+	background-color: #BBBBBB;
+	color: #696969; 
+	border-left: 5px solid gray;
+	text-decoration: line-through;
 }
 
 QLineEdit 
