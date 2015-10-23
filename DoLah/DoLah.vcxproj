@@ -153,6 +153,7 @@
     <ClCompile Include="Models\Task.cpp" />
     <ClCompile Include="Parser\TaskParser.cpp" />
     <ClCompile Include="Parser\TaskTokenizer.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Parser\CommandParser.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Models\TaskFactory.h" />
     <ClInclude Include="Parser\TaskParser.h" />
     <ClInclude Include="Parser\TaskTokenizer.h" />
+    <ClInclude Include="TimeManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -17,6 +17,7 @@
 
 #include "CalendarBuilder.h"
 #include "TaskBuilder.h"
+#include "TimeManager.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -105,8 +106,8 @@ public:
     std::string UNEXPECTED_EXCEPTION = "This is an unexpected exception.";
 
     TEST_METHOD_INITIALIZE(Startup) {
-        time_t t = time(0);
-        localtime_s(&current, &t);
+        current = DoLah::TimeManager::getCurrentTime();
+
         year = current.tm_year + 1900;
         nextYear = current.tm_year + 1900 + 1;
         month = current.tm_mon + 1;

@@ -1,7 +1,5 @@
 #include "DateTimeParser.h"
 
-#include <iostream>
-
 namespace DoLah {
     int DateTimeParser::REJECT = -1;
     std::string DateTimeParser::CENTURY = "20";
@@ -155,9 +153,7 @@ namespace DoLah {
     }
 
     int DateTimeParser::getDateModifier(int date, bool notThisWeek) {
-        time_t t = time(0);
-        std::tm current;
-        localtime_s(&current, &t);
+        std::tm current = TimeManager::getCurrentTime();
 
         int diff = date - current.tm_wday + 1;
         if (diff < 0) {
@@ -287,10 +283,7 @@ namespace DoLah {
         if (hasLowerBound) {
             output = lowerBound;
         } else {
-            time_t t = time(0);
-            std::tm currTime;
-            localtime_s(&currTime, &t);
-            lowerBound = currTime;
+            lowerBound = TimeManager::getCurrentTime();
         }
 
         std::vector<std::string> cleanArr = formatArr(strArr);
@@ -343,7 +336,7 @@ namespace DoLah {
         // If only time is given and the time is behind the lowerBound,
         // take it as the next day.
         if (!hasDay) {
-            if (difftime(mktime(&output), mktime(&lowerBound)) < 0) {
+            if (TimeManager::compareTime(lowerBound, output) < 0) {
                 output.tm_mday += 1;
                 std::mktime(&output);
             }
@@ -367,24 +360,8 @@ namespace DoLah {
         return output;
     }
 
-    bool DateTimeParser::isValidDate(std::tm date) {
-        std::tm checkTime = date;
-        std::mktime(&checkTime);
-        // IF mktime changes the time format, that means the input date was wrong!
-        // ex. 31st April becomes 1st May
-        if (date.tm_mday != checkTime.tm_mday
-            || date.tm_mon != checkTime.tm_mon
-            || date.tm_year != checkTime.tm_year) {
-            return false;
-        }
-        return true;
-    }
-
     std::tm DateTimeParser::checkDMYformat(std::vector<std::string> strArr) {
-        time_t t = time(0);
-        std::tm current;
-        localtime_s(&current, &t);
-
+        std::tm current = TimeManager::getCurrentTime();
         std::tm output = current;
 
         int day = -1;
@@ -426,7 +403,7 @@ namespace DoLah {
             throw std::invalid_argument("");
         }
 
-        if (!isValidDate(output)) {
+        if (!TimeManager::isValidDate(output)) {
             throw std::invalid_argument("");
         }
 
@@ -437,10 +414,7 @@ namespace DoLah {
     }
 
     std::tm DateTimeParser::checkMDYformat(std::vector<std::string> strArr) {
-        time_t t = time(0);
-        std::tm current;
-        localtime_s(&current, &t);
-
+        std::tm current = TimeManager::getCurrentTime();
         std::tm output = current;
 
         int day = -1;
@@ -479,7 +453,7 @@ namespace DoLah {
             throw std::invalid_argument("");
         }
 
-        if (!isValidDate(output)) {
+        if (!TimeManager::isValidDate(output)) {
             throw std::invalid_argument("");
         }
 

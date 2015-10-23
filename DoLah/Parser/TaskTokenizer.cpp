@@ -44,7 +44,7 @@ namespace DoLah {
     }
 
     std::vector<std::tm> TaskTokenizer::findAndRemoveDate(std::vector<std::string> &lineArr) {
-        TaskTokenizer ct;
+        std::tm current = TimeManager::getCurrentTime();
         std::vector<std::tm> output;
 
         std::vector<std::string> prunedArr = lineArr;
@@ -60,15 +60,12 @@ namespace DoLah {
                     continue;
                 }
 
-                time_t t = time(0);
-                std::tm current;
-                localtime_s(&current, &t);
 
                 if (dueDate.tm_year == defaultTMYear) {
-                    ParserLibrary::copyDay(current, dueDate);
+                    TimeManager::copyDay(current, dueDate);
                 }
 
-                if (difftime(mktime(&dueDate), mktime(&current)) < 0) {
+                if (TimeManager::compareTime(current, dueDate) < 0) {
                     dueDate.tm_mday += 1;
                     mktime(&dueDate);
                 }
@@ -93,24 +90,20 @@ namespace DoLah {
                             enddate = DateTimeParser::toDateFormat(endDateArr, startdate);
 
                             if (startdate.tm_year == defaultTMYear && startdate.tm_year == defaultTMYear) {
-                                time_t t = time(0);
-                                std::tm current;
-                                localtime_s(&current, &t);
-
-                                ParserLibrary::copyDay(current, startdate);
-                                ParserLibrary::copyDay(current, enddate);
-                                if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
+                                TimeManager::copyDay(current, startdate);
+                                TimeManager::copyDay(current, enddate);
+                                if (TimeManager::compareTime(startdate, enddate) < 0) {
                                     enddate.tm_mon += 1;
                                     mktime(&enddate);
                                 }
                             } else if (startdate.tm_year == defaultTMYear) {
-                                ParserLibrary::copyDay(enddate, startdate);
-                                if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
+                                TimeManager::copyDay(enddate, startdate);
+                                if (TimeManager::compareTime(startdate, enddate) < 0) {
                                     throw std::invalid_argument("");
                                 }
                             } else if (enddate.tm_year == defaultTMYear) {
-                                ParserLibrary::copyDay(startdate, enddate);
-                                if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
+                                TimeManager::copyDay(startdate, enddate);
+                                if (TimeManager::compareTime(startdate, enddate) < 0) {
                                     enddate.tm_mon += 1;
                                     mktime(&enddate);
                                 }
@@ -120,7 +113,7 @@ namespace DoLah {
                         }
 
                         // time cannot backflow!
-                        if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
+                        if (TimeManager::compareTime(startdate, enddate) < 0) {
                             throw std::invalid_argument("");
                         }
 

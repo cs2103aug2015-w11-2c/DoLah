@@ -8,7 +8,7 @@
 #include "boost/algorithm/string/erase.hpp"
 
 #include "ParserLibrary.h"
-
+#include "TimeManager.h"
 
 namespace DoLah {
     class DateTimeParser {
@@ -36,8 +36,6 @@ namespace DoLah {
         static std::tm checkRelativeDateFormat(std::vector<std::string>);
 
         static std::tm classifyDate(std::vector<std::string>);
-        // 31st of Feb is not valid
-        static bool isValidDate(std::tm);
         // 25th December 2015
         static std::tm checkDMYformat(std::vector<std::string>);
         // December 25th 2015
