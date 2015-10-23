@@ -134,12 +134,27 @@ namespace DoLah {
 
     void DoLahUI::createTaskBox(int index, AbstractTask *task) {
         std::string name = task->getName();
-
-        // dynamic casting??
         QString tasktitle = "<font size=4><b>" + QString::number(index) + ". " + QString::fromStdString(name);
         QTextBrowser *tempTaskBox = new UITaskBox();
-        tempTaskBox->setObjectName(QStringLiteral("Task"));
-        tempTaskBox->setText(tasktitle);
+
+        if (FloatingTask *fTask = dynamic_cast<FloatingTask*>(task)) {
+            tempTaskBox->setObjectName(QStringLiteral("Floating"));
+            tempTaskBox->setText(tasktitle);
+        }
+        else if (DeadlineTask *dTask = dynamic_cast<DeadlineTask*>(task)) {
+            tempTaskBox->setObjectName(QStringLiteral("Deadline"));
+            char *deadline = asctime(&(dTask->getDueDate()));
+            QString contents = tasktitle.append("</font><br><font size=3><font color=#2fb6a7>" + QString(deadline));
+            tempTaskBox->setText(contents);
+        }
+        else if (EventTask *eTask = dynamic_cast<EventTask*>(task)) {
+            tempTaskBox->setObjectName(QStringLiteral("Event"));
+            char *start = asctime(&(eTask->getStartDate()));
+            char *end = asctime(&(eTask->getEndDate()));
+            QString contents = tasktitle.append("</font><br><font size=3><font color=#2fb6a7>" + QString(start) + " to " + QString(end));
+            tempTaskBox->setText(contents);
+        }
+
         tasksLayout->addWidget(tempTaskBox);
     }
 

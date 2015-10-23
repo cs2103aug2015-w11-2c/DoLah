@@ -8,7 +8,6 @@ namespace DoLah {
         this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         this->setFixedHeight(40);
         this->setSizeAdjustPolicy(SizeAdjustPolicy::AdjustToContents);
-        this->setObjectName(QStringLiteral("UITaskBox"));
         //this->setFrameStyle(QFrame::NoFrame);
     }
 

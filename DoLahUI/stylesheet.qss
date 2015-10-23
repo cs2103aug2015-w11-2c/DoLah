@@ -8,9 +8,21 @@ QScrollArea > QWidget > QWidget
 	background-color: #a08d8f;
 } 
 
-QTextBrowser#UITaskBox
+QTextBrowser#Floating
 {
 	background-color: #fcebbf; 
+	color: #4c3e3e; 
+}
+
+QTextBrowser#Deadline
+{
+	background-color: #fcebbf; 
+	color: #4c3e3e; 
+}
+
+QTextBrowser#Event
+{
+	background-color: #fcebbf;
 	color: #4c3e3e; 
 }
 
