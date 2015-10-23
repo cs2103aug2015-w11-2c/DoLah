@@ -377,16 +377,10 @@ namespace DoLah {
         size_t size = strArr.size();
         day = getDay(strArr.at(0));
         if (day != REJECT) {
-            if (current.tm_mday > day) {
-                monthModifier += 1;
-            }
             output.tm_mday = day;
             if (size > 1) {
                 month = getMonth(strArr.at(1));
                 if (month != REJECT) {
-                    if (current.tm_mon > month) {
-                        yearModifier += 1;
-                    }
                     output.tm_mon = month;
                     if (size > 2) {
                         year = getYear(strArr.at(2));
@@ -395,9 +389,17 @@ namespace DoLah {
                         } else {
                             throw std::invalid_argument("");
                         }
+                    } else {
+                        if (current.tm_mon > month) {
+                            yearModifier += 1;
+                        }
                     }
                 } else {
                     throw std::invalid_argument("");
+                }
+            } else {
+                if (current.tm_mday > day) {
+                    monthModifier += 1;
                 }
             }
         } else {
@@ -416,8 +418,10 @@ namespace DoLah {
 
     std::tm DateTimeParser::checkMDYformat(std::vector<std::string> strArr) {
         time_t t = time(0);
-        std::tm output;
-        localtime_s(&output, &t);
+        std::tm current;
+        localtime_s(&current, &t);
+
+        std::tm output = current;
 
         int day = -1;
         int month = -1;
@@ -442,6 +446,10 @@ namespace DoLah {
                         output.tm_year = year - 1900;
                     } else {
                         throw std::invalid_argument("");
+                    }
+                } else {
+                    if (current.tm_mon > month) {
+                        yearModifier += 1;
                     }
                 }
             } else {
