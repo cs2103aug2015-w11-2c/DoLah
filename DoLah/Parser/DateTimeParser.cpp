@@ -148,9 +148,6 @@ namespace DoLah {
             
             subVec = formatArr(subVec);
             std::tm specifiedDay = classifyDate(subVec);
-            if (!isValidDate(specifiedDay)) {
-                throw std::invalid_argument("");
-            }
 
             int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
             time_t t = time(NULL) + modifer;
@@ -160,8 +157,6 @@ namespace DoLah {
             if (diff == 0) {
                 return output;
             } else {
-                //specifiedDay.tm_mday += diff;
-                //std::mktime(&specifiedDay);
                 return specifiedDay;
             }
         } else if (ParserLibrary::inStringArray(nextPattern, element)) {
@@ -265,10 +260,6 @@ namespace DoLah {
             }
         }
 
-        if (!isValidDate(output)) {
-            throw std::invalid_argument("");
-        }
-
         return output;
     }
 
@@ -296,28 +287,30 @@ namespace DoLah {
         day = getDay(strArr.at(0));
         if (day != REJECT) {
             output.tm_mday = day;
-            if (size <= 1) {
-                return output;
-            }
-            month = getMonth(strArr.at(1));
-            if (month != REJECT) {
-                output.tm_mon = month;
-                if (size <= 2) {
-                    return output;
-                }
-                year = getYear(strArr.at(2));
-                if (year != REJECT) {
-                    output.tm_year = year - 1900;
-                    return output;
+            if (size > 1) {
+                month = getMonth(strArr.at(1));
+                if (month != REJECT) {
+                    output.tm_mon = month;
+                    if (size > 2) {
+                        year = getYear(strArr.at(2));
+                        if (year != REJECT) {
+                            output.tm_year = year - 1900;
+                        } else {
+                            throw std::invalid_argument("");
+                        }
+                    }
                 } else {
                     throw std::invalid_argument("");
                 }
-            } else {
-                throw std::invalid_argument("");
             }
         } else {
             throw std::invalid_argument("");
         }
+
+        if (!isValidDate(output)) {
+            throw std::invalid_argument("");
+        }
+
         return output;
     }
 
@@ -340,15 +333,13 @@ namespace DoLah {
             day = getDay(strArr.at(1));
             if (day != REJECT) {
                 output.tm_mday = day;
-                if (size <= 2) {
-                    return output;
-                }
-                year = getYear(strArr.at(2));
-                if (year != REJECT) {
-                    output.tm_year = year - 1900;
-                    return output;
-                } else {
-                    throw std::invalid_argument("");
+                if (size > 2) {
+                    year = getYear(strArr.at(2));
+                    if (year != REJECT) {
+                        output.tm_year = year - 1900;
+                    } else {
+                        throw std::invalid_argument("");
+                    }
                 }
             } else {
                 throw std::invalid_argument("");
@@ -356,6 +347,11 @@ namespace DoLah {
         } else {
             throw std::invalid_argument("");
         }
+
+        if (!isValidDate(output)) {
+            throw std::invalid_argument("");
+        }
+
         return output;
     }
 }
