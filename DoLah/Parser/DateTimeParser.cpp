@@ -274,18 +274,23 @@ namespace DoLah {
         return cleanArr;
     }
 
-    std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
+    std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr, std::tm defaultTime) {
         time_t t = time(0);
         std::tm currTime;
         localtime_s(&currTime, &t);
 
-        std::tm output = currTime;
-
-        std::vector<std::string> cleanArr = formatArr(strArr);
-
         bool done = false;
         bool hasTime = false;
         bool hasDay = false;
+
+        std::tm output = currTime;
+        if (defaultTime.tm_year != std::tm().tm_year) {
+            output = defaultTime;
+            hasDay = true;
+        }
+
+        std::vector<std::string> cleanArr = formatArr(strArr);
+
         int time = 0;
         for (size_t i = 0; i < cleanArr.size(); i++) {
             try {

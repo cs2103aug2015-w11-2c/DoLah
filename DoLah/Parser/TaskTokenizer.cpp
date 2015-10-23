@@ -8,8 +8,8 @@ namespace DoLah {
         "between"
     };
     std::vector<std::vector<std::string>> TaskTokenizer::EVENT_SEPARATOR = {
-        { "to", "until" },
-        { "to", "and" }
+        { "to", "~", "until" },
+        { "to", "~", "and" }
     };
     std::string TaskTokenizer::tag = "#";
 
@@ -65,7 +65,7 @@ namespace DoLah {
                             std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
 
                             std::tm startdate = DateTimeParser::toDateFormat(startDateArr);
-                            std::tm enddate = DateTimeParser::toDateFormat(endDateArr);
+                            std::tm enddate = DateTimeParser::toDateFormat(endDateArr, startdate);
 
                             // time cannot backflow!
                             if (difftime(mktime(&enddate), mktime(&startdate)) < 0) {
