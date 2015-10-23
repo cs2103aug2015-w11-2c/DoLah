@@ -121,7 +121,10 @@ namespace DoLah {
         std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
 
         if (command.empty()) {
-            throw std::invalid_argument(UNKNOWN_COMMAND_MESSAGE);
+            // default command
+            command = ADD;
+        } else {
+            inputArr = CommandTokenizer::pruneCommand(inputArr);
         }
 
         if (command == ADD) {
