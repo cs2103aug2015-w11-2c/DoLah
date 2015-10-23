@@ -39,7 +39,7 @@ namespace DoLah {
         "^(december|dec|12)$"
     };
     std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
-    std::vector<std::string> DateTimeParser::punctuations = { ",", "." };
+    std::vector<std::string> DateTimeParser::punctuations = { "," };
 
     std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow" };
     std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };
