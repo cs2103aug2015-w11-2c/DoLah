@@ -24,6 +24,7 @@ namespace DoLah {
         static int getYear(std::string);
         static int getDate(std::string);
         
+        static std::vector<std::string> formatArr(std::vector<std::string>);
         static int getDateModifier(int, bool);
         static std::tm checkModifierFormat(std::vector<std::string>);
 

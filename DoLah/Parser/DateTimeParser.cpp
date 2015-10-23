@@ -142,7 +142,10 @@ namespace DoLah {
             }
         } else if ((date = getDate(element) != REJECT)) {
             dayDiff = getDateModifier(date, false);
-            // what about the rest?
+            std::vector<std::string> subVec(strArr.begin() + 1, strArr.end());
+            
+            std::tm specifiedDay = classifyDate(subVec);
+
         } else if (ParserLibrary::inStringArray(nextPattern, element)) {
             element = strArr.at(index++);
             int date = getDate(element);
@@ -188,33 +191,39 @@ namespace DoLah {
         return output;
     }
 
-    std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
-        std::tm output;
+    std::vector<std::string> DateTimeParser::formatArr(std::vector<std::string> strArr) {
+        std::vector<std::string> cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
 
-        std::vector<std::string> cleanArr = strArr;
-        cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
         for (size_t i = 0; i < cleanArr.size(); i++) {
             for (size_t j = 0; j < punctuations.size(); j++) {
                 boost::erase_all(cleanArr.at(i), punctuations.at(j));
             }
         }
 
-        try {
-            output = checkModifierFormat(cleanArr);
-            return output;
-        } catch (std::invalid_argument e) {
-            // if not continue
-        }
-
         if (cleanArr.size() == 1) {
             std::string str = cleanArr.at(0);
-            
+
             for (size_t i = 0; i < dateDividers.size(); i++) {
                 cleanArr = ParserLibrary::explode(str, dateDividers.at(i));
                 if (cleanArr.size() > 1) {
                     break;
                 }
             }
+        }
+
+        return cleanArr;
+    }
+
+    std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
+        std::tm output;
+
+        std::vector<std::string> cleanArr = formatArr(strArr);
+
+        try {
+            output = checkModifierFormat(cleanArr);
+            return output;
+        } catch (std::invalid_argument e) {
+            // if not continue
         }
 
         try {
