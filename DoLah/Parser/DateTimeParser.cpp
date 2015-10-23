@@ -137,15 +137,33 @@ namespace DoLah {
         if (strArr.size() == 1) {
             if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
                 dayDiff = 1;
+            } else if (date != REJECT) {
+                dayDiff = getDateModifier(date, false);
             } else {
                 throw std::invalid_argument("");
             }
-        } else if ((date = getDate(element) != REJECT)) {
+        } else if (date != REJECT) {
             dayDiff = getDateModifier(date, false);
             std::vector<std::string> subVec(strArr.begin() + 1, strArr.end());
             
+            subVec = formatArr(subVec);
             std::tm specifiedDay = classifyDate(subVec);
+            if (!isValidDate(specifiedDay)) {
+                throw std::invalid_argument("");
+            }
 
+            int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
+            time_t t = time(NULL) + modifer;
+            localtime_s(&output, &t);
+
+            int diff = output.tm_wday - specifiedDay.tm_wday;
+            if (diff == 0) {
+                return output;
+            } else {
+                //specifiedDay.tm_mday += diff;
+                //std::mktime(&specifiedDay);
+                return specifiedDay;
+            }
         } else if (ParserLibrary::inStringArray(nextPattern, element)) {
             element = strArr.at(index++);
             int date = getDate(element);
@@ -192,7 +210,7 @@ namespace DoLah {
     }
 
     std::vector<std::string> DateTimeParser::formatArr(std::vector<std::string> strArr) {
-        std::vector<std::string> cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
+        std::vector<std::string> cleanArr = ParserLibrary::removeElementsFromStringVector(strArr, decorators);
 
         for (size_t i = 0; i < cleanArr.size(); i++) {
             for (size_t j = 0; j < punctuations.size(); j++) {
