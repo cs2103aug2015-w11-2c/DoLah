@@ -109,22 +109,12 @@ namespace DoLah {
     int DateTimeParser::getTime(std::string str) {
         int time = 0;
         bool isTime = false;
+
+        bool isPM = false;
         if (str.find("pm") != std::string::npos) {
             ParserLibrary::stringRemove(str, "pm");
-
-            std::vector<std::string> strArr = ParserLibrary::explode(str, ":");
-
-            int hour = std::stoi(strArr.at(0));
-            time = hour * 60;
-            if (hour < 12) {
-                time += 12 * 60;
-            }
-            if (strArr.size() > 1) {
-                isTime = true;
-                time += std::stoi(strArr.at(1));
-            }
-
-            return time;
+            isPM = true;
+            isTime = true;
         } else if (str.find("am") != std::string::npos) {
             ParserLibrary::stringRemove(str, "am");
             isTime = true;
@@ -132,10 +122,16 @@ namespace DoLah {
         
         std::vector<std::string> strArr = ParserLibrary::explode(str, ":");
 
-        time += std::stoi(strArr.at(0)) * 60;
+        int hour = std::stoi(strArr.at(0));
+        time = hour * 60;
+
+        if (isPM && hour < 12) {
+            time += 12 * 60;
+        }
+
         if (strArr.size() > 1) {
-            isTime = true;
             time += std::stoi(strArr.at(1));
+            isTime = true;
         }
 
         if (!isTime) {
