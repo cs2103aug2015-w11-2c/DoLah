@@ -286,7 +286,7 @@ namespace DoLah {
         std::tm output = currTime;
         if (defaultTime.tm_year != std::tm().tm_year) {
             output = defaultTime;
-            hasDay = true;
+            hasDay = true; // but not done yet
         }
 
         std::vector<std::string> cleanArr = formatArr(strArr);

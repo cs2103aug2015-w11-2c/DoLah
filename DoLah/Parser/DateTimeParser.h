@@ -16,8 +16,9 @@ namespace DoLah {
         DateTimeParser();
         ~DateTimeParser();
 
-        // decision tree to classify the input as dateformat or not
-        // accepts DD, DD MM, DD MM YYYY, MM DD, MM DD YYYY
+        // Converts string array into std::tm.
+        // Second parameter is the time to initialize to.
+        // By default, the current time will be used (done so inside the method).
         static std::tm toDateFormat(std::vector<std::string>, std::tm = std::tm());
         static int getDay(std::string);
         static int getMonth(std::string);
