@@ -81,6 +81,11 @@ namespace DoLah {
         return std::find(arr.begin(), arr.end(), ParserLibrary::tolowercase(str)) != arr.end();
     }
 
+    size_t ParserLibrary::getIndexInStringArray(std::vector<std::string> arr, std::string str) {
+        size_t pos = std::find(arr.begin(), arr.end(), str) - arr.begin();
+        return pos;
+    }
+
     std::vector<std::string> ParserLibrary::stringVectorUnique(std::vector<std::string> vector) {
         std::vector<std::string>::iterator it;
         it = std::unique(vector.begin(), vector.end());

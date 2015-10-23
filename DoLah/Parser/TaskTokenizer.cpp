@@ -3,8 +3,14 @@
 
 namespace DoLah {
     std::vector<std::string> TaskTokenizer::DEADLINE_INDICATOR = { "in", "on", "by" };
-    std::string TaskTokenizer::SCHEDULE_INDICATOR = "from";
-    std::vector<std::string> TaskTokenizer::SCHEDULE_SEPARATOR = { "to", "until" };
+    std::vector<std::string> TaskTokenizer::EVENT_INDICATOR = {
+        "from",
+        "between"
+    };
+    std::vector<std::vector<std::string>> TaskTokenizer::EVENT_SEPARATOR = {
+        { "to", "until" },
+        { "to", "and" }
+    };
     std::string TaskTokenizer::tag = "#";
 
     TaskTokenizer::TaskTokenizer() {
@@ -50,10 +56,11 @@ namespace DoLah {
                     output.push_back(time);
                     lineArr.erase(lineArr.begin() + i, lineArr.end());
                     return output;
-                } else if (SCHEDULE_INDICATOR == ParserLibrary::tolowercase(lineArr.at(i))) {
+                } else if (ParserLibrary::inStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
+                    size_t indicatorIndex = ParserLibrary::getIndexInStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)));
                     std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
                     for (size_t j = 0; j < subVec.size(); j++) {
-                        if (ParserLibrary::inStringArray(SCHEDULE_SEPARATOR, ParserLibrary::tolowercase(subVec.at(j)))) {
+                        if (ParserLibrary::inStringArray(EVENT_SEPARATOR.at(indicatorIndex), ParserLibrary::tolowercase(subVec.at(j)))) {
                             std::vector<std::string> startDateArr(subVec.begin(), subVec.begin() + j);
                             std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
 
