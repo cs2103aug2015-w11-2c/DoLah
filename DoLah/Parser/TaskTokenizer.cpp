@@ -94,36 +94,43 @@ namespace DoLah {
         return { startdate, enddate };
     }
 
+    std::vector<std::tm> TaskTokenizer::findDate(std::vector<std::string> lineArr, int index) {
+        std::vector<std::tm> output;
+
+        if (ParserLibrary::inStringArray(DEADLINE_INDICATOR, ParserLibrary::tolowercase(lineArr.at(index)))) {
+            std::vector<std::string> subVec(lineArr.begin() + index + 1, lineArr.end());
+            
+            output = findDeadline(subVec);
+        } else if (ParserLibrary::inStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(index)))) {
+            size_t indicatorIndex = ParserLibrary::getIndexInStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(index)));
+            std::vector<std::string> subVec(lineArr.begin() + index + 1, lineArr.end());
+            for (size_t j = 0; j < subVec.size(); j++) {
+                if (ParserLibrary::inStringArray(EVENT_SEPARATOR.at(indicatorIndex), ParserLibrary::tolowercase(subVec.at(j)))) {
+                    std::vector<std::string> startDateArr(subVec.begin(), subVec.begin() + j);
+                    std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
+                    
+                    output = findEvent(startDateArr, endDateArr);
+                }
+            }
+        } else {
+            throw std::invalid_argument("");
+        }
+
+        return output;
+    }
+
     std::vector<std::tm> TaskTokenizer::findAndRemoveDate(std::vector<std::string> &lineArr) {
         std::tm current = TimeManager::getCurrentTime();
         std::vector<std::tm> output;
 
         std::vector<std::string> prunedArr = lineArr;
 
-        for (size_t i = 0; i < lineArr.size(); i++) {
-            if (ParserLibrary::inStringArray(DEADLINE_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
-                std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
-                try {
-                    output = findDeadline(subVec);
-                    prunedArr = std::vector<std::string>(lineArr.begin(), lineArr.begin() + i);
-                } catch (std::invalid_argument e) {
-                    // continue
-                }                
-            } else if (ParserLibrary::inStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
-                size_t indicatorIndex = ParserLibrary::getIndexInStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)));
-                std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
-                for (size_t j = 0; j < subVec.size(); j++) {
-                    if (ParserLibrary::inStringArray(EVENT_SEPARATOR.at(indicatorIndex), ParserLibrary::tolowercase(subVec.at(j)))) {
-                        std::vector<std::string> startDateArr(subVec.begin(), subVec.begin() + j);
-                        std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
-                        try {
-                            output = findEvent(startDateArr, endDateArr);
-                            prunedArr = std::vector<std::string>(lineArr.begin(), lineArr.begin() + i);
-                        } catch (std::invalid_argument e) {
-                            // continue
-                        }
-                    }
-                }
+        for (size_t index = 0; index < lineArr.size(); index++) {
+            try {
+                output = findDate(lineArr, index);
+                prunedArr = std::vector<std::string>(lineArr.begin(), lineArr.begin() + index);
+            } catch (std::invalid_argument e) {
+                // continue
             }
         }
 
