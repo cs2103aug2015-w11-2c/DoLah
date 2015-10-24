@@ -43,6 +43,57 @@ namespace DoLah {
         return ParserLibrary::implode(lineArr, " ");
     }
 
+    std::vector<std::tm> TaskTokenizer::findDeadline(std::vector<std::string> subVec) {
+        std::tm current = TimeManager::getCurrentTime();
+        std::tm dueDate;
+
+        dueDate = DateTimeParser::toDateFormat(subVec);
+
+        if (dueDate.tm_year == defaultTMYear) {
+            TimeManager::copyDay(current, dueDate);
+        }
+
+        if (TimeManager::compareTime(current, dueDate) < 0) {
+            dueDate.tm_mday += 1;
+            mktime(&dueDate);
+        }
+
+        return { dueDate };
+    }
+
+    std::vector<std::tm> TaskTokenizer::findEvent(std::vector<std::string> startDateArr, std::vector<std::string> endDateArr) {
+        std::tm current = TimeManager::getCurrentTime();
+        std::tm startdate = DateTimeParser::toDateFormat(startDateArr);
+        std::tm enddate = DateTimeParser::toDateFormat(endDateArr, startdate);
+
+        if (startdate.tm_year == defaultTMYear && startdate.tm_year == defaultTMYear) {
+            TimeManager::copyDay(current, startdate);
+            TimeManager::copyDay(current, enddate);
+            if (TimeManager::compareTime(startdate, enddate) < 0) {
+                enddate.tm_mon += 1;
+                mktime(&enddate);
+            }
+        } else if (startdate.tm_year == defaultTMYear) {
+            TimeManager::copyDay(enddate, startdate);
+            if (TimeManager::compareTime(startdate, enddate) < 0) {
+                throw std::invalid_argument("");
+            }
+        } else if (enddate.tm_year == defaultTMYear) {
+            TimeManager::copyDay(startdate, enddate);
+            if (TimeManager::compareTime(startdate, enddate) < 0) {
+                enddate.tm_mon += 1;
+                mktime(&enddate);
+            }
+        }
+
+        // time cannot backflow!
+        if (TimeManager::compareTime(startdate, enddate) < 0) {
+            throw std::invalid_argument("");
+        }
+
+        return { startdate, enddate };
+    }
+
     std::vector<std::tm> TaskTokenizer::findAndRemoveDate(std::vector<std::string> &lineArr) {
         std::tm current = TimeManager::getCurrentTime();
         std::vector<std::tm> output;
@@ -52,29 +103,12 @@ namespace DoLah {
         for (size_t i = 0; i < lineArr.size(); i++) {
             if (ParserLibrary::inStringArray(DEADLINE_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
                 std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
-                
-                std::tm dueDate;
                 try {
-                    dueDate = DateTimeParser::toDateFormat(subVec);
+                    output = findDeadline(subVec);
+                    prunedArr = std::vector<std::string>(lineArr.begin(), lineArr.begin() + i);
                 } catch (std::invalid_argument e) {
-                    continue;
-                }
-
-
-                if (dueDate.tm_year == defaultTMYear) {
-                    TimeManager::copyDay(current, dueDate);
-                }
-
-                if (TimeManager::compareTime(current, dueDate) < 0) {
-                    dueDate.tm_mday += 1;
-                    mktime(&dueDate);
-                }
-
-                output.clear();
-                output.push_back(dueDate);
-
-                prunedArr = lineArr;
-                prunedArr.erase(prunedArr.begin() + i, prunedArr.end());
+                    // continue
+                }                
             } else if (ParserLibrary::inStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)))) {
                 size_t indicatorIndex = ParserLibrary::getIndexInStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(i)));
                 std::vector<std::string> subVec(lineArr.begin() + i + 1, lineArr.end());
@@ -82,47 +116,12 @@ namespace DoLah {
                     if (ParserLibrary::inStringArray(EVENT_SEPARATOR.at(indicatorIndex), ParserLibrary::tolowercase(subVec.at(j)))) {
                         std::vector<std::string> startDateArr(subVec.begin(), subVec.begin() + j);
                         std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
-
-                        std::tm startdate;
-                        std::tm enddate;
                         try {
-                            startdate = DateTimeParser::toDateFormat(startDateArr);
-                            enddate = DateTimeParser::toDateFormat(endDateArr, startdate);
-
-                            if (startdate.tm_year == defaultTMYear && startdate.tm_year == defaultTMYear) {
-                                TimeManager::copyDay(current, startdate);
-                                TimeManager::copyDay(current, enddate);
-                                if (TimeManager::compareTime(startdate, enddate) < 0) {
-                                    enddate.tm_mon += 1;
-                                    mktime(&enddate);
-                                }
-                            } else if (startdate.tm_year == defaultTMYear) {
-                                TimeManager::copyDay(enddate, startdate);
-                                if (TimeManager::compareTime(startdate, enddate) < 0) {
-                                    throw std::invalid_argument("");
-                                }
-                            } else if (enddate.tm_year == defaultTMYear) {
-                                TimeManager::copyDay(startdate, enddate);
-                                if (TimeManager::compareTime(startdate, enddate) < 0) {
-                                    enddate.tm_mon += 1;
-                                    mktime(&enddate);
-                                }
-                            }
+                            output = findEvent(startDateArr, endDateArr);
+                            prunedArr = std::vector<std::string>(lineArr.begin(), lineArr.begin() + i);
                         } catch (std::invalid_argument e) {
-                            continue;
+                            // continue
                         }
-
-                        // time cannot backflow!
-                        if (TimeManager::compareTime(startdate, enddate) < 0) {
-                            throw std::invalid_argument("");
-                        }
-
-                        output.clear();
-                        output.push_back(startdate);
-                        output.push_back(enddate);
-
-                        prunedArr = lineArr;
-                        prunedArr.erase(prunedArr.begin() + i, prunedArr.end());
                     }
                 }
             }

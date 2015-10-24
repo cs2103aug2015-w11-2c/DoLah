@@ -506,7 +506,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function in the morning
             std::string input = "12PM";
-            std::string expected = strfyTime(12, 0, 0, nextDay, month, year);
+            std::string expected = strfyTime(12, 0, 0, 0, 1, 1900);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
