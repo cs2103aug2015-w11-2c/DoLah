@@ -30,10 +30,17 @@ namespace DoLah {
         doneLayout->setSpacing(3);
         doneLayout->setContentsMargins(0, 0, 0, 0);
 
+        tagsPage = new QWidget;
+        tagsLayout = new QVBoxLayout(tagsPage);
+        tagsLayout->setAlignment(Qt::AlignTop);
+        tagsLayout->setSpacing(3);
+        tagsLayout->setContentsMargins(0, 0, 0, 0);
+
         tabbedView = new QStackedWidget(this);
         tabbedView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         tabbedView->addWidget(homePage);
         tabbedView->addWidget(donePage);
+        tabbedView->addWidget(tagsPage);
 
         this->setWidget(tabbedView);
     }

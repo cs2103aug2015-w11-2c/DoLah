@@ -25,13 +25,13 @@ namespace DoLah {
 
         this->resize(350, 570);
         this->setFixedSize(this->size());
-        this->setWindowFlags(Qt::CustomizeWindowHint);
-        this->setWindowFlags(Qt::FramelessWindowHint);
+        this->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
         centralWidget = new QWidget(this);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         initMenu();
         initDisplayArea();
         initInputArea();
+        helpWindow = new HelpWindow();
 
         this->setCentralWidget(centralWidget);
 
@@ -60,20 +60,35 @@ namespace DoLah {
         menu = new QWidget(centralWidget);
         menu->setGeometry(QRect(0, 0, 350, 70));
         menuLayout = new QHBoxLayout(menu);
-        menuLayout->setAlignment(Qt::AlignRight);
         menuLayout->setContentsMargins(5, 5, 5, 5);
 
         homeButton = new MenuLabel;
         homeButton->setObjectName(QStringLiteral("home"));
-        homeButton->setText("HOME");
+        QPixmap homeIcon("home.png");
+        homeButton->setPixmap(homeIcon);
         menuLayout->addWidget(homeButton);
         QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToHome()));
 
         doneButton = new MenuLabel;
         doneButton->setObjectName(QStringLiteral("done"));
-        doneButton->setText("DONE");
+        QPixmap doneIcon("done.png");
+        doneButton->setPixmap(doneIcon);
         menuLayout->addWidget(doneButton);
         QObject::connect(doneButton, SIGNAL(clicked()), this, SLOT(goToDone()));
+
+        tagsButton = new MenuLabel;
+        tagsButton->setObjectName(QStringLiteral("tags"));
+        QPixmap tagsIcon("tags.png");
+        tagsButton->setPixmap(tagsIcon);
+        menuLayout->addWidget(tagsButton);
+        QObject::connect(tagsButton, SIGNAL(clicked()), this, SLOT(goToTags()));
+
+        helpButton = new MenuLabel;
+        helpButton->setObjectName(QStringLiteral("help"));
+        QPixmap helpIcon("help.png");
+        helpButton->setPixmap(helpIcon);
+        menuLayout->addWidget(helpButton);
+        QObject::connect(helpButton, SIGNAL(clicked()), this, SLOT(goToHelp()));
 
         settingsButton = new MenuLabel;
         settingsButton->setObjectName(QStringLiteral("settings"));
@@ -97,6 +112,7 @@ namespace DoLah {
         tabOrganizer = viewPort->tabbedView;
         home = viewPort->homeLayout;
         done = viewPort->doneLayout;
+        tags = viewPort->tagsLayout;
         loadTasks();
     }
 
@@ -162,9 +178,14 @@ namespace DoLah {
         std::string inputline = input.toStdString();
         if (inputline.length() != 0) {
             try {
-                this->appClient.parseAndProcessCommand(inputline);
-                refreshTasks();
-                message->setText("Done. Enter next command:");
+                if (inputline == "help") {
+                    goToHelp();
+                }
+                else {
+                    this->appClient.parseAndProcessCommand(inputline);
+                    refreshTasks();
+                    message->setText("Done. Enter next command:");
+                }
             }
             catch (std::exception e) {
                 QString text = QString(e.what());
@@ -184,6 +205,14 @@ namespace DoLah {
 
     void DoLahUI::goToDone() {
         tabOrganizer->setCurrentIndex(1);
+    }
+
+    void DoLahUI::goToTags() {
+        tabOrganizer->setCurrentIndex(2);
+    }
+
+    void DoLahUI::goToHelp() {
+        helpWindow->exec();
     }
 
     void DoLahUI::changeTheme() {

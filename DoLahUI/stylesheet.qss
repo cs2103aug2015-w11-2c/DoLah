@@ -95,3 +95,23 @@ QLabel#home:hover
 {
 	background-color: rgba(0, 0, 0, 0.2);
 }
+
+QLabel#tags
+{
+	background-color: transparent;
+}
+
+QLabel#tags:hover
+{
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+QLabel#help
+{
+	background-color: transparent;
+}
+
+QLabel#help:hover
+{
+	background-color: rgba(0, 0, 0, 0.2);
+}

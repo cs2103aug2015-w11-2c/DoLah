@@ -5,6 +5,7 @@
 #include "UITaskBox.h"
 #include "MenuLabel.h"
 #include "DisplayArea.h"
+#include "HelpWindow.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -43,18 +44,21 @@ namespace DoLah {
         QHBoxLayout *menuLayout;
         MenuLabel *homeButton;
         MenuLabel *doneButton;
+        MenuLabel *tagsButton;
+        MenuLabel *helpButton;
         MenuLabel *settingsButton;
         MenuLabel *exitButton;
 
         DisplayArea *viewPort;
         QStackedWidget *tabOrganizer;
         QVBoxLayout *home;
-        QVBoxLayout *sort;
-        QVBoxLayout *tags;
         QVBoxLayout *done;
+        QVBoxLayout *tags;
 
         QLabel *message;
         QLineEdit *lineEdit;
+
+        HelpWindow *helpWindow;
 
     protected:
         void mousePressEvent(QMouseEvent*);
@@ -66,6 +70,8 @@ namespace DoLah {
         void changeTheme();
         void goToHome();
         void goToDone();
+        void goToTags();
+        void goToHelp();
 
     private:
         void setupUI();
