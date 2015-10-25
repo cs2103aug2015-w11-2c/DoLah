@@ -63,6 +63,8 @@ namespace DoLah {
         // 25/12/2015, 25-12-2015, 25.12.2015,
         static std::vector<std::string> dateDividers;
 
+        // today
+        static std::vector<std::string> todayPattern;
         // tomorrow
         static std::vector<std::string> tomorrowPattern;
         // a week

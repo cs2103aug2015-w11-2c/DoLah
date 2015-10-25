@@ -41,6 +41,7 @@ namespace DoLah {
     std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
     std::vector<std::string> DateTimeParser::punctuations = { "," };
 
+    std::vector<std::string> DateTimeParser::todayPattern = { "today" };
     std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow", "tom" };
     std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };
     std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };
@@ -179,7 +180,9 @@ namespace DoLah {
         element = strArr.at(index++);
         int date = getDate(element);
         if (strArr.size() == 1) { // singleton format
-            if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
+            if (ParserLibrary::inStringArray(todayPattern, element)) {
+                dayDiff = 0;
+            } else if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
                 dayDiff = 1;
             } else if (date != REJECT) {
                 dayDiff = getDateModifier(date, false);
@@ -293,16 +296,13 @@ namespace DoLah {
             try {
                 time = getTime(cleanArr.at(i));
                 cleanArr.erase(cleanArr.begin() + i);
+                if (cleanArr.size() == 0) {
+                    done = true;
+                }
                 hasTime = true;
                 break;
             } catch (std::invalid_argument e) {
                 // if not continue
-            }
-        }
-
-        if (cleanArr.size() == 0) {
-            if (hasTime) {
-                done = true;
             }
         }
 
@@ -322,9 +322,7 @@ namespace DoLah {
                 hasTime = true;
                 hasDay = true;
             } catch (std::invalid_argument e) {
-                if (!hasTime) {
-                    throw e;
-                }
+                // if not continue
             }
         }
 
@@ -332,10 +330,12 @@ namespace DoLah {
         output.tm_min = time % 60;
         output.tm_sec = 0; // default
 
-
         // If only time is given and the time is behind the lowerBound,
         // take it as the next day.
-        if (!hasDay) {
+        if (!hasDay && !hasTime) {
+            throw std::invalid_argument("");
+        } else if (!hasDay) {
+            output = TimeManager::copyDay(TimeManager::getCurrentTime(), output);
             if (TimeManager::compareTime(lowerBound, output) < 0) {
                 output.tm_mday += 1;
                 std::mktime(&output);

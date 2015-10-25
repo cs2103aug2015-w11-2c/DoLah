@@ -49,13 +49,8 @@ namespace DoLah {
 
         dueDate = DateTimeParser::toDateFormat(subVec);
 
-        if (dueDate.tm_year == defaultTMYear) {
-            TimeManager::copyDay(current, dueDate);
-        }
-
         if (TimeManager::compareTime(current, dueDate) < 0) {
-            dueDate.tm_mday += 1;
-            mktime(&dueDate);
+            throw std::invalid_argument("");
         }
 
         return { dueDate };
