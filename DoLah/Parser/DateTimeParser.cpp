@@ -3,14 +3,24 @@
 namespace DoLah {
     int DateTimeParser::REJECT = -1;
     std::string DateTimeParser::CENTURY = "20";
+    int DateTimeParser::DAYINSECS = 86400;
+    int DateTimeParser::WEEKINSECS = 604800;
+    int DateTimeParser::MONTHINSECS = 2592000;
+    int DateTimeParser::DEFAULT_TIME = 1439; // 23:59
 
-    std::vector<std::string> DateTimeParser::decorators = { "of" };
+    std::vector<std::string> DateTimeParser::decorators = { "of", "in", "on", "by", "due", "at" };
 
     std::string DateTimeParser::relativePattern = "this|next";
-    std::string DateTimeParser::datePattern = "^("
-        "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
-        "|mon|tue|wed|thu|fri|sat|sun"
-        ")$";
+    std::string DateTimeParser::modiferPattern = "^(next |coming |)";
+    std::vector<std::string> DateTimeParser::datePattern = {
+        "monday|mon|mond",
+        "tuesday|tue|tues",
+        "wednesday|wed|weds",
+        "thursday|thu|thur",
+        "friday|fri|frid",
+        "saturday|sat|satu",
+        "sunday|sun|sund"
+    };
     std::string DateTimeParser::dayPattern = "^("
         "([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)"
         ")$";
@@ -29,9 +39,20 @@ namespace DoLah {
         "^(november|nov|11)$",
         "^(december|dec|12)$"
     };
-    std::vector<std::string> DateTimeParser::dateDividers = {
-        "/", "-", "."
-    };
+    std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
+    std::vector<std::string> DateTimeParser::punctuations = { "," };
+
+    std::vector<std::string> DateTimeParser::todayPattern = { "today" };
+    std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow", "tom" };
+    std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };
+    std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };
+    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks" };
+    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months" };
+    std::vector<std::string> DateTimeParser::nextPattern = { "next", "coming" };
+
+    std::string DateTimeParser::AM = "am";
+    std::string DateTimeParser::PM = "pm";
+    std::string DateTimeParser::timeDivider = ":";
 
     DateTimeParser::DateTimeParser() {
     }
@@ -79,14 +100,171 @@ namespace DoLah {
         return std::stoi(year);
     }
 
+    int DateTimeParser::getDate(std::string str) {
+        std::string out;
+        for (size_t d = 0; d < datePattern.size(); d++) {
+            if (std::regex_match(str, std::regex(datePattern.at(d), std::regex_constants::icase))) {
+                return (int)d;
+            }
+        }
 
+        return REJECT;
+    }
 
-    std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr) {
+    int DateTimeParser::getTime(std::string str) {
+        str = ParserLibrary::tolowercase(str);
+
+        int time = 0;
+        bool isTime = false;
+
+        bool isPM = false;
+        bool isAM = false;
+        if (str.find(PM) != std::string::npos) {
+            ParserLibrary::stringRemove(str, PM);
+            isPM = true;
+            isTime = true;
+        } else if (str.find(AM) != std::string::npos) {
+            ParserLibrary::stringRemove(str, AM);
+            isAM = true;
+            isTime = true;
+        }
+        
+        std::vector<std::string> strArr = ParserLibrary::explode(str, timeDivider);
+
+        int hour = std::stoi(strArr.at(0));
+        time = hour * 60;
+
+        if (isAM && hour >= 12) {
+            throw std::invalid_argument("");
+        }
+
+        if (isPM && hour < 12) {
+            time += 12 * 60;
+        }
+
+        if (strArr.size() > 1) {
+            time += std::stoi(strArr.at(1));
+            isTime = true;
+        }
+
+        if (!isTime) {
+            throw std::invalid_argument("");
+        }
+
+        return time;
+    }
+
+    int DateTimeParser::getDateModifier(int date, bool notThisWeek) {
+        std::tm current = TimeManager::getCurrentTime();
+
+        int diff = date - current.tm_wday + 1;
+        if (diff < 0) {
+            diff = 7 + diff;
+        } else if (notThisWeek) {
+            diff += 7;
+        }
+
+        return diff;
+    }
+
+    std::tm DateTimeParser::checkRelativeDateFormat(std::vector<std::string> strArr) {
         std::tm output;
+        int dayDiff = 0;
+        int weekDiff = 0;
+        int monthDiff = 0;
 
-        std::vector<std::string> cleanArr = strArr;
+        size_t size = strArr.size();
+
+        int index = 0;
+        std::string element;
+        
+        element = strArr.at(index++);
+        int date = getDate(element);
+        if (strArr.size() == 1) { // singleton format
+            if (ParserLibrary::inStringArray(todayPattern, element)) {
+                dayDiff = 0;
+            } else if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
+                dayDiff = 1;
+            } else if (date != REJECT) {
+                dayDiff = getDateModifier(date, false);
+            } else {
+                throw std::invalid_argument("");
+            }
+        } else if (ParserLibrary::inStringArray(nextPattern, element)) { // next pattern
+            element = strArr.at(index++);
+            int date = getDate(element);
+            if (date != REJECT) {
+                dayDiff = getDateModifier(date, true);
+            } else {
+                if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
+                    dayDiff = 1;
+                } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
+                    weekDiff = 1;
+                } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
+                    monthDiff = 1; // month length is not fixed!!
+                } else {
+                    throw std::invalid_argument("");
+                }
+            }
+        } else if (ParserLibrary::isDecimal(element) ||
+            ParserLibrary::inStringArray(articlePattern, element)) { // 10 days, a week, etc
+            int n = 0;
+            if (ParserLibrary::inStringArray(articlePattern, element)) {
+                n = 1;
+            } else {
+                n = stoi(element);
+            }
+
+            element = strArr.at(index++);
+            if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
+                dayDiff = n;
+            } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
+                weekDiff = n;
+            } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
+                monthDiff = n; // month length is not fixed!!
+            } else {
+                throw std::invalid_argument("");
+            }
+        } else if (date != REJECT) { // date with something more behind
+            dayDiff = getDateModifier(date, false);
+            std::vector<std::string> subVec(strArr.begin() + 1, strArr.end());
+
+            subVec = formatArr(subVec);
+            std::tm specifiedDay = classifyDate(subVec);
+
+            int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
+            time_t t = time(NULL) + modifer;
+            localtime_s(&output, &t);
+
+            int diff = output.tm_wday - specifiedDay.tm_wday;
+            if (diff == 0) {
+                return output;
+            } else {
+                return specifiedDay;
+            }
+        } else {
+            throw std::invalid_argument("");
+        }
+
+        int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
+        time_t t = time(NULL) + modifer;
+        localtime_s(&output, &t);
+
+        return output;
+    }
+
+    std::vector<std::string> DateTimeParser::formatArr(std::vector<std::string> strArr) {
+        std::vector<std::string> cleanArr = ParserLibrary::removeElementsFromStringVector(strArr, decorators);
+
+        for (size_t i = 0; i < cleanArr.size(); i++) {
+            for (size_t j = 0; j < punctuations.size(); j++) {
+                boost::erase_all(cleanArr.at(i), punctuations.at(j));
+            }
+        }
+
         if (cleanArr.size() == 1) {
             std::string str = cleanArr.at(0);
+
             for (size_t i = 0; i < dateDividers.size(); i++) {
                 cleanArr = ParserLibrary::explode(str, dateDividers.at(i));
                 if (cleanArr.size() > 1) {
@@ -94,12 +272,75 @@ namespace DoLah {
                 }
             }
         }
-        cleanArr = ParserLibrary::removeElementsFromStringVector(cleanArr, decorators);
 
-        try {
-            output = classifyDate(cleanArr);
-        } catch (std::invalid_argument e) {
-            throw e;
+        return cleanArr;
+    }
+
+    std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr, std::tm lowerBound) {
+        std::tm output = std::tm();
+
+        bool done = false;
+        bool hasTime = false;
+        bool hasDay = false;
+
+        bool hasLowerBound = (lowerBound.tm_year != std::tm().tm_year);
+        if (hasLowerBound) {
+            output = lowerBound;
+        } else {
+            lowerBound = TimeManager::getCurrentTime();
+        }
+
+        std::vector<std::string> cleanArr = formatArr(strArr);
+
+        int time = DEFAULT_TIME;
+        for (size_t i = 0; i < cleanArr.size(); i++) {
+            try {
+                time = getTime(cleanArr.at(i));
+                cleanArr.erase(cleanArr.begin() + i);
+                if (cleanArr.size() == 0) {
+                    done = true;
+                }
+                hasTime = true;
+                break;
+            } catch (std::invalid_argument e) {
+                // if not continue
+            }
+        }
+
+        if (!done) {
+            try {
+                output = checkRelativeDateFormat(cleanArr);
+                done = true;
+                hasDay = true;
+            } catch (std::invalid_argument e) {
+                // if not continue
+            }
+        }
+
+        if (!done) {
+            try {
+                output = classifyDate(cleanArr);
+                hasTime = true;
+                hasDay = true;
+            } catch (std::invalid_argument e) {
+                // if not continue
+            }
+        }
+
+        output.tm_hour = time / 60;
+        output.tm_min = time % 60;
+        output.tm_sec = 0; // default
+
+        // If only time is given and the time is behind the lowerBound,
+        // take it as the next day.
+        if (!hasDay && !hasTime) {
+            throw std::invalid_argument("");
+        } else if (!hasDay) {
+            output = TimeManager::copyDay(TimeManager::getCurrentTime(), output);
+            if (TimeManager::compareTime(lowerBound, output) < 0) {
+                output.tm_mday += 1;
+                std::mktime(&output);
+            }
         }
 
         return output;
@@ -116,55 +357,73 @@ namespace DoLah {
                 throw e;
             }
         }
+
         return output;
     }
 
     std::tm DateTimeParser::checkDMYformat(std::vector<std::string> strArr) {
-        time_t t = time(0);
-        std::tm output;
-        localtime_s(&output, &t);
+        std::tm current = TimeManager::getCurrentTime();
+        std::tm output = current;
 
         int day = -1;
         int month = -1;
         int year = -1;
+
+        int monthModifier = 0;
+        int yearModifier = 0;
 
         size_t size = strArr.size();
         day = getDay(strArr.at(0));
         if (day != REJECT) {
             output.tm_mday = day;
-            if (size <= 1) {
-                return output;
-            }
-            month = getMonth(strArr.at(1));
-            if (month != REJECT) {
-                output.tm_mon = month;
-                if (size <= 2) {
-                    return output;
-                }
-                year = getYear(strArr.at(2));
-                if (year != REJECT) {
-                    output.tm_year = year - 1900;
-                    return output;
+            if (size > 1) {
+                month = getMonth(strArr.at(1));
+                if (month != REJECT) {
+                    output.tm_mon = month;
+                    if (size > 2) {
+                        year = getYear(strArr.at(2));
+                        if (year != REJECT) {
+                            output.tm_year = year - 1900;
+                        } else {
+                            throw std::invalid_argument("");
+                        }
+                    } else {
+                        if (current.tm_mon > month) {
+                            yearModifier += 1;
+                        }
+                    }
                 } else {
                     throw std::invalid_argument("");
                 }
             } else {
-                throw std::invalid_argument("");
+                if (current.tm_mday > day) {
+                    monthModifier += 1;
+                }
             }
         } else {
             throw std::invalid_argument("");
         }
+
+        if (!TimeManager::isValidDate(output)) {
+            throw std::invalid_argument("");
+        }
+
+        output.tm_mon += monthModifier;
+        output.tm_year += yearModifier;
+
         return output;
     }
 
     std::tm DateTimeParser::checkMDYformat(std::vector<std::string> strArr) {
-        time_t t = time(0);
-        std::tm output;
-        localtime_s(&output, &t);
+        std::tm current = TimeManager::getCurrentTime();
+        std::tm output = current;
 
         int day = -1;
         int month = -1;
         int year = -1;
+
+        int monthModifier = 0;
+        int yearModifier = 0;
 
         size_t size = strArr.size();
         month = getMonth(strArr.at(0));
@@ -176,15 +435,17 @@ namespace DoLah {
             day = getDay(strArr.at(1));
             if (day != REJECT) {
                 output.tm_mday = day;
-                if (size <= 2) {
-                    return output;
-                }
-                year = getYear(strArr.at(2));
-                if (year != REJECT) {
-                    output.tm_year = year - 1900;
-                    return output;
+                if (size > 2) {
+                    year = getYear(strArr.at(2));
+                    if (year != REJECT) {
+                        output.tm_year = year - 1900;
+                    } else {
+                        throw std::invalid_argument("");
+                    }
                 } else {
-                    throw std::invalid_argument("");
+                    if (current.tm_mon > month) {
+                        yearModifier += 1;
+                    }
                 }
             } else {
                 throw std::invalid_argument("");
@@ -192,6 +453,14 @@ namespace DoLah {
         } else {
             throw std::invalid_argument("");
         }
+
+        if (!TimeManager::isValidDate(output)) {
+            throw std::invalid_argument("");
+        }
+
+        output.tm_mon += monthModifier;
+        output.tm_year += yearModifier;
+
         return output;
     }
 }

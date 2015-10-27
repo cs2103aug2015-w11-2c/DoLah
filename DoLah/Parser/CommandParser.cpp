@@ -1,13 +1,13 @@
 #include "CommandParser.h"
 
 namespace DoLah {
-    std::string CommandParser::ADD = "add";
-    std::string CommandParser::SEARCH = "search";
-    std::string CommandParser::DONE = "done";
-    std::string CommandParser::EDIT = "edit";
-    std::string CommandParser::DELETE = "delete";
-    std::string CommandParser::CLEAR = "clear";
-    std::string CommandParser::UNDO = "undo";
+    std::vector<std::string> CommandParser::ADD = { "add" };
+    std::vector<std::string> CommandParser::SEARCH = { "search" };
+    std::vector<std::string> CommandParser::DONE = { "done" };
+    std::vector<std::string> CommandParser::EDIT = { "edit" };
+    std::vector<std::string> CommandParser::DELETE = { "delete", "del" };
+    std::vector<std::string> CommandParser::CLEAR = { "clear" };
+    std::vector<std::string> CommandParser::UNDO = { "undo" };
 
     std::string CommandParser::UNHANDLED_COMMAND_MESSAGE = "Command not handled";
     std::string CommandParser::UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
@@ -121,28 +121,31 @@ namespace DoLah {
         std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
 
         if (command.empty()) {
-            throw std::invalid_argument(UNKNOWN_COMMAND_MESSAGE);
+            // default command
+            command = ADD.at(0);
+        } else {
+            inputArr = CommandTokenizer::pruneCommand(inputArr);
         }
 
-        if (command == ADD) {
+        if (ParserLibrary::inStringArray(ADD, command)) {
             AddTaskCommand* command = new AddTaskCommand(parseAdd(inputArr));
             return command;
-        } else if (command == SEARCH) {
+        } else if (ParserLibrary::inStringArray(SEARCH, command)) {
             SearchTaskCommand* command = new SearchTaskCommand(parseSearch(inputArr));
             return command;
-        } else if (command == DONE){
+        } else if (ParserLibrary::inStringArray(DONE, command)) {
             SetDoneTaskCommand* command = new SetDoneTaskCommand(parseSetDone(inputArr));
             return command;
-        } else if (command == EDIT) {
+        } else if (ParserLibrary::inStringArray(EDIT, command)) {
             EditTaskCommand* command = new EditTaskCommand(parseEdit(inputArr));
             return command;
-        } else if (command == DELETE) {
+        } else if (ParserLibrary::inStringArray(DELETE, command)) {
             DeleteTaskCommand* command = new DeleteTaskCommand(parseDelete(inputArr));
             return command;
-        } else if (command == CLEAR) {
+        } else if (ParserLibrary::inStringArray(CLEAR, command)) {
             ClearTaskCommand* command = new ClearTaskCommand(parseClear(inputArr));
             return command;
-        } else if (command == UNDO) {
+        } else if (ParserLibrary::inStringArray(UNDO, command)) {
             UndoTaskCommand* command = new UndoTaskCommand(parseUndo(inputArr));
             return command;
         } else {
