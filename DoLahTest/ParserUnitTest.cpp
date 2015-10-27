@@ -124,14 +124,14 @@ public:
     // Test for corner cases.
     TEST_METHOD(DateInDifferentFormat1) {
         std::string input = "24.12.2015";
-        std::string expected = strfyTime(0, 0, 0, 24, 12, 2015);
+        std::string expected = strfyTime(23, 59, 0, 24, 12, 2015);
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
 
     TEST_METHOD(DateInDifferentFormat2) {
         std::string input = "24-12-2015";
-        std::string expected = strfyTime(0, 0, 0, 24, 12, 2015);
+        std::string expected = strfyTime(23, 59, 0, 24, 12, 2015);
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
@@ -149,28 +149,28 @@ public:
     TEST_METHOD(DeadlineWithName) {
         parseTaskMethod((std::string)
             "task on 24.12.2015",
-            { strfyTime(0, 0, 0, 24, 12, 2015), "{  }", "task" }
+            { strfyTime(23, 59, 0, 24, 12, 2015), "{  }", "task" }
         );
     }
 
     TEST_METHOD(EventWithName) {
         parseTaskMethod((std::string)
             "task from 24.12.2015 to 25.12.2015",
-            { strfyTime(0, 0, 0, 24, 12, 2015) + " ~ " + strfyTime(0, 0, 0, 25, 12, 2015), "{  }", "task" }
+            { strfyTime(23, 59, 0, 24, 12, 2015) + " ~ " + strfyTime(23, 59, 0, 25, 12, 2015), "{  }", "task" }
         );
     }
 
     TEST_METHOD(EventWithNameAndTag) {
         parseTaskMethod((std::string)
             "#task from 24.12.2015 until 25.12.2015",
-            { strfyTime(0, 0, 0, 24, 12, 2015) + " ~ " + strfyTime(0, 0, 0, 25, 12, 2015), "{ task }", "#task" }
+            { strfyTime(23, 59, 0, 24, 12, 2015) + " ~ " + strfyTime(23, 59, 0, 25, 12, 2015), "{ task }", "#task" }
         );
     }
 
     TEST_METHOD(EventWithNameAndMultipleTags) {
         parseTaskMethod((std::string)
             "#cs2103 #task from 24.12.2015 until 25.12.2015",
-            { strfyTime(0, 0, 0, 24, 12, 2015) + " ~ " + strfyTime(0, 0, 0, 25, 12, 2015), "{ task, cs2103 }", "#cs2103 #task" }
+            { strfyTime(23, 59, 0, 24, 12, 2015) + " ~ " + strfyTime(23, 59, 0, 25, 12, 2015), "{ task, cs2103 }", "#cs2103 #task" }
         );
     }
 
@@ -396,7 +396,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function in every new year
             std::string input = "1st January";
-            std::string expected = strfyTime(0, 0, 0, 1, 1, nextYear);
+            std::string expected = strfyTime(23, 59, 0, 1, 1, nextYear);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
@@ -407,7 +407,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function on the 1st of every month
             std::string input = "1st";
-            std::string expected = strfyTime(0, 0, 0, 1, nextMonth, year);
+            std::string expected = strfyTime(23, 59, 0, 1, nextMonth, year);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
@@ -418,7 +418,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function in every new year
             std::string input = "January 1st";
-            std::string expected = strfyTime(0, 0, 0, 1, 1, nextYear);
+            std::string expected = strfyTime(23, 59, 0, 1, 1, nextYear);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
@@ -429,7 +429,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function on the last day of the month
             std::string input = "tomorrow";
-            std::string expected = strfyTime(0, 0, 0, nextDay, month, year);
+            std::string expected = strfyTime(23, 59, 0, nextDay, month, year);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
@@ -440,7 +440,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function on the last week of the month
             std::string input = "next week";
-            std::string expected = strfyTime(0, 0, 0, day + 7, month, year);
+            std::string expected = strfyTime(23, 59, 0, day + 7, month, year);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
@@ -451,7 +451,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function in the last 2 days of the month
             std::string input = "2 days";
-            std::string expected = strfyTime(0, 0, 0, day + 2, month, year);
+            std::string expected = strfyTime(23, 59, 0, day + 2, month, year);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }
@@ -462,7 +462,7 @@ public:
             Assert::IsTrue(true);
         } else { // test will not function in the last 1 weeks of the month
             std::string input = "1 week";
-            std::string expected = strfyTime(0, 0, 0, day + 7, month, year);
+            std::string expected = strfyTime(23, 59, 0, day + 7, month, year);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }

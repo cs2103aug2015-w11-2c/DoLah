@@ -46,6 +46,7 @@ namespace DoLah {
         static int DAYINSECS;
         static int WEEKINSECS;
         static int MONTHINSECS;
+        static int DEFAULT_TIME;
 
         // this week, next week (not implemented)
         static std::string relativePattern;

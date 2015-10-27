@@ -6,6 +6,7 @@ namespace DoLah {
     int DateTimeParser::DAYINSECS = 86400;
     int DateTimeParser::WEEKINSECS = 604800;
     int DateTimeParser::MONTHINSECS = 2592000;
+    int DateTimeParser::DEFAULT_TIME = 1439; // 23:59
 
     std::vector<std::string> DateTimeParser::decorators = { "of", "in", "on", "by", "due", "at" };
 
@@ -172,7 +173,7 @@ namespace DoLah {
         int weekDiff = 0;
         int monthDiff = 0;
 
-        int size = strArr.size();
+        size_t size = strArr.size();
 
         int index = 0;
         std::string element;
@@ -188,23 +189,6 @@ namespace DoLah {
                 dayDiff = getDateModifier(date, false);
             } else {
                 throw std::invalid_argument("");
-            }
-        } else if (date != REJECT) { // date with something more behind
-            dayDiff = getDateModifier(date, false);
-            std::vector<std::string> subVec(strArr.begin() + 1, strArr.end());
-            
-            subVec = formatArr(subVec);
-            std::tm specifiedDay = classifyDate(subVec);
-
-            int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
-            time_t t = time(NULL) + modifer;
-            localtime_s(&output, &t);
-
-            int diff = output.tm_wday - specifiedDay.tm_wday;
-            if (diff == 0) {
-                return output;
-            } else {
-                return specifiedDay;
             }
         } else if (ParserLibrary::inStringArray(nextPattern, element)) { // next pattern
             element = strArr.at(index++);
@@ -240,6 +224,23 @@ namespace DoLah {
                 monthDiff = n; // month length is not fixed!!
             } else {
                 throw std::invalid_argument("");
+            }
+        } else if (date != REJECT) { // date with something more behind
+            dayDiff = getDateModifier(date, false);
+            std::vector<std::string> subVec(strArr.begin() + 1, strArr.end());
+
+            subVec = formatArr(subVec);
+            std::tm specifiedDay = classifyDate(subVec);
+
+            int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
+            time_t t = time(NULL) + modifer;
+            localtime_s(&output, &t);
+
+            int diff = output.tm_wday - specifiedDay.tm_wday;
+            if (diff == 0) {
+                return output;
+            } else {
+                return specifiedDay;
             }
         } else {
             throw std::invalid_argument("");
@@ -291,7 +292,7 @@ namespace DoLah {
 
         std::vector<std::string> cleanArr = formatArr(strArr);
 
-        int time = 0;
+        int time = DEFAULT_TIME;
         for (size_t i = 0; i < cleanArr.size(); i++) {
             try {
                 time = getTime(cleanArr.at(i));
