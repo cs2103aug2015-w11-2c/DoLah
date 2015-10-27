@@ -6,6 +6,7 @@
 #include <fstream>
 //#include "Models/Task.h"
 #include "Models/Calendar.h"
+#include "CommandInvoker.h"
 
 namespace DoLah {
 
@@ -20,6 +21,7 @@ namespace DoLah {
         std::string settingsFile;
         std::string storageFile;
         DoLah::Calendar calendar;
+        DoLah::CommandInvoker commandInvoker;
 	};
 }
 

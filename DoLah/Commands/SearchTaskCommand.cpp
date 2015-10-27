@@ -31,5 +31,9 @@ namespace DoLah {
 		**resultVector = (this->calendar->search(query));
 	}
 
+    void SearchTaskCommand::revert() {
+        **resultVector = (this->calendar->search(query));
+    }
+
 	//private
 }

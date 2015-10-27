@@ -11,7 +11,8 @@ namespace DoLah {
 	}
 
 	void RedoTaskCommand::execute() {
-		//TODO
+        AbstractCommand * command = this->commHistory->redo();
+        command->execute();
 	}
 
 	//private

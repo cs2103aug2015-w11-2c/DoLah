@@ -11,7 +11,8 @@ namespace DoLah {
 
     }
 
-    void CommandInvoker::process(AbstractCommand *command) {
+    void CommandInvoker::process(AbstractCommand * command) {
         command->execute();
+        history.addToUndoStack(command);
     }
 }

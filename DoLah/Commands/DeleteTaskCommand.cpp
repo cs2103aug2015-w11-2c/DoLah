@@ -15,8 +15,13 @@ namespace DoLah {
 	}
 
 	void DeleteTaskCommand::execute() {
+        this->oldTask = this->calendar->getTask(taskIndex);
 		this->calendar->deleteTask(taskIndex);
 	}
+    
+    void DeleteTaskCommand::revert() {
+        this->calendar->addTask(oldTask);
+    }
 
 	//private
 }

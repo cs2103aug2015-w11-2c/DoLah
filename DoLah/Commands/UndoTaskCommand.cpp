@@ -11,7 +11,8 @@ namespace DoLah {
 	}
 
 	void UndoTaskCommand::execute() {
-		//TODO
+        AbstractCommand * command = this->commHistory->undo();
+        command->revert();
 	}
 
 	//private

@@ -3,17 +3,22 @@
 #include <stack>
 
 namespace DoLah {
+    class AbstractCommand;
+
 	class CommandHistory {
+
 	public:
         CommandHistory();
 		~CommandHistory();
 
-		void redo();
-		void undo();
+        void addToUndoStack(AbstractCommand *);
+
+        AbstractCommand * undo();
+        AbstractCommand * redo();
 
 	private:
 		//placeholder
-		std::stack<std::string> undoStack;
-		std::stack<std::string> redoStack;
+		std::stack<AbstractCommand *> undoStack;
+		std::stack<AbstractCommand *> redoStack;
 	};
 }

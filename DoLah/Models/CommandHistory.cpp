@@ -10,12 +10,22 @@ namespace DoLah {
 
 	}
 
-	void CommandHistory::redo() {
-		//TODO
-	}
+    void CommandHistory::addToUndoStack(AbstractCommand * command) {
+        this->undoStack.push(command);
+    }
 
-	void CommandHistory::undo() {
-		//TODO
+    AbstractCommand * CommandHistory::undo() {
+        AbstractCommand * command = this->undoStack.top();
+        this->undoStack.pop();
+        this->redoStack.push(command);
+        return command;
+    }
+
+	AbstractCommand * CommandHistory::redo() {
+        AbstractCommand * command = this->redoStack.top();
+        this->redoStack.pop();
+        this->undoStack.push(command);
+        return command;
 	}
 
 	//private

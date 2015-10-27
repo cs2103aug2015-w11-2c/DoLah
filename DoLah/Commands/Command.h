@@ -4,6 +4,7 @@
 #include <string>
 #include "Models/Task.h"
 #include "Models/Calendar.h"
+#include "Models/CommandHistory.h"
 
 namespace DoLah {
 
@@ -12,6 +13,7 @@ namespace DoLah {
 		virtual ~AbstractCommand() = 0;
         void setCalendar(DoLah::Calendar*);
 		virtual void execute() = 0;
+        virtual void revert() = 0;
 
     protected:
         DoLah::Calendar* calendar;
@@ -24,6 +26,7 @@ namespace DoLah {
 		~AddTaskCommand();
 
 		void execute();
+        void revert();
 
 	private:
 		DoLah::AbstractTask* task;
@@ -34,18 +37,24 @@ namespace DoLah {
 		EditTaskCommand();
 		EditTaskCommand(int, DoLah::AbstractTask *);
 		~EditTaskCommand();
-		void execute();
+		
+        void execute();
+        void revert();
 
 	private:
 		int taskIndex;
 		DoLah::AbstractTask* task;
+        DoLah::AbstractTask* oldTask;
 	};
 
     class SetDoneTaskCommand : public AbstractCommand {
     public:
         SetDoneTaskCommand(int);
         ~SetDoneTaskCommand();
+        
         void execute();
+        void revert();
+    
     private:
         int taskIndex;
     };
@@ -57,9 +66,11 @@ namespace DoLah {
 		~DeleteTaskCommand();
 
 		void execute();
+        void revert();
 
 	private:
 		int taskIndex;
+        DoLah::AbstractTask* oldTask;
 	};
 
 	class ClearTaskCommand : public AbstractCommand {
@@ -68,6 +79,10 @@ namespace DoLah {
 		~ClearTaskCommand();
 
 		void execute();
+        void revert();
+
+    private:
+        std::vector<AbstractTask*> oldTaskList;
 	};
 
 	class SearchTaskCommand : public AbstractCommand {
@@ -82,6 +97,7 @@ namespace DoLah {
         void setResultVector(std::vector<AbstractTask*>*);
 
 		void execute();
+        void revert();
 
 	private:
 		std::string query;
@@ -94,6 +110,8 @@ namespace DoLah {
 		~UndoTaskCommand();
 
 		void execute();
+    private:
+        DoLah::CommandHistory* commHistory;
 	};
 
 	class RedoTaskCommand : public AbstractCommand {
@@ -102,6 +120,8 @@ namespace DoLah {
 		~RedoTaskCommand();
 
 		void execute();
+    private:
+        DoLah::CommandHistory* commHistory;
 	};
 
 }
