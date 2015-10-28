@@ -15,7 +15,12 @@ namespace DoLah {
         if (!ParserLibrary::inStringArray(commandList, command)) {
             return std::string();
         }
-        lineArr.erase(lineArr.begin());
+
         return command;
+    }
+
+    std::vector<std::string> CommandTokenizer::pruneCommand(std::vector<std::string> lineArr) {
+        lineArr.erase(lineArr.begin());
+        return lineArr;
     }
 }

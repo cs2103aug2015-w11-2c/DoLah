@@ -24,8 +24,15 @@ namespace DoLah {
         
     private:
         static std::vector<std::string> DEADLINE_INDICATOR;
+        static std::vector<std::string> EVENT_INDICATOR;
+        static std::vector<std::vector<std::string>> EVENT_SEPARATOR;
         static std::string SCHEDULE_INDICATOR;
         static std::vector<std::string> SCHEDULE_SEPARATOR;
         static std::string tag;
+        static int defaultTMYear;
+        
+        static std::vector<std::tm> TaskTokenizer::findDate(std::vector<std::string>, int);
+        static std::vector<std::tm> TaskTokenizer::findDeadline(std::vector<std::string>);
+        static std::vector<std::tm> TaskTokenizer::findEvent(std::vector<std::string>, std::vector<std::string>);
     };
 }

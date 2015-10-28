@@ -1,18 +1,12 @@
 QMainWindow
 {
-	background-image: url("dawn.jpg");
-	/*background-color: #9e3b36;*/
-}
-
-QWidget
-{
-	background-color: transparent;
+	/*background-image: url("night_bg");*/
+	background-image: url("night_bg");
 }
 
 QScrollArea > QWidget > QWidget
 { 
-	/*background-color: #a08d8f;*/
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: #a08d8f;
 } 
 
 QTextBrowser
@@ -22,13 +16,13 @@ QTextBrowser
 
 QTextBrowser#Floating
 {
-	background-color: #fcebbf; 
+	background-color: #fcebbf;
 	color: #4c3e3e; 
 }
 
 QTextBrowser#Deadline
 {
-	background-color: #fcebbf; 
+	background-color: #fcebbf;
 	color: #4c3e3e; 
 }
 
@@ -41,7 +35,7 @@ QTextBrowser#Event
 QTextBrowser#Done
 {
 	background-color: #BBBBBB;
-	color: #696969; 
+	color: #696969;
 	border-left: 5px solid gray;
 	text-decoration: line-through;
 }
@@ -53,6 +47,7 @@ QLineEdit
 
 QLabel
 { 
+	font-family: times;
 	color: white;
 }
 
@@ -63,7 +58,7 @@ QLabel#exitButton
 
 QLabel#exitButton:hover
 {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 QLabel#settings
@@ -73,7 +68,7 @@ QLabel#settings
 
 QLabel#settings:hover
 {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 QLabel#done
@@ -83,7 +78,7 @@ QLabel#done
 
 QLabel#done:hover
 {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 QLabel#home
@@ -93,7 +88,7 @@ QLabel#home
 
 QLabel#home:hover
 {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 QLabel#tags
@@ -103,7 +98,7 @@ QLabel#tags
 
 QLabel#tags:hover
 {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 QLabel#help
@@ -113,5 +108,5 @@ QLabel#help
 
 QLabel#help:hover
 {
-	background-color: rgba(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 }

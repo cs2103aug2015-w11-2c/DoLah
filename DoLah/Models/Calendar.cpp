@@ -87,9 +87,10 @@ namespace DoLah {
         taskList.at(index) = task;
 	}
 
-	void Calendar::clearTasks() {
-		taskList.clear();
-	}
+    void Calendar::clearTasks() {
+        this->taskList.clear();
+        this->doneList.clear();
+    }
 	
 	std::vector<AbstractTask*> Calendar::search(std::string query) {
 		std::vector<AbstractTask*> results;

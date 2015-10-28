@@ -8,14 +8,12 @@ namespace DoLah {
         QFile stylesheet("stylesheet.qss");
         if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
         {
-        setStyleSheet(stylesheet.readAll());
-        stylesheet.close();
+            setStyleSheet(stylesheet.readAll());
+            stylesheet.close();
         }
     }
 
-    DoLahUI::~DoLahUI()
-    {
-
+    DoLahUI::~DoLahUI() {
     }
 
     // MAIN WINDOW
@@ -27,13 +25,13 @@ namespace DoLah {
 
         this->resize(350, 570);
         this->setFixedSize(this->size());
-        this->setWindowFlags(Qt::CustomizeWindowHint);
-        this->setWindowFlags(Qt::FramelessWindowHint);
+        this->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
         centralWidget = new QWidget(this);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         initMenu();
         initDisplayArea();
         initInputArea();
+        helpWindow = new HelpWindow();
 
         this->setCentralWidget(centralWidget);
 
@@ -61,59 +59,85 @@ namespace DoLah {
     void DoLahUI::initMenu() {
         menu = new QWidget(centralWidget);
         menu->setGeometry(QRect(0, 0, 350, 70));
-
         menuLayout = new QHBoxLayout(menu);
-        menuLayout->setAlignment(Qt::AlignRight);
         menuLayout->setContentsMargins(5, 5, 5, 5);
+
+        homeButton = new MenuLabel;
+        homeButton->setObjectName(QStringLiteral("home"));
+        QPixmap homeIcon("home.png");
+        homeButton->setPixmap(homeIcon);
+        menuLayout->addWidget(homeButton);
+        QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToHome()));
+
+        doneButton = new MenuLabel;
+        doneButton->setObjectName(QStringLiteral("done"));
+        QPixmap doneIcon("done.png");
+        doneButton->setPixmap(doneIcon);
+        menuLayout->addWidget(doneButton);
+        QObject::connect(doneButton, SIGNAL(clicked()), this, SLOT(goToDone()));
+
+        tagsButton = new MenuLabel;
+        tagsButton->setObjectName(QStringLiteral("tags"));
+        QPixmap tagsIcon("tags.png");
+        tagsButton->setPixmap(tagsIcon);
+        menuLayout->addWidget(tagsButton);
+        QObject::connect(tagsButton, SIGNAL(clicked()), this, SLOT(goToTags()));
+
+        helpButton = new MenuLabel;
+        helpButton->setObjectName(QStringLiteral("help"));
+        QPixmap helpIcon("help.png");
+        helpButton->setPixmap(helpIcon);
+        menuLayout->addWidget(helpButton);
+        QObject::connect(helpButton, SIGNAL(clicked()), this, SLOT(goToHelp()));
+
+        settingsButton = new MenuLabel;
+        settingsButton->setObjectName(QStringLiteral("settings"));
+        QPixmap settingsIcon("settings.png");
+        settingsButton->setPixmap(settingsIcon);
+        menuLayout->addWidget(settingsButton);
+        QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(changeTheme()));
 
         exitButton = new MenuLabel;
         exitButton->setObjectName(QStringLiteral("exitButton"));
-        exitButton->setMinimumHeight(65);
         QPixmap exitIcon("exit.png");
         exitButton->setPixmap(exitIcon);
         menuLayout->addWidget(exitButton);
-
         QObject::connect(exitButton, SIGNAL(clicked()), this, SLOT(menuExit()));
     }
 
     // DISPLAY AREA
 
     void DoLahUI::initDisplayArea() {
-        scrollArea = new QScrollArea(centralWidget);
-        scrollArea->setGeometry(QRect(5, 70, 340, 450));
-        scrollArea->setFrameStyle(QFrame::NoFrame);
-
-        scrollArea->setWidgetResizable(true);
-
-        taskBox = new QTextBrowser();
-        taskBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        taskBox->setFixedHeight(40);
-        taskBox->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        taskBox->setText("<font size=4><b>1. polish GUI</b></font><br><font size=3><font color=#2fb6a7>today</font></font>");
-
-        tasksContainer = new QWidget(scrollArea);
-        tasksContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        tasksLayout = new QVBoxLayout(tasksContainer);
-        tasksLayout->setAlignment(Qt::AlignTop);
-        //tasksLayout->addWidget(taskBox);
-        tasksLayout->setSpacing(3);
-        tasksLayout->setContentsMargins(0, 0, 0, 0);
+        viewPort = new DisplayArea(centralWidget);
+        tabOrganizer = viewPort->tabbedView;
+        home = viewPort->homeLayout;
+        done = viewPort->doneLayout;
+        tags = viewPort->tagsLayout;
         loadTasks();
-
-        scrollArea->setWidget(tasksContainer);
     }
 
     void DoLahUI::loadTasks() {
+        int i = 0;
         std::vector<AbstractTask*> taskList = (appClient.getCalendar()).getTaskList();
-        for (int i = 0; i < taskList.size(); ++i) {
-            createTaskBox(i, taskList[i]);
+        for (i; i < taskList.size(); ++i) {
+            createTaskBox(home, i, taskList[i]);
         }
+        std::vector<AbstractTask*> doneList = appClient.getCalendar().getDoneList();
+        for (int j = 0; j < doneList.size(); ++j) {
+            createTaskBox(done, i+j, doneList[j]);
+        }
+
     }
 
     void DoLahUI::refreshTasks() {
+        flushPage(home);
+        flushPage(done);
+        loadTasks();
+    }
+
+    void DoLahUI::flushPage(QVBoxLayout *page) {
         QLayoutItem* child;
-        while ((child = tasksLayout->takeAt(0)) != 0)
+        while ((child = page->takeAt(0)) != 0)
         {
             QWidget* widget = child->widget();
             if (widget)
@@ -122,18 +146,12 @@ namespace DoLah {
                 delete child;
             }
         }
-        loadTasks();
     }
 
-    void DoLahUI::createTaskBox(int index, AbstractTask *task) {
-        std::string name = task->getName();
-
-        // dynamic casting??
-        QString tasktitle = "<font size=4><b>" + QString::number(index) + ". " + QString::fromStdString(name);
-        QTextBrowser *tempTaskBox = new UITaskBox();
-        tempTaskBox->setObjectName(QStringLiteral("Task"));
-        tempTaskBox->setText(tasktitle);
-        tasksLayout->addWidget(tempTaskBox);
+    void DoLahUI::createTaskBox(QVBoxLayout *page, int index, AbstractTask *task) {
+        UITaskBox *tempTaskBox = new UITaskBox(index, task);
+        tempTaskBox->adjust();
+        page->addWidget(tempTaskBox);
     }
 
     // INPUT AREA
@@ -158,15 +176,63 @@ namespace DoLah {
     void DoLahUI::handleUserInput() {
         QString input = lineEdit->text();
         std::string inputline = input.toStdString();
-        try {
-            this->appClient.parseAndProcessCommand(inputline);
-            refreshTasks();
-            message->setText("Done. Enter next command:");
+        if (inputline.length() != 0) {
+            try {
+                if (inputline == "help") {
+                    goToHelp();
+                }
+                else {
+                    this->appClient.parseAndProcessCommand(inputline);
+                    refreshTasks();
+                    message->setText("Done. Enter next command:");
+                }
+            }
+            catch (std::exception e) {
+                QString text = QString(e.what());
+                message->setText(text);
+                refreshTasks();
+            }
         }
-        catch(std::exception e) {
-            QString text = QString(e.what());
-            message->setText(text);
-            
+        else {
+            message->setText("NOPE");
+            refreshTasks();
+        }
+    }
+
+    void DoLahUI::goToHome() {
+        tabOrganizer->setCurrentIndex(0);
+    }
+
+    void DoLahUI::goToDone() {
+        tabOrganizer->setCurrentIndex(1);
+    }
+
+    void DoLahUI::goToTags() {
+        tabOrganizer->setCurrentIndex(2);
+    }
+
+    void DoLahUI::goToHelp() {
+        helpWindow->exec();
+    }
+
+    void DoLahUI::changeTheme() {
+        if (themecounter == 0) {
+            QFile stylesheet("night_stylesheet.qss");
+            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                setStyleSheet(stylesheet.readAll());
+                stylesheet.close();
+                themecounter = 1;
+            }
+        }
+        else {
+            QFile stylesheet("stylesheet.qss");
+            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                setStyleSheet(stylesheet.readAll());
+                stylesheet.close();
+                themecounter = 0;
+            }
         }
     }
 

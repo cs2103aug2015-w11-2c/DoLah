@@ -29,13 +29,13 @@ namespace DoLah {
         static ClearTaskCommand parseClear(std::vector<std::string>);
         static UndoTaskCommand parseUndo(std::vector<std::string>);
     private:
-        static std::string ADD;
-        static std::string SEARCH;
-        static std::string DONE;
-        static std::string EDIT;
-        static std::string DELETE;
-        static std::string CLEAR;
-        static std::string UNDO;
+        static std::vector<std::string> ADD;
+        static std::vector<std::string> SEARCH;
+        static std::vector<std::string> DONE;
+        static std::vector<std::string> EDIT;
+        static std::vector<std::string> DELETE;
+        static std::vector<std::string> CLEAR;
+        static std::vector<std::string> UNDO;
 
         static std::string UNHANDLED_COMMAND_MESSAGE;
         static std::string UNKNOWN_COMMAND_MESSAGE;

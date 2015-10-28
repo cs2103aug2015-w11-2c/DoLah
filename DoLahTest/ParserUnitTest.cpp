@@ -17,21 +17,45 @@
 
 #include "CalendarBuilder.h"
 #include "TaskBuilder.h"
+#include "TimeManager.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace DoLahTest {
     TEST_CLASS(Parser) {
 private:
-    std::string year;
-    std::string month;
-    std::string day;
+    std::tm current;
+    int year;
+    int month;
+    int day;
+    int nextYear;
+    int nextMonth;
+    int nextDay;
+    int hour;
+    int min;
+    int remainderDays;
 public:
     std::string tmToString(std::tm time) {
-        return std::to_string(time.tm_mday) + "/"
+        return ""
+            + std::to_string(time.tm_hour) + ":"
+            + std::to_string(time.tm_min) + ":"
+            + std::to_string(time.tm_sec) + " "
+            + std::to_string(time.tm_mday) + "/"
             + std::to_string(time.tm_mon + 1) + "/"
             + std::to_string(time.tm_year + 1900);
     }
+
+    std::string strfyTime(int hour, int min, int sec, int day, int month, int year) {
+        return ""
+            + std::to_string(hour) + ":"
+            + std::to_string(min) + ":"
+            + std::to_string(sec) + " "
+            + std::to_string(day) + "/"
+            + std::to_string(month) + "/"
+            + std::to_string(year)
+            ;
+    }
+
     void parseTaskMethod(std::string input, std::vector<std::string> expected) {
         try {
             std::vector<std::string> inputArr = DoLah::ParserLibrary::explode(input, " ");
@@ -61,6 +85,18 @@ public:
         }
     }
 
+    int getRemainderDaysOfTheMonth() {
+        int count = 0;
+        std::tm day = current;
+        while (current.tm_mon == day.tm_mon) {
+            day.tm_mday += 1;
+            mktime(&day);
+            count += 1;
+        }
+
+        return count - 1;
+    }
+
     std::string UNHANDLED_COMMAND_MESSAGE = "Command not handled";
     std::string UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
     std::string TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
@@ -70,52 +106,35 @@ public:
     std::string UNEXPECTED_EXCEPTION = "This is an unexpected exception.";
 
     TEST_METHOD_INITIALIZE(Startup) {
-        time_t t = time(0);
-        std::tm current;
-        localtime_s(&current, &t);
-        year = std::to_string(current.tm_year + 1900);
-        month = std::to_string(current.tm_mon + 1);
-        day = std::to_string(current.tm_mday);
+        current = DoLah::TimeManager::getCurrentTime();
+
+        year = current.tm_year + 1900;
+        nextYear = current.tm_year + 1900 + 1;
+        month = current.tm_mon + 1;
+        nextMonth = current.tm_mon + 1 + 1;
+        day = current.tm_mday;
+        nextDay = current.tm_mday + 1;
+        hour = current.tm_hour;
+        min = current.tm_min;
+
+        remainderDays = getRemainderDaysOfTheMonth();
     }
 
     // From here, unit tests for time parsing
     // Test for corner cases.
-
-    TEST_METHOD(DateGivenDayAndMonth) {
-        std::string input = "2st January";
-        std::string expected = "2/1/" + year;
-        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
-        Assert::AreEqual(expected, actual);
-    }
-
-    TEST_METHOD(DateGivenDay) {
-        std::string input = "1st";
-        std::string expected = "1/" + month + "/" + year;
-        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
-        Assert::AreEqual(expected, actual);
-    }
-
-    TEST_METHOD(DateGivenMonthAndDay) {
-        std::string input = "January 2st";
-        std::string expected = "2/1/" + year;
-        std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
-        Assert::AreEqual(expected, actual);
-    }
-
     TEST_METHOD(DateInDifferentFormat1) {
         std::string input = "24.12.2015";
-        std::string expected = "24/12/2015";
+        std::string expected = strfyTime(23, 59, 0, 24, 12, 2015);
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
 
     TEST_METHOD(DateInDifferentFormat2) {
         std::string input = "24-12-2015";
-        std::string expected = "24/12/2015";
+        std::string expected = strfyTime(23, 59, 0, 24, 12, 2015);
         std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
         Assert::AreEqual(expected, actual);
     }
-
 
     // From here, integrated tests for task parsing
     // Does test for combination of multiple inputs
@@ -130,28 +149,28 @@ public:
     TEST_METHOD(DeadlineWithName) {
         parseTaskMethod((std::string)
             "task on 24.12.2015",
-            { "24/12/2015", "{  }", "task" }
+            { strfyTime(23, 59, 0, 24, 12, 2015), "{  }", "task" }
         );
     }
 
     TEST_METHOD(EventWithName) {
         parseTaskMethod((std::string)
             "task from 24.12.2015 to 25.12.2015",
-            { "24/12/2015 ~ 25/12/2015", "{  }", "task" }
+            { strfyTime(23, 59, 0, 24, 12, 2015) + " ~ " + strfyTime(23, 59, 0, 25, 12, 2015), "{  }", "task" }
         );
     }
 
     TEST_METHOD(EventWithNameAndTag) {
         parseTaskMethod((std::string)
             "#task from 24.12.2015 until 25.12.2015",
-            { "24/12/2015 ~ 25/12/2015", "{ task }", "#task" }
+            { strfyTime(23, 59, 0, 24, 12, 2015) + " ~ " + strfyTime(23, 59, 0, 25, 12, 2015), "{ task }", "#task" }
         );
     }
 
     TEST_METHOD(EventWithNameAndMultipleTags) {
         parseTaskMethod((std::string)
             "#cs2103 #task from 24.12.2015 until 25.12.2015",
-            { "24/12/2015 ~ 25/12/2015", "{ task, cs2103 }", "#cs2103 #task" }
+            { strfyTime(23, 59, 0, 24, 12, 2015) + " ~ " + strfyTime(23, 59, 0, 25, 12, 2015), "{ task, cs2103 }", "#cs2103 #task" }
         );
     }
 
@@ -208,16 +227,6 @@ public:
     // From here, integrated tests for command parsing
     // Will check boundary cases and exceptions.
     // The actual content of the commands are hidden as black box.
-
-    TEST_METHOD(ParseWrongCommandTest) {
-        std::string input = "eddard ";
-        try {
-            DoLah::CommandParser::parse(input);
-            Assert::IsTrue(false);
-        } catch (std::invalid_argument e) {
-            Assert::AreEqual(UNKNOWN_COMMAND_MESSAGE, (std::string) e.what());
-        }
-    }
 
     TEST_METHOD(ParseUnimplementedCommandTest) {
         std::string input = "sort ";
@@ -376,6 +385,130 @@ public:
             Assert::IsTrue(true);
         } catch (std::invalid_argument e) {
             Assert::AreEqual(UNEXPECTED_EXCEPTION, (std::string) e.what());
+        }
+    }
+
+    // From here, integrated test on special cases of 'toDateFormat' for relative time descriptions.
+    // The time will auto-filled, and the behaviour changes depending on the time of running.
+    // Test will be disabled in a certain condition where it cannot run properly.
+    TEST_METHOD(DateGivenDayAndMonth) {
+        if (month == 1 && day == 1) {
+            Assert::IsTrue(true);
+        } else { // test will not function in every new year
+            std::string input = "1st January";
+            std::string expected = strfyTime(23, 59, 0, 1, 1, nextYear);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(DateGivenDay) {
+        if (day == 1) {
+            Assert::IsTrue(true);
+        } else { // test will not function on the 1st of every month
+            std::string input = "1st";
+            std::string expected = strfyTime(23, 59, 0, 1, nextMonth, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(DateGivenMonthAndDay) {
+        if (month == 1 && day == 1) {
+            Assert::IsTrue(true);
+        } else { // test will not function in every new year
+            std::string input = "January 1st";
+            std::string expected = strfyTime(23, 59, 0, 1, 1, nextYear);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(Tomorrow) {
+        if (remainderDays < 1) {
+            Assert::IsTrue(true);
+        } else { // test will not function on the last day of the month
+            std::string input = "tomorrow";
+            std::string expected = strfyTime(23, 59, 0, nextDay, month, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(NextWeek) {
+        if (remainderDays < 7) {
+            Assert::IsTrue(true);
+        } else { // test will not function on the last week of the month
+            std::string input = "next week";
+            std::string expected = strfyTime(23, 59, 0, day + 7, month, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(In2Days) {
+        if (remainderDays < 2) {
+            Assert::IsTrue(true);
+        } else { // test will not function in the last 2 days of the month
+            std::string input = "2 days";
+            std::string expected = strfyTime(23, 59, 0, day + 2, month, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(In1Weeks) {
+        if (remainderDays < 7) {
+            Assert::IsTrue(true);
+        } else { // test will not function in the last 1 weeks of the month
+            std::string input = "1 week";
+            std::string expected = strfyTime(23, 59, 0, day + 7, month, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(At1159PM) {
+        if (hour == 23 && min == 59) {
+            Assert::IsTrue(true);
+        } else { // test will not function at 11:59:00
+            std::string input = "11:59PM";
+            std::string expected = strfyTime(23, 59, 0, day, month, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(At2359PM) {
+        if (hour == 23 && min == 59) {
+            Assert::IsTrue(true);
+        } else { // test will not function at 11:59:00
+            std::string input = "23:59PM";
+            std::string expected = strfyTime(23, 59, 0, day, month, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(At2359) {
+        if (hour == 23 && min == 59) {
+            Assert::IsTrue(true);
+        } else { // test will not function at 11:59:00
+            std::string input = "23:59";
+            std::string expected = strfyTime(23, 59, 0, day, month, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
+        }
+    }
+
+    TEST_METHOD(At1200PM) {
+        if (hour < 12) {
+            Assert::IsTrue(true);
+        } else { // test will not function in the morning
+            std::string input = "12PM";
+            std::string expected = strfyTime(12, 0, 0, nextDay, month, year);
+            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
+            Assert::AreEqual(expected, actual);
         }
     }
 

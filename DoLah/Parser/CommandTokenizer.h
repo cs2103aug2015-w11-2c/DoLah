@@ -18,9 +18,9 @@ namespace DoLah {
         ~CommandTokenizer();
 
         // Fixed format ~ command is always at the front
-        // It will prune the comand part from the input
         static std::string findCommand(std::vector<std::string>&);
-
+        // Prune the comand part from the input
+        static std::vector<std::string> pruneCommand(std::vector<std::string>);
     private:
         static std::vector<std::string> commandList;
     };
