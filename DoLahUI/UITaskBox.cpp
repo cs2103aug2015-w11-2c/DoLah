@@ -35,7 +35,8 @@ namespace DoLah {
         }
         else if (DeadlineTask *dTask = dynamic_cast<DeadlineTask*>(task)) {
             this->setObjectName(QStringLiteral("Deadline"));
-            char *deadline = asctime(&(dTask->getDueDate()));
+            char deadline[100];
+            strftime(deadline, 100, "%a %e %b %Y %I:%M %p", &(dTask->getDueDate()));
             if (task->isDone()) {
                 QString contents = tasktitle.append("</font><br><font size=3>" + QString(deadline));
                 this->setText(contents);
@@ -48,8 +49,10 @@ namespace DoLah {
         }
         else if (EventTask *eTask = dynamic_cast<EventTask*>(task)) {
             this->setObjectName(QStringLiteral("Event"));
-            char *start = asctime(&(eTask->getStartDate()));
-            char *end = asctime(&(eTask->getEndDate()));
+            char start[100];
+            char end[100];
+            strftime(start, 100, "%a %e %b %Y %I:%M %p", &(eTask->getStartDate()));
+            strftime(end, 100, "%a %e %b %Y %I:%M %p", &(eTask->getEndDate()));
             if (task->isDone()) {
                 QString contents = tasktitle.append("</font><br><font size=3>" + QString(start) + " to " + QString(end));
                 this->setText(contents);
