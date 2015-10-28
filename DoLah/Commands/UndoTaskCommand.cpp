@@ -11,9 +11,13 @@ namespace DoLah {
 	}
 
 	void UndoTaskCommand::execute() {
-        AbstractCommand * command = this->commHistory->undo();
+        AbstractCommand * command = this->calendar->getCmdHistory()->undo();
         command->revert();
 	}
+
+    void UndoTaskCommand::revert() {
+        //unimplemented
+    }
 
 	//private
 }

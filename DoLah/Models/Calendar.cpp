@@ -2,6 +2,7 @@
 
 namespace DoLah {
 	Calendar::Calendar() {
+        this->cmdHistory = DoLah::CommandHistory();
 	}
 	
 	Calendar::~Calendar() {
@@ -30,6 +31,11 @@ namespace DoLah {
         allTaskList.insert(allTaskList.end(), taskList.begin(), taskList.end());
         allTaskList.insert(allTaskList.end(), doneList.begin(), doneList.end());
         return allTaskList;
+    }
+
+    DoLah::CommandHistory* Calendar::getCmdHistory(){
+        DoLah::CommandHistory* cmdHistoryPointer = &(this->cmdHistory);
+        return cmdHistoryPointer;
     }
 
 	void Calendar::addTask(AbstractTask* task) {

@@ -9,6 +9,9 @@ namespace DoLah {
 
     DoLahClient::DoLahClient() {
         this->calendar = DoLah::CalendarStorage::load(DEFAULT_CALENDAR_FILENAME);
+        this->commandInvoker = CommandInvoker();
+        CommandHistory* cmdHistory = (this->calendar.getCmdHistory());
+        this->commandInvoker.setCmdHistory(cmdHistory);
     }
 
     DoLahClient::~DoLahClient() {

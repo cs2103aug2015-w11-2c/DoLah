@@ -110,8 +110,8 @@ namespace DoLah {
 		~UndoTaskCommand();
 
 		void execute();
+        void revert();
     private:
-        DoLah::CommandHistory* commHistory;
 	};
 
 	class RedoTaskCommand : public AbstractCommand {
@@ -120,8 +120,8 @@ namespace DoLah {
 		~RedoTaskCommand();
 
 		void execute();
+        void revert();
     private:
-        DoLah::CommandHistory* commHistory;
 	};
 
 }
