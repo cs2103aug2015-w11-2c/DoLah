@@ -2,10 +2,10 @@
 #define UITASKBOX_H
 
 #include "DoLahClient.h"
-#include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QLabel>
 
 namespace DoLah {
-    class UITaskBox : public QTextBrowser
+    class UITaskBox : public QLabel
     {
         Q_OBJECT
 
@@ -13,7 +13,6 @@ namespace DoLah {
         UITaskBox(int, AbstractTask*);
         ~UITaskBox();
         QSize sizeHint() const;
-        void adjust();
 
     private:
         void dynamicCast(int, AbstractTask*);

@@ -150,8 +150,7 @@ namespace DoLah {
 
     void DoLahUI::createTaskBox(QVBoxLayout *page, int index, AbstractTask *task) {
         UITaskBox *tempTaskBox = new UITaskBox(index, task);
-        tempTaskBox->adjust();
-        page->addWidget(tempTaskBox);
+        page->addWidget(tempTaskBox, 0, 0);
     }
 
     // INPUT AREA
@@ -159,6 +158,7 @@ namespace DoLah {
     void DoLahUI::initInputArea() {
         message = new QLabel(centralWidget);
         message->setText("Enter a command:");
+        message->setObjectName(QStringLiteral("message"));
         message->setGeometry(QRect(7, 520, 338, 20));
 
         lineEdit = new QLineEdit(centralWidget);
@@ -180,6 +180,12 @@ namespace DoLah {
             try {
                 if (inputline == "help") {
                     goToHelp();
+                }
+                else if (inputline == "settings") {
+                    changeTheme();
+                }
+                else if (inputline == "exit") {
+                    menuExit();
                 }
                 else {
                     this->appClient.parseAndProcessCommand(inputline);
