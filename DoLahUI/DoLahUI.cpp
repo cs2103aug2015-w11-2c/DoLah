@@ -32,6 +32,7 @@ namespace DoLah {
         initDisplayArea();
         initInputArea();
         helpWindow = new HelpWindow();
+        settingsWindow = new SettingsWindow(this);
 
         this->setCentralWidget(centralWidget);
 
@@ -95,7 +96,7 @@ namespace DoLah {
         QPixmap settingsIcon("settings.png");
         settingsButton->setPixmap(settingsIcon);
         menuLayout->addWidget(settingsButton);
-        QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(changeTheme()));
+        QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(goToSettings()));
 
         exitButton = new MenuLabel;
         exitButton->setObjectName(QStringLiteral("exitButton"));
@@ -182,7 +183,7 @@ namespace DoLah {
                     goToHelp();
                 }
                 else if (inputline == "settings") {
-                    changeTheme();
+                    goToSettings();
                 }
                 else if (inputline == "exit") {
                     menuExit();
@@ -221,25 +222,8 @@ namespace DoLah {
         helpWindow->exec();
     }
 
-    void DoLahUI::changeTheme() {
-        if (themecounter == 0) {
-            QFile stylesheet("night_stylesheet.qss");
-            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-                setStyleSheet(stylesheet.readAll());
-                stylesheet.close();
-                themecounter = 1;
-            }
-        }
-        else {
-            QFile stylesheet("stylesheet.qss");
-            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-                setStyleSheet(stylesheet.readAll());
-                stylesheet.close();
-                themecounter = 0;
-            }
-        }
+    void DoLahUI::goToSettings() {
+        settingsWindow->exec();
     }
 
     void DoLahUI::menuExit() {

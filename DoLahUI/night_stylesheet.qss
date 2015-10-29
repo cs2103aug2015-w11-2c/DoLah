@@ -1,7 +1,11 @@
 QMainWindow
 {
-	/*background-image: url("night_bg");*/
 	background-image: url("night_bg");
+}
+
+QWidget
+{
+	background-color: transparent;
 }
 
 QScrollArea > QWidget > QWidget
@@ -9,30 +13,48 @@ QScrollArea > QWidget > QWidget
 	background-color: #a08d8f;
 } 
 
-QTextBrowser
+QScrollBar:vertical
 {
-	padding-left: 2px;
+	background: transparent;
+	width: 10px;
 }
 
-QTextBrowser#Floating
+QScrollBar::handle:vertical
+{
+	background: gray;
+	border-radius: 20px;
+}
+
+QLabel
+{ 
+	background-color: #fdf1c8; 
+	color: #4c3e3e; 
+	padding-left: 1px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+
+}
+
+QLabel#Floating
 {
 	background-color: #fcebbf;
 	color: #4c3e3e; 
 }
 
-QTextBrowser#Deadline
+QLabel#Deadline
 {
 	background-color: #fcebbf;
 	color: #4c3e3e; 
 }
 
-QTextBrowser#Event
+QLabel#Event
 {
 	background-color: #fcebbf;
 	color: #4c3e3e; 
 }
 
-QTextBrowser#Done
+QLabel#Done
 {
 	background-color: #BBBBBB;
 	color: #696969;
@@ -45,68 +67,80 @@ QLineEdit
 	background-color: white; 
 }
 
-QLabel
+QLabel#message
 { 
-	font-family: times;
 	color: white;
+	padding: 0px;
 }
 
 QLabel#exitButton
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#exitButton:hover
 {
 	background-color: rgba(255, 255, 255, 0.2);
+	padding: 0px;
 }
 
 QLabel#settings
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#settings:hover
 {
 	background-color: rgba(255, 255, 255, 0.2);
+	padding: 0px;
 }
 
 QLabel#done
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#done:hover
 {
 	background-color: rgba(255, 255, 255, 0.2);
+	padding: 0px;
 }
 
 QLabel#home
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#home:hover
 {
 	background-color: rgba(255, 255, 255, 0.2);
+	padding: 0px;
 }
 
 QLabel#tags
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#tags:hover
 {
 	background-color: rgba(255, 255, 255, 0.2);
+	padding: 0px;
 }
 
 QLabel#help
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#help:hover
 {
 	background-color: rgba(255, 255, 255, 0.2);
+	padding: 0px;
 }

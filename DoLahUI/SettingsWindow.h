@@ -1,6 +1,9 @@
 #pragma once
 
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QComboBox>
+#include <QMainWindow>
+#include <QFile>
 
 namespace DoLah {
     class SettingsWindow :
@@ -9,7 +12,15 @@ namespace DoLah {
         Q_OBJECT
 
     public:
-        SettingsWindow();
+        SettingsWindow(QMainWindow*);
         ~SettingsWindow();
+
+    private slots:
+        void changeTheme(int);
+
+    private:
+        QComboBox *themeSelect;
+        QMainWindow *window;
+        void themeOptions();
     };
 }

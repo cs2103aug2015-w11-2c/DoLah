@@ -6,6 +6,7 @@
 #include "MenuLabel.h"
 #include "DisplayArea.h"
 #include "HelpWindow.h"
+#include "SettingsWindow.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -58,6 +59,7 @@ namespace DoLah {
         QLineEdit *lineEdit;
 
         HelpWindow *helpWindow;
+        SettingsWindow *settingsWindow;
 
     protected:
         void mousePressEvent(QMouseEvent*);
@@ -66,11 +68,11 @@ namespace DoLah {
     private slots:
         void handleUserInput();
         void menuExit();
-        void changeTheme();
         void goToHome();
         void goToDone();
         void goToTags();
         void goToHelp();
+        void goToSettings();
 
     private:
         void setupUI();
@@ -85,7 +87,6 @@ namespace DoLah {
 
         DoLah::DoLahClient appClient;
         QPoint dragPosition;
-        int themecounter = 0;
     };
 }
 #endif // DOLAHUI_H
