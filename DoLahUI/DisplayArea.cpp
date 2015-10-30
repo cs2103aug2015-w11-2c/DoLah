@@ -10,7 +10,7 @@ namespace DoLah {
         this->setGeometry(QRect(5, 70, 340, 450));
         this->setFrameStyle(QFrame::NoFrame);
         this->setWidgetResizable(true);
-
+        //this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         initViewPort();
     }
 
@@ -30,17 +30,17 @@ namespace DoLah {
         doneLayout->setSpacing(3);
         doneLayout->setContentsMargins(0, 0, 0, 0);
 
-        tagsPage = new QWidget;
-        tagsLayout = new QVBoxLayout(tagsPage);
-        tagsLayout->setAlignment(Qt::AlignTop);
-        tagsLayout->setSpacing(3);
-        tagsLayout->setContentsMargins(0, 0, 0, 0);
+        searchPage = new QWidget;
+        searchLayout = new QVBoxLayout(searchPage);
+        searchLayout->setAlignment(Qt::AlignTop);
+        searchLayout->setSpacing(3);
+        searchLayout->setContentsMargins(0, 0, 0, 0);
 
         tabbedView = new QStackedWidget(this);
         tabbedView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         tabbedView->addWidget(homePage);
         tabbedView->addWidget(donePage);
-        tabbedView->addWidget(tagsPage);
+        tabbedView->addWidget(searchPage);
 
         this->setWidget(tabbedView);
     }

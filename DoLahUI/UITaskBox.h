@@ -3,6 +3,7 @@
 
 #include "DoLahClient.h"
 #include <QtWidgets/QLabel>
+#include <QMouseEvent>
 
 namespace DoLah {
     class UITaskBox : public QLabel
@@ -13,6 +14,10 @@ namespace DoLah {
         UITaskBox(int, AbstractTask*);
         ~UITaskBox();
         QSize sizeHint() const;
+
+    protected:
+        /*void mouseDoubleClickEvent(QMouseEvent*);
+        void mousePressEvent(QMouseEvent*);*/
 
     private:
         void dynamicCast(int, AbstractTask*);

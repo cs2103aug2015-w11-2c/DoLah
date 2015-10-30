@@ -44,7 +44,7 @@ namespace DoLah {
         QHBoxLayout *menuLayout;
         MenuLabel *homeButton;
         MenuLabel *doneButton;
-        MenuLabel *tagsButton;
+        MenuLabel *searchButton;
         MenuLabel *helpButton;
         MenuLabel *settingsButton;
         MenuLabel *exitButton;
@@ -53,7 +53,7 @@ namespace DoLah {
         QStackedWidget *tabOrganizer;
         QVBoxLayout *home;
         QVBoxLayout *done;
-        QVBoxLayout *tags;
+        QVBoxLayout *search;
 
         QLabel *message;
         QLineEdit *lineEdit;
@@ -64,13 +64,14 @@ namespace DoLah {
     protected:
         void mousePressEvent(QMouseEvent*);
         void mouseMoveEvent(QMouseEvent*);
+        void keyPressEvent(QKeyEvent*);
 
     private slots:
         void handleUserInput();
         void menuExit();
         void goToHome();
         void goToDone();
-        void goToTags();
+        void goToSearch();
         void goToHelp();
         void goToSettings();
 

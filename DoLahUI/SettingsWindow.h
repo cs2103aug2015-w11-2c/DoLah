@@ -19,8 +19,8 @@ namespace DoLah {
         void changeTheme(int);
 
     private:
-        QComboBox *themeSelect;
-        QMainWindow *window;
+        QComboBox *themeSelection;
+        QMainWindow *mainWin;
         void themeOptions();
     };
 }

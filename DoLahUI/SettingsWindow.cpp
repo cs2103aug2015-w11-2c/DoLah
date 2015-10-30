@@ -3,7 +3,7 @@
 
 namespace DoLah {
     SettingsWindow::SettingsWindow(QMainWindow *window) {
-        this->window = window;
+        this->mainWin = window;
         this->resize(400, 350);
         this->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
         themeOptions();
@@ -14,11 +14,11 @@ namespace DoLah {
     }
 
     void SettingsWindow::themeOptions() {
-        themeSelect = new QComboBox(this);
-        themeSelect->addItem("Default");
-        themeSelect->addItem("Windows 10");
-        themeSelect->setGeometry(QRect(50, 100, 300, 20));
-        connect(themeSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(changeTheme(int)));
+        themeSelection = new QComboBox(this);
+        themeSelection->addItem("Default");
+        themeSelection->addItem("Windows 10");
+        themeSelection->setGeometry(QRect(50, 100, 300, 20));
+        connect(themeSelection, SIGNAL(currentIndexChanged(int)), this, SLOT(changeTheme(int)));
     }
 
     void SettingsWindow::changeTheme(int index) {
@@ -26,19 +26,19 @@ namespace DoLah {
             QFile stylesheet("stylesheet.qss");
             if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
             {
-                window->setStyleSheet(stylesheet.readAll());
+                mainWin->setStyleSheet(stylesheet.readAll());
                 stylesheet.close();
             }
-            themeSelect->setCurrentIndex(0);
+            themeSelection->setCurrentIndex(0);
         }
         else if (index == 1) {
             QFile stylesheet("night_stylesheet.qss");
             if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
             {
-                window->setStyleSheet(stylesheet.readAll());
+                mainWin->setStyleSheet(stylesheet.readAll());
                 stylesheet.close();
             }
-            themeSelect->setCurrentIndex(1);
+            themeSelection->setCurrentIndex(1);
         }
     }
 }
