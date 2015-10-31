@@ -106,7 +106,7 @@ namespace DoLah {
 		return results;
 	}
 
-    void Calendar::sortTasks(std::vector<AbstractTask*> unsortedTaskList) {
+    void Calendar::sortTasks(std::vector<AbstractTask*> &unsortedTaskList) {
         std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), taskCompare);
     }
 
