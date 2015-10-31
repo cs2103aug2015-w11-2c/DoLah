@@ -126,7 +126,10 @@ namespace DoLah {
         for (int j = 0; j < doneList.size(); ++j) {
             createTaskBox(done, i+j, doneList[j]);
         }
-
+        //std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
+        //for (int j = 0; j < searchedList.size(); ++j) {
+        //    createTaskBox(searched, i + j, searchedList[j]);
+        //}
     }
 
     void DoLahUI::refreshTasks() {
