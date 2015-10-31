@@ -70,6 +70,15 @@ namespace DoLah {
         else if (event->key() == Qt::Key_3 & event->modifiers() == Qt::ControlModifier) {
             goToSearch();
         }
+        else if (event->key() == Qt::Key_PageUp) {
+            // scroll up
+        }
+        else if (event->key() == Qt::Key_PageDown) {
+            // scroll down
+        }
+        else {
+            QMainWindow::keyPressEvent(event);
+        }
     }
 
     //////////////////////////////////////////
