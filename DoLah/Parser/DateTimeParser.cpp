@@ -1,5 +1,4 @@
 #include "DateTimeParser.h"
-#include <iostream>
 
 namespace DoLah {
     int DateTimeParser::REJECT = -1;
@@ -283,8 +282,6 @@ namespace DoLah {
 
     std::tm DateTimeParser::toDateFormat(std::vector<std::string> strArr, std::tm lowerBound) {
         std::tm output = std::tm();
-
-        std::cout << lowerBound.tm_mday << std::endl;
 
         bool done = false;
         bool hasTime = false;
