@@ -181,7 +181,7 @@ namespace DoLah {
         
         element = strArr.at(index++);
         int date = getDate(element);
-        if (strArr.size() == 1) { // singleton format
+        if (size == 1) { // singleton format
             if (ParserLibrary::inStringArray(todayPattern, element)) {
                 dayDiff = 0;
             } else if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
@@ -191,38 +191,42 @@ namespace DoLah {
             } else {
                 throw std::invalid_argument("");
             }
-        } else if (ParserLibrary::inStringArray(nextPattern, element)) { // next pattern
-            element = strArr.at(index++);
-            int date = getDate(element);
-            if (date != REJECT) {
-                dayDiff = getDateModifier(date, true);
-            } else {
+        } else if (size == 2) {
+            if (ParserLibrary::inStringArray(nextPattern, element)) { // next pattern
+                element = strArr.at(index++);
+                int date = getDate(element);
+                if (date != REJECT) {
+                    dayDiff = getDateModifier(date, true);
+                } else {
+                    if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
+                        dayDiff = 1;
+                    } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
+                        weekDiff = 1;
+                    } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
+                        monthDiff = 1; // month length is not fixed!!
+                    } else {
+                        throw std::invalid_argument("");
+                    }
+                }
+            } else if (ParserLibrary::isDecimal(element) ||
+                ParserLibrary::inStringArray(articlePattern, element)) { // 10 days, a week, etc
+                int n = 0;
+                if (ParserLibrary::inStringArray(articlePattern, element)) {
+                    n = 1;
+                } else {
+                    n = stoi(element);
+                }
+
+                element = strArr.at(index++);
                 if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
-                    dayDiff = 1;
+                    dayDiff = n;
                 } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
-                    weekDiff = 1;
+                    weekDiff = n;
                 } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
-                    monthDiff = 1; // month length is not fixed!!
+                    monthDiff = n; // month length is not fixed!!
                 } else {
                     throw std::invalid_argument("");
                 }
-            }
-        } else if (ParserLibrary::isDecimal(element) ||
-            ParserLibrary::inStringArray(articlePattern, element)) { // 10 days, a week, etc
-            int n = 0;
-            if (ParserLibrary::inStringArray(articlePattern, element)) {
-                n = 1;
-            } else {
-                n = stoi(element);
-            }
-
-            element = strArr.at(index++);
-            if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
-                dayDiff = n;
-            } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
-                weekDiff = n;
-            } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
-                monthDiff = n; // month length is not fixed!!
             } else {
                 throw std::invalid_argument("");
             }

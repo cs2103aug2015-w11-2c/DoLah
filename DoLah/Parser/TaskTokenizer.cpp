@@ -105,9 +105,12 @@ namespace DoLah {
                     std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
                     
                     output = findEvent(startDateArr, endDateArr);
+                    break;
                 }
             }
-        } else {
+        }
+
+        if (output.size() == 0) {
             throw std::invalid_argument("");
         }
 
