@@ -43,13 +43,17 @@ namespace DoLah {
             else {
                 QString contents = tasktitle.append("</font><br><font size=3><font color=#2fb6a7>" + QString(deadline));
                 this->setText(contents);
-            }
-            
+            }   
         }
         else if (EventTask *eTask = dynamic_cast<EventTask*>(task)) {
             this->setObjectName(QStringLiteral("Event"));
-            char *start = asctime(&(eTask->getStartDate()));
-            char *end = asctime(&(eTask->getEndDate()));
+            
+            const int bufferSize = 32;
+            char start[bufferSize];
+            asctime_s(start, &(eTask->getStartDate()));
+            char end[bufferSize];
+            asctime_s(end, &(eTask->getEndDate()));
+
             if (task->isDone()) {
                 QString contents = tasktitle.append("</font><br><font size=3>" + QString(start) + " to " + QString(end));
                 this->setText(contents);
