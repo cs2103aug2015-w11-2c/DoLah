@@ -4,10 +4,7 @@
 namespace DoLah {
     std::vector<std::string> TaskTokenizer::EVENT_INDICATOR = { "in", "on", "from", "between" };
     std::vector<std::string> TaskTokenizer::DEADLINE_INDICATOR = { "in", "on", "by", "due", "at" };
-    std::vector<std::vector<std::string>> TaskTokenizer::EVENT_SEPARATOR = {
-        { "to", "~", "until" },
-        { "to", "~", "and" }
-    };
+    std::vector<std::string> TaskTokenizer::EVENT_SEPARATOR = { "to", "~", "until" };
     std::string TaskTokenizer::tag = "#";
     int TaskTokenizer::defaultTMYear = 0; // represents 1900
 
@@ -93,7 +90,7 @@ namespace DoLah {
             size_t indicatorIndex = ParserLibrary::getIndexInStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(index)));
             std::vector<std::string> subVec(lineArr.begin() + index + 1, lineArr.end());
             for (size_t j = 0; j < subVec.size(); j++) {
-                if (ParserLibrary::inStringArray(EVENT_SEPARATOR.at(indicatorIndex), ParserLibrary::tolowercase(subVec.at(j)))) {
+                if (ParserLibrary::inStringArray(EVENT_SEPARATOR, ParserLibrary::tolowercase(subVec.at(j)))) {
                     std::vector<std::string> startDateArr(subVec.begin(), subVec.begin() + j);
                     std::vector<std::string> endDateArr(subVec.begin() + j + 1, subVec.end());
 

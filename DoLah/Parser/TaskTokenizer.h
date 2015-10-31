@@ -25,7 +25,7 @@ namespace DoLah {
     private:
         static std::vector<std::string> DEADLINE_INDICATOR;
         static std::vector<std::string> EVENT_INDICATOR;
-        static std::vector<std::vector<std::string>> EVENT_SEPARATOR;
+        static std::vector<std::string> EVENT_SEPARATOR;
         static std::string SCHEDULE_INDICATOR;
         static std::vector<std::string> SCHEDULE_SEPARATOR;
         static std::string tag;
