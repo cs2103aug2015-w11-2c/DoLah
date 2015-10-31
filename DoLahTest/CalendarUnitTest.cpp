@@ -131,7 +131,8 @@ namespace DoLahTest
             DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
 
             //Act
-            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("Floating");
+            testCal.search("Floating");
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.getSearchedTaskList();
 
             //Assert
             Assert::AreEqual((size_t)5, resultVector.size());
@@ -142,7 +143,8 @@ namespace DoLahTest
             DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
 
             //Act
-            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("The quick brown fox");
+            testCal.search("The quick brown fox");
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.getSearchedTaskList();
 
             //Assert
             Assert::AreEqual((size_t)0, resultVector.size());
