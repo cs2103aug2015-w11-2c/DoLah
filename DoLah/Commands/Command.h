@@ -77,10 +77,6 @@ namespace DoLah {
 		SearchTaskCommand(std::string, std::vector<AbstractTask*> *);
 		~SearchTaskCommand();
 
-        std::vector<AbstractTask*> getResultVector();
-
-        void setResultVector(std::vector<AbstractTask*>*);
-
 		void execute();
 
 	private:

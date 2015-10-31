@@ -19,16 +19,8 @@ namespace DoLah {
 
 	}
 
-    std::vector<AbstractTask*> SearchTaskCommand::getResultVector() {
-        return **resultVector;
-    }
-
-    void SearchTaskCommand::setResultVector(std::vector<AbstractTask*> * resVector) {
-        resultVector = &resVector;
-    }
-
 	void SearchTaskCommand::execute() {
-		**resultVector = (this->calendar->search(query));
+		this->calendar->search(query);
 	}
 
 	//private

@@ -24,6 +24,10 @@ namespace DoLah {
         return this->doneList;
     }
 
+    std::vector<AbstractTask*> Calendar::getSearchedTaskList() const {
+        return this->searchedList;
+    }
+
     std::vector<AbstractTask*> Calendar::getAllTaskList() const {
         std::vector<AbstractTask*> allTaskList;
         allTaskList.reserve(taskList.size() + doneList.size());
@@ -90,7 +94,7 @@ namespace DoLah {
         this->doneList.clear();
     }
 	
-	std::vector<AbstractTask*> Calendar::search(std::string query) {
+	void Calendar::search(std::string query) {
 		std::vector<AbstractTask*> results;
 	
 		for (int i = 0; i < taskList.size(); i++) {
@@ -103,7 +107,7 @@ namespace DoLah {
                 results.push_back(doneList.at(i));
             }
         }
-		return results;
+		this->searchedList = results;
 	}
 
     void Calendar::sortTasks(std::vector<AbstractTask*> &unsortedTaskList) {
