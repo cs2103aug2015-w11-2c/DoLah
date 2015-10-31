@@ -42,8 +42,10 @@ namespace DoLah {
 
         if (task->isDone()) {
             doneList.push_back(task);
+            sortTasks(doneList);
         } else {
 		    taskList.push_back(task);
+            sortTasks(taskList);
         }
 	}
 
@@ -79,6 +81,8 @@ namespace DoLah {
 	void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
         taskList.at(index) = task;
+
+        sortTasks(taskList);
 	}
 
     void Calendar::clearTasks() {
@@ -101,4 +105,56 @@ namespace DoLah {
         }
 		return results;
 	}
+
+    void Calendar::sortTasks(std::vector<AbstractTask*> unsortedTaskList) {
+        std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), taskCompare);
+    }
+
+    bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
+        std::vector<std::tm> firstDates = getDates(first);
+        std::vector<std::tm> secondDates = getDates(second);
+
+        if (firstDates.size() != secondDates.size()) {
+            return firstDates.size() > secondDates.size();
+        } else if (firstDates.size() == 1) {
+            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
+            if (diff != 0) {
+                return diff > 0;
+            }
+            return first->getDescription().compare(second->getDescription()) > 0;
+        } else if (firstDates.size() == 2) {
+            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
+            if (diff != 0) {
+                return diff > 0;
+            }
+            diff = TimeManager::compareTime(firstDates[1], secondDates[1]);
+            if (diff != 0) {
+                return diff > 0;
+            }
+            return first->getDescription().compare(second->getDescription()) > 0;
+        }
+
+        return false;
+    }
+
+    std::vector<std::tm> Calendar::getDates(AbstractTask *it) {
+        std::vector<std::tm> dates;
+
+        DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(it);
+        DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(it);
+        DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(it);
+
+        if (eventTask != NULL) {
+            dates.push_back(eventTask->getEndDate());
+            dates.push_back(eventTask->getStartDate());
+        }
+
+        if (deadlineTask != NULL) {
+            dates.push_back(deadlineTask->getDueDate());
+        }
+
+        return dates;
+    }
+
+
 }
