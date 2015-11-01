@@ -113,8 +113,9 @@ namespace DoLah {
 		~UndoTaskCommand();
 
 		void execute();
-        void revert();
+        void revert(); // DO NOT CALL
     private:
+        static std::string ILLEGAL_FUNCTION_CALL_MESSAGE;
 	};
 
 	class RedoTaskCommand : public AbstractCommand {
@@ -123,8 +124,9 @@ namespace DoLah {
 		~RedoTaskCommand();
 
 		void execute();
-        void revert();
+        void revert(); // DO NOT CALL
     private:
+        static std::string ILLEGAL_FUNCTION_CALL_MESSAGE;
 	};
 
 }

@@ -1,6 +1,9 @@
 #include "Command.h"
 
 namespace DoLah {
+    // data
+    std::string UndoTaskCommand::ILLEGAL_FUNCTION_CALL_MESSAGE = "A function was called on UndoTaskCommand illegally!";
+    
 	//public
 	UndoTaskCommand::UndoTaskCommand() {
 
@@ -16,8 +19,8 @@ namespace DoLah {
 	}
 
     void UndoTaskCommand::revert() {
-        //we actually want to just skip past this
-        this->execute();
+        //this should never be called
+        throw std::logic_error(ILLEGAL_FUNCTION_CALL_MESSAGE);
     }
 
 	//private
