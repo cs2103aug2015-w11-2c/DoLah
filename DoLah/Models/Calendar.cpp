@@ -119,7 +119,23 @@ namespace DoLah {
         std::vector<std::tm> secondDates = getDates(second);
 
         if (firstDates.size() != secondDates.size()) {
-            return firstDates.size() > secondDates.size();
+            if (firstDates.size() == 0) {
+                return false;
+            }
+            if (secondDates.size() == 0) {
+                return true;
+            }
+
+            int diff = 0;
+            if (firstDates.size() > secondDates.size()) {
+                diff = TimeManager::compareTime(firstDates[1], secondDates[0]);
+            } else if (firstDates.size() < secondDates.size()) {
+                diff = TimeManager::compareTime(firstDates[0], secondDates[1]);
+            }
+            if (diff != 0) {
+                return diff > 0;
+            }
+            return first->getDescription().compare(second->getDescription()) > 0;
         } else if (firstDates.size() == 1) {
             int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
             if (diff != 0) {
@@ -138,7 +154,7 @@ namespace DoLah {
             return first->getDescription().compare(second->getDescription()) > 0;
         }
 
-        return false;
+        return true;
     }
 
     std::vector<std::tm> Calendar::getDates(AbstractTask *it) {
@@ -149,8 +165,8 @@ namespace DoLah {
         DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(it);
 
         if (eventTask != NULL) {
-            dates.push_back(eventTask->getEndDate());
             dates.push_back(eventTask->getStartDate());
+            dates.push_back(eventTask->getEndDate());
         }
 
         if (deadlineTask != NULL) {
