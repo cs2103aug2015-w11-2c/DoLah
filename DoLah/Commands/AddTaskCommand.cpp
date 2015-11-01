@@ -20,8 +20,7 @@ namespace DoLah {
 	}
 
     void AddTaskCommand::revert() {
-        int targetId = this->task->getId();
-        calendar->deleteTask(targetId);
+        CalendarInverter::invertAdd(task, calendar);
     }
 
 	//protected

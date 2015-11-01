@@ -6,7 +6,6 @@ namespace DoLah {
 
     }
 
-
     CommandInvoker::~CommandInvoker() {
 
     }

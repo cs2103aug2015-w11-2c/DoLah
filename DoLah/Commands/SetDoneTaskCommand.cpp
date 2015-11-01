@@ -10,11 +10,12 @@ namespace DoLah {
     }
     
     void SetDoneTaskCommand::execute() {
+        this->oldTask = this->calendar->getTask(taskIndex);
         this->calendar->setDoneTask(this->taskIndex);
     };
 
     void SetDoneTaskCommand::revert() {
-        this->calendar->setDoneTask(this->calendar->getDoneList().size()-1);
+        CalendarInverter::invertDone(oldTask, calendar);
     }
 }
 

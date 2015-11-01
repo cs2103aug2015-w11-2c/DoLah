@@ -16,7 +16,8 @@ namespace DoLah {
 	}
 
     void UndoTaskCommand::revert() {
-        //unimplemented
+        //we actually want to just skip past this
+        this->execute();
     }
 
 	//private

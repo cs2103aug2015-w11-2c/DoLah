@@ -16,9 +16,7 @@ namespace DoLah {
 	}
 
     void ClearTaskCommand::revert() {
-        for (int i = 0; i < this->oldTaskList.size(); i++) {
-            this->calendar->addTask(this->oldTaskList.at(i));
-        }
+        CalendarInverter::invertClear(oldTaskList, calendar);
     }
 
 	//private

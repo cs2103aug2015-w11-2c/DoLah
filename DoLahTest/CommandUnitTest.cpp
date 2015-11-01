@@ -88,5 +88,9 @@ namespace DoLahTest
             //Assert
             Assert::AreEqual((size_t) 5, resultVector->size());
         }
+
+        TEST_METHOD(UndoAddCommand) {
+
+        }
     };
 }

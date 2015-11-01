@@ -53,11 +53,28 @@ namespace DoLah {
         }
 	}
 
-    void Calendar::deleteTask(int index) {
+    void Calendar::addTask(AbstractTask* task, int index) {
+        task->setId(index);
+
+        if (task->isDone()) {
+            doneList.insert(doneList.begin()+index, task);
+        }
+        else {
+            taskList.insert(taskList.begin()+index, task);
+        }
+    }
+
+    void Calendar::deleteTask(int index, bool status) {
         if (index >= taskList.size()) {
             throw std::out_of_range(TASK_INDEX_OUT_OF_RANGE_MESSAGE);
         }
-        taskList.erase(taskList.begin() + index);
+
+        if (status) {
+            taskList.erase(taskList.begin() + index);
+        }
+        else {
+            taskList.erase(doneList.begin() + index);
+        }
     }
 
     void Calendar::setDoneTask(int taskIndex, bool status) {

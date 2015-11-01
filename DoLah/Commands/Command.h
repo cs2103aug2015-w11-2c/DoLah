@@ -5,6 +5,7 @@
 #include "Models/Task.h"
 #include "Models/Calendar.h"
 #include "Models/CommandHistory.h"
+#include "Models/CalendarInverter.h"
 
 namespace DoLah {
 
@@ -57,6 +58,7 @@ namespace DoLah {
     
     private:
         int taskIndex;
+        DoLah::AbstractTask* oldTask;
     };
 
 	class DeleteTaskCommand : public AbstractCommand {
@@ -83,6 +85,7 @@ namespace DoLah {
 
     private:
         std::vector<AbstractTask*> oldTaskList;
+        std::vector<AbstractTask*> oldDoneList;
 	};
 
 	class SearchTaskCommand : public AbstractCommand {

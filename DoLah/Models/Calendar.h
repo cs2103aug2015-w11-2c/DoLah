@@ -17,7 +17,8 @@ namespace DoLah {
         std::vector<AbstractTask*> Calendar::getAllTaskList() const;
         CommandHistory* Calendar::getCmdHistory();
 		void addTask(AbstractTask*);
-		void deleteTask(int);
+        void addTask(AbstractTask*, int);
+        void deleteTask(int, bool=true);
         void setDoneTask(int, bool=true);
 		void updateTask(int, AbstractTask*);
 		void clearTasks();

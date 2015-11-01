@@ -32,7 +32,7 @@ namespace DoLah {
 	}
 
     void SearchTaskCommand::revert() {
-        **resultVector = (this->calendar->search(query));
+        CalendarInverter::invertSearch(resultVector, query, calendar);
     }
 
 	//private
