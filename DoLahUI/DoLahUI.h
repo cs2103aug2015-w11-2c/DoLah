@@ -5,6 +5,7 @@
 #include "UITaskBox.h"
 #include "MenuLabel.h"
 #include "DisplayArea.h"
+#include "InputBox.h"
 #include "HelpWindow.h"
 #include "SettingsWindow.h"
 
@@ -19,12 +20,9 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QSizePolicy>
-#include <QtWidgets/QStackedWidget>
 #include <QFile>
 #include <QMouseEvent>
 
@@ -56,7 +54,7 @@ namespace DoLah {
         QVBoxLayout *search;
 
         QLabel *message;
-        QLineEdit *lineEdit;
+        InputBox *lineEdit;
 
         HelpWindow *helpWindow;
         SettingsWindow *settingsWindow;
