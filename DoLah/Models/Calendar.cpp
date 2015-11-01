@@ -41,14 +41,9 @@ namespace DoLah {
         DoLah::CommandHistory* cmdHistoryPointer = &(this->cmdHistory);
         return cmdHistoryPointer;
     }
-
-	int Calendar::addTask(AbstractTask* task) {
+    
+	void Calendar::addTask(AbstractTask* task) {
         int insertionIndex = 0;
-		if (taskList.empty()) {
-			task->setId(1);
-		} else {
-			task->setId(taskList.back()->getId() + 1);
-		}
 
         if (task->isDone()) {
             while (insertionIndex < doneList.size() && taskCompare(doneList[insertionIndex], task)) {
@@ -56,18 +51,18 @@ namespace DoLah {
             }
             doneList.insert(doneList.begin() + insertionIndex, task);
 
-            return insertionIndex;
+            task->setId(insertionIndex);
         } else {
             while (insertionIndex < taskList.size() && taskCompare(taskList[insertionIndex], task)) {
                 insertionIndex++;
             }
             taskList.insert(taskList.begin() + insertionIndex, task);
 
-            return insertionIndex;
+            task->setId(insertionIndex);
         }
     }
 
-    int Calendar::addTask(AbstractTask* task, int index) {
+    void Calendar::addTask(AbstractTask* task, int index) {
         task->setId(index);
 
         if (task->isDone()) {
@@ -76,8 +71,6 @@ namespace DoLah {
         else {
             taskList.insert(taskList.begin()+index, task);
         }
-
-        return 0;
     }
 
     void Calendar::deleteTask(int index, bool status) {
@@ -115,10 +108,10 @@ namespace DoLah {
 
     }
 
-    int Calendar::updateTask(int taskIndex, AbstractTask* task) {
+    void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
         deleteTask(index);
-        return addTask(task);
+        addTask(task);
     }
 
     void Calendar::clearTasks() {

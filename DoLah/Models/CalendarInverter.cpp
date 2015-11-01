@@ -17,12 +17,12 @@ void DoLah::CalendarInverter::invertAdd(AbstractTask * task, Calendar * calendar
     calendar->deleteTask(targetId);
 }
 
-void DoLah::CalendarInverter::invertDelete(AbstractTask * task, int taskIndex, Calendar * calendar){
-    calendar->addTask(task, taskIndex);
+void DoLah::CalendarInverter::invertDelete(AbstractTask * task, Calendar * calendar){
+    calendar->addTask(task, task->getId());
 }
 
-void DoLah::CalendarInverter::invertEdit(AbstractTask * task, int taskIndex, Calendar * calendar){
-    calendar->updateTask(taskIndex, task);
+void DoLah::CalendarInverter::invertEdit(AbstractTask * task, Calendar * calendar){
+    calendar->updateTask(task->getId(), task);
 }
 
 void DoLah::CalendarInverter::invertClear(std::vector<AbstractTask*> taskList, Calendar * calendar){

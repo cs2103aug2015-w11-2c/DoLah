@@ -93,12 +93,12 @@ namespace DoLahTest
             DoLah::DeadlineTask* task = TaskBuilder::buildDeadlineTask();
 
             //Act
-            int insertionIndex = testCal.updateTask(0, task);
+            testCal.updateTask(0, task);
 
             //Assert
-            Assert::AreEqual(task->getName(), testCal.getTaskList()[insertionIndex]->getName());
-            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[insertionIndex]->getDescription());
-            Assert::AreEqual(task->isDone(), testCal.getTaskList()[insertionIndex]->isDone());
+            Assert::AreEqual(task->getName(), testCal.getTaskList()[task->getId()]->getName());
+            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[task->getId()]->getDescription());
+            Assert::AreEqual(task->isDone(), testCal.getTaskList()[task->getId()]->isDone());
         }
 
         // TESTING FOR BOUNDARY CASE WHERE TASK TO BE EDITED DOES NOT EXIST

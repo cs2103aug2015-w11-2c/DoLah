@@ -12,6 +12,8 @@ namespace DoLah {
 		~CommandHistory();
 
         void addToUndoStack(AbstractCommand *);
+        int getUndoStackSize() const;
+        int getRedoStackSize() const;
 
         AbstractCommand * undo();
         AbstractCommand * redo();

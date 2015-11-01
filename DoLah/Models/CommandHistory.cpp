@@ -18,6 +18,14 @@ namespace DoLah {
         this->undoStack.push(command);
     }
 
+    int CommandHistory::getUndoStackSize() const {
+        return this->undoStack.size();
+    }
+
+    int CommandHistory::getRedoStackSize() const {
+        return this->redoStack.size();
+    }
+
     AbstractCommand * CommandHistory::undo() {
         if (this->undoStack.empty()) {
             throw std::out_of_range(INVALID_UNDO_CALL_MESSAGE);

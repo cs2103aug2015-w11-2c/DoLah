@@ -19,11 +19,11 @@ namespace DoLah {
         std::vector<AbstractTask*> getSearchedTaskList() const;
         std::vector<AbstractTask*> getAllTaskList() const;
         CommandHistory* Calendar::getCmdHistory();
-		int addTask(AbstractTask*);
-        int addTask(AbstractTask*, int);
+		void addTask(AbstractTask*); /// returns position where task is added
+        void addTask(AbstractTask*, int); /// returns position where task is added
         void deleteTask(int, bool=true);
         void setDoneTask(int, bool=true);
-		int updateTask(int, AbstractTask*);
+		void updateTask(int, AbstractTask*);
 		void clearTasks();
         void search(std::string);
         void sortTasks(std::vector<AbstractTask*>&);

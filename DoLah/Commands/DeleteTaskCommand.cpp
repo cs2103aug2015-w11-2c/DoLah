@@ -20,7 +20,7 @@ namespace DoLah {
 	}
     
     void DeleteTaskCommand::revert() {
-        CalendarInverter::invertDelete(oldTask, taskIndex, calendar);
+        CalendarInverter::invertDelete(oldTask, calendar);
     }
 
 	//private

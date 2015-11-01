@@ -36,7 +36,7 @@ public:
         testCal.deleteTask(oldLength-1);
 
         //Act
-        DoLah::CalendarInverter::invertDelete(task, oldLength-1, &testCal);
+        DoLah::CalendarInverter::invertDelete(task, &testCal);
 
         //Assert
         Assert::AreEqual((size_t)oldLength, testCal.getTaskList().size());
@@ -89,7 +89,7 @@ public:
         testCal.updateTask(0, newTask);
 
         //Act
-        DoLah::CalendarInverter::invertEdit(oldTask, 0, &testCal);
+        DoLah::CalendarInverter::invertEdit(oldTask, &testCal);
 
         //Assert
         Assert::AreEqual(oldTask->getName(), testCal.getTaskList()[0]->getName());
