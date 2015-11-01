@@ -4,25 +4,29 @@ namespace DoLah {
 	Calendar::Calendar() {
         this->cmdHistory = DoLah::CommandHistory();
 	}
-	
-	Calendar::~Calendar() {
-		//TODO
-	}
 
-	AbstractTask* Calendar::getTask(int index) const {
-		return taskList.at(index);
-	}
+    Calendar::~Calendar() {
+        //TODO
+    }
+
+    AbstractTask* Calendar::getTask(int index) const {
+        return taskList.at(index);
+    }
 
     AbstractTask* Calendar::getDone(int index) const {
         return doneList.at(index);
     }
 
-	std::vector<AbstractTask*> Calendar::getTaskList() const {
+    std::vector<AbstractTask*> Calendar::getTaskList() const {
         return this->taskList;
-	}
+    }
 
     std::vector<AbstractTask*> Calendar::getDoneList() const {
         return this->doneList;
+    }
+
+    std::vector<AbstractTask*> Calendar::getSearchedTaskList() const {
+        return this->searchedList;
     }
 
     std::vector<AbstractTask*> Calendar::getAllTaskList() const {
@@ -38,22 +42,32 @@ namespace DoLah {
         return cmdHistoryPointer;
     }
 
-	void Calendar::addTask(AbstractTask* task) {
+	int Calendar::addTask(AbstractTask* task) {
+        int insertionIndex = 0;
 		if (taskList.empty()) {
 			task->setId(1);
-		}
-		else {
+		} else {
 			task->setId(taskList.back()->getId() + 1);
 		}
 
         if (task->isDone()) {
-            doneList.push_back(task);
-        } else {
-		    taskList.push_back(task);
-        }
-	}
+            while (insertionIndex < doneList.size() && taskCompare(doneList[insertionIndex], task)) {
+                insertionIndex++;
+            }
+            doneList.insert(doneList.begin() + insertionIndex, task);
 
-    void Calendar::addTask(AbstractTask* task, int index) {
+            return insertionIndex;
+        } else {
+            while (insertionIndex < taskList.size() && taskCompare(taskList[insertionIndex], task)) {
+                insertionIndex++;
+            }
+            taskList.insert(taskList.begin() + insertionIndex, task);
+
+            return insertionIndex;
+        }
+    }
+
+    int Calendar::addTask(AbstractTask* task, int index) {
         task->setId(index);
 
         if (task->isDone()) {
@@ -62,6 +76,8 @@ namespace DoLah {
         else {
             taskList.insert(taskList.begin()+index, task);
         }
+
+        return 0;
     }
 
     void Calendar::deleteTask(int index, bool status) {
@@ -99,29 +115,82 @@ namespace DoLah {
 
     }
 
-	void Calendar::updateTask(int taskIndex, AbstractTask* task) {
+    int Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
-        taskList.at(index) = task;
-	}
+        deleteTask(index);
+        return addTask(task);
+    }
 
     void Calendar::clearTasks() {
         this->taskList.clear();
         this->doneList.clear();
     }
-	
-	std::vector<AbstractTask*> Calendar::search(std::string query) {
-		std::vector<AbstractTask*> results;
-	
-		for (int i = 0; i < taskList.size(); i++) {
-			if (taskList[i]->getName().find(query) != std::string::npos) {
-				results.push_back(taskList.at(i));
-			}
-		}
+
+    void Calendar::search(std::string query) {
+        std::vector<AbstractTask*> results;
+
+        for (int i = 0; i < taskList.size(); i++) {
+            if (taskList[i]->getName().find(query) != std::string::npos) {
+                results.push_back(taskList.at(i));
+            }
+        }
         for (int i = 0; i < doneList.size(); i++) {
             if (doneList[i]->getName().find(query) != std::string::npos) {
                 results.push_back(doneList.at(i));
             }
         }
-		return results;
-	}
+        this->searchedList = results;
+    }
+
+    void Calendar::sortTasks(std::vector<AbstractTask*> &unsortedTaskList) {
+        std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), taskCompare);
+    }
+
+    bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
+        std::vector<std::tm> firstDates = getDates(first);
+        std::vector<std::tm> secondDates = getDates(second);
+
+        if (firstDates.size() != secondDates.size()) {
+            return firstDates.size() > secondDates.size();
+        } else if (firstDates.size() == 1) {
+            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
+            if (diff != 0) {
+                return diff > 0;
+            }
+            return first->getDescription().compare(second->getDescription()) > 0;
+        } else if (firstDates.size() == 2) {
+            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
+            if (diff != 0) {
+                return diff > 0;
+            }
+            diff = TimeManager::compareTime(firstDates[1], secondDates[1]);
+            if (diff != 0) {
+                return diff > 0;
+            }
+            return first->getDescription().compare(second->getDescription()) > 0;
+        }
+
+        return false;
+    }
+
+    std::vector<std::tm> Calendar::getDates(AbstractTask *it) {
+        std::vector<std::tm> dates;
+
+        DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(it);
+        DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(it);
+        DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(it);
+
+        if (eventTask != NULL) {
+            dates.push_back(eventTask->getEndDate());
+            dates.push_back(eventTask->getStartDate());
+        }
+
+        if (deadlineTask != NULL) {
+            dates.push_back(deadlineTask->getDueDate());
+        }
+
+        return dates;
+    }
+
+
 }

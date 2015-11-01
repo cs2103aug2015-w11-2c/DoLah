@@ -93,12 +93,12 @@ namespace DoLahTest
             DoLah::DeadlineTask* task = TaskBuilder::buildDeadlineTask();
 
             //Act
-            testCal.updateTask(0, task);
+            int insertionIndex = testCal.updateTask(0, task);
 
             //Assert
-            Assert::AreEqual(task->getName(), testCal.getTaskList()[0]->getName());
-            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[0]->getDescription());
-            Assert::AreEqual(task->isDone(), testCal.getTaskList()[0]->isDone());
+            Assert::AreEqual(task->getName(), testCal.getTaskList()[insertionIndex]->getName());
+            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[insertionIndex]->getDescription());
+            Assert::AreEqual(task->isDone(), testCal.getTaskList()[insertionIndex]->isDone());
         }
 
         // TESTING FOR BOUNDARY CASE WHERE TASK TO BE EDITED DOES NOT EXIST
@@ -131,7 +131,8 @@ namespace DoLahTest
             DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
 
             //Act
-            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("Floating");
+            testCal.search("Floating");
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.getSearchedTaskList();
 
             //Assert
             Assert::AreEqual((size_t)5, resultVector.size());
@@ -142,7 +143,8 @@ namespace DoLahTest
             DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
 
             //Act
-            std::vector<DoLah::AbstractTask*> resultVector = testCal.search("The quick brown fox");
+            testCal.search("The quick brown fox");
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.getSearchedTaskList();
 
             //Assert
             Assert::AreEqual((size_t)0, resultVector.size());

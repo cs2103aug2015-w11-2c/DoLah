@@ -424,7 +424,7 @@ public:
         }
     }
 
-    TEST_METHOD(Tomorrow) {
+    TEST_METHOD(TestTomorrow) {
         if (remainderDays < 1) {
             Assert::IsTrue(true);
         } else { // test will not function on the last day of the month
@@ -435,7 +435,7 @@ public:
         }
     }
 
-    TEST_METHOD(NextWeek) {
+    TEST_METHOD(TestNextWeek) {
         if (remainderDays < 7) {
             Assert::IsTrue(true);
         } else { // test will not function on the last week of the month
@@ -446,7 +446,7 @@ public:
         }
     }
 
-    TEST_METHOD(In2Days) {
+    TEST_METHOD(TestIn2Days) {
         if (remainderDays < 2) {
             Assert::IsTrue(true);
         } else { // test will not function in the last 2 days of the month
@@ -457,7 +457,7 @@ public:
         }
     }
 
-    TEST_METHOD(In1Weeks) {
+    TEST_METHOD(TestIn1Weeks) {
         if (remainderDays < 7) {
             Assert::IsTrue(true);
         } else { // test will not function in the last 1 weeks of the month
@@ -468,7 +468,7 @@ public:
         }
     }
 
-    TEST_METHOD(At1159PM) {
+    TEST_METHOD(TestAt1159PM) {
         if (hour == 23 && min == 59) {
             Assert::IsTrue(true);
         } else { // test will not function at 11:59:00
@@ -479,7 +479,7 @@ public:
         }
     }
 
-    TEST_METHOD(At2359PM) {
+    TEST_METHOD(TestAt2359PM) {
         if (hour == 23 && min == 59) {
             Assert::IsTrue(true);
         } else { // test will not function at 11:59:00
@@ -490,23 +490,12 @@ public:
         }
     }
 
-    TEST_METHOD(At2359) {
+    TEST_METHOD(TestAt2359) {
         if (hour == 23 && min == 59) {
             Assert::IsTrue(true);
         } else { // test will not function at 11:59:00
             std::string input = "23:59";
             std::string expected = strfyTime(23, 59, 0, day, month, year);
-            std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
-            Assert::AreEqual(expected, actual);
-        }
-    }
-
-    TEST_METHOD(At1200PM) {
-        if (hour < 12) {
-            Assert::IsTrue(true);
-        } else { // test will not function in the morning
-            std::string input = "12PM";
-            std::string expected = strfyTime(12, 0, 0, nextDay, month, year);
             std::string actual = tmToString(DoLah::DateTimeParser::toDateFormat(DoLah::ParserLibrary::explode(input, " ")));
             Assert::AreEqual(expected, actual);
         }

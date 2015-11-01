@@ -32,7 +32,7 @@ void DoLah::CalendarInverter::invertClear(std::vector<AbstractTask*> taskList, C
 }
 
 void DoLah::CalendarInverter::invertSearch(std::vector<AbstractTask*> ** resultVector, std::string query, Calendar * calendar){
-    **resultVector = (calendar->search(query));
+    calendar->search(query);
 }
 
 void DoLah::CalendarInverter::invertDone(AbstractTask * task, Calendar * calendar){
