@@ -36,12 +36,23 @@ void DoLah::CalendarInverter::invertSearch(std::vector<AbstractTask*> ** resultV
 }
 
 void DoLah::CalendarInverter::invertDone(AbstractTask * task, Calendar * calendar){
-    std::vector<AbstractTask *> doneList = calendar->getDoneList();
-    for (int i = 0; i < doneList.size(); i++) {
-        if (task->getName() == doneList[i]->getName()){
-            if (task->getDescription() == doneList[i]->getDescription()){
-                if (task->getId() == doneList[i]->getId()){
-                    calendar->setDoneTask(i, false);
+    bool done;
+    std::vector<AbstractTask *> taskList;
+
+    if (task->isDone()) {
+        done = false;
+        taskList = calendar->getDoneList();
+    }
+    else {
+        done = true;
+        taskList = calendar->getTaskList();
+    }
+
+    for (int i = 0; i < taskList.size(); i++) {
+        if (task->getName() == taskList[i]->getName()){
+            if (task->getDescription() == taskList[i]->getDescription()){
+                if (task->getId() == taskList[i]->getId()){
+                    calendar->setDoneTask(i, done);
                     break;
                 }
             }
