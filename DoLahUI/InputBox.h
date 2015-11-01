@@ -8,7 +8,7 @@ namespace DoLah {
         Q_OBJECT
 
     public:
-        InputBox();
+        InputBox(QWidget *parent = 0);
         ~InputBox();
     };
 

@@ -202,7 +202,7 @@ namespace DoLah {
         message->setObjectName(QStringLiteral("message"));
         message->setGeometry(QRect(7, 520, 338, 20));
 
-        lineEdit = new QLineEdit(centralWidget);
+        lineEdit = new InputBox(centralWidget);
         lineEdit->setObjectName(QStringLiteral("inputarea"));
         lineEdit->setGeometry(QRect(5, 540, 340, 25));
         lineEdit->setFocus();

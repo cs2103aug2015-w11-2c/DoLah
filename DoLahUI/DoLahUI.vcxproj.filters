@@ -95,6 +95,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_SettingsWindow.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_InputBox.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_InputBox.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="InputBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="DoLahUI.h">
@@ -116,6 +125,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="SettingsWindow.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="InputBox.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
