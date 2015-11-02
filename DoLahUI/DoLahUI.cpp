@@ -155,15 +155,15 @@ namespace DoLah {
         int i = 0;
         std::vector<AbstractTask*> taskList = (appClient.getCalendar()).getTaskList();
         for (i; i < taskList.size(); ++i) {
-            createTaskBox(home, i, taskList[i]);
+            createTaskBox(home, i+1, taskList[i]);
         }
         std::vector<AbstractTask*> doneList = appClient.getCalendar().getDoneList();
         for (int j = 0; j < doneList.size(); ++j) {
-            createTaskBox(done, j, doneList[j]);
+            createTaskBox(done, j+1, doneList[j]);
         }
         std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
         for (int k = 0; k < searchedList.size(); ++k) {
-            createTaskBox(search, (searchedList[k])->getIndex(), searchedList[k]);
+            createTaskBox(search, (searchedList[k])->getIndex()+1, searchedList[k]);
         }
     }
 
