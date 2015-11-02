@@ -136,6 +136,7 @@
     <ClCompile Include="Parser\CommandTokenizer.cpp" />
     <ClCompile Include="Parser\DateTimeParser.cpp" />
     <ClCompile Include="Parser\ParserLibrary.cpp" />
+    <ClCompile Include="Commands\SetUndoneTaskCommand.cpp" />
     <ClCompile Include="Storage\CalendarStorage.cpp" />
     <ClCompile Include="CommandInvoker.cpp" />
     <ClCompile Include="Models\Calendar.cpp" />

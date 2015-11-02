@@ -14,4 +14,11 @@ namespace DoLah {
     std::tm DeadlineTask::getDueDate() {
         return this->dueDate;
     }
+
+    void DeadlineTask::updateExpired() {
+        if (!isExpired()) {
+            std::tm current = TimeManager::getCurrentTime();
+            setExpired(TimeManager::compareTime(this->dueDate, current) > 0);
+        }
+    }
 }

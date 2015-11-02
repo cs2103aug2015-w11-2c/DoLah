@@ -1,7 +1,6 @@
 #pragma once
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QMainWindow>
 #include <QMouseEvent>
 
 namespace DoLah {

@@ -22,4 +22,11 @@ namespace DoLah {
     std::tm EventTask::getStartDate() {
         return this->startDate;
     }
+
+    void EventTask::updateExpired() {
+        if (!isExpired()) {
+            std::tm current = TimeManager::getCurrentTime();
+            setExpired(TimeManager::compareTime(this->endDate, current) > 0);
+        }
+    }
 }

@@ -24,6 +24,7 @@ namespace DoLah {
         static AddTaskCommand parseAdd(std::vector<std::string>);
         static SearchTaskCommand parseSearch(std::vector<std::string>);
         static SetDoneTaskCommand parseSetDone(std::vector<std::string>);
+        static SetUndoneTaskCommand parseSetUndone(std::vector<std::string>);
         static EditTaskCommand parseEdit(std::vector<std::string>);
         static DeleteTaskCommand parseDelete(std::vector<std::string>);
         static ClearTaskCommand parseClear(std::vector<std::string>);
@@ -33,6 +34,7 @@ namespace DoLah {
         static std::vector<std::string> ADD;
         static std::vector<std::string> SEARCH;
         static std::vector<std::string> DONE;
+        static std::vector<std::string> UNDONE;
         static std::vector<std::string> EDIT;
         static std::vector<std::string> DELETE;
         static std::vector<std::string> CLEAR;

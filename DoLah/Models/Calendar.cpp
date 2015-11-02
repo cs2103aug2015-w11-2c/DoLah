@@ -80,9 +80,11 @@ namespace DoLah {
 
         if (status) {
             taskList.erase(taskList.begin() + index);
+            indexTasks(taskList);
         }
         else {
             taskList.erase(doneList.begin() + index);
+            indexTasks(doneList);
         }
     }
 
@@ -96,6 +98,8 @@ namespace DoLah {
             auto it_end = it_start + 1;
             std::move(it_start, it_end, std::back_inserter(doneList));
             taskList.erase(it_start, it_end);
+            indexTasks(taskList);
+            sortTasks(doneList);
         } else {
             // set task to undone (from donelist to tasklist)
             task = doneList.at(taskIndex);
@@ -104,6 +108,8 @@ namespace DoLah {
             auto it_end = it_start + 1;
             std::move(it_start, it_end, std::back_inserter(taskList));
             doneList.erase(it_start, it_end);
+            indexTasks(doneList);
+            sortTasks(taskList);
         }
 
     }
@@ -137,6 +143,13 @@ namespace DoLah {
 
     void Calendar::sortTasks(std::vector<AbstractTask*> &unsortedTaskList) {
         std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), taskCompare);
+        indexTasks(unsortedTaskList);
+    }
+
+    void Calendar::indexTasks(std::vector<AbstractTask*> &list) {
+        for (size_t index = 0; index < list.size(); index++) {
+            list[index]->setIndex(index);
+        }
     }
 
     bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
@@ -185,5 +198,9 @@ namespace DoLah {
         return dates;
     }
 
-
+    void Calendar::updateTaskExpiry() {
+        for (size_t i = 0; i < this->taskList.size(); i++) {
+            this->taskList[i]->updateExpired();
+        }
+    }
 }

@@ -22,22 +22,22 @@ namespace DoLah {
         if (this->objectName().isEmpty()) {
             this->setObjectName(QStringLiteral("DoLahUIWindow"));
         }
-
-        this->resize(350, 570);
-        this->setFixedSize(this->size());
+        this->setFixedSize(350, 570);
         this->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint);
         centralWidget = new QWidget(this);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        this->setCentralWidget(centralWidget);
         initMenu();
         initDisplayArea();
         initInputArea();
         helpWindow = new HelpWindow();
-
-        this->setCentralWidget(centralWidget);
+        settingsWindow = new SettingsWindow(this);
 
         QMetaObject::connectSlotsByName(this);
     }
-
+    //////////////////////////////////////////
+    // OVERRIDING CLICK AND KEYBOARD INPUTS //
+    //////////////////////////////////////////
     // HANDLE DRAGGING OF WINDOW
 
     void DoLahUI::mousePressEvent(QMouseEvent *event) {
@@ -54,49 +54,79 @@ namespace DoLah {
         }
     }
 
-    // MENU
+    // HANDLE KEYPRESS EVENTS
+
+    void DoLahUI::keyPressEvent(QKeyEvent *event) {
+        if (event->key() == Qt::Key_Tab & event->modifiers() == Qt::ControlModifier) {
+            int index = tabOrganizer->currentIndex();
+            tabOrganizer->setCurrentIndex((index+1)%3);
+        }
+        else if (event->key() == Qt::Key_1 & event->modifiers() == Qt::ControlModifier) {
+            goToHome();
+        }
+        else if (event->key() == Qt::Key_2 & event->modifiers() == Qt::ControlModifier) {
+            goToDone();
+        }
+        else if (event->key() == Qt::Key_3 & event->modifiers() == Qt::ControlModifier) {
+            goToSearch();
+        }
+        else if (event->key() == Qt::Key_PageUp) {
+            // scroll up
+        }
+        else if (event->key() == Qt::Key_PageDown) {
+            // scroll down
+        }
+        else {
+            QMainWindow::keyPressEvent(event);
+        }
+    }
+
+    //////////////////////////////////////////
+    //            TOP MENU AREA             //
+    //////////////////////////////////////////
+    // INITIALIZATION
 
     void DoLahUI::initMenu() {
         menu = new QWidget(centralWidget);
         menu->setGeometry(QRect(0, 0, 350, 70));
         menuLayout = new QHBoxLayout(menu);
         menuLayout->setContentsMargins(5, 5, 5, 5);
-
+        // DEFAULT VIEW
         homeButton = new MenuLabel;
         homeButton->setObjectName(QStringLiteral("home"));
         QPixmap homeIcon("home.png");
         homeButton->setPixmap(homeIcon);
         menuLayout->addWidget(homeButton);
         QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToHome()));
-
+        // DONE TASKS VIEW
         doneButton = new MenuLabel;
         doneButton->setObjectName(QStringLiteral("done"));
         QPixmap doneIcon("done.png");
         doneButton->setPixmap(doneIcon);
         menuLayout->addWidget(doneButton);
         QObject::connect(doneButton, SIGNAL(clicked()), this, SLOT(goToDone()));
-
-        tagsButton = new MenuLabel;
-        tagsButton->setObjectName(QStringLiteral("tags"));
-        QPixmap tagsIcon("tags.png");
-        tagsButton->setPixmap(tagsIcon);
-        menuLayout->addWidget(tagsButton);
-        QObject::connect(tagsButton, SIGNAL(clicked()), this, SLOT(goToTags()));
-
+        // SEARCH RESULTS VIEW
+        searchButton = new MenuLabel;
+        searchButton->setObjectName(QStringLiteral("search"));
+        QPixmap searchIcon("tags.png");
+        searchButton->setPixmap(searchIcon);
+        menuLayout->addWidget(searchButton);
+        QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(goToSearch()));
+        // HELP WINDOW
         helpButton = new MenuLabel;
         helpButton->setObjectName(QStringLiteral("help"));
         QPixmap helpIcon("help.png");
         helpButton->setPixmap(helpIcon);
         menuLayout->addWidget(helpButton);
         QObject::connect(helpButton, SIGNAL(clicked()), this, SLOT(goToHelp()));
-
+        // SETTINGS
         settingsButton = new MenuLabel;
         settingsButton->setObjectName(QStringLiteral("settings"));
         QPixmap settingsIcon("settings.png");
         settingsButton->setPixmap(settingsIcon);
         menuLayout->addWidget(settingsButton);
-        QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(changeTheme()));
-
+        QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(goToSettings()));
+        // EXIT
         exitButton = new MenuLabel;
         exitButton->setObjectName(QStringLiteral("exitButton"));
         QPixmap exitIcon("exit.png");
@@ -105,36 +135,42 @@ namespace DoLah {
         QObject::connect(exitButton, SIGNAL(clicked()), this, SLOT(menuExit()));
     }
 
-    // DISPLAY AREA
+    //////////////////////////////////////////
+    //            DISPLAY AREA              //
+    //////////////////////////////////////////
+    // INITIALIZATION
 
     void DoLahUI::initDisplayArea() {
         viewPort = new DisplayArea(centralWidget);
         tabOrganizer = viewPort->tabbedView;
         home = viewPort->homeLayout;
         done = viewPort->doneLayout;
-        tags = viewPort->tagsLayout;
+        search = viewPort->searchLayout;
         loadTasks();
     }
+    
+    // METHODS TO UPDATE VIEWS
 
     void DoLahUI::loadTasks() {
         int i = 0;
         std::vector<AbstractTask*> taskList = (appClient.getCalendar()).getTaskList();
         for (i; i < taskList.size(); ++i) {
-            createTaskBox(home, i, taskList[i]);
+            createTaskBox(home, i+1, taskList[i]);
         }
         std::vector<AbstractTask*> doneList = appClient.getCalendar().getDoneList();
         for (int j = 0; j < doneList.size(); ++j) {
-            createTaskBox(done, i+j, doneList[j]);
+            createTaskBox(done, j+1, doneList[j]);
         }
-        //std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
-        //for (int j = 0; j < searchedList.size(); ++j) {
-        //    createTaskBox(searched, i + j, searchedList[j]);
-        //}
+        std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
+        for (int k = 0; k < searchedList.size(); ++k) {
+            createTaskBox(search, (searchedList[k])->getIndex()+1, searchedList[k]);
+        }
     }
 
     void DoLahUI::refreshTasks() {
         flushPage(home);
         flushPage(done);
+        flushPage(search);
         loadTasks();
     }
 
@@ -150,22 +186,24 @@ namespace DoLah {
             }
         }
     }
-
+    
     void DoLahUI::createTaskBox(QVBoxLayout *page, int index, AbstractTask *task) {
         UITaskBox *tempTaskBox = new UITaskBox(index, task);
-        tempTaskBox->adjust();
-        page->addWidget(tempTaskBox);
+        page->addWidget(tempTaskBox, 0, 0);
     }
 
-    // INPUT AREA
+    //////////////////////////////////////////
+    //              INPUT AREA              //
+    //////////////////////////////////////////
 
     void DoLahUI::initInputArea() {
         message = new QLabel(centralWidget);
         message->setText("Enter a command:");
+        message->setObjectName(QStringLiteral("message"));
         message->setGeometry(QRect(7, 520, 338, 20));
 
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QStringLiteral("User Input Area"));
+        lineEdit = new InputBox(centralWidget);
+        lineEdit->setObjectName(QStringLiteral("inputarea"));
         lineEdit->setGeometry(QRect(5, 540, 340, 25));
         lineEdit->setFocus();
 
@@ -174,15 +212,25 @@ namespace DoLah {
         QObject::connect(lineEdit, SIGNAL(returnPressed()), lineEdit, SLOT(clear()));
     }
 
-    // SLOTS
+    //////////////////////////////////////////
+    //                SLOTS                 //
+    //////////////////////////////////////////
 
     void DoLahUI::handleUserInput() {
         QString input = lineEdit->text();
         std::string inputline = input.toStdString();
+        lineEdit->arrangeStack();
+        lineEdit->commandstack_up.push(inputline);
         if (inputline.length() != 0) {
             try {
                 if (inputline == "help") {
                     goToHelp();
+                }
+                else if (inputline == "settings") {
+                    goToSettings();
+                }
+                else if (inputline == "exit") {
+                    menuExit();
                 }
                 else {
                     this->appClient.parseAndProcessCommand(inputline);
@@ -197,7 +245,6 @@ namespace DoLah {
             }
         }
         else {
-            message->setText("NOPE");
             refreshTasks();
         }
     }
@@ -210,7 +257,7 @@ namespace DoLah {
         tabOrganizer->setCurrentIndex(1);
     }
 
-    void DoLahUI::goToTags() {
+    void DoLahUI::goToSearch() {
         tabOrganizer->setCurrentIndex(2);
     }
 
@@ -218,25 +265,8 @@ namespace DoLah {
         helpWindow->exec();
     }
 
-    void DoLahUI::changeTheme() {
-        if (themecounter == 0) {
-            QFile stylesheet("night_stylesheet.qss");
-            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-                setStyleSheet(stylesheet.readAll());
-                stylesheet.close();
-                themecounter = 1;
-            }
-        }
-        else {
-            QFile stylesheet("stylesheet.qss");
-            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-                setStyleSheet(stylesheet.readAll());
-                stylesheet.close();
-                themecounter = 0;
-            }
-        }
+    void DoLahUI::goToSettings() {
+        settingsWindow->exec();
     }
 
     void DoLahUI::menuExit() {

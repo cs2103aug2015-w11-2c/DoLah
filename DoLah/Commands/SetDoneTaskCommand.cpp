@@ -1,6 +1,10 @@
 #include "Command.h"
 
 namespace DoLah {
+    SetDoneTaskCommand::SetDoneTaskCommand() {
+
+    }
+
     SetDoneTaskCommand::SetDoneTaskCommand(int taskIndex) : taskIndex(taskIndex) {
     
     }

@@ -50,12 +50,26 @@ namespace DoLah {
 
     class SetDoneTaskCommand : public AbstractCommand {
     public:
+        SetDoneTaskCommand();
         SetDoneTaskCommand(int);
         ~SetDoneTaskCommand();
         
         void execute();
         void revert();
     
+    private:
+        int taskIndex;
+        DoLah::AbstractTask* oldTask;
+    };
+
+    class SetUndoneTaskCommand : public AbstractCommand {
+    public:
+        SetUndoneTaskCommand();
+        SetUndoneTaskCommand(int);
+        ~SetUndoneTaskCommand();
+
+        void execute();
+        void revert();
     private:
         int taskIndex;
         DoLah::AbstractTask* oldTask;

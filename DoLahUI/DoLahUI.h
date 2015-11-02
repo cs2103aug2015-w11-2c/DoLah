@@ -5,7 +5,9 @@
 #include "UITaskBox.h"
 #include "MenuLabel.h"
 #include "DisplayArea.h"
+#include "InputBox.h"
 #include "HelpWindow.h"
+#include "SettingsWindow.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -15,16 +17,12 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QSizePolicy>
-#include <QtWidgets/QStackedWidget>
 #include <QFile>
 #include <QMouseEvent>
 
@@ -44,7 +42,7 @@ namespace DoLah {
         QHBoxLayout *menuLayout;
         MenuLabel *homeButton;
         MenuLabel *doneButton;
-        MenuLabel *tagsButton;
+        MenuLabel *searchButton;
         MenuLabel *helpButton;
         MenuLabel *settingsButton;
         MenuLabel *exitButton;
@@ -53,25 +51,27 @@ namespace DoLah {
         QStackedWidget *tabOrganizer;
         QVBoxLayout *home;
         QVBoxLayout *done;
-        QVBoxLayout *tags;
+        QVBoxLayout *search;
 
         QLabel *message;
-        QLineEdit *lineEdit;
+        InputBox *lineEdit;
 
         HelpWindow *helpWindow;
+        SettingsWindow *settingsWindow;
 
     protected:
         void mousePressEvent(QMouseEvent*);
         void mouseMoveEvent(QMouseEvent*);
+        void keyPressEvent(QKeyEvent*);
 
     private slots:
         void handleUserInput();
         void menuExit();
-        void changeTheme();
         void goToHome();
         void goToDone();
-        void goToTags();
+        void goToSearch();
         void goToHelp();
+        void goToSettings();
 
     private:
         void setupUI();
@@ -86,7 +86,6 @@ namespace DoLah {
 
         DoLah::DoLahClient appClient;
         QPoint dragPosition;
-        int themecounter = 0;
     };
 }
 #endif // DOLAHUI_H

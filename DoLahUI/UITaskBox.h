@@ -2,10 +2,11 @@
 #define UITASKBOX_H
 
 #include "DoLahClient.h"
-#include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QLabel>
+#include <QMouseEvent>
 
 namespace DoLah {
-    class UITaskBox : public QTextBrowser
+    class UITaskBox : public QLabel
     {
         Q_OBJECT
 
@@ -13,7 +14,10 @@ namespace DoLah {
         UITaskBox(int, AbstractTask*);
         ~UITaskBox();
         QSize sizeHint() const;
-        void adjust();
+
+    protected:
+        /*void mouseDoubleClickEvent(QMouseEvent*);
+        void mousePressEvent(QMouseEvent*);*/
 
     private:
         void dynamicCast(int, AbstractTask*);

@@ -88,6 +88,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Models\CalendarInverter.cpp">
+	  <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Commands\SetUndoneTaskCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
