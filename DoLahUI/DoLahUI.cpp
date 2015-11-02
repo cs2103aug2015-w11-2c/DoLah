@@ -159,11 +159,11 @@ namespace DoLah {
         }
         std::vector<AbstractTask*> doneList = appClient.getCalendar().getDoneList();
         for (int j = 0; j < doneList.size(); ++j) {
-            createTaskBox(done, i+j, doneList[j]);
+            createTaskBox(done, j, doneList[j]);
         }
         std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
-        for (int j = 0; j < searchedList.size(); ++j) {
-            createTaskBox(search, (searchedList[j])->getId()-1, searchedList[j]);
+        for (int k = 0; k < searchedList.size(); ++k) {
+            createTaskBox(search, (searchedList[k])->getId()-1, searchedList[k]);
         }
     }
 
@@ -219,6 +219,8 @@ namespace DoLah {
     void DoLahUI::handleUserInput() {
         QString input = lineEdit->text();
         std::string inputline = input.toStdString();
+        lineEdit->arrangeStack();
+        lineEdit->commandstack_up.push(inputline);
         if (inputline.length() != 0) {
             try {
                 if (inputline == "help") {

@@ -4,6 +4,7 @@ namespace DoLah {
     std::vector<std::string> CommandParser::ADD = { "add" };
     std::vector<std::string> CommandParser::SEARCH = { "search" };
     std::vector<std::string> CommandParser::DONE = { "done" };
+    std::vector<std::string> CommandParser::UNDONE = { "undone" };
     std::vector<std::string> CommandParser::EDIT = { "edit" };
     std::vector<std::string> CommandParser::DELETE = { "delete", "del" };
     std::vector<std::string> CommandParser::CLEAR = { "clear" };
@@ -49,6 +50,27 @@ namespace DoLah {
             throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
         }
         return SetDoneTaskCommand(taskID);
+    }
+
+    SetUndoneTaskCommand CommandParser::parseSetUndone(std::vector<std::string> inputArr) {
+        if (inputArr.size() == 0) {
+            throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
+        }
+        else if (inputArr.size() > 1) {
+            throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
+        }
+
+        int taskID;
+        try {
+            taskID = std::stoi(inputArr.at(0));
+            if (taskID < 0) {
+                throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
+            }
+        }
+        catch (std::invalid_argument e) {
+            throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
+        }
+        return SetUndoneTaskCommand(taskID);
     }
 
     SearchTaskCommand CommandParser::parseSearch(std::vector<std::string> inputArr) {
@@ -136,7 +158,12 @@ namespace DoLah {
         } else if (ParserLibrary::inStringArray(DONE, command)) {
             SetDoneTaskCommand* command = new SetDoneTaskCommand(parseSetDone(inputArr));
             return command;
-        } else if (ParserLibrary::inStringArray(EDIT, command)) {
+        }
+        else if (ParserLibrary::inStringArray(UNDONE, command)) {
+            SetUndoneTaskCommand* command = new SetUndoneTaskCommand(parseSetUndone(inputArr));
+            return command;
+        }
+        else if (ParserLibrary::inStringArray(EDIT, command)) {
             EditTaskCommand* command = new EditTaskCommand(parseEdit(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(DELETE, command)) {

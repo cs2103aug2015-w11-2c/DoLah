@@ -22,5 +22,6 @@ namespace DoLah {
         QComboBox *themeSelection;
         QMainWindow *mainWin;
         void themeOptions();
+        void readAndSetStyleSheet(const char*);
     };
 }

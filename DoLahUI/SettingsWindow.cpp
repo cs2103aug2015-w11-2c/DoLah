@@ -23,22 +23,21 @@ namespace DoLah {
 
     void SettingsWindow::changeTheme(int index) {
         if (index == 0) {
-            QFile stylesheet("stylesheet.qss");
-            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-                mainWin->setStyleSheet(stylesheet.readAll());
-                stylesheet.close();
-            }
+            readAndSetStyleSheet("stylesheet.qss");
             themeSelection->setCurrentIndex(0);
         }
         else if (index == 1) {
-            QFile stylesheet("night_stylesheet.qss");
-            if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-                mainWin->setStyleSheet(stylesheet.readAll());
-                stylesheet.close();
-            }
+            readAndSetStyleSheet("night_stylesheet.qss");
             themeSelection->setCurrentIndex(1);
+        }
+    }
+
+    void SettingsWindow::readAndSetStyleSheet(const char *qss) {
+        QFile stylesheet(qss);
+        if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            mainWin->setStyleSheet(stylesheet.readAll());
+            stylesheet.close();
         }
     }
 }

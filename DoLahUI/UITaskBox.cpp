@@ -34,7 +34,7 @@ namespace DoLah {
                 this->setText(contents);
             }
             else {
-                QString contents = tasktitle.append("</font><br><font size=3><font color=#2fb6a7>" + QString(deadline));
+                QString contents = tasktitle.append("</font><br><font size=3><font color=#6270d6>" + QString(deadline));
                 this->setText(contents);
             }
             
@@ -50,7 +50,7 @@ namespace DoLah {
                 this->setText(contents);
             }
             else {
-                QString contents = tasktitle.append("</font><br><font size=3><font color=#2fb6a7>" + QString(start) + " to " + QString(end));
+                QString contents = tasktitle.append("</font><br><font size=3><font color=#6270d6>" + QString(start) + " to " + QString(end));
                 this->setText(contents);
             }
         }
