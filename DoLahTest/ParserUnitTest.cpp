@@ -7,7 +7,6 @@
 
 #include "Parser/ParserLibrary.h"
 #include "Parser/CommandParser.h"
-#include "Parser/CommandTokenizer.h"
 #include "Parser/TaskParser.h"
 #include "Parser/TaskTokenizer.h"
 #include "Parser/DateTimeParser.h"
@@ -227,16 +226,6 @@ public:
     // From here, integrated tests for command parsing
     // Will check boundary cases and exceptions.
     // The actual content of the commands are hidden as black box.
-
-    TEST_METHOD(ParseUnimplementedCommandTest) {
-        std::string input = "sort ";
-        try {
-            DoLah::CommandParser::parse(input);
-            Assert::IsTrue(false);
-        } catch (std::invalid_argument e) {
-            Assert::AreEqual(UNHANDLED_COMMAND_MESSAGE, (std::string) e.what());
-        }
-    }
 
     TEST_METHOD(WellDefinedAddCommandWithDeadline) {
         std::string input = "add #cs2103 #homework on 30th December 2015";

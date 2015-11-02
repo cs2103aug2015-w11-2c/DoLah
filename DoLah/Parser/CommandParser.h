@@ -6,7 +6,6 @@
 #include "assert.h"
 
 #include "ParserLibrary.h"
-#include "CommandTokenizer.h"
 #include "TaskParser.h"
 
 #include "Commands/Command.h"
@@ -29,6 +28,9 @@ namespace DoLah {
         static DeleteTaskCommand parseDelete(std::vector<std::string>);
         static ClearTaskCommand parseClear(std::vector<std::string>);
         static UndoTaskCommand parseUndo(std::vector<std::string>);
+
+        // Fixed format ~ command is always at the front
+        static std::vector<std::string> pruneCommand(std::vector<std::string> lineArr);
     private:
         static std::vector<std::string> ADD;
         static std::vector<std::string> SEARCH;
