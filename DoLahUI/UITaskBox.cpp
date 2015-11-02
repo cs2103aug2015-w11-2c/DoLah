@@ -19,6 +19,9 @@ namespace DoLah {
     
     void UITaskBox::dynamicCast(int index, AbstractTask *task) {
         std::string name = task->getName();
+        if (task->isExpired()) {
+            name = "(overdue) " + name;
+        }
         QString tasktitle = "<font size=4><b>" + QString::number(index) + ". " + QString::fromStdString(name);
 
         if (FloatingTask *fTask = dynamic_cast<FloatingTask*>(task)) {

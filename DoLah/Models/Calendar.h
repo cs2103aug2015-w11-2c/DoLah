@@ -26,7 +26,7 @@ namespace DoLah {
         void sortTasks(std::vector<AbstractTask*>&);
         static bool taskCompare(AbstractTask*, AbstractTask*);
         static std::vector<std::tm> getDates(AbstractTask*);
-
+        void updateTaskExpiry();
     private:
         std::vector<AbstractTask*> taskList;
         std::vector<AbstractTask*> doneList;

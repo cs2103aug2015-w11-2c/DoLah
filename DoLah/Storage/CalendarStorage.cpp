@@ -112,6 +112,7 @@ namespace DoLah {
                 }
             }
         }
+        calendar.updateTaskExpiry();
         return calendar;
         
     }
