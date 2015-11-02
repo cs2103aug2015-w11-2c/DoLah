@@ -37,12 +37,13 @@ namespace DoLah {
     std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
     std::vector<std::string> DateTimeParser::punctuations = { "," };
 
-    std::vector<std::string> DateTimeParser::todayPattern = { "today" };
-    std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow", "tom" };
-    std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the" };
+    std::vector<std::string> DateTimeParser::todayPattern = { "today", "td" };
+    std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow", "tom", "tm" };
+    std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the", "one" };
     std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };
-    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks" };
-    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months" };
+    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks", "wk", "wks" };
+    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months", "mon", "mons" };
+    std::vector<std::string> DateTimeParser::yearDescriptionPattern = { "y", "year", "years", "yr", "yrs" };
     std::vector<std::string> DateTimeParser::nextPattern = { "next", "coming" };
 
     std::string DateTimeParser::AM = "am";
@@ -167,6 +168,7 @@ namespace DoLah {
         int dayDiff = 0;
         int weekDiff = 0;
         int monthDiff = 0;
+        int yearDiff = 0;
 
         size_t size = strArr.size();
 
@@ -198,6 +200,8 @@ namespace DoLah {
                         weekDiff = 1;
                     } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
                         monthDiff = 1;
+                    } else if (ParserLibrary::inStringArray(yearDescriptionPattern, element)) {
+                        yearDiff = 1;
                     } else {
                         throw std::invalid_argument("");
                     }
@@ -218,6 +222,8 @@ namespace DoLah {
                     weekDiff = n;
                 } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
                     monthDiff = n;
+                } else if (ParserLibrary::inStringArray(yearDescriptionPattern, element)) {
+                    yearDiff = n;
                 } else {
                     throw std::invalid_argument("");
                 }
@@ -241,6 +247,7 @@ namespace DoLah {
         std::tm modified = current;
         modified.tm_mday += dayDiff + 7 * weekDiff;
         modified.tm_mon += monthDiff;
+        modified.tm_year += yearDiff;
 
         return TimeManager::compareTime(current, modified);
     }

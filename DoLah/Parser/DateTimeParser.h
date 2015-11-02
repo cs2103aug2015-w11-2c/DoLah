@@ -74,6 +74,8 @@ namespace DoLah {
         static std::vector<std::string> weekDescriptionPattern;
         // in a month (will add 30 days per month)
         static std::vector<std::string> monthDescriptionPattern;
+
+        static std::vector<std::string> yearDescriptionPattern;
         // next week
         static std::vector<std::string> nextPattern;
 
