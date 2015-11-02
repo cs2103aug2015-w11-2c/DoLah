@@ -15,6 +15,8 @@ namespace DoLah {
         virtual ~AbstractTask() = 0; ///< destructor
         void setId(int id); ///< set the Task ID
         int getId(); ///< get the Task ID
+        void setIndex(int);
+        int getIndex();
         void setName(std::string); ///< set the Task name
         std::string getName(); ///< get the Task name
         void setDescription(std::string); ///< set the Task description
@@ -30,6 +32,7 @@ namespace DoLah {
         std::string description; ///< A Detailed explanation about the task.
         std::string name; ///< Task name is the header of the task.
         int id; ///< Task identifier is used for the storage tracking.
+        int index;
         bool done; ///< a flag that mark whether a task has finished, and may be hide or cleared later.
 		std::vector<std::string> tags; ///< Vector holding tags assigned to the task.
         bool expired = false;
