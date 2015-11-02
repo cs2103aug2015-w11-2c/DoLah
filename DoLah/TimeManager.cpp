@@ -18,6 +18,9 @@ namespace DoLah {
     bool TimeManager::isValidDate(std::tm date) {
         std::tm checkTime = date;
         std::mktime(&checkTime);
+        if (checkTime.tm_year == -1 && checkTime.tm_mon == -1 && checkTime.tm_mday == -1) {
+            throw std::invalid_argument("");
+        }
         // IF mktime changes the time format, that means the input date was wrong!
         // ex. 31st April becomes 1st May
         if (date.tm_mday != checkTime.tm_mday

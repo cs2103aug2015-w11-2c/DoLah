@@ -312,6 +312,9 @@ namespace DoLah {
                 int modifier = checkDateModifier(cleanArr);
                 time_t t = time(NULL) + modifier;
                 localtime_s(&output, &t);
+                if (!TimeManager::isValidDate(output)) {
+                    throw std::invalid_argument("");
+                }
                 done = true;
                 hasDay = true;
             } catch (std::invalid_argument e) {
