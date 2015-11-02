@@ -25,6 +25,7 @@
 #include <QtWidgets/QSizePolicy>
 #include <QFile>
 #include <QMouseEvent>
+#include <QScrollBar>
 
 namespace DoLah {
     class DoLahUI : public QMainWindow

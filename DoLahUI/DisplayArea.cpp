@@ -10,7 +10,7 @@ namespace DoLah {
         this->setGeometry(QRect(5, 70, 340, 450));
         this->setFrameStyle(QFrame::NoFrame);
         this->setWidgetResizable(true);
-        //this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        this->setFocusPolicy(Qt::NoFocus);
         initViewPort();
     }
 

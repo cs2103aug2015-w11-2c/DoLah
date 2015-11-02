@@ -59,16 +59,10 @@ namespace DoLah {
         }
     }
 
-    /*void UITaskBox::mouseDoubleClickEvent(QMouseEvent *event) {
+    void UITaskBox::mouseDoubleClickEvent(QMouseEvent *event) {
         if (event->button() == Qt::LeftButton) {
             this->setText("LOLOLOLOL");
         }
     }
-
-    void UITaskBox::mousePressEvent(QMouseEvent *event) {
-        if (event->button() == Qt::LeftButton) {
-            this->setAttribute(Qt::WA_TransparentForMouseEvents);
-        }
-    }*/
 
 }

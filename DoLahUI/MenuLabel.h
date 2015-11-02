@@ -15,9 +15,6 @@ namespace DoLah {
     signals:
         void clicked();
 
-    private:
-        QPoint dragPosition;
-
     protected:
         void mousePressEvent(QMouseEvent*);
         void mouseMoveEvent(QMouseEvent*);

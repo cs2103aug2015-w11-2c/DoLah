@@ -71,10 +71,12 @@ namespace DoLah {
             goToSearch();
         }
         else if (event->key() == Qt::Key_PageUp) {
-            // scroll up
+            QScrollBar *scrollbar = viewPort->verticalScrollBar();
+            scrollbar->setValue(scrollbar->value() - scrollbar->singleStep());
         }
         else if (event->key() == Qt::Key_PageDown) {
-            // scroll down
+            QScrollBar *scrollbar = viewPort->verticalScrollBar();
+            scrollbar->setValue(scrollbar->value() + scrollbar->singleStep());
         }
         else {
             QMainWindow::keyPressEvent(event);
@@ -108,7 +110,7 @@ namespace DoLah {
         // SEARCH RESULTS VIEW
         searchButton = new MenuLabel;
         searchButton->setObjectName(QStringLiteral("search"));
-        QPixmap searchIcon("tags.png");
+        QPixmap searchIcon("search.png");
         searchButton->setPixmap(searchIcon);
         menuLayout->addWidget(searchButton);
         QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(goToSearch()));

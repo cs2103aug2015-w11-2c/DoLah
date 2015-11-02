@@ -3,6 +3,7 @@
 
 #include "DoLahClient.h"
 #include <QtWidgets/QLabel>
+#include <QMainWindow>
 #include <QMouseEvent>
 
 namespace DoLah {
@@ -16,8 +17,7 @@ namespace DoLah {
         QSize sizeHint() const;
 
     protected:
-        /*void mouseDoubleClickEvent(QMouseEvent*);
-        void mousePressEvent(QMouseEvent*);*/
+        void mouseDoubleClickEvent(QMouseEvent*);
 
     private:
         void dynamicCast(int, AbstractTask*);

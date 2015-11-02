@@ -31,12 +31,6 @@ namespace DoLah {
                 this->clear();
             }
         }
-        else if (event->key() == Qt::Key_PageUp) {
-            // scroll up
-        }
-        else if (event->key() == Qt::Key_PageDown) {
-            // scroll down
-        }
         else {
             QLineEdit::keyPressEvent(event);
         }
