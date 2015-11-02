@@ -33,6 +33,10 @@ namespace DoLah {
                 QString contents = tasktitle.append("</font><br><font size=3>" + QString(deadline));
                 this->setText(contents);
             }
+            else if (task->isExpired()) {
+                QString contents = tasktitle.append("</font><br><font size=3><font color=#fc7370>" + QString(deadline));
+                this->setText(contents);
+            }
             else {
                 QString contents = tasktitle.append("</font><br><font size=3><font color=#6270d6>" + QString(deadline));
                 this->setText(contents);
@@ -49,6 +53,10 @@ namespace DoLah {
                 QString contents = tasktitle.append("</font><br><font size=3>" + QString(start) + " to " + QString(end));
                 this->setText(contents);
             }
+            else if (task->isExpired()) {
+                QString contents = tasktitle.append("</font><br><font size=3><font color=#fc7370>" + QString(start) + " to " + QString(end));
+                this->setText(contents);
+            }
             else {
                 QString contents = tasktitle.append("</font><br><font size=3><font color=#6270d6>" + QString(start) + " to " + QString(end));
                 this->setText(contents);
@@ -56,6 +64,9 @@ namespace DoLah {
         }
         if (task->isDone()) {
             this->setObjectName(QStringLiteral("Done"));
+        }
+        if (task->isExpired()) {
+            this->setObjectName(QStringLiteral("Due"));
         }
     }
 

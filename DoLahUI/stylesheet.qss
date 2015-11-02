@@ -62,6 +62,12 @@ QLabel#Done
 	text-decoration: line-through;
 }
 
+QLabel#Due
+{
+	color: #8e3530;
+	border-left: 5px solid #fc7370;
+}
+
 QLineEdit 
 { 
 	background-color: white; 

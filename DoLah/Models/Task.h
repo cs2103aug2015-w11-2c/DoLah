@@ -4,6 +4,8 @@
 #include <yaml-cpp/yaml.h>
 #include <vector>
 
+#include "TimeManager.h"
+
 namespace DoLah {
 
     /// Abstract Task class is the base class for any Task.
@@ -23,7 +25,9 @@ namespace DoLah {
         bool isDone(); ///< get the Task done flag
         void setTags(std::vector<std::string>); ///< set the vector of tags assigned to the task.
         std::vector<std::string> getTags(); ///< get the vector of tags assigned to the task.
-
+        bool isExpired();
+        void setExpired(bool);
+        virtual void updateExpired();
     private:
         std::string description; ///< A Detailed explanation about the task.
         std::string name; ///< Task name is the header of the task.
@@ -31,6 +35,7 @@ namespace DoLah {
         int index;
         bool done; ///< a flag that mark whether a task has finished, and may be hide or cleared later.
 		std::vector<std::string> tags; ///< Vector holding tags assigned to the task.
+        bool expired = false;
     };
 
     /// A floating task is a task without any time specified.
@@ -45,6 +50,7 @@ namespace DoLah {
         void setStartDate(std::tm); ///< set the starting datetime
         std::tm getEndDate(); ///< get the ending datetime
         void setEndDate(std::tm); ///< set the ending datetime
+        virtual void updateExpired();
     private:
         std::tm startDate; ///< Task starting datetime
         std::tm endDate; ///< Task ending datetime
@@ -57,6 +63,7 @@ namespace DoLah {
         ~DeadlineTask(); ///< destructor
         std::tm getDueDate(); ///< get the due date
         void setDueDate(std::tm); ///< set the due date
+        virtual void updateExpired();
     private:
         std::tm dueDate; ///< Task due datetime
     };
