@@ -2,10 +2,11 @@
 
 
 namespace DoLah {
-    MenuLabel::MenuLabel() {
+    MenuLabel::MenuLabel(QWidget *parent)
+        : QLabel(parent) {
         this->setMinimumHeight(65);
+        this->setObjectName(QStringLiteral("menuButton"));
     }
-
 
     MenuLabel::~MenuLabel() {
 

@@ -74,74 +74,35 @@ QLabel#message
 	padding: 0px;
 }
 
-QLabel#exitButton
+QLabel#menuButton
 {
 	background-color: transparent;
+	padding: 0px;
+}
+
+QLabel#menuButton:hover
+{
+	background-color: rgba(255, 255, 255, 0.2);
+	padding: 0px;
+}
+
+QDialog QLabel{
+	background-color: transparent;
+	padding: 0px;
+}
+
+QLabel#exitButton
+{
+	background-color: rgba(0, 0, 0, 0.2);
 	padding: 0px;
 }
 
 QLabel#exitButton:hover
 {
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: rgba(0, 0, 0, 0.5);
 	padding: 0px;
 }
 
-QLabel#settings
-{
-	background-color: transparent;
-	padding: 0px;
-}
-
-QLabel#settings:hover
-{
-	background-color: rgba(255, 255, 255, 0.2);
-	padding: 0px;
-}
-
-QLabel#done
-{
-	background-color: transparent;
-	padding: 0px;
-}
-
-QLabel#done:hover
-{
-	background-color: rgba(255, 255, 255, 0.2);
-	padding: 0px;
-}
-
-QLabel#home
-{
-	background-color: transparent;
-	padding: 0px;
-}
-
-QLabel#home:hover
-{
-	background-color: rgba(255, 255, 255, 0.2);
-	padding: 0px;
-}
-
-QLabel#search
-{
-	background-color: transparent;
-	padding: 0px;
-}
-
-QLabel#search:hover
-{
-	background-color: rgba(255, 255, 255, 0.2);
-	padding: 0px;
-}
-
-QLabel#help
-{
-	background-color: transparent;
-	padding: 0px;
-}
-
-QLabel#help:hover
-{
-	background-color: rgba(255, 255, 255, 0.2);
-	padding: 0px;
+QDialog {
+	background-color: gray;
 }

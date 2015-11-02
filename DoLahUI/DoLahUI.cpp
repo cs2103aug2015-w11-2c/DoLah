@@ -5,7 +5,7 @@ namespace DoLah {
         : QMainWindow(parent)
     {
         this->setupUI();
-        QFile stylesheet("stylesheet.qss");
+        QFile stylesheet("stylesheets/stylesheet.qss");
         if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             setStyleSheet(stylesheet.readAll());
@@ -30,7 +30,7 @@ namespace DoLah {
         initMenu();
         initDisplayArea();
         initInputArea();
-        helpWindow = new HelpWindow();
+        helpWindow = new HelpWindow(this);
         settingsWindow = new SettingsWindow(this);
 
         QMetaObject::connectSlotsByName(this);
@@ -95,43 +95,37 @@ namespace DoLah {
         menuLayout->setContentsMargins(5, 5, 5, 5);
         // DEFAULT VIEW
         homeButton = new MenuLabel;
-        homeButton->setObjectName(QStringLiteral("home"));
-        QPixmap homeIcon("home.png");
+        QPixmap homeIcon("images/home.png");
         homeButton->setPixmap(homeIcon);
         menuLayout->addWidget(homeButton);
         QObject::connect(homeButton, SIGNAL(clicked()), this, SLOT(goToHome()));
         // DONE TASKS VIEW
         doneButton = new MenuLabel;
-        doneButton->setObjectName(QStringLiteral("done"));
-        QPixmap doneIcon("done.png");
+        QPixmap doneIcon("images/done.png");
         doneButton->setPixmap(doneIcon);
         menuLayout->addWidget(doneButton);
         QObject::connect(doneButton, SIGNAL(clicked()), this, SLOT(goToDone()));
         // SEARCH RESULTS VIEW
         searchButton = new MenuLabel;
-        searchButton->setObjectName(QStringLiteral("search"));
-        QPixmap searchIcon("search.png");
+        QPixmap searchIcon("images/search.png");
         searchButton->setPixmap(searchIcon);
         menuLayout->addWidget(searchButton);
         QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(goToSearch()));
         // HELP WINDOW
         helpButton = new MenuLabel;
-        helpButton->setObjectName(QStringLiteral("help"));
-        QPixmap helpIcon("help.png");
+        QPixmap helpIcon("images/help.png");
         helpButton->setPixmap(helpIcon);
         menuLayout->addWidget(helpButton);
         QObject::connect(helpButton, SIGNAL(clicked()), this, SLOT(goToHelp()));
         // SETTINGS
         settingsButton = new MenuLabel;
-        settingsButton->setObjectName(QStringLiteral("settings"));
-        QPixmap settingsIcon("settings.png");
+        QPixmap settingsIcon("images/settings.png");
         settingsButton->setPixmap(settingsIcon);
         menuLayout->addWidget(settingsButton);
         QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(goToSettings()));
         // EXIT
         exitButton = new MenuLabel;
-        exitButton->setObjectName(QStringLiteral("exitButton"));
-        QPixmap exitIcon("exit.png");
+        QPixmap exitIcon("images/exit.png");
         exitButton->setPixmap(exitIcon);
         menuLayout->addWidget(exitButton);
         QObject::connect(exitButton, SIGNAL(clicked()), this, SLOT(menuExit()));
@@ -266,7 +260,7 @@ namespace DoLah {
     }
 
     void DoLahUI::goToHelp() {
-        helpWindow->exec();
+        helpWindow->show();
     }
 
     void DoLahUI::goToSettings() {

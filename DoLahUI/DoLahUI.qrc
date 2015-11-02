@@ -1,16 +1,15 @@
 <RCC>
     <qresource prefix="/DoLahUI">
-        <file>stylesheet.qss</file>
-        <file>night_bg.jpg</file>
-        <file>night_stylesheet.qss</file>
-        <file>dawn.jpg</file>
         <file>DoLah.ico</file>
-        <file>helpwindow.jpg</file>
-        <file>settings.png</file>
-        <file>done.png</file>
-        <file>exit.png</file>
-        <file>help.png</file>
-        <file>home.png</file>
-        <file>search.png</file>
+        <file>Images/done.png</file>
+        <file>Images/exit.png</file>
+        <file>Images/help.png</file>
+        <file>Images/helpwindow.jpg</file>
+        <file>Images/home.png</file>
+        <file>Images/search.png</file>
+        <file>Images/settings.png</file>
+        <file>stylesheets/night_stylesheet.qss</file>
+        <file>stylesheets/stylesheet.qss</file>
+        <file>Images/dialog_exit.png</file>
     </qresource>
 </RCC>

@@ -9,7 +9,7 @@ namespace DoLah {
         Q_OBJECT
 
     public:
-        MenuLabel();
+        MenuLabel(QWidget *parent = 0);
         ~MenuLabel();
 
     signals:

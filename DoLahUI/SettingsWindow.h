@@ -1,7 +1,9 @@
 #pragma once
+#include "MenuLabel.h"
 
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QComboBox>
+#include <QtWidgets/QLabel>
 #include <QMainWindow>
 #include <QFile>
 
@@ -12,8 +14,10 @@ namespace DoLah {
         Q_OBJECT
 
     public:
-        SettingsWindow(QMainWindow*);
+        SettingsWindow(QMainWindow * parent);
         ~SettingsWindow();
+
+        MenuLabel *exitButton;
 
     private slots:
         void changeTheme(int);
