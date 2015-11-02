@@ -50,6 +50,15 @@ namespace DoLah {
         int taskIndex;
     };
 
+    class SetUndoneTaskCommand : public AbstractCommand {
+    public:
+        SetUndoneTaskCommand(int);
+        ~SetUndoneTaskCommand();
+        void execute();
+    private:
+        int taskIndex;
+    };
+
 	class DeleteTaskCommand : public AbstractCommand {
 	public:
 		DeleteTaskCommand();

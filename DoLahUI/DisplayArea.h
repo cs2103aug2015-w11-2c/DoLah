@@ -17,13 +17,13 @@ namespace DoLah {
         QStackedWidget *tabbedView;
         QVBoxLayout *homeLayout;
         QVBoxLayout *sortLayout;
-        QVBoxLayout *tagsLayout;
+        QVBoxLayout *searchLayout;
         QVBoxLayout *doneLayout;
 
     private:
         QWidget *homePage;
         QWidget *sortPage;
-        QWidget *tagsPage;
+        QWidget *searchPage;
         QWidget *donePage;
 
         void initViewPort();

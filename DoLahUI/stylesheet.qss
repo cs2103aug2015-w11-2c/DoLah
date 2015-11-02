@@ -1,7 +1,6 @@
 QMainWindow
 {
 	background-image: url("dawn.jpg");
-	/*background-color: #9e3b36;*/
 }
 
 QWidget
@@ -11,34 +10,51 @@ QWidget
 
 QScrollArea > QWidget > QWidget
 { 
-	/*background-color: #a08d8f;*/
 	background-color: rgba(255, 255, 255, 0.5);
 } 
 
-QTextBrowser
+QScrollBar:vertical
 {
-	padding-left: 2px;
+	background: transparent;
+	width: 10px;
 }
 
-QTextBrowser#Floating
+QScrollBar::handle:vertical
 {
-	background-color: #fcebbf; 
+	background: gray;
+	border-radius: 20px;
+}
+
+QLabel
+{ 
+	/*color: white;*/
+	background-color: #fdf1c8; 
 	color: #4c3e3e; 
+	padding-left: 1px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+
 }
 
-QTextBrowser#Deadline
+QLabel#Floating
 {
-	background-color: #fcebbf; 
-	color: #4c3e3e; 
+	border-left: 5px solid #fcebbf;
 }
 
-QTextBrowser#Event
+QLabel#Deadline
 {
-	background-color: #fcebbf;
-	color: #4c3e3e; 
+	color: #4c3e3e;
+	border-left: 5px solid #CB94FF;
 }
 
-QTextBrowser#Done
+QLabel#Event
+{
+	color: #4c3e3e; 
+	border-left: 5px solid #67bba5;
+}
+
+QLabel#Done
 {
 	background-color: #BBBBBB;
 	color: #696969; 
@@ -51,67 +67,81 @@ QLineEdit
 	background-color: white; 
 }
 
-QLabel
-{ 
+QLabel#message
+{
 	color: white;
+	background: transparent;
+	padding: 0px;
 }
 
 QLabel#exitButton
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#exitButton:hover
 {
 	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0px;
 }
 
 QLabel#settings
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#settings:hover
 {
 	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0px;
 }
 
 QLabel#done
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#done:hover
 {
 	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0px;
 }
 
 QLabel#home
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#home:hover
 {
 	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0px;
 }
 
-QLabel#tags
+QLabel#search
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
-QLabel#tags:hover
+QLabel#search:hover
 {
 	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0px;
 }
 
 QLabel#help
 {
 	background-color: transparent;
+	padding: 0px;
 }
 
 QLabel#help:hover
 {
 	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0px;
 }
