@@ -39,7 +39,7 @@ namespace DoLah {
 
     std::vector<std::string> DateTimeParser::todayPattern = { "today", "td" };
     std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow", "tom", "tm" };
-    std::vector<std::string> DateTimeParser::articlePattern = { "a", "an", "the", "one" };
+    std::vector<std::string> DateTimeParser::singularPattern = { "a", "an", "the", "one" };
     std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };
     std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks", "wk", "wks" };
     std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months", "mon", "mons" };
@@ -207,9 +207,9 @@ namespace DoLah {
                     }
                 }
             } else if (ParserLibrary::isDecimal(element) ||
-                ParserLibrary::inStringArray(articlePattern, element)) { // 10 days, a week, etc
+                ParserLibrary::inStringArray(singularPattern, element)) { // 10 days, a week, etc
                 int n = 0;
-                if (ParserLibrary::inStringArray(articlePattern, element)) {
+                if (ParserLibrary::inStringArray(singularPattern, element)) {
                     n = 1;
                 } else {
                     n = stoi(element);

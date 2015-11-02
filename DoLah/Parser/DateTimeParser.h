@@ -67,7 +67,7 @@ namespace DoLah {
         // tomorrow
         static std::vector<std::string> tomorrowPattern;
         // a week
-        static std::vector<std::string> articlePattern;
+        static std::vector<std::string> singularPattern;
         // in 10 days
         static std::vector<std::string> dayDescriptionPattern;
         // in 2 weeks
