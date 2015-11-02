@@ -162,7 +162,7 @@ namespace DoLah {
         return diff;
     }
 
-    std::tm DateTimeParser::checkRelativeDateFormat(std::vector<std::string> strArr) {
+    int DateTimeParser::checkDateModifier(std::vector<std::string> strArr) {
         std::tm output;
         int dayDiff = 0;
         int weekDiff = 0;
@@ -172,7 +172,7 @@ namespace DoLah {
 
         int index = 0;
         std::string element;
-        
+
         element = strArr.at(index++);
         int date = getDate(element);
         if (size == 1) { // singleton format
@@ -197,7 +197,7 @@ namespace DoLah {
                     } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
                         weekDiff = 1;
                     } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
-                        monthDiff = 1; // month length is not fixed!!
+                        monthDiff = 1;
                     } else {
                         throw std::invalid_argument("");
                     }
@@ -217,39 +217,32 @@ namespace DoLah {
                 } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
                     weekDiff = n;
                 } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
-                    monthDiff = n; // month length is not fixed!!
+                    monthDiff = n;
                 } else {
                     throw std::invalid_argument("");
                 }
             } else {
                 throw std::invalid_argument("");
             }
-        } else if (date != REJECT) { // date with something more behind
+        } else if (date != REJECT) {
             dayDiff = getDateModifier(date, false);
             std::vector<std::string> subVec(strArr.begin() + 1, strArr.end());
 
             subVec = formatArr(subVec);
             std::tm specifiedDay = classifyDate(subVec);
+            std::tm current = TimeManager::getCurrentTime();
 
-            int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
-            time_t t = time(NULL) + modifer;
-            localtime_s(&output, &t);
-
-            int diff = output.tm_wday - specifiedDay.tm_wday;
-            if (diff == 0) {
-                return output;
-            } else {
-                return specifiedDay;
-            }
+            return TimeManager::compareTime(current, specifiedDay);
         } else {
             throw std::invalid_argument("");
         }
 
-        int modifer = dayDiff * DAYINSECS + weekDiff * WEEKINSECS + monthDiff * MONTHINSECS;
-        time_t t = time(NULL) + modifer;
-        localtime_s(&output, &t);
+        std::tm current = TimeManager::getCurrentTime();
+        std::tm modified = current;
+        modified.tm_mday += dayDiff + 7 * weekDiff;
+        modified.tm_mon += monthDiff;
 
-        return output;
+        return TimeManager::compareTime(current, modified);
     }
 
     std::vector<std::string> DateTimeParser::formatArr(std::vector<std::string> strArr) {
@@ -292,10 +285,10 @@ namespace DoLah {
 
         std::vector<std::string> cleanArr = formatArr(strArr);
 
-        int time = DEFAULT_TIME;
+        int giventime = DEFAULT_TIME;
         for (size_t i = 0; i < cleanArr.size(); i++) {
             try {
-                time = getTime(cleanArr.at(i));
+                giventime = getTime(cleanArr.at(i));
                 cleanArr.erase(cleanArr.begin() + i);
                 if (cleanArr.size() == 0) {
                     done = true;
@@ -309,7 +302,9 @@ namespace DoLah {
 
         if (!done) {
             try {
-                output = checkRelativeDateFormat(cleanArr);
+                int modifier = checkDateModifier(cleanArr);
+                time_t t = time(NULL) + modifier;
+                localtime_s(&output, &t);
                 done = true;
                 hasDay = true;
             } catch (std::invalid_argument e) {
@@ -327,8 +322,8 @@ namespace DoLah {
             }
         }
 
-        output.tm_hour = time / 60;
-        output.tm_min = time % 60;
+        output.tm_hour = giventime / 60;
+        output.tm_min = giventime % 60;
         output.tm_sec = 0; // default
 
         // If only time is given and the time is behind the lowerBound,

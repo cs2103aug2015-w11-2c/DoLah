@@ -33,7 +33,7 @@ namespace DoLah {
         static int getDateModifier(int, bool);
 
         // Time that is relative to today such as in 10 days, in a week, tomorrow
-        static std::tm checkRelativeDateFormat(std::vector<std::string>);
+        static int checkDateModifier(std::vector<std::string>);
 
         static std::tm classifyDate(std::vector<std::string>);
         // 25th December 2015
