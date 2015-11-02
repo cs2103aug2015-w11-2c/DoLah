@@ -2,11 +2,11 @@
 
 namespace DoLah {
     std::vector<std::string> CommandParser::ADD = { "add" };
-    std::vector<std::string> CommandParser::SEARCH = { "search" };
+    std::vector<std::string> CommandParser::SEARCH = { "search", "find" };
     std::vector<std::string> CommandParser::DONE = { "done" };
     std::vector<std::string> CommandParser::UNDONE = { "undone" };
     std::vector<std::string> CommandParser::EDIT = { "edit" };
-    std::vector<std::string> CommandParser::DELETE = { "delete", "del" };
+    std::vector<std::string> CommandParser::DELETE = { "delete", "del", "dl" };
     std::vector<std::string> CommandParser::CLEAR = { "clear" };
     std::vector<std::string> CommandParser::UNDO = { "undo" };
 
