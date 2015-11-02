@@ -154,18 +154,17 @@ namespace DoLah {
     // METHODS TO UPDATE VIEWS
 
     void DoLahUI::loadTasks() {
-        int i = 0;
         std::vector<AbstractTask*> taskList = (appClient.getCalendar()).getTaskList();
-        for (i; i < taskList.size(); ++i) {
-            createTaskBox(home, i, taskList[i]);
+        for (int i = 0; i < taskList.size(); ++i) {
+            createTaskBox(home, i+1, taskList[i]);
         }
         std::vector<AbstractTask*> doneList = appClient.getCalendar().getDoneList();
         for (int j = 0; j < doneList.size(); ++j) {
-            createTaskBox(done, j, doneList[j]);
+            createTaskBox(done, j+1, doneList[j]);
         }
         std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
         for (int k = 0; k < searchedList.size(); ++k) {
-            createTaskBox(search, (searchedList[k])->getId()-1, searchedList[k]);
+            createTaskBox(search, (searchedList[k])->getIndex()+1, searchedList[k]);
         }
     }
 
@@ -253,14 +252,17 @@ namespace DoLah {
 
     void DoLahUI::goToHome() {
         tabOrganizer->setCurrentIndex(0);
+        viewPort->verticalScrollBar()->setValue(0);
     }
 
     void DoLahUI::goToDone() {
         tabOrganizer->setCurrentIndex(1);
+        viewPort->verticalScrollBar()->setValue(0);
     }
 
     void DoLahUI::goToSearch() {
         tabOrganizer->setCurrentIndex(2);
+        viewPort->verticalScrollBar()->setValue(0);
     }
 
     void DoLahUI::goToHelp() {

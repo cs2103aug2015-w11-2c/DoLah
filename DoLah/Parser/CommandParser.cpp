@@ -49,7 +49,7 @@ namespace DoLah {
         } catch (std::invalid_argument e) {
             throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
         }
-        return SetDoneTaskCommand(taskID);
+        return SetDoneTaskCommand(taskID-1);
     }
 
     SetUndoneTaskCommand CommandParser::parseSetUndone(std::vector<std::string> inputArr) {
@@ -70,7 +70,7 @@ namespace DoLah {
         catch (std::invalid_argument e) {
             throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
         }
-        return SetUndoneTaskCommand(taskID);
+        return SetUndoneTaskCommand(taskID-1);
     }
 
     SearchTaskCommand CommandParser::parseSearch(std::vector<std::string> inputArr) {
@@ -97,7 +97,7 @@ namespace DoLah {
 
         std::vector<std::string> subVec(inputArr.begin() + 1, inputArr.end());
         AbstractTask* task = TaskParser::parseTask(subVec);
-        return EditTaskCommand(taskID, task);
+        return EditTaskCommand(taskID-1, task);
     }
 
 
@@ -114,7 +114,7 @@ namespace DoLah {
         } catch (std::invalid_argument e) {
             throw std::invalid_argument(INVALID_TASK_ID_ARGUMENT);
         }
-        return DeleteTaskCommand(taskID);
+        return DeleteTaskCommand(taskID-1);
     }
 
 
