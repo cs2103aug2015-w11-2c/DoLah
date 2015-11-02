@@ -30,6 +30,17 @@ namespace DoLah {
         return this->tags;
     }
 
+    void AbstractTask::setExpired(bool expired) {
+        this->expired = expired;
+    }
+
+    bool AbstractTask::isExpired() {
+        return this->expired;
+    }
+
+    void AbstractTask::updateExpired() {
+    }
+
     void AbstractTask::setDone(bool done) {
         this->done = done;
     }

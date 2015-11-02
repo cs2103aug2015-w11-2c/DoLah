@@ -171,5 +171,9 @@ namespace DoLah {
         return dates;
     }
 
-
+    void Calendar::updateTaskExpiry() {
+        for (size_t i = 0; i < this->taskList.size(); i++) {
+            this->taskList[i]->updateExpired();
+        }
+    }
 }
