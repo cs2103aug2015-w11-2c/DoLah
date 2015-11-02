@@ -45,4 +45,12 @@ namespace DoLah {
     int AbstractTask::getId() {
         return this->id;
     }
+
+    void AbstractTask::setIndex(int index) {
+        this->index = index;
+    }
+
+    int AbstractTask::getIndex() {
+        return this->index;
+    }
 }

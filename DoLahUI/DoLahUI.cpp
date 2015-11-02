@@ -163,7 +163,7 @@ namespace DoLah {
         }
         std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
         for (int k = 0; k < searchedList.size(); ++k) {
-            createTaskBox(search, (searchedList[k])->getId()-1, searchedList[k]);
+            createTaskBox(search, (searchedList[k])->getIndex(), searchedList[k]);
         }
     }
 
