@@ -69,6 +69,7 @@ namespace DoLah {
             auto it_end = it_start + 1;
             std::move(it_start, it_end, std::back_inserter(doneList));
             taskList.erase(it_start, it_end);
+            sortTasks(doneList);
         } else {
             // set task to undone (from donelist to tasklist)
             task = doneList.at(taskIndex);
@@ -77,6 +78,7 @@ namespace DoLah {
             auto it_end = it_start + 1;
             std::move(it_start, it_end, std::back_inserter(taskList));
             doneList.erase(it_start, it_end);
+            sortTasks(taskList);
         }
 
     }
