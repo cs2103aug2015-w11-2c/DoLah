@@ -7,14 +7,7 @@ DoLah::CalendarInverter::~CalendarInverter(){
 }
 
 void DoLah::CalendarInverter::invertAdd(AbstractTask * task, Calendar * calendar){
-    int targetId;
-    if (task->isDone()) {
-        targetId = calendar->getDoneList().size() - 1;
-    }
-    else {
-        targetId = calendar->getTaskList().size() - 1;
-    }
-    calendar->deleteTask(targetId);
+    calendar->deleteTask(task->getId(), !(task->isDone()));
 }
 
 void DoLah::CalendarInverter::invertDelete(AbstractTask * task, Calendar * calendar){
