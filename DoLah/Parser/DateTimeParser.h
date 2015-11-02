@@ -35,6 +35,8 @@ namespace DoLah {
         // Time that is relative to today such as in 10 days, in a week, tomorrow
         static int checkDateModifier(std::vector<std::string>);
 
+        static int checkTimeModifier(std::vector<std::string>);
+
         static std::tm classifyDate(std::vector<std::string>);
         // 25th December 2015
         static std::tm checkDMYformat(std::vector<std::string>);
@@ -43,6 +45,8 @@ namespace DoLah {
     private:
         static int REJECT;
         static std::string CENTURY;
+        static int MININSECS;
+        static int HOURINSECS;
         static int DAYINSECS;
         static int WEEKINSECS;
         static int MONTHINSECS;
@@ -76,6 +80,11 @@ namespace DoLah {
         static std::vector<std::string> monthDescriptionPattern;
 
         static std::vector<std::string> yearDescriptionPattern;
+
+        static std::vector<std::string> hourDescriptionPattern;
+
+        static std::vector<std::string> minDescriptionPattern;
+
         // next week
         static std::vector<std::string> nextPattern;
 

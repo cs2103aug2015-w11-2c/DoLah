@@ -3,6 +3,8 @@
 namespace DoLah {
     int DateTimeParser::REJECT = -1;
     std::string DateTimeParser::CENTURY = "20";
+    int DateTimeParser::MININSECS = 60;
+    int DateTimeParser::HOURINSECS = 3600;
     int DateTimeParser::DAYINSECS = 86400;
     int DateTimeParser::WEEKINSECS = 604800;
     int DateTimeParser::MONTHINSECS = 2592000;
@@ -40,10 +42,14 @@ namespace DoLah {
     std::vector<std::string> DateTimeParser::todayPattern = { "today", "td" };
     std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow", "tom", "tm" };
     std::vector<std::string> DateTimeParser::singularPattern = { "a", "an", "the", "one" };
+
     std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };
     std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks", "wk", "wks" };
     std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months", "mon", "mons" };
     std::vector<std::string> DateTimeParser::yearDescriptionPattern = { "y", "year", "years", "yr", "yrs" };
+    std::vector<std::string> DateTimeParser::hourDescriptionPattern = { "hour", "hours", "hr", "hrs" };
+    std::vector<std::string> DateTimeParser::minDescriptionPattern = { "minute", "minutes", "min", "mins" };
+
     std::vector<std::string> DateTimeParser::nextPattern = { "next", "coming" };
 
     std::string DateTimeParser::AM = "am";
@@ -161,6 +167,59 @@ namespace DoLah {
         }
 
         return diff;
+    }
+
+    int DateTimeParser::checkTimeModifier(std::vector<std::string> strArr) {
+        int hourDiff = 0;
+        int minDiff = 0;
+
+        size_t size = strArr.size();
+
+        int index = 0;
+        std::string element;
+
+        element = strArr.at(index++);
+
+        if (size == 2) {
+            if (ParserLibrary::inStringArray(nextPattern, element)) { // next pattern
+                element = strArr.at(index++);
+                if (ParserLibrary::inStringArray(hourDescriptionPattern, element)) {
+                    hourDiff = 1;
+                } else if (ParserLibrary::inStringArray(minDescriptionPattern, element)) {
+                    minDiff = 1;
+                } else {
+                    throw std::invalid_argument("");
+                }
+            } else if (ParserLibrary::isDecimal(element) ||
+                ParserLibrary::inStringArray(singularPattern, element)) { // 10 days, a week, etc
+                int n = 0;
+                if (ParserLibrary::inStringArray(singularPattern, element)) {
+                    n = 1;
+                } else {
+                    n = stoi(element);
+                }
+
+                element = strArr.at(index++);
+                if (ParserLibrary::inStringArray(hourDescriptionPattern, element)) {
+                    hourDiff = n;
+                } else if (ParserLibrary::inStringArray(minDescriptionPattern, element)) {
+                    minDiff = n;
+                } else {
+                    throw std::invalid_argument("");
+                }
+            } else {
+                throw std::invalid_argument("");
+            }
+        } else {
+            throw std::invalid_argument("");
+        }
+
+        std::tm current = TimeManager::getCurrentTime();
+        std::tm modified = current;
+        modified.tm_hour += hourDiff;
+        modified.tm_min += minDiff;
+
+        return TimeManager::compareTime(current, modified);
     }
 
     int DateTimeParser::checkDateModifier(std::vector<std::string> strArr) {
@@ -317,6 +376,24 @@ namespace DoLah {
                 }
                 done = true;
                 hasDay = true;
+            } catch (std::invalid_argument e) {
+                // if not continue
+            }
+        }
+
+        if (!done) {
+            try {
+                int modifier = checkTimeModifier(cleanArr);
+                time_t t = time(NULL) + modifier;
+                localtime_s(&output, &t);
+                if (!TimeManager::isValidDate(output)) {
+                    throw std::invalid_argument("");
+                }
+                done = true;
+
+                giventime = output.tm_hour * 60 + output.tm_min;
+
+                hasTime = true;
             } catch (std::invalid_argument e) {
                 // if not continue
             }
