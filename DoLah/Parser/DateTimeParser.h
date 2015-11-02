@@ -50,9 +50,7 @@ namespace DoLah {
 
         // this week, next week (not implemented)
         static std::string relativePattern;
-        static std::string modiferPattern;
         static std::vector<std::string> datePattern;
-        static std::string dayPattern;
         static std::vector<std::string> monthPattern;
 
         // 1st, 2nd, 3rd, 4th

@@ -10,8 +10,6 @@ namespace DoLah {
 
     std::vector<std::string> DateTimeParser::decorators = { "of", "in", "on", "by", "due", "at" };
 
-    std::string DateTimeParser::relativePattern = "this|next";
-    std::string DateTimeParser::modiferPattern = "^(next |coming |)";
     std::vector<std::string> DateTimeParser::datePattern = {
         "monday|mon|mond",
         "tuesday|tue|tues",
@@ -21,9 +19,6 @@ namespace DoLah {
         "saturday|sat|satu",
         "sunday|sun|sund"
     };
-    std::string DateTimeParser::dayPattern = "^("
-        "([1-9]|0[1-9]|[1-2][0-9]|[3][0-1])(st|nd|rd|th|$)"
-        ")$";
     std::string DateTimeParser::dayAppendixPattern = "(st|nd|rd|th)$";
     std::vector<std::string> DateTimeParser::monthPattern = {
         "^(january|jan|01|1)$",
