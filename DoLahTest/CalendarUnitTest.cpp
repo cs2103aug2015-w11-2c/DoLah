@@ -12,7 +12,8 @@ namespace DoLahTest
 {		
 	TEST_CLASS(CALENDAR_TESTER) {
 	private:
-
+        std::string UNIQUE_NAME = "Unique name";
+        std::string UNIQUE_DESCRIPTION = "Unique description";
     public:
         TEST_METHOD(AddTask) {
             //Arrange
@@ -26,6 +27,24 @@ namespace DoLahTest
             Assert::AreEqual((size_t)1, testCal.getTaskList().size());
             Assert::AreEqual(task->getName(), testCal.getTaskList()[0]->getName());
             Assert::AreEqual(task->getDescription(), testCal.getTaskList()[0]->getDescription());
+        }
+
+        TEST_METHOD(AddTaskIntoPreconstructedList) {
+            //Arrange
+            DoLah::Calendar testCal = CalendarBuilder::buildSimpleCalendar();
+            size_t oldsize = testCal.getTaskList().size();
+            DoLah::DeadlineTask* task = TaskBuilder::buildDeadlineTask();
+            task->setDone(false);
+            task->setName(UNIQUE_NAME);
+            task->setDescription(UNIQUE_DESCRIPTION);
+
+            //Act
+            testCal.addTask(task);
+
+            //Assert
+            Assert::AreEqual(oldsize+1, testCal.getTaskList().size());
+            Assert::AreEqual(UNIQUE_NAME, testCal.getTaskList()[5]->getName());
+            Assert::AreEqual(UNIQUE_DESCRIPTION, testCal.getTaskList()[5]->getDescription());
         }
 
         TEST_METHOD(DeleteTask) {

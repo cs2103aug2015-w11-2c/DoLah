@@ -43,22 +43,49 @@ namespace DoLah {
     }
     
 	void Calendar::addTask(AbstractTask* task) {
-        int insertionIndex = 0;
+        /*int insertionIndex = 0;*/
 
         if (task->isDone()) {
-            while (insertionIndex < doneList.size() && taskCompare(doneList[insertionIndex], task)) {
+           /* while (insertionIndex < doneList.size() && taskCompare(doneList[insertionIndex], task)) {
                 insertionIndex++;
-            }
-            doneList.insert(doneList.begin() + insertionIndex, task);
-
-            task->setId(insertionIndex);
+            }*/
+            findInsertionPoint(task, 0, doneList.size());
+            doneList.insert(doneList.begin() + task->getIndex(), task);
+            task->setId(task->getIndex());
         } else {
-            while (insertionIndex < taskList.size() && taskCompare(taskList[insertionIndex], task)) {
+           /* while (insertionIndex < taskList.size() && taskCompare(taskList[insertionIndex], task)) {
                 insertionIndex++;
-            }
-            taskList.insert(taskList.begin() + insertionIndex, task);
+            }*/
+            findInsertionPoint(task, 0, taskList.size());
+            taskList.insert(taskList.begin() + task->getIndex(), task);
 
-            task->setId(insertionIndex);
+            task->setId(task->getIndex());
+        }
+    }
+
+    void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
+        if (end - start <= 1) {
+            task->setIndex(end);
+        }
+        else {
+            int middle = (start + end) / 2;
+            if (task->isDone()) {
+                if (taskCompare(task, doneList[middle])) {
+                    findInsertionPoint(task, middle, end);
+                } else {
+                    findInsertionPoint(task, start, middle);
+                }
+            }
+            else {
+                if (taskCompare(task, taskList[middle])) {
+                    //findInsertionPoint(task, middle, end);
+                    findInsertionPoint(task, start, middle);
+                }
+                else {
+                    //findInsertionPoint(task, start, middle);
+                    findInsertionPoint(task, middle, end);
+                }
+            }
         }
     }
 
@@ -146,12 +173,13 @@ namespace DoLah {
         indexTasks(unsortedTaskList);
     }
 
-    void Calendar::indexTasks(std::vector<AbstractTask*> &list) {
-        for (size_t index = 0; index < list.size(); index++) {
+    void Calendar::indexTasks(std::vector<AbstractTask*> &list, int startIndex) {
+        for (size_t index = startIndex; index < list.size(); index++) {
             list[index]->setIndex(index);
         }
     }
 
+    // Check if first > second
     bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
         std::vector<std::tm> firstDates = getDates(first);
         std::vector<std::tm> secondDates = getDates(second);
