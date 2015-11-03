@@ -9,6 +9,7 @@ namespace DoLah {
     std::vector<std::string> CommandParser::DELETE = { "delete", "del", "dl" };
     std::vector<std::string> CommandParser::CLEAR = { "clear" };
     std::vector<std::string> CommandParser::UNDO = { "undo" };
+    std::vector<std::string> CommandParser::REDO = { "redo" };
 
     std::string CommandParser::UNHANDLED_COMMAND_MESSAGE = "Command not handled";
     std::string CommandParser::UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
@@ -142,6 +143,17 @@ namespace DoLah {
         return lineArr;
     }
 
+
+    RedoTaskCommand CommandParser::parseRedo(std::vector<std::string> inputArr) {
+        if (inputArr.size() > 0) {
+            throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
+        }
+
+        RedoTaskCommand command;
+        return command;
+    }
+
+
     AbstractCommand* CommandParser::parse(std::string input) {
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
         std::string command = inputArr[0];
@@ -177,6 +189,9 @@ namespace DoLah {
         } else if (ParserLibrary::inStringArray(UNDO, command)) {
             inputArr = pruneCommand(inputArr);
             UndoTaskCommand* command = new UndoTaskCommand(parseUndo(inputArr));
+            return command;
+        } else if (ParserLibrary::inStringArray(REDO, command)) {
+            RedoTaskCommand* command = new RedoTaskCommand(parseRedo(inputArr));
             return command;
         } else {
             AddTaskCommand* command = new AddTaskCommand(parseAdd(inputArr));

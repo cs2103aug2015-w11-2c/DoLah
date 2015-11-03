@@ -131,6 +131,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Commands\SetDoneTaskCommand.cpp" />
+    <ClCompile Include="Models\CalendarInverter.cpp" />
     <ClCompile Include="Parser\CommandParser.cpp" />
     <ClCompile Include="Parser\DateTimeParser.cpp" />
     <ClCompile Include="Parser\ParserLibrary.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Models\CalendarInverter.h" />
     <ClInclude Include="Parser\CommandParser.h" />
     <ClInclude Include="Parser\DateTimeParser.h" />
     <ClInclude Include="Parser\ParserLibrary.h" />

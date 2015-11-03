@@ -8,7 +8,7 @@ namespace DoLah {
 	}
 
 	AddTaskCommand::AddTaskCommand(DoLah::AbstractTask* newTask) {
-		task = newTask;
+		this->task = newTask;
 	}
 
 	AddTaskCommand::~AddTaskCommand() {
@@ -18,6 +18,10 @@ namespace DoLah {
 	void AddTaskCommand::execute() {
 		calendar->addTask(task);
 	}
+
+    void AddTaskCommand::revert() {
+        CalendarInverter::invertAdd(task, calendar);
+    }
 
 	//protected
 }

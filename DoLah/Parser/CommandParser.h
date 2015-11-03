@@ -28,6 +28,7 @@ namespace DoLah {
         static DeleteTaskCommand parseDelete(std::vector<std::string>);
         static ClearTaskCommand parseClear(std::vector<std::string>);
         static UndoTaskCommand parseUndo(std::vector<std::string>);
+        static RedoTaskCommand parseRedo(std::vector<std::string>);
 
         // Fixed format ~ command is always at the front
         static std::vector<std::string> pruneCommand(std::vector<std::string> lineArr);
@@ -40,7 +41,7 @@ namespace DoLah {
         static std::vector<std::string> DELETE;
         static std::vector<std::string> CLEAR;
         static std::vector<std::string> UNDO;
-
+        static std::vector<std::string> REDO;
         static std::string UNHANDLED_COMMAND_MESSAGE;
         static std::string UNKNOWN_COMMAND_MESSAGE;
         static std::string TOO_MANY_ARGUMENTS_MESSAGE;

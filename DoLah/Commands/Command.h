@@ -4,6 +4,8 @@
 #include <string>
 #include "Models/Task.h"
 #include "Models/Calendar.h"
+#include "Models/CommandHistory.h"
+#include "Models/CalendarInverter.h"
 
 namespace DoLah {
 
@@ -12,6 +14,7 @@ namespace DoLah {
 		virtual ~AbstractCommand() = 0;
         void setCalendar(DoLah::Calendar*);
 		virtual void execute() = 0;
+        virtual void revert() = 0;
 
     protected:
         DoLah::Calendar* calendar;
@@ -24,6 +27,7 @@ namespace DoLah {
 		~AddTaskCommand();
 
 		void execute();
+        void revert();
 
 	private:
 		DoLah::AbstractTask* task;
@@ -34,29 +38,41 @@ namespace DoLah {
 		EditTaskCommand();
 		EditTaskCommand(int, DoLah::AbstractTask *);
 		~EditTaskCommand();
-		void execute();
+		
+        void execute();
+        void revert();
 
 	private:
 		int taskIndex;
 		DoLah::AbstractTask* task;
+        DoLah::AbstractTask* oldTask;
 	};
 
     class SetDoneTaskCommand : public AbstractCommand {
     public:
+        SetDoneTaskCommand();
         SetDoneTaskCommand(int);
         ~SetDoneTaskCommand();
+        
         void execute();
+        void revert();
+    
     private:
         int taskIndex;
+        DoLah::AbstractTask* oldTask;
     };
 
     class SetUndoneTaskCommand : public AbstractCommand {
     public:
+        SetUndoneTaskCommand();
         SetUndoneTaskCommand(int);
         ~SetUndoneTaskCommand();
+
         void execute();
+        void revert();
     private:
         int taskIndex;
+        DoLah::AbstractTask* oldTask;
     };
 
 	class DeleteTaskCommand : public AbstractCommand {
@@ -66,9 +82,11 @@ namespace DoLah {
 		~DeleteTaskCommand();
 
 		void execute();
+        void revert();
 
 	private:
 		int taskIndex;
+        DoLah::AbstractTask* oldTask;
 	};
 
 	class ClearTaskCommand : public AbstractCommand {
@@ -77,6 +95,11 @@ namespace DoLah {
 		~ClearTaskCommand();
 
 		void execute();
+        void revert();
+
+    private:
+        std::vector<AbstractTask*> oldTaskList;
+        std::vector<AbstractTask*> oldDoneList;
 	};
 
 	class SearchTaskCommand : public AbstractCommand {
@@ -87,6 +110,7 @@ namespace DoLah {
 		~SearchTaskCommand();
 
 		void execute();
+        void revert();
 
 	private:
 		std::string query;
@@ -99,6 +123,9 @@ namespace DoLah {
 		~UndoTaskCommand();
 
 		void execute();
+        void revert(); // DO NOT CALL
+    private:
+        static std::string ILLEGAL_FUNCTION_CALL_MESSAGE;
 	};
 
 	class RedoTaskCommand : public AbstractCommand {
@@ -107,6 +134,9 @@ namespace DoLah {
 		~RedoTaskCommand();
 
 		void execute();
+        void revert(); // DO NOT CALL
+    private:
+        static std::string ILLEGAL_FUNCTION_CALL_MESSAGE;
 	};
 
 }
