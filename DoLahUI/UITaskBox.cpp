@@ -6,6 +6,7 @@ namespace DoLah {
         this->setWordWrap(true);
         this->setFrameStyle(QFrame::NoFrame);
         dynamicCast(index, task);
+        easyEdit = new EasyEdit(this);
     }
 
 
@@ -72,7 +73,7 @@ namespace DoLah {
 
     void UITaskBox::mouseDoubleClickEvent(QMouseEvent *event) {
         if (event->button() == Qt::LeftButton) {
-            this->setText("LOLOLOLOL");
+            easyEdit->exec();
         }
     }
 

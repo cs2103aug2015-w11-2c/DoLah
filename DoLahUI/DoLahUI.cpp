@@ -149,15 +149,15 @@ namespace DoLah {
 
     void DoLahUI::loadTasks() {
         std::vector<AbstractTask*> taskList = (appClient.getCalendar()).getTaskList();
-        for (int i = 0; i < taskList.size(); ++i) {
+        for (int i = 0; i < static_cast<int>(taskList.size()); ++i) {
             createTaskBox(home, i+1, taskList[i]);
         }
         std::vector<AbstractTask*> doneList = appClient.getCalendar().getDoneList();
-        for (int j = 0; j < doneList.size(); ++j) {
+        for (int j = 0; j < static_cast<int>(doneList.size()); ++j) {
             createTaskBox(done, j+1, doneList[j]);
         }
         std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
-        for (int k = 0; k < searchedList.size(); ++k) {
+        for (int k = 0; k < static_cast<int>(searchedList.size()); ++k) {
             createTaskBox(search, (searchedList[k])->getIndex()+1, searchedList[k]);
         }
     }
@@ -214,9 +214,9 @@ namespace DoLah {
     void DoLahUI::handleUserInput() {
         QString input = lineEdit->text();
         std::string inputline = input.toStdString();
-        lineEdit->arrangeStack();
-        lineEdit->commandstack_up.push(inputline);
         if (inputline.length() != 0) {
+            lineEdit->arrangeStack();
+            lineEdit->commandstack_up.push(inputline);
             try {
                 if (inputline == "help") {
                     goToHelp();
@@ -230,17 +230,21 @@ namespace DoLah {
                 else {
                     this->appClient.parseAndProcessCommand(inputline);
                     refreshTasks();
+                    message->clear();
                     message->setText("Done. Enter next command:");
                 }
             }
             catch (std::exception e) {
                 QString text = QString(e.what());
+                message->clear();
                 message->setText(text);
                 refreshTasks();
             }
         }
         else {
             refreshTasks();
+            message->clear();
+            message->setText("Enter a command??");
         }
     }
 

@@ -15,6 +15,14 @@ namespace DoLah {
         exitButton->setPixmap(exitIcon);
         exitButton->setGeometry(QRect(270, 0, 20, 20));
         QObject::connect(exitButton, SIGNAL(clicked()), this, SLOT(reject()));
+
+        buttonBox = new QDialogButtonBox(this);
+        buttonBox->setObjectName(QStringLiteral("buttonBox"));
+        buttonBox->setGeometry(QRect(65, 170, 170, 23));
+        buttonBox->setCenterButtons(true);
+        buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+        connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     }
 
     SettingsWindow::~SettingsWindow()

@@ -4,6 +4,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QDialogButtonBox>
 #include <QMainWindow>
 #include <QFile>
 
@@ -18,6 +19,7 @@ namespace DoLah {
         ~SettingsWindow();
 
         MenuLabel *exitButton;
+        QDialogButtonBox *buttonBox;
 
     private slots:
         void changeTheme(int);

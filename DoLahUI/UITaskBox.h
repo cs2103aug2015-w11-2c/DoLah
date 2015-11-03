@@ -2,6 +2,7 @@
 #define UITASKBOX_H
 
 #include "DoLahClient.h"
+#include "EasyEdit.h"
 #include <QtWidgets/QLabel>
 #include <QMainWindow>
 #include <QMouseEvent>
@@ -15,6 +16,8 @@ namespace DoLah {
         UITaskBox(int, AbstractTask*);
         ~UITaskBox();
         QSize sizeHint() const;
+
+        EasyEdit *easyEdit;
 
     protected:
         void mouseDoubleClickEvent(QMouseEvent*);
