@@ -7,15 +7,15 @@ DoLah::CalendarInverter::~CalendarInverter(){
 }
 
 void DoLah::CalendarInverter::invertAdd(AbstractTask * task, Calendar * calendar){
-    calendar->deleteTask(task->getId(), !(task->isDone()));
+    calendar->deleteTask(task->getIndex(), !(task->isDone()));
 }
 
 void DoLah::CalendarInverter::invertDelete(AbstractTask * task, Calendar * calendar){
-    calendar->addTask(task, task->getId());
+    calendar->addTask(task, task->getIndex());
 }
 
 void DoLah::CalendarInverter::invertEdit(AbstractTask * task, Calendar * calendar){
-    calendar->updateTask(task->getId(), task);
+    calendar->updateTask(task->getIndex(), task);
 }
 
 void DoLah::CalendarInverter::invertClear(std::vector<AbstractTask*> taskList, Calendar * calendar){
@@ -41,14 +41,5 @@ void DoLah::CalendarInverter::invertDone(AbstractTask * task, Calendar * calenda
         taskList = calendar->getTaskList();
     }
 
-    for (int i = 0; i < taskList.size(); i++) {
-        if (task->getName() == taskList[i]->getName()){
-            if (task->getDescription() == taskList[i]->getDescription()){
-                if (task->getId() == taskList[i]->getId()){
-                    calendar->setDoneTask(i, done);
-                    break;
-                }
-            }
-        }
-    }
+    calendar->setDoneTask(task->getIndex(),done);
 }

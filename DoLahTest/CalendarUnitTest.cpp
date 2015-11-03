@@ -43,8 +43,8 @@ namespace DoLahTest
 
             //Assert
             Assert::AreEqual(oldsize+1, testCal.getTaskList().size());
-            Assert::AreEqual(UNIQUE_NAME, testCal.getTaskList()[5]->getName());
-            Assert::AreEqual(UNIQUE_DESCRIPTION, testCal.getTaskList()[5]->getDescription());
+            Assert::AreEqual(UNIQUE_NAME, testCal.getTaskList()[2]->getName());
+            Assert::AreEqual(UNIQUE_DESCRIPTION, testCal.getTaskList()[2]->getDescription());
         }
 
         TEST_METHOD(DeleteTask) {
@@ -115,9 +115,9 @@ namespace DoLahTest
             testCal.updateTask(0, task);
 
             //Assert
-            Assert::AreEqual(task->getName(), testCal.getTaskList()[task->getId()]->getName());
-            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[task->getId()]->getDescription());
-            Assert::AreEqual(task->isDone(), testCal.getTaskList()[task->getId()]->isDone());
+            Assert::AreEqual(task->getName(), testCal.getTaskList()[task->getIndex()]->getName());
+            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[task->getIndex()]->getDescription());
+            Assert::AreEqual(task->isDone(), testCal.getTaskList()[task->getIndex()]->isDone());
         }
 
         // TESTING FOR BOUNDARY CASE WHERE TASK TO BE EDITED DOES NOT EXIST

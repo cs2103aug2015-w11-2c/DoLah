@@ -43,47 +43,39 @@ namespace DoLah {
     }
     
 	void Calendar::addTask(AbstractTask* task) {
-        /*int insertionIndex = 0;*/
-
         if (task->isDone()) {
-           /* while (insertionIndex < doneList.size() && taskCompare(doneList[insertionIndex], task)) {
-                insertionIndex++;
-            }*/
             findInsertionPoint(task, 0, doneList.size());
             doneList.insert(doneList.begin() + task->getIndex(), task);
-            task->setId(task->getIndex());
+            indexTasks(doneList, task->getIndex());
+            //task->setId(task->getIndex());
         } else {
-           /* while (insertionIndex < taskList.size() && taskCompare(taskList[insertionIndex], task)) {
-                insertionIndex++;
-            }*/
             findInsertionPoint(task, 0, taskList.size());
             taskList.insert(taskList.begin() + task->getIndex(), task);
-
-            task->setId(task->getIndex());
+            indexTasks(taskList, task->getIndex());
+            //task->setId(task->getIndex());
         }
     }
 
     void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
-        if (end - start <= 1) {
-            task->setIndex(end);
+        if (end == start) {
+            task->setIndex(start);
         }
         else {
             int middle = (start + end) / 2;
             if (task->isDone()) {
                 if (taskCompare(task, doneList[middle])) {
-                    findInsertionPoint(task, middle, end);
-                } else {
                     findInsertionPoint(task, start, middle);
+                } else {
+                    
+                    findInsertionPoint(task, middle + 1, end);
                 }
             }
             else {
                 if (taskCompare(task, taskList[middle])) {
-                    //findInsertionPoint(task, middle, end);
                     findInsertionPoint(task, start, middle);
                 }
                 else {
-                    //findInsertionPoint(task, start, middle);
-                    findInsertionPoint(task, middle, end);
+                    findInsertionPoint(task, middle+1, end);
                 }
             }
         }
