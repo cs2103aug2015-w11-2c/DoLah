@@ -43,22 +43,39 @@ namespace DoLah {
     }
     
 	void Calendar::addTask(AbstractTask* task) {
-        int insertionIndex = 0;
-
         if (task->isDone()) {
-            while (insertionIndex < doneList.size() && taskCompare(doneList[insertionIndex], task)) {
-                insertionIndex++;
-            }
-            doneList.insert(doneList.begin() + insertionIndex, task);
-
-            task->setId(insertionIndex);
+            findInsertionPoint(task, 0, doneList.size());
+            doneList.insert(doneList.begin() + task->getIndex(), task);
+            indexTasks(doneList, task->getIndex());
         } else {
-            while (insertionIndex < taskList.size() && taskCompare(taskList[insertionIndex], task)) {
-                insertionIndex++;
-            }
-            taskList.insert(taskList.begin() + insertionIndex, task);
+            findInsertionPoint(task, 0, taskList.size());
+            taskList.insert(taskList.begin() + task->getIndex(), task);
+            indexTasks(taskList, task->getIndex());
+        }
+    }
 
-            task->setId(insertionIndex);
+    void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
+        if (end == start) {
+            task->setIndex(start);
+        }
+        else {
+            int middle = (start + end) / 2;
+            if (task->isDone()) {
+                if (taskCompare(task, doneList[middle])) {
+                    findInsertionPoint(task, start, middle);
+                } else {
+                    
+                    findInsertionPoint(task, middle + 1, end);
+                }
+            }
+            else {
+                if (taskCompare(task, taskList[middle])) {
+                    findInsertionPoint(task, start, middle);
+                }
+                else {
+                    findInsertionPoint(task, middle+1, end);
+                }
+            }
         }
     }
 
@@ -146,37 +163,36 @@ namespace DoLah {
         indexTasks(unsortedTaskList);
     }
 
-    void Calendar::indexTasks(std::vector<AbstractTask*> &list) {
-        for (size_t index = 0; index < list.size(); index++) {
+    void Calendar::indexTasks(std::vector<AbstractTask*> &list, int startIndex) {
+        for (size_t index = startIndex; index < list.size(); index++) {
             list[index]->setIndex(index);
         }
     }
 
+    // Check if first < second
     bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
-        std::vector<std::tm> firstDates = getDates(first);
-        std::vector<std::tm> secondDates = getDates(second);
+        if (typeid(*second) == typeid(FloatingTask)){
+            //case: floating task vs floating task
+            if (typeid(*first) == typeid(FloatingTask)) {
+                return first->getName().compare(second->getName()) < 0;
+            }
+            //case: non-floating task vs floating task
+            return true; 
+        } else if (typeid(*first) == typeid(FloatingTask)) {
+            //case: floating task vs non-floating task
+            return false;
+        } else {
+            std::vector<std::tm> firstDates = getDates(first);
+            std::vector<std::tm> secondDates = getDates(second);
 
-        if (firstDates.size() != secondDates.size()) {
-            return firstDates.size() > secondDates.size();
-        } else if (firstDates.size() == 1) {
             int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
             if (diff != 0) {
                 return diff > 0;
             }
-            return first->getDescription().compare(second->getDescription()) > 0;
-        } else if (firstDates.size() == 2) {
-            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
-            if (diff != 0) {
-                return diff > 0;
+            else {
+                return first->getName().compare(second->getName()) < 0;
             }
-            diff = TimeManager::compareTime(firstDates[1], secondDates[1]);
-            if (diff != 0) {
-                return diff > 0;
-            }
-            return first->getDescription().compare(second->getDescription()) > 0;
         }
-
-        return false;
     }
 
     std::vector<std::tm> Calendar::getDates(AbstractTask *it) {
