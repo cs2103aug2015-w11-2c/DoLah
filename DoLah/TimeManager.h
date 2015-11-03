@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ctime>
+#include <string>
 
 namespace DoLah {
     class TimeManager {

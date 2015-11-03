@@ -2,11 +2,11 @@
 
 namespace DoLah {
     std::vector<std::string> CommandParser::ADD = { "add" };
-    std::vector<std::string> CommandParser::SEARCH = { "search" };
+    std::vector<std::string> CommandParser::SEARCH = { "search", "find" };
     std::vector<std::string> CommandParser::DONE = { "done" };
     std::vector<std::string> CommandParser::UNDONE = { "undone" };
     std::vector<std::string> CommandParser::EDIT = { "edit" };
-    std::vector<std::string> CommandParser::DELETE = { "delete", "del" };
+    std::vector<std::string> CommandParser::DELETE = { "delete", "del", "dl" };
     std::vector<std::string> CommandParser::CLEAR = { "clear" };
     std::vector<std::string> CommandParser::UNDO = { "undo" };
     std::vector<std::string> CommandParser::REDO = { "redo" };
@@ -138,6 +138,12 @@ namespace DoLah {
         return command;
     }
 
+    std::vector<std::string> CommandParser::pruneCommand(std::vector<std::string> lineArr) {
+        lineArr.erase(lineArr.begin());
+        return lineArr;
+    }
+
+
     RedoTaskCommand CommandParser::parseRedo(std::vector<std::string> inputArr) {
         if (inputArr.size() > 0) {
             throw std::invalid_argument(TOO_MANY_ARGUMENTS_MESSAGE);
@@ -150,46 +156,46 @@ namespace DoLah {
 
     AbstractCommand* CommandParser::parse(std::string input) {
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
-        std::string command = DoLah::CommandTokenizer::findCommand(inputArr);
-
-        if (command.empty()) {
-            // default command
-            command = ADD.at(0);
-        } else {
-            inputArr = CommandTokenizer::pruneCommand(inputArr);
-        }
+        std::string command = inputArr[0];
 
         if (ParserLibrary::inStringArray(ADD, command)) {
+            inputArr = pruneCommand(inputArr);
             AddTaskCommand* command = new AddTaskCommand(parseAdd(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(SEARCH, command)) {
+            inputArr = pruneCommand(inputArr);
             SearchTaskCommand* command = new SearchTaskCommand(parseSearch(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(DONE, command)) {
+            inputArr = pruneCommand(inputArr);
             SetDoneTaskCommand* command = new SetDoneTaskCommand(parseSetDone(inputArr));
             return command;
-        }
-        else if (ParserLibrary::inStringArray(UNDONE, command)) {
+        } else if (ParserLibrary::inStringArray(UNDONE, command)) {
+            inputArr = pruneCommand(inputArr);
             SetUndoneTaskCommand* command = new SetUndoneTaskCommand(parseSetUndone(inputArr));
             return command;
-        }
-        else if (ParserLibrary::inStringArray(EDIT, command)) {
+        } else if (ParserLibrary::inStringArray(EDIT, command)) {
+            inputArr = pruneCommand(inputArr);
             EditTaskCommand* command = new EditTaskCommand(parseEdit(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(DELETE, command)) {
+            inputArr = pruneCommand(inputArr);
             DeleteTaskCommand* command = new DeleteTaskCommand(parseDelete(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(CLEAR, command)) {
+            inputArr = pruneCommand(inputArr);
             ClearTaskCommand* command = new ClearTaskCommand(parseClear(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(UNDO, command)) {
+            inputArr = pruneCommand(inputArr);
             UndoTaskCommand* command = new UndoTaskCommand(parseUndo(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(REDO, command)) {
             RedoTaskCommand* command = new RedoTaskCommand(parseRedo(inputArr));
             return command;
         } else {
-            throw std::invalid_argument(UNHANDLED_COMMAND_MESSAGE);
+            AddTaskCommand* command = new AddTaskCommand(parseAdd(inputArr));
+            return command;
         }
     }
 }

@@ -33,9 +33,6 @@
     <ClCompile Include="Parser\DateTimeParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Parser\CommandTokenizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Parser\CommandParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,9 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Parser\DateTimeParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser\CommandTokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Parser\CommandParser.h">

@@ -133,7 +133,6 @@
     <ClCompile Include="Commands\SetDoneTaskCommand.cpp" />
     <ClCompile Include="Models\CalendarInverter.cpp" />
     <ClCompile Include="Parser\CommandParser.cpp" />
-    <ClCompile Include="Parser\CommandTokenizer.cpp" />
     <ClCompile Include="Parser\DateTimeParser.cpp" />
     <ClCompile Include="Parser\ParserLibrary.cpp" />
     <ClCompile Include="Commands\SetUndoneTaskCommand.cpp" />
@@ -160,7 +159,6 @@
   <ItemGroup>
     <ClInclude Include="Models\CalendarInverter.h" />
     <ClInclude Include="Parser\CommandParser.h" />
-    <ClInclude Include="Parser\CommandTokenizer.h" />
     <ClInclude Include="Parser\DateTimeParser.h" />
     <ClInclude Include="Parser\ParserLibrary.h" />
     <ClInclude Include="Storage\CalendarStorage.h" />
