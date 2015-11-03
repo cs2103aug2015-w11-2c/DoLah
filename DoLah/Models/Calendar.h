@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include "Models/Task.h"
+#include <Models/CommandHistory.h>
 #include "TimeManager.h"
 
 namespace DoLah {
@@ -14,11 +15,13 @@ namespace DoLah {
 		AbstractTask* getTask(int) const;
         AbstractTask* getDone(int) const;
 		std::vector<AbstractTask*> getTaskList() const;
-        std::vector<AbstractTask*> getDoneList() const;
+        std::vector<AbstractTask*> Calendar::getDoneList() const;
         std::vector<AbstractTask*> getSearchedTaskList() const;
         std::vector<AbstractTask*> getAllTaskList() const;
-		void addTask(AbstractTask*);
-		void deleteTask(int);
+        CommandHistory* Calendar::getCmdHistory();
+		void addTask(AbstractTask*); /// returns position where task is added
+        void addTask(AbstractTask*, int); /// returns position where task is added
+        void deleteTask(int, bool=true);
         void setDoneTask(int, bool=true);
 		void updateTask(int, AbstractTask*);
 		void clearTasks();
@@ -31,6 +34,7 @@ namespace DoLah {
     private:
         std::vector<AbstractTask*> taskList;
         std::vector<AbstractTask*> doneList;
+        CommandHistory cmdHistory;
         std::vector<AbstractTask*> searchedList;
 
         std::string TASK_INDEX_OUT_OF_RANGE_MESSAGE = "Task index out of range";

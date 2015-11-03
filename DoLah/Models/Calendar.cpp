@@ -1,8 +1,9 @@
 #include "Calendar.h"
 
 namespace DoLah {
-    Calendar::Calendar() {
-    }
+	Calendar::Calendar() {
+        this->cmdHistory = DoLah::CommandHistory();
+	}
 
     Calendar::~Calendar() {
         //TODO
@@ -36,28 +37,55 @@ namespace DoLah {
         return allTaskList;
     }
 
-    void Calendar::addTask(AbstractTask* task) {
-        if (taskList.empty()) {
-            task->setId(1);
-        } else {
-            task->setId(taskList.back()->getId() + 1);
-        }
+    DoLah::CommandHistory* Calendar::getCmdHistory(){
+        DoLah::CommandHistory* cmdHistoryPointer = &(this->cmdHistory);
+        return cmdHistoryPointer;
+    }
+    
+	void Calendar::addTask(AbstractTask* task) {
+        int insertionIndex = 0;
 
         if (task->isDone()) {
-            doneList.push_back(task);
-            sortTasks(doneList);
+            while (insertionIndex < doneList.size() && taskCompare(doneList[insertionIndex], task)) {
+                insertionIndex++;
+            }
+            doneList.insert(doneList.begin() + insertionIndex, task);
+
+            task->setId(insertionIndex);
         } else {
-            taskList.push_back(task);
-            sortTasks(taskList);
+            while (insertionIndex < taskList.size() && taskCompare(taskList[insertionIndex], task)) {
+                insertionIndex++;
+            }
+            taskList.insert(taskList.begin() + insertionIndex, task);
+
+            task->setId(insertionIndex);
         }
     }
 
-    void Calendar::deleteTask(int index) {
+    void Calendar::addTask(AbstractTask* task, int index) {
+        task->setId(index);
+
+        if (task->isDone()) {
+            doneList.insert(doneList.begin()+index, task);
+        }
+        else {
+            taskList.insert(taskList.begin()+index, task);
+        }
+    }
+
+    void Calendar::deleteTask(int index, bool status) {
         if (index >= taskList.size()) {
             throw std::out_of_range(TASK_INDEX_OUT_OF_RANGE_MESSAGE);
         }
-        taskList.erase(taskList.begin() + index);
-        indexTasks(taskList);
+
+        if (status) {
+            taskList.erase(taskList.begin() + index);
+            indexTasks(taskList);
+        }
+        else {
+            taskList.erase(doneList.begin() + index);
+            indexTasks(doneList);
+        }
     }
 
     void Calendar::setDoneTask(int taskIndex, bool status) {
@@ -88,9 +116,8 @@ namespace DoLah {
 
     void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
-        taskList.at(index) = task;
-
-        sortTasks(taskList);
+        deleteTask(index);
+        addTask(task);
     }
 
     void Calendar::clearTasks() {

@@ -39,15 +39,15 @@ done:  # Completed Tasks
 ...)";
     const std::string SAMPLE_FIXTURE_SIMPLE_CONTENT = R"(---
 todo:  # Todo Tasks
-    - task: Floating Task 0
-      description: A task description for floating task 0
-    - task: Deadline Task 1
-      due: 2016-08-16 03:10:15
-      description: A task description for deadline task 1
     - description: A task description for event task 2
       end: 2015-10-18 00:10:15
       start: 2015-10-16 23:10:15
       task: Event Task 2
+    - task: Deadline Task 1
+      due: 2016-08-16 03:10:15
+      description: A task description for deadline task 1
+    - task: Floating Task 0
+      description: A task description for floating task 0
 ...)";
 
 
@@ -128,7 +128,7 @@ todo:  # Todo Tasks
             }
 
             // Assert Floating Task Details
-            DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(taskList[0]);
+            DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(taskList[2]);
             Assert::IsNotNull(floatingTask);
 
 
@@ -140,9 +140,9 @@ todo:  # Todo Tasks
 
 
             // Assert Event Task Details
-            DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(taskList[2]);
-            std::tm start = calNode["todo"][2]["start"].as<std::tm>();
-            std::tm end = calNode["todo"][2]["end"].as<std::tm>();
+            DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(taskList[0]);
+            std::tm start = calNode["todo"][0]["start"].as<std::tm>();
+            std::tm end = calNode["todo"][0]["end"].as<std::tm>();
             Assert::IsNotNull(eventTask);
             Assert::AreEqual(0.0, difftime(mktime(&start), mktime(&eventTask->getStartDate())));
             Assert::AreEqual(0.0, difftime(mktime(&end), mktime(&eventTask->getEndDate())));

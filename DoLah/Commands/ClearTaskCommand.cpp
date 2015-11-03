@@ -11,8 +11,13 @@ namespace DoLah {
 	}
 
 	void ClearTaskCommand::execute() {
+        this->oldTaskList = this->calendar->getAllTaskList();
 		this->calendar->clearTasks();
 	}
+
+    void ClearTaskCommand::revert() {
+        CalendarInverter::invertClear(oldTaskList, calendar);
+    }
 
 	//private
 }

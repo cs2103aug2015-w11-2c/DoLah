@@ -96,9 +96,9 @@ namespace DoLahTest
             testCal.updateTask(0, task);
 
             //Assert
-            Assert::AreEqual(task->getName(), testCal.getTaskList()[0]->getName());
-            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[0]->getDescription());
-            Assert::AreEqual(task->isDone(), testCal.getTaskList()[0]->isDone());
+            Assert::AreEqual(task->getName(), testCal.getTaskList()[task->getId()]->getName());
+            Assert::AreEqual(task->getDescription(), testCal.getTaskList()[task->getId()]->getDescription());
+            Assert::AreEqual(task->isDone(), testCal.getTaskList()[task->getId()]->isDone());
         }
 
         // TESTING FOR BOUNDARY CASE WHERE TASK TO BE EDITED DOES NOT EXIST

@@ -3,17 +3,28 @@
 #include <stack>
 
 namespace DoLah {
+    class AbstractCommand;
+
 	class CommandHistory {
+
 	public:
         CommandHistory();
 		~CommandHistory();
 
-		void redo();
-		void undo();
+        void addToUndoStack(AbstractCommand *);
+        int getUndoStackSize() const;
+        int getRedoStackSize() const;
+
+        AbstractCommand * undo();
+        AbstractCommand * redo();
 
 	private:
-		//placeholder
-		std::stack<std::string> undoStack;
-		std::stack<std::string> redoStack;
+        //actual data
+		std::stack<AbstractCommand *> undoStack;
+		std::stack<AbstractCommand *> redoStack;
+
+        //error messages
+        static std::string INVALID_UNDO_CALL_MESSAGE;
+        static std::string INVALID_REDO_CALL_MESSAGE;
 	};
 }
