@@ -43,8 +43,8 @@ namespace DoLahTest
 
             //Assert
             Assert::AreEqual(oldsize+1, testCal.getTaskList().size());
-            Assert::AreEqual(UNIQUE_NAME, testCal.getTaskList()[2]->getName());
-            Assert::AreEqual(UNIQUE_DESCRIPTION, testCal.getTaskList()[2]->getDescription());
+            Assert::AreEqual(UNIQUE_NAME, testCal.getTaskList()[5]->getName());
+            Assert::AreEqual(UNIQUE_DESCRIPTION, testCal.getTaskList()[5]->getDescription());
         }
 
         TEST_METHOD(DeleteTask) {
