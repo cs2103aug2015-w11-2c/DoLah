@@ -24,6 +24,7 @@ namespace DoLah {
         void setDone(bool); ///< set the Task done flag
         bool isDone(); ///< get the Task done flag
         void setTags(std::vector<std::string>); ///< set the vector of tags assigned to the task.
+        void addTag(std::string); ///< add a tag assigned to the task.
         std::vector<std::string> getTags(); ///< get the vector of tags assigned to the task.
         bool isExpired();
         void setExpired(bool);

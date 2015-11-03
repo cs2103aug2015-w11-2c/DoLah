@@ -101,6 +101,12 @@ namespace DoLah {
                         task = new FloatingTask;
                     }
 
+                    if (!taskNode["tags"].IsNull()) {
+                        for (auto tagIter = taskNode["tags"].begin(); tagIter != taskNode["tags"].end(); ++tagIter) {
+                            task->addTag((*tagIter).as<std::string>());
+                        }
+                    }
+
                     if (taskStatus == "todo") {
                         task->setDone(false);
                     } else if (taskStatus == "done") {
