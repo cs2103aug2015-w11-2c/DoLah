@@ -134,14 +134,20 @@ namespace DoLah {
         std::vector<std::string> strArr = ParserLibrary::explode(str, timeDivider);
 
         int hour = std::stoi(strArr.at(0));
-        time = hour * 60;
-
-        if (isAM && hour >= 12) {
-            throw std::invalid_argument("");
+        if (isAM) {
+            if (hour > 12) {
+                throw std::invalid_argument("");
+            } else if (isAM && hour == 12) {
+                hour = 0;
+            }
         }
 
-        if (isPM && hour < 12) {
-            time += 12 * 60;
+        time = hour * 60;
+
+        if (isPM) {
+            if (hour < 12) {
+                time += 12 * 60;
+            }
         }
 
         if (strArr.size() > 1) {
