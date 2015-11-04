@@ -24,6 +24,8 @@ namespace DoLah {
         void confirmed(int, QString);
 
     protected:
+        void mousePressEvent(QMouseEvent*);
+        void mouseMoveEvent(QMouseEvent*);
         void mouseDoubleClickEvent(QMouseEvent*);
 
     private slots:
@@ -31,6 +33,7 @@ namespace DoLah {
 
     private:
         void dynamicCast(int, AbstractTask*);
+        void tidyDate(char*);
 
         QString editabletext;
         int index;

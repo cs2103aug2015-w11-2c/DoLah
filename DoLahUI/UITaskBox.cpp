@@ -32,12 +32,13 @@ namespace DoLah {
         else if (DeadlineTask *dTask = dynamic_cast<DeadlineTask*>(task)) {
             this->setObjectName(QStringLiteral("Deadline"));
             char deadline[100];
-            strftime(deadline, 100, "%a%e %b %Y %I:%M %p", &(dTask->getDueDate()));
+            strftime(deadline, 100, "%a %e %b %Y %I:%M %p", &(dTask->getDueDate()));
+            tidyDate(deadline);
             editabletext = QString::fromStdString(name) + " by " + QString(deadline);
             if (task->isDone()) {
                 QString contents = tasktitle.append("</font><br><font size=3>" + QString(deadline));
                 this->setText(contents);
-                
+
             }
             else if (task->isExpired()) {
                 QString contents = tasktitle.append("</font><br><font size=3><font color=#fc7370>" + QString(deadline));
@@ -53,8 +54,10 @@ namespace DoLah {
             this->setObjectName(QStringLiteral("Event"));
             char start[100];
             char end[100];
-            strftime(start, 100, "%a%e %b %Y %I:%M %p", &(eTask->getStartDate()));
-            strftime(end, 100, "%a%e %b %Y %I:%M %p", &(eTask->getEndDate()));
+            strftime(start, 100, "%a %e %b %Y %I:%M %p", &(eTask->getStartDate()));
+            strftime(end, 100, "%a %e %b %Y %I:%M %p", &(eTask->getEndDate()));
+            tidyDate(start);
+            tidyDate(end);
             editabletext = QString::fromStdString(name) + " from " + QString(start) + " to " + QString(end);
             if (task->isDone()) {
                 QString contents = tasktitle.append("</font><br><font size=3>" + QString(start) + " to " + QString(end));
@@ -75,6 +78,23 @@ namespace DoLah {
         if (task->isExpired()) {
             this->setObjectName(QStringLiteral("Due"));
         }
+    }
+
+    // Remove space padding from strftime %e
+    void UITaskBox::tidyDate(char date[]) {
+        if (isspace(date[4])) {
+            for (int i = 4; i < 100; i++) {
+                date[i] = date[i + 1];
+            }
+        }
+    }
+
+    void UITaskBox::mousePressEvent(QMouseEvent *event) {
+        event->ignore();
+    }
+
+    void UITaskBox::mouseMoveEvent(QMouseEvent *event) {
+        event->ignore();
     }
 
     void UITaskBox::mouseDoubleClickEvent(QMouseEvent *event) {

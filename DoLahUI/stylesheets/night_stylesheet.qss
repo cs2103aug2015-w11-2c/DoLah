@@ -1,10 +1,12 @@
 QMainWindow
 {
 	background-image: url("night_bg");
+	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
 QWidget
 {
+	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
 	background-color: transparent;
 }
 
@@ -93,7 +95,7 @@ QLabel#menuButton:hover
 }
 
 QDialog {
-	background-color: gray;
+	background-color: white;
 }
 
 QDialog QLabel{
@@ -113,11 +115,27 @@ QLabel#exitButton:hover
 	padding: 0px;
 }
 
+QLabel#helpnavi
+{
+	background-color: rgba(0, 0, 0, 0.2); 
+	min-height: 30px; 
+	max-height: 30px; 
+	qproperty-alignment: AlignCenter; 
+	font-size: 15px;
+}
+
+QLabel#helpnavi:hover
+{
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+}
+
 QDialog QPushButton {
 	background-color: white;
 	border: 2px solid gray;
 	padding: 5px;
 	width: 50px;
+	/*border-radius: 5px;*/
 }
 
 QDialog QPushButton:hover {
@@ -126,4 +144,11 @@ QDialog QPushButton:hover {
 
 QDialog QPushButton:pressed {
 	background-color: rgba(0, 0, 0, 0.5);
+}
+
+QComboBox {
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
 }
