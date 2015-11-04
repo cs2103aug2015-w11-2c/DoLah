@@ -4,6 +4,7 @@
 #include "DoLahClient.h"
 #include "EasyEdit.h"
 #include <QtWidgets/QLabel>
+#include <QTextDocument>
 #include <QMainWindow>
 #include <QMouseEvent>
 
@@ -24,6 +25,8 @@ namespace DoLah {
 
     private:
         void dynamicCast(int, AbstractTask*);
+
+        QString editabletext;
     };
 
 }

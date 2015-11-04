@@ -1,10 +1,12 @@
 QMainWindow
 {
 	background-image: url("dawn.jpg");
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 QWidget
 {
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	background-color: transparent;
 }
 
@@ -124,6 +126,21 @@ QLabel#exitButton:hover
 {
 	background-color: rgba(0, 0, 0, 0.5);
 	padding: 0px;
+}
+
+QLabel#helpnavi
+{
+	background-color: rgba(0, 0, 0, 0.2); 
+	min-height: 30px; 
+	max-height: 30px; 
+	qproperty-alignment: AlignCenter; 
+	font-size: 15px;
+}
+
+QLabel#helpnavi:hover
+{
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
 }
 
 QDialog QPushButton {

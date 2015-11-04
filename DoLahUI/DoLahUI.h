@@ -68,6 +68,7 @@ namespace DoLah {
     private slots:
         void handleUserInput();
         void menuExit();
+        void updateMenu(int);
         void goToHome();
         void goToDone();
         void goToSearch();
@@ -80,6 +81,7 @@ namespace DoLah {
         void initMenu();
         void initDisplayArea();
         void initInputArea();
+        void clearMenuStyles();
         void createTaskBox(QVBoxLayout*, int, AbstractTask*);
         void loadTasks();
         void refreshTasks();

@@ -11,5 +11,6 @@
         <file>stylesheets/night_stylesheet.qss</file>
         <file>stylesheets/stylesheet.qss</file>
         <file>Images/dialog_exit.png</file>
+        <file>Images/help_basic.png</file>
     </qresource>
 </RCC>

@@ -129,6 +129,13 @@ namespace DoLah {
         exitButton->setPixmap(exitIcon);
         menuLayout->addWidget(exitButton);
         QObject::connect(exitButton, SIGNAL(clicked()), this, SLOT(menuExit()));
+        updateMenu(0);
+    }
+
+    void DoLahUI::clearMenuStyles() {
+        homeButton->setStyleSheet("");
+        doneButton->setStyleSheet("");
+        searchButton->setStyleSheet("");
     }
 
     //////////////////////////////////////////
@@ -139,6 +146,7 @@ namespace DoLah {
     void DoLahUI::initDisplayArea() {
         viewPort = new DisplayArea(centralWidget);
         tabOrganizer = viewPort->tabbedView;
+        QObject::connect(tabOrganizer, SIGNAL(currentChanged(int)), this, SLOT(updateMenu(int)));
         home = viewPort->homeLayout;
         done = viewPort->doneLayout;
         search = viewPort->searchLayout;
@@ -264,7 +272,13 @@ namespace DoLah {
     }
 
     void DoLahUI::goToHelp() {
-        helpWindow->show();
+        if (helpWindow->isHidden()) {
+            helpWindow->show();
+        }
+        else {
+            message->clear();
+            message->setText("Already showing help");
+        }
     }
 
     void DoLahUI::goToSettings() {
@@ -275,4 +289,18 @@ namespace DoLah {
         exit(0);
     }
 
+    void DoLahUI::updateMenu(int index) {
+        if (index == 0) {
+            clearMenuStyles();
+            homeButton->setStyleSheet("border-bottom: 5px solid rgba(255, 255, 255, 0.5);");
+        }
+        else if (index == 1) {
+            clearMenuStyles();
+            doneButton->setStyleSheet("border-bottom: 5px solid rgba(255, 255, 255, 0.5);");
+        }
+        else {
+            clearMenuStyles();
+            searchButton->setStyleSheet("border-bottom: 5px solid rgba(255, 255, 255, 0.5);");
+        }
+    }
 }

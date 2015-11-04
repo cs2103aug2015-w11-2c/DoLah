@@ -3,6 +3,8 @@
 #include "MenuLabel.h"
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QDialogButtonBox>
 #include <QMouseEvent>
 
 namespace DoLah {
@@ -16,6 +18,8 @@ namespace DoLah {
         ~EasyEdit();
 
         MenuLabel *exitButton;
+        QLineEdit *editarea;
+        QDialogButtonBox *buttonBox;
 
     protected:
         void mousePressEvent(QMouseEvent*);
