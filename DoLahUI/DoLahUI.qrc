@@ -12,5 +12,7 @@
         <file>stylesheets/stylesheet.qss</file>
         <file>Images/dialog_exit.png</file>
         <file>Images/help_basic.png</file>
+        <file>Images/help_add.png</file>
+        <file>Images/help_commands.png</file>
     </qresource>
 </RCC>

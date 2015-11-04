@@ -72,11 +72,11 @@ namespace DoLah {
                 this->setText(contents);
             }
         }
-        if (task->isDone()) {
-            this->setObjectName(QStringLiteral("Done"));
-        }
         if (task->isExpired()) {
             this->setObjectName(QStringLiteral("Due"));
+        }
+        if (task->isDone()) {
+            this->setObjectName(QStringLiteral("Done"));
         }
     }
 

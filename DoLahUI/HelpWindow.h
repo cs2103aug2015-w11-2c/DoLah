@@ -25,14 +25,14 @@ namespace DoLah {
         QLabel *page_basic;
         MenuLabel *nav_add;
         QLabel *page_add;
-        MenuLabel *nav_types;
-        QLabel *page_types;
-        MenuLabel *nav_datetime;
-        QLabel *page_datetime;
         MenuLabel *nav_commands;
         QLabel *page_commands;
+        MenuLabel *nav_datetime;
+        QLabel *page_datetime;
         MenuLabel *nav_keyboard;
         QLabel *page_keyboard;
+        MenuLabel *nav_other;
+        QLabel *page_other;
         QStackedWidget *helpcontents;
 
     protected:
@@ -47,6 +47,7 @@ namespace DoLah {
         void goToDateTime();
         void goToCommands();
         void goToKeyboard();
+        void goToOther();
         void updateNav(int);
 
     private:
