@@ -421,10 +421,10 @@ namespace DoLah {
             output = TimeManager::copyDay(TimeManager::getCurrentTime(), output);
             if (TimeManager::compareTime(lowerBound, output) < 0) {
                 output.tm_mday += 1;
-                std::mktime(&output);
             }
         }
 
+        std::mktime(&output);
         return output;
     }
 
