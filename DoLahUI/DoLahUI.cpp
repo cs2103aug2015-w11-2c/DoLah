@@ -59,7 +59,7 @@ namespace DoLah {
     void DoLahUI::keyPressEvent(QKeyEvent *event) {
         if (event->key() == Qt::Key_Tab & event->modifiers() == Qt::ControlModifier) {
             int index = tabOrganizer->currentIndex();
-            tabOrganizer->setCurrentIndex((index+1)%3);
+            tabOrganizer->setCurrentIndex((index + 1) % 3);
         }
         else if (event->key() == Qt::Key_1 & event->modifiers() == Qt::ControlModifier) {
             goToHome();
@@ -152,21 +152,21 @@ namespace DoLah {
         search = viewPort->searchLayout;
         loadTasks();
     }
-    
+
     // METHODS TO UPDATE VIEWS
 
     void DoLahUI::loadTasks() {
         std::vector<AbstractTask*> taskList = (appClient.getCalendar()).getTaskList();
         for (int i = 0; i < static_cast<int>(taskList.size()); ++i) {
-            createTaskBox(home, i+1, taskList[i]);
+            createTaskBox(home, i + 1, taskList[i]);
         }
         std::vector<AbstractTask*> doneList = appClient.getCalendar().getDoneList();
         for (int j = 0; j < static_cast<int>(doneList.size()); ++j) {
-            createTaskBox(done, j+1, doneList[j]);
+            createTaskBox(done, j + 1, doneList[j]);
         }
         std::vector<AbstractTask*> searchedList = appClient.getCalendar().getSearchedTaskList();
         for (int k = 0; k < static_cast<int>(searchedList.size()); ++k) {
-            createTaskBox(search, (searchedList[k])->getIndex()+1, searchedList[k]);
+            createTaskBox(search, (searchedList[k])->getIndex() + 1, searchedList[k]);
         }
     }
 
@@ -193,6 +193,7 @@ namespace DoLah {
     void DoLahUI::createTaskBox(QVBoxLayout *page, int index, AbstractTask *task) {
         UITaskBox *tempTaskBox = new UITaskBox(index, task);
         page->addWidget(tempTaskBox, 0, 0);
+        QObject::connect(tempTaskBox, SIGNAL(confirmed(int, QString)), this, SLOT(handleEasyEdit(int, QString)));
     }
 
     //////////////////////////////////////////
@@ -253,6 +254,23 @@ namespace DoLah {
             refreshTasks();
             message->clear();
             message->setText("Enter a command??");
+        }
+    }
+
+    void DoLahUI::handleEasyEdit(int index, QString editedtext) {
+        QString qcommand = QString("edit ") + QString::number(index) + " " + editedtext;
+        std::string command = qcommand.toStdString();
+        try {
+            this->appClient.parseAndProcessCommand(command);
+            message->clear();
+            message->setText(QString("Edited task ").append(QString::number(index)));
+            refreshTasks();
+        }
+        catch (std::exception e) {
+            QString text = QString(e.what());
+            message->clear();
+            message->setText(text);
+            refreshTasks();
         }
     }
 

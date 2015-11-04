@@ -5,8 +5,10 @@ namespace DoLah {
     UITaskBox::UITaskBox(int index, AbstractTask *task) {
         this->setWordWrap(true);
         this->setFrameStyle(QFrame::NoFrame);
+        this->index = index;
         dynamicCast(index, task);
-        easyEdit = new EasyEdit(this);
+        easyedit = new EasyEdit(this);
+        QObject::connect(easyedit->buttonBox, SIGNAL(accepted()), this, SLOT(handleEdit()));
     }
 
 
@@ -77,9 +79,24 @@ namespace DoLah {
 
     void UITaskBox::mouseDoubleClickEvent(QMouseEvent *event) {
         if (event->button() == Qt::LeftButton) {
-            easyEdit->editarea->setText(editabletext);
-            easyEdit->exec();
+            easyedit->editarea->setText(editabletext);
+            QString temp = QString("Edit task ") + QString::number(index) + ":";
+            easyedit->description->setText(temp);
+            easyedit->exec();
         }
+
     }
 
+    //////////////////////////////////////////
+    //                SLOTS                 //
+    //////////////////////////////////////////
+
+    void UITaskBox::handleEdit() {
+        if (!easyedit->editarea->text().isEmpty()) {
+            emit confirmed(index, easyedit->editarea->text());
+        }
+        else {
+            easyedit->reject();
+        }
+    }
 }

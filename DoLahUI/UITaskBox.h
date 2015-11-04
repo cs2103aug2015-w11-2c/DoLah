@@ -3,9 +3,9 @@
 
 #include "DoLahClient.h"
 #include "EasyEdit.h"
+
 #include <QtWidgets/QLabel>
 #include <QTextDocument>
-#include <QMainWindow>
 #include <QMouseEvent>
 
 namespace DoLah {
@@ -18,15 +18,22 @@ namespace DoLah {
         ~UITaskBox();
         QSize sizeHint() const;
 
-        EasyEdit *easyEdit;
+        EasyEdit *easyedit;
+
+    signals:
+        void confirmed(int, QString);
 
     protected:
         void mouseDoubleClickEvent(QMouseEvent*);
+
+    private slots:
+        void handleEdit();
 
     private:
         void dynamicCast(int, AbstractTask*);
 
         QString editabletext;
+        int index;
     };
 
 }

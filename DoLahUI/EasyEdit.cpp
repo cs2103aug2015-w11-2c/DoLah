@@ -15,16 +15,18 @@ namespace DoLah {
         exitButton->setGeometry(QRect(420, 0, 20, 20));
         QObject::connect(exitButton, SIGNAL(clicked()), this, SLOT(reject()));
 
+        description = new QLabel(this);
+        description->setGeometry(QRect(25, 40, 370, 20));
+
         editarea = new QLineEdit(this);
-        editarea->setGeometry(QRect(25, 40, 370, 20));
+        editarea->setGeometry(QRect(25, 60, 370, 20));
         editarea->setFocus();
 
         buttonBox = new QDialogButtonBox(this);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));
-        buttonBox->setGeometry(QRect(65, 70, 170, 23));
+        buttonBox->setGeometry(QRect(0, 100, 450, 23));
         buttonBox->setCenterButtons(true);
         buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-        connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
         connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
     }
 
@@ -43,5 +45,6 @@ namespace DoLah {
             event->accept();
         }
     }
+
 
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MenuLabel.h"
+
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -18,6 +19,7 @@ namespace DoLah {
         ~EasyEdit();
 
         MenuLabel *exitButton;
+        QLabel *description;
         QLineEdit *editarea;
         QDialogButtonBox *buttonBox;
 
