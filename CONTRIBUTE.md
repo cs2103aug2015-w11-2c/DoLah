@@ -4,10 +4,15 @@ Welcome to our contribution guideline. Feel free to explore our documentation pa
 
 ## API Docs
 
-Our API Documentation will be automatically generated from the project code
-using [Doxygen](http://www.doxygen.org/) docs formatting.
+The API docs should be written in the header files. It will be automatically generated from the project code
+using [Doxygen](http://www.doxygen.org/) docs using [C-like (C/C++) formatting](https://www.stack.nl/~dimitri/doxygen/manual/docblocks.html#cppblock).
 
-Generally, you should write the API docs in header file instead of the source file.
+Our API docs should start with  `///` for single line or `/**` `*/` for multilines above the function or class.
+Alternatively, use `int myVariable; ///< description` for inline description.
+
+Whenever possible, use the correct [semantic command](https://www.stack.nl/~dimitri/doxygen/manual/commands.html) when writing the API docs (e.g `params`, `todo`, `class`). Also use the `@` sign instead of backslash for command (e.g. `@params`).
+
+Please ensure the consistency of the syntax, and also consult with the team when in doubt of a certain format. It is also good to check out at some tips that others mentioned in online forum or Q&A site such as Stackoverflow (e.g. [Tips Doxygen](https://www.stack.nl/~dimitri/doxygen/manual/commands.html)).
 
 ## Branch naming
 
