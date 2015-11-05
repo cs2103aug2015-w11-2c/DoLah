@@ -166,6 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CalendarBuilder.cpp" />
+    <ClCompile Include="CommandHistoryTest.cpp" />
+    <ClCompile Include="CalendarInverterTest.cpp" />
     <ClCompile Include="CommandUnitTest.cpp" />
     <ClCompile Include="ParserUnitTest.cpp" />
     <ClCompile Include="stdafx.cpp">

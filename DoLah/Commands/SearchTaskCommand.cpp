@@ -23,5 +23,9 @@ namespace DoLah {
 		this->calendar->search(query);
 	}
 
+    void SearchTaskCommand::revert() {
+        CalendarInverter::invertSearch(resultVector, query, calendar);
+    }
+
 	//private
 }

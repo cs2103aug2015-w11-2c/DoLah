@@ -7,18 +7,24 @@ void startConsole() {
     std::cout << "Welcome to DoLah! " << std::endl;
 
     while (true) {
-        printCalendar(client.getCalendar());
-        std::cout << "Please enter a command: ";
-        std::string command;
-        getline(std::cin, command);
-        client.parseAndProcessCommand(command);
-        std::cout << "Your command \"" << command << "\" has been executed." << std::endl;
+        try {
+            printCalendar(client.getCalendar());
+            std::cout << "Please enter a command: ";
+            std::string command;
+            getline(std::cin, command);
+            client.parseAndProcessCommand(command);
+            std::cout << "Your command \"" << command << "\" has been executed." << std::endl;
+        }
+        catch (std::exception e) {
+            std::cout << "thr fuck" << std::endl;
+            std::cout << e.what() << std::endl;
+        }
     }
 }
 
 void printCalendar(const DoLah::Calendar& calendar){
     std::vector<DoLah::AbstractTask*> taskList = calendar.getTaskList();
-    std::system("cls");
+    //std::system("cls");
     std::cout << "<<<<< TASK LIST >>>>> " << std::endl << "(size: " << taskList.size() << ")" << std::endl;
 
     for (size_t i = 0; i < taskList.size(); i++) {

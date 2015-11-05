@@ -33,7 +33,9 @@ namespace DoLah {
         static int getDateModifier(int, bool);
 
         // Time that is relative to today such as in 10 days, in a week, tomorrow
-        static std::tm checkRelativeDateFormat(std::vector<std::string>);
+        static int checkDateModifier(std::vector<std::string>);
+
+        static int checkTimeModifier(std::vector<std::string>);
 
         static std::tm classifyDate(std::vector<std::string>);
         // 25th December 2015
@@ -43,6 +45,8 @@ namespace DoLah {
     private:
         static int REJECT;
         static std::string CENTURY;
+        static int MININSECS;
+        static int HOURINSECS;
         static int DAYINSECS;
         static int WEEKINSECS;
         static int MONTHINSECS;
@@ -50,9 +54,7 @@ namespace DoLah {
 
         // this week, next week (not implemented)
         static std::string relativePattern;
-        static std::string modiferPattern;
         static std::vector<std::string> datePattern;
-        static std::string dayPattern;
         static std::vector<std::string> monthPattern;
 
         // 1st, 2nd, 3rd, 4th
@@ -69,13 +71,20 @@ namespace DoLah {
         // tomorrow
         static std::vector<std::string> tomorrowPattern;
         // a week
-        static std::vector<std::string> articlePattern;
+        static std::vector<std::string> singularPattern;
         // in 10 days
         static std::vector<std::string> dayDescriptionPattern;
         // in 2 weeks
         static std::vector<std::string> weekDescriptionPattern;
         // in a month (will add 30 days per month)
         static std::vector<std::string> monthDescriptionPattern;
+
+        static std::vector<std::string> yearDescriptionPattern;
+
+        static std::vector<std::string> hourDescriptionPattern;
+
+        static std::vector<std::string> minDescriptionPattern;
+
         // next week
         static std::vector<std::string> nextPattern;
 

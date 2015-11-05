@@ -1,8 +1,9 @@
 #include "Calendar.h"
 
 namespace DoLah {
-    Calendar::Calendar() {
-    }
+	Calendar::Calendar() {
+        this->cmdHistory = DoLah::CommandHistory();
+	}
 
     Calendar::~Calendar() {
         //TODO
@@ -36,28 +37,72 @@ namespace DoLah {
         return allTaskList;
     }
 
-    void Calendar::addTask(AbstractTask* task) {
-        if (taskList.empty()) {
-            task->setId(1);
-        } else {
-            task->setId(taskList.back()->getId() + 1);
-        }
-
+    DoLah::CommandHistory* Calendar::getCmdHistory(){
+        DoLah::CommandHistory* cmdHistoryPointer = &(this->cmdHistory);
+        return cmdHistoryPointer;
+    }
+    
+	void Calendar::addTask(AbstractTask* task) {
         if (task->isDone()) {
-            doneList.push_back(task);
-            sortTasks(doneList);
+            findInsertionPoint(task, 0, doneList.size());
+            doneList.insert(doneList.begin() + task->getIndex(), task);
+            indexTasks(doneList, task->getIndex());
         } else {
-            taskList.push_back(task);
-            sortTasks(taskList);
+            findInsertionPoint(task, 0, taskList.size());
+            taskList.insert(taskList.begin() + task->getIndex(), task);
+            indexTasks(taskList, task->getIndex());
         }
     }
 
-    void Calendar::deleteTask(int index) {
+    void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
+        if (end == start) {
+            task->setIndex(start);
+        }
+        else {
+            int middle = (start + end) / 2;
+            if (task->isDone()) {
+                if (taskCompare(task, doneList[middle])) {
+                    findInsertionPoint(task, start, middle);
+                } else {
+                    
+                    findInsertionPoint(task, middle + 1, end);
+                }
+            }
+            else {
+                if (taskCompare(task, taskList[middle])) {
+                    findInsertionPoint(task, start, middle);
+                }
+                else {
+                    findInsertionPoint(task, middle+1, end);
+                }
+            }
+        }
+    }
+
+    void Calendar::addTask(AbstractTask* task, int index) {
+        task->setId(index);
+
+        if (task->isDone()) {
+            doneList.insert(doneList.begin()+index, task);
+        }
+        else {
+            taskList.insert(taskList.begin()+index, task);
+        }
+    }
+
+    void Calendar::deleteTask(int index, bool status) {
         if (index >= taskList.size()) {
             throw std::out_of_range(TASK_INDEX_OUT_OF_RANGE_MESSAGE);
         }
-        taskList.erase(taskList.begin() + index);
-        indexTasks(taskList);
+
+        if (status) {
+            taskList.erase(taskList.begin() + index);
+            indexTasks(taskList);
+        }
+        else {
+            taskList.erase(doneList.begin() + index);
+            indexTasks(doneList);
+        }
     }
 
     void Calendar::setDoneTask(int taskIndex, bool status) {
@@ -88,9 +133,8 @@ namespace DoLah {
 
     void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
-        taskList.at(index) = task;
-
-        sortTasks(taskList);
+        deleteTask(index);
+        addTask(task);
     }
 
     void Calendar::clearTasks() {
@@ -119,37 +163,36 @@ namespace DoLah {
         indexTasks(unsortedTaskList);
     }
 
-    void Calendar::indexTasks(std::vector<AbstractTask*> &list) {
-        for (size_t index = 0; index < list.size(); index++) {
+    void Calendar::indexTasks(std::vector<AbstractTask*> &list, int startIndex) {
+        for (size_t index = startIndex; index < list.size(); index++) {
             list[index]->setIndex(index);
         }
     }
 
+    // Check if first < second
     bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
-        std::vector<std::tm> firstDates = getDates(first);
-        std::vector<std::tm> secondDates = getDates(second);
+        if (typeid(*second) == typeid(FloatingTask)){
+            //case: floating task vs floating task
+            if (typeid(*first) == typeid(FloatingTask)) {
+                return first->getName().compare(second->getName()) < 0;
+            }
+            //case: non-floating task vs floating task
+            return true; 
+        } else if (typeid(*first) == typeid(FloatingTask)) {
+            //case: floating task vs non-floating task
+            return false;
+        } else {
+            std::vector<std::tm> firstDates = getDates(first);
+            std::vector<std::tm> secondDates = getDates(second);
 
-        if (firstDates.size() != secondDates.size()) {
-            return firstDates.size() > secondDates.size();
-        } else if (firstDates.size() == 1) {
             int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
             if (diff != 0) {
                 return diff > 0;
             }
-            return first->getDescription().compare(second->getDescription()) > 0;
-        } else if (firstDates.size() == 2) {
-            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
-            if (diff != 0) {
-                return diff > 0;
+            else {
+                return first->getName().compare(second->getName()) < 0;
             }
-            diff = TimeManager::compareTime(firstDates[1], secondDates[1]);
-            if (diff != 0) {
-                return diff > 0;
-            }
-            return first->getDescription().compare(second->getDescription()) > 0;
         }
-
-        return false;
     }
 
     std::vector<std::tm> Calendar::getDates(AbstractTask *it) {

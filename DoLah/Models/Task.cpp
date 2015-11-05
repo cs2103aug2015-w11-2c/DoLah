@@ -26,6 +26,10 @@ namespace DoLah {
         this->tags = tags;
     }
 
+    void AbstractTask::addTag(std::string tag) {
+        this->tags.push_back(tag);
+    }
+
     std::vector<std::string> AbstractTask::getTags() {
         return this->tags;
     }

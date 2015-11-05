@@ -33,9 +33,6 @@
     <ClCompile Include="Parser\DateTimeParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Parser\CommandTokenizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Parser\CommandParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,6 +84,9 @@
     <ClCompile Include="TimeManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Models\CalendarInverter.cpp">
+	  <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Commands\SetUndoneTaskCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,9 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Parser\DateTimeParser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser\CommandTokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Parser\CommandParser.h">
@@ -135,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\CalendarInverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

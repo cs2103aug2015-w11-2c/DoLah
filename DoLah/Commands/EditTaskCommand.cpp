@@ -17,8 +17,13 @@ namespace DoLah {
 	}
 
     void EditTaskCommand::execute() {
+        this->oldTask = calendar->getTask(taskIndex);
 		this->calendar->updateTask(taskIndex, task);
 	}
+
+    void EditTaskCommand::revert() {
+        CalendarInverter::invertEdit(oldTask, calendar);
+    }
 
 	//protected
 }

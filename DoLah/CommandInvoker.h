@@ -11,10 +11,11 @@ namespace DoLah {
     public:
         CommandInvoker();
         ~CommandInvoker();
-        static void process(AbstractCommand*);
+        void setCmdHistory(CommandHistory*);
+        void process(AbstractCommand*);
 
     private:
-        CommandHistory history;
+        CommandHistory* cmdHistory;
     };
 
 }
