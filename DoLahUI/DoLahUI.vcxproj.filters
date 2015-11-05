@@ -104,6 +104,15 @@
     <ClCompile Include="InputBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EasyEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_EasyEdit.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_EasyEdit.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="DoLahUI.h">
@@ -128,6 +137,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="InputBox.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="EasyEdit.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

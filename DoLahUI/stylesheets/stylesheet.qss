@@ -1,10 +1,12 @@
 QMainWindow
 {
 	background-image: url("dawn.jpg");
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 QWidget
 {
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	background-color: transparent;
 }
 
@@ -75,6 +77,12 @@ QLabel#Done
 	text-decoration: line-through;
 }
 
+QLabel#Due
+{
+	color: #8e3530; 
+	border-left: 5px solid #fc7370;
+}
+
 QLineEdit 
 { 
 	background-color: white; 
@@ -87,14 +95,73 @@ QLabel#message
 	padding: 0px;
 }
 
-QLabel#menu
+QLabel#menuButton
 {
 	background-color: transparent;
 	padding: 0px;
 }
 
-QLabel#menu:hover
+QLabel#menuButton:hover
 {
 	background-color: rgba(0, 0, 0, 0.2);
 	padding: 0px;
+}
+
+QDialog {
+	background-color: white;
+}
+
+QDialog QLabel{
+	background-color: transparent;
+	padding: 0px;
+}
+
+QLabel#exitButton
+{
+	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0px;
+}
+
+QLabel#exitButton:hover
+{
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 0px;
+}
+
+QLabel#helpnavi
+{
+	background-color: rgba(0, 0, 0, 0.2); 
+	min-height: 30px; 
+	max-height: 30px; 
+	qproperty-alignment: AlignCenter; 
+	font-size: 15px;
+}
+
+QLabel#helpnavi:hover
+{
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+}
+
+QDialog QPushButton {
+	background-color: white;
+	border: 2px solid gray;
+	padding: 5px;
+	width: 50px;
+	/*border-radius: 5px;*/
+}
+
+QDialog QPushButton:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+QDialog QPushButton:pressed {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+QComboBox {
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
 }
