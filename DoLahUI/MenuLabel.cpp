@@ -2,10 +2,11 @@
 
 
 namespace DoLah {
-    MenuLabel::MenuLabel() {
+    MenuLabel::MenuLabel(QWidget *parent)
+        : QLabel(parent) {
         this->setMinimumHeight(65);
+        this->setObjectName(QStringLiteral("menuButton"));
     }
-
 
     MenuLabel::~MenuLabel() {
 
@@ -14,14 +15,12 @@ namespace DoLah {
     void MenuLabel::mousePressEvent(QMouseEvent* event) {
         emit clicked();
         if (event->button() == Qt::LeftButton) {
-            //dragPosition = event->globalPos() - static_cast<QMainWindow*>((parent())->parent()->parent())->frameGeometry().topLeft();
             event->accept();
         }
     }
 
     void MenuLabel::mouseMoveEvent(QMouseEvent *event) {
         if (event->buttons() & Qt::LeftButton) {
-            //static_cast<QMainWindow*>((parent())->parent()->parent())->move(event->globalPos() - dragPosition);
             event->accept();
         }
     }

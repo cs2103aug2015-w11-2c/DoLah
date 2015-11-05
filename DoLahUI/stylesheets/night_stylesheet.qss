@@ -1,0 +1,154 @@
+QMainWindow
+{
+	background-image: url("night_bg");
+	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+QWidget
+{
+	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+	background-color: transparent;
+}
+
+QScrollArea > QWidget > QWidget
+{ 
+	background-color: #a08d8f;
+} 
+
+QScrollBar:vertical
+{
+	background: transparent;
+	width: 10px;
+}
+
+QScrollBar::handle:vertical
+{
+	background: gray;
+	border-radius: 20px;
+}
+
+QLabel
+{ 
+	background-color: #fdf1c8; 
+	color: #4c3e3e; 
+	padding-left: 1px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+
+}
+
+QLabel#Floating
+{
+	border-left: 5px solid #fcebbf;
+}
+
+QLabel#Deadline
+{
+	color: #4c3e3e;
+	border-left: 5px solid #CB94FF;
+}
+
+QLabel#Event
+{
+	color: #4c3e3e; 
+	border-left: 5px solid #67bba5;
+}
+
+QLabel#Done
+{
+	background-color: #BBBBBB;
+	color: #696969; 
+	border-left: 5px solid gray;
+	text-decoration: line-through;
+}
+
+QLabel#Due
+{
+	color: #8e3530; 
+	border-left: 5px solid #fc7370;
+}
+
+
+QLineEdit 
+{ 
+	background-color: white; 
+}
+
+QLabel#message
+{
+	color: white;
+	background: transparent;
+	padding: 0px;
+}
+
+QLabel#menuButton
+{
+	background-color: transparent;
+	padding: 0px;
+}
+
+QLabel#menuButton:hover
+{
+	background-color: rgba(255, 255, 255, 0.2);
+	padding: 0px;
+}
+
+QDialog {
+	background-color: white;
+}
+
+QDialog QLabel{
+	background-color: transparent;
+	padding: 0px;
+}
+
+QLabel#exitButton
+{
+	background-color: rgba(0, 0, 0, 0.2);
+	padding: 0px;
+}
+
+QLabel#exitButton:hover
+{
+	background-color: rgba(0, 0, 0, 0.5);
+	padding: 0px;
+}
+
+QLabel#helpnavi
+{
+	background-color: rgba(0, 0, 0, 0.2); 
+	min-height: 30px; 
+	max-height: 30px; 
+	qproperty-alignment: AlignCenter; 
+	font-size: 15px;
+}
+
+QLabel#helpnavi:hover
+{
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+}
+
+QDialog QPushButton {
+	background-color: white;
+	border: 2px solid gray;
+	padding: 5px;
+	width: 50px;
+	/*border-radius: 5px;*/
+}
+
+QDialog QPushButton:hover {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+QDialog QPushButton:pressed {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+QComboBox {
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
+}
