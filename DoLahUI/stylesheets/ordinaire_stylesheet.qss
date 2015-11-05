@@ -1,18 +1,18 @@
 QMainWindow
 {
-	background-image: url("night_bg");
-	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+	background-color: black;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 
 QWidget
 {
-	font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	background-color: transparent;
 }
 
 QScrollArea > QWidget > QWidget
 { 
-	background-color: #a08d8f;
+	background-color: rgba(255, 255, 255, 0.5);
 } 
 
 QScrollBar:vertical
@@ -24,12 +24,26 @@ QScrollBar:vertical
 QScrollBar::handle:vertical
 {
 	background: gray;
-	border-radius: 20px;
+}
+
+QScrollBar::handle:vertical:hover
+{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
+{
+    background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+{
+	background-color: rgba(255, 255, 255, 0.5);
 }
 
 QLabel
 { 
-	background-color: #fdf1c8; 
+	background-color: white; 
 	color: #4c3e3e; 
 	padding-left: 1px;
 	padding-right: 5px;
@@ -69,6 +83,16 @@ QLabel#Due
 	border-left: 5px solid #fc7370;
 }
 
+QMenu
+{
+	background: white;
+	color: black;
+}
+
+QMenu::item:selected
+{
+	background: #BBBBBB;
+}
 
 QLineEdit 
 { 
@@ -90,7 +114,7 @@ QLabel#menuButton
 
 QLabel#menuButton:hover
 {
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: rgba(0, 0, 0, 0.2);
 	padding: 0px;
 }
 

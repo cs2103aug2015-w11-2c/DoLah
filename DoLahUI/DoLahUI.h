@@ -68,6 +68,7 @@ namespace DoLah {
     private slots:
         void handleUserInput();
         void handleEasyEdit(int, QString);
+        /*void handleMenuCommand(QString, int);*/
         void menuExit();
         void updateMenu(int);
         void goToHome();

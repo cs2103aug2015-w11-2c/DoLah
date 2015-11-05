@@ -4,7 +4,9 @@
 #include "DoLahClient.h"
 #include "EasyEdit.h"
 
+#include <QtWidgets/QAction>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QMenu>
 #include <QTextDocument>
 #include <QMouseEvent>
 
@@ -19,9 +21,14 @@ namespace DoLah {
         QSize sizeHint() const;
 
         EasyEdit *easyedit;
+        /*QMenu *contextMenu;*/
 
     signals:
         void confirmed(int, QString);
+        void rightclicked(QPoint);
+        //void setDone(QString, int);
+        //void deleteThis(int);
+        /*void setUndone(QString, int);*/
 
     protected:
         void mousePressEvent(QMouseEvent*);
@@ -29,14 +36,21 @@ namespace DoLah {
         void mouseDoubleClickEvent(QMouseEvent*);
 
     private slots:
-        void handleEdit();
+        void handleEasyEdit();
+        //void openContextMenu(QPoint);
+        //void menuEdit();
+        //void menuDone();
+        //void menuDelete();
+        //void menuUndone();
 
     private:
+        //void initContextMenu(bool);
         void dynamicCast(int, AbstractTask*);
         void tidyDate(char*);
 
         QString editabletext;
         int index;
+        AbstractTask *task;
     };
 
 }

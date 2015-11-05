@@ -194,6 +194,8 @@ namespace DoLah {
         UITaskBox *tempTaskBox = new UITaskBox(index, task);
         page->addWidget(tempTaskBox, 0, 0);
         QObject::connect(tempTaskBox, SIGNAL(confirmed(int, QString)), this, SLOT(handleEasyEdit(int, QString)));
+        //QObject::connect(tempTaskBox, SIGNAL(setDone(QString, int)), this, SLOT(handleMenuDone(int)));
+        /*QObject::connect(tempTaskBox, SIGNAL(setUndone(QString, int)), this, SLOT(handleMenuCommand(QString, int)));*/
     }
 
     //////////////////////////////////////////
@@ -273,6 +275,23 @@ namespace DoLah {
             refreshTasks();
         }
     }
+
+    //void DoLahUI::handleMenuCommand(QString keyword, int index) {
+    //    QString qcommand = keyword + QString::number(index);
+    //    std::string command = qcommand.toStdString();
+    //    try {
+    //        this->appClient.parseAndProcessCommand(command);
+    //        message->clear();
+    //        message->setText(qcommand);
+    //        refreshTasks();
+    //    }
+    //    catch (std::exception e) {
+    //        QString text = QString(e.what());
+    //        message->clear();
+    //        message->setText(text);
+    //        refreshTasks();
+    //    }
+    //}
 
     void DoLahUI::goToHome() {
         tabOrganizer->setCurrentIndex(0);

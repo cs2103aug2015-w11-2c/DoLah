@@ -33,6 +33,8 @@ namespace DoLah {
         QLabel *page_keyboard;
         MenuLabel *nav_other;
         QLabel *page_other;
+        MenuLabel *nav_about;
+        QLabel *page_about;
         QStackedWidget *helpcontents;
 
     protected:
@@ -43,11 +45,11 @@ namespace DoLah {
     private slots:
         void goToBasic();
         void goToAdd();
-        void goToTypes();
         void goToDateTime();
         void goToCommands();
         void goToKeyboard();
         void goToOther();
+        void goToAbout();
         void updateNav(int);
 
     private:
