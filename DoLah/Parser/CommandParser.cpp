@@ -191,6 +191,7 @@ namespace DoLah {
             UndoTaskCommand* command = new UndoTaskCommand(parseUndo(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(REDO, command)) {
+            inputArr = pruneCommand(inputArr); 
             RedoTaskCommand* command = new RedoTaskCommand(parseRedo(inputArr));
             return command;
         } else {
