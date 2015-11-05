@@ -6,6 +6,7 @@ namespace DoLah {
     {
         this->resize(750, 500);
         this->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::Dialog);
+        this->setObjectName(QStringLiteral("helpwindow"));
 
         bglabel = new QLabel(this);
         QPixmap background("images/helpwindow.jpg");
