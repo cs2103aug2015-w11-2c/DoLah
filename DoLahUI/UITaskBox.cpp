@@ -5,12 +5,16 @@ namespace DoLah {
     UITaskBox::UITaskBox(int index, AbstractTask *task) {
         this->setWordWrap(true);
         this->setFrameStyle(QFrame::NoFrame);
+        //this->setContextMenuPolicy(Qt::CustomContextMenu);
         this->index = index;
+        this->task = task;
         dynamicCast(index, task);
+        /*initContextMenu(task->isDone());
+        QObject::connect(this, SIGNAL(rightclicked(QPoint)), this, SLOT(openContextMenu(QPoint)));*/
         easyedit = new EasyEdit(this);
-        QObject::connect(easyedit->buttonBox, SIGNAL(accepted()), this, SLOT(handleEdit()));
-    }
+        QObject::connect(easyedit->buttonBox, SIGNAL(accepted()), this, SLOT(handleEasyEdit()));
 
+    }
 
     UITaskBox::~UITaskBox()
     {
@@ -19,6 +23,22 @@ namespace DoLah {
     QSize UITaskBox::sizeHint() const {
         return QSize(350, 300);
     }
+
+    /*void UITaskBox::initContextMenu(bool done) {
+        contextMenu = new QMenu(this);
+        if (done) {
+            contextMenu->addAction("Undone");
+            QObject::connect(contextMenu->actions().at(0), SIGNAL(triggered()), this, SLOT(menuUndone()));
+        }
+        else {
+            contextMenu->addAction("Edit");
+            QObject::connect(contextMenu->actions().at(0), SIGNAL(triggered()), this, SLOT(menuEdit()));
+            contextMenu->addAction("Done");
+            QObject::connect(contextMenu->actions().at(1), SIGNAL(triggered()), this, SLOT(menuDone()));
+            contextMenu->addAction("Delete");
+            QObject::connect(contextMenu->actions().at(2), SIGNAL(triggered()), this, SLOT(menuDelete()));
+        }
+    }*/
 
     void UITaskBox::dynamicCast(int index, AbstractTask *task) {
         std::string name = task->getName();
@@ -32,7 +52,7 @@ namespace DoLah {
         else if (DeadlineTask *dTask = dynamic_cast<DeadlineTask*>(task)) {
             this->setObjectName(QStringLiteral("Deadline"));
             char deadline[100];
-            strftime(deadline, 100, "%a %e %b %Y %I:%M %p", &(dTask->getDueDate()));
+            strftime(deadline, 100, "%a %e %b %Y %I:%M%p", &(dTask->getDueDate()));
             tidyDate(deadline);
             editabletext = QString::fromStdString(name) + " by " + QString(deadline);
             if (task->isDone()) {
@@ -54,8 +74,8 @@ namespace DoLah {
             this->setObjectName(QStringLiteral("Event"));
             char start[100];
             char end[100];
-            strftime(start, 100, "%a %e %b %Y %I:%M %p", &(eTask->getStartDate()));
-            strftime(end, 100, "%a %e %b %Y %I:%M %p", &(eTask->getEndDate()));
+            strftime(start, 100, "%a %e %b %Y %I:%M%p", &(eTask->getStartDate()));
+            strftime(end, 100, "%a %e %b %Y %I:%M%p", &(eTask->getEndDate()));
             tidyDate(start);
             tidyDate(end);
             editabletext = QString::fromStdString(name) + " from " + QString(start) + " to " + QString(end);
@@ -89,29 +109,37 @@ namespace DoLah {
         }
     }
 
-    void UITaskBox::mousePressEvent(QMouseEvent *event) {
-        event->ignore();
-    }
+    //////////////////////////////////////////
+    // OVERRIDING CLICK AND KEYBOARD INPUTS //
+    //////////////////////////////////////////
 
+    void UITaskBox::mousePressEvent(QMouseEvent *event) {
+        if (event->button() == Qt::RightButton) {
+            emit rightclicked(event->globalPos());
+        }
+        else {
+            event->ignore();
+        }
+    }
     void UITaskBox::mouseMoveEvent(QMouseEvent *event) {
         event->ignore();
     }
-
     void UITaskBox::mouseDoubleClickEvent(QMouseEvent *event) {
         if (event->button() == Qt::LeftButton) {
-            easyedit->editarea->setText(editabletext);
-            QString temp = QString("Edit task ") + QString::number(index) + ":";
-            easyedit->description->setText(temp);
-            easyedit->exec();
+            if (!task->isDone()) {
+                easyedit->editarea->setText(editabletext);
+                QString temp = QString("Edit task ") + QString::number(index) + ":";
+                easyedit->description->setText(temp);
+                easyedit->exec();
+            }
         }
-
     }
 
     //////////////////////////////////////////
     //                SLOTS                 //
     //////////////////////////////////////////
 
-    void UITaskBox::handleEdit() {
+    void UITaskBox::handleEasyEdit() {
         if (!easyedit->editarea->text().isEmpty()) {
             emit confirmed(index, easyedit->editarea->text());
         }
@@ -119,4 +147,24 @@ namespace DoLah {
             easyedit->reject();
         }
     }
+
+    //void UITaskBox::openContextMenu(QPoint pos) {
+    //    contextMenu->exec(pos);
+    //}
+
+    //void UITaskBox::menuEdit() {
+    //    easyedit->editarea->setText(editabletext);
+    //    QString temp = QString("Edit task ") + QString::number(index) + ":";
+    //    easyedit->description->setText(temp);
+    //    easyedit->exec();
+    //}
+    //void UITaskBox::menuDone() {
+    //    emit setDone(index);
+    //}
+    //void UITaskBox::menuDelete() {
+    //    emit deleteThis(index);
+    //}
+    /*void UITaskBox::menuUndone() {
+        emit setUndone(QString("undone "), index);
+    }*/
 }

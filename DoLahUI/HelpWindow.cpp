@@ -6,6 +6,7 @@ namespace DoLah {
     {
         this->resize(750, 500);
         this->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::Dialog);
+        this->setObjectName(QStringLiteral("helpwindow"));
 
         bglabel = new QLabel(this);
         QPixmap background("images/helpwindow.jpg");
@@ -27,9 +28,20 @@ namespace DoLah {
         page_commands->setPixmap(commandsimg);
 
         page_datetime = new QLabel;
+        QPixmap datetimeimg("images/help_datetime.png");
+        page_datetime->setPixmap(datetimeimg);
 
         page_keyboard = new QLabel;
+        QPixmap keyboardimg("images/help_keyboard.png");
+        page_keyboard->setPixmap(keyboardimg);
+
         page_other = new QLabel;
+        QPixmap otherimg("images/help_other.png");
+        page_other->setPixmap(otherimg);
+
+        page_about = new QLabel;
+        QPixmap aboutimg("images/help_about.png");
+        page_about->setPixmap(aboutimg);
 
         helpcontents = new QStackedWidget(this);
         helpcontents->setGeometry(QRect(278, 25, 450, 450));
@@ -39,6 +51,7 @@ namespace DoLah {
         helpcontents->addWidget(page_datetime);
         helpcontents->addWidget(page_keyboard);
         helpcontents->addWidget(page_other);
+        helpcontents->addWidget(page_about);
         QObject::connect(helpcontents, SIGNAL(currentChanged(int)), this, SLOT(updateNav(int)));
 
         exitButton = new MenuLabel(this);
@@ -77,10 +90,18 @@ namespace DoLah {
         addNaviLabel(nav_keyboard, QString("Keyboard Shortcuts"));
         QObject::connect(nav_keyboard, SIGNAL(clicked()), this, SLOT(goToKeyboard()));
         nav_other = new MenuLabel;
-        addNaviLabel(nav_other, QString("Other features"));
+        addNaviLabel(nav_other, QString("Other Features"));
         QObject::connect(nav_other, SIGNAL(clicked()), this, SLOT(goToOther()));
-
+        nav_about = new MenuLabel;
+        addNaviLabel(nav_about, QString("About"));
+        QObject::connect(nav_about, SIGNAL(clicked()), this, SLOT(goToAbout()));
         updateNav(0);
+
+        QLabel *instructions = new QLabel("use PGUP/PGDN OR UP/DOWN ARROWS to navigate through the help pages");
+        instructions->setWordWrap(true);
+        instructions->setMinimumHeight(100);
+        instructions->setAlignment(Qt::AlignCenter);
+        navilayout->addWidget(instructions);
     }
 
     void HelpWindow::addNaviLabel(QLabel* label, QString text) {
@@ -128,6 +149,7 @@ namespace DoLah {
         nav_commands->setStyleSheet("");
         nav_keyboard->setStyleSheet("");
         nav_other->setStyleSheet("");
+        nav_about->setStyleSheet("");
     }
 
     //////////////////////////////////////////
@@ -143,16 +165,16 @@ namespace DoLah {
     void HelpWindow::goToCommands() {
         helpcontents->setCurrentIndex(2);
     }
-    void HelpWindow::goToTypes() {
+    void HelpWindow::goToDateTime() {
         helpcontents->setCurrentIndex(3);
     }
-    void HelpWindow::goToDateTime() {
+    void HelpWindow::goToKeyboard() {
         helpcontents->setCurrentIndex(4);
     }
-    void HelpWindow::goToKeyboard() {
+    void HelpWindow::goToOther() {
         helpcontents->setCurrentIndex(5);
     }
-    void HelpWindow::goToOther() {
+    void HelpWindow::goToAbout() {
         helpcontents->setCurrentIndex(6);
     }
 
@@ -177,9 +199,13 @@ namespace DoLah {
             clearStyles();
             nav_keyboard->setStyleSheet("background-color: rgba(0, 0, 0, 0.5); color: white;");
         }
-        else {
+        else if (index == 5) {
             clearStyles();
             nav_other->setStyleSheet("background-color: rgba(0, 0, 0, 0.5); color: white;");
+        }
+        else {
+            clearStyles();
+            nav_about->setStyleSheet("background-color: rgba(0, 0, 0, 0.5); color: white;");
         }
     }
 }
