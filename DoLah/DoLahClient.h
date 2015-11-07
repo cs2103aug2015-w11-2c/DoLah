@@ -7,6 +7,7 @@
 //#include "Models/Task.h"
 #include "Models/Calendar.h"
 #include "CommandInvoker.h"
+#include "Config/ConfigurationManager.h"
 
 namespace DoLah {
 
@@ -16,10 +17,10 @@ namespace DoLah {
         ~DoLahClient();
         void parseAndProcessCommand(std::string);
         Calendar getCalendar() const;
-
+        void setStorageLocation(std::string);
     private:
+        Configuration config;
         std::string settingsFile;
-        std::string storageFile;
         DoLah::Calendar calendar;
         DoLah::CommandInvoker commandInvoker;
 	};
