@@ -168,7 +168,6 @@
     <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
-    <ClInclude Include="Models\TaskFactory.h" />
     <ClInclude Include="Parser\TaskParser.h" />
     <ClInclude Include="Parser\TaskTokenizer.h" />
     <ClInclude Include="TimeManager.h" />

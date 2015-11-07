@@ -85,7 +85,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Models\CalendarInverter.cpp">
-	  <Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Commands\SetUndoneTaskCommand.cpp">
       <Filter>Source Files</Filter>
@@ -111,9 +111,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Models\Task.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Models\TaskFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Commands\Command.h">
