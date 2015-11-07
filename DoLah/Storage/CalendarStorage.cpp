@@ -54,15 +54,22 @@ namespace DoLah {
         }
 
         out << YAML::BeginDoc;
-        out << YAML::BeginMap;
-        out << YAML::Key << "todo";
+        if (todoNode.size() + completedNode.size() > 0) {
+            out << YAML::BeginMap;
+            if (todoNode.size() > 0) {
+                out << YAML::Key << "todo";
 
-        out << YAML::Comment("Todo Tasks");
-        out << YAML::Value << todoNode;
-        out << YAML::Key << "done";
-        out << YAML::Comment("Completed Tasks");
-        out << YAML::Value << completedNode;
-        out << YAML::EndMap;
+                out << YAML::Comment("Todo Tasks");
+                out << YAML::Value << todoNode;
+            }
+            if (completedNode.size() > 0) {
+                out << YAML::Key << "done";
+                out << YAML::Comment("Completed Tasks");
+                out << YAML::Value << completedNode;
+            }
+
+            out << YAML::EndMap;
+        }
         out << YAML::EndDoc;
 
         std::ofstream ofstream(filename);
