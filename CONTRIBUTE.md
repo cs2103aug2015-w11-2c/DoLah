@@ -14,6 +14,10 @@ Whenever possible, use the correct [semantic command](https://www.stack.nl/~dimi
 
 Please ensure the consistency of the syntax, and also consult with the team when in doubt of a certain format. It is also good to check out at some tips that others mentioned in online forum or Q&A site such as Stackoverflow (e.g. [Tips Doxygen](https://www.stack.nl/~dimitri/doxygen/manual/commands.html)).
 
+Generating document for our project can be done by executing the following command in the terminal:
+
+    doxygen
+
 ## Branch naming
 
     # Specific Feature or Functionality
