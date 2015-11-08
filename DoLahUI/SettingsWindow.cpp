@@ -74,9 +74,15 @@ namespace DoLah {
 
     void SettingsWindow::applyChanges() {
         originalTheme = themeSelection->currentIndex();
-        originalLocation = storageLocationBox->text();
-        QString formattedUrl = originalLocation + "/calendar.yaml";
-        emit applyStorageLocation(formattedUrl);
+        QString formattedUrl;
+        if (storageLocationBox->text().length() < 1) {
+            formattedUrl = "calendar.yaml";
+        }
+        else {
+            originalLocation = storageLocationBox->text();
+            formattedUrl = originalLocation + "/calendar.yaml";
+        }
+        emit applySettings(formattedUrl);
         this->accept();
     }
 

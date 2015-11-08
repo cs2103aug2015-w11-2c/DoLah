@@ -27,7 +27,7 @@ namespace DoLah {
         QPushButton *browseButton;
 
     signals:
-        void applyStorageLocation(QString);
+        void applySettings(QString);
 
     protected:
         void keyPressEvent(QKeyEvent*);
