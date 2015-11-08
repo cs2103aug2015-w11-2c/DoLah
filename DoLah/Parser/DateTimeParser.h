@@ -33,7 +33,7 @@ namespace DoLah {
         static int getDateModifier(int, bool);
 
         // Time that is relative to today such as in 10 days, in a week, tomorrow
-        static int checkDateModifier(std::vector<std::string>);
+        static int checkDateModifier(std::vector<std::string>, std::tm);
 
         static int checkTimeModifier(std::vector<std::string>);
 

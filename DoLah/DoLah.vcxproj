@@ -137,6 +137,7 @@
     <ClCompile Include="Parser\DateTimeParser.cpp" />
     <ClCompile Include="Parser\ParserLibrary.cpp" />
     <ClCompile Include="Commands\SetUndoneTaskCommand.cpp" />
+    <ClCompile Include="Commands\SearchDateTaskCommand.cpp" />
     <ClCompile Include="Storage\CalendarStorage.cpp" />
     <ClCompile Include="CommandInvoker.cpp" />
     <ClCompile Include="Models\Calendar.cpp" />
@@ -171,7 +172,6 @@
     <ClInclude Include="Commands\Command.h" />
     <ClInclude Include="DoLahClient.h" />
     <ClInclude Include="Models\Task.h" />
-    <ClInclude Include="Models\TaskFactory.h" />
     <ClInclude Include="Parser\TaskParser.h" />
     <ClInclude Include="Parser\TaskTokenizer.h" />
     <ClInclude Include="TimeManager.h" />

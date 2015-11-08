@@ -106,15 +106,33 @@ namespace DoLah {
 
     std::string ParserLibrary::stringRemove(std::string str, std::string substr) {
         size_t f = str.find(substr);
-        str.replace(f, substr.length(), "");
+        if (f != std::string::npos) {
+            str.replace(f, substr.length(), "");
+        }
         return str;
     }
 
+    std::string ParserLibrary::stringRemoveAll(std::string str, std::string substr) {
+        size_t f = str.find(substr);
+        while (f != std::string::npos) {
+            str.replace(f, substr.length(), "");
+            f = str.find(substr);
+        }
+        return str;
+    }
+
+    std::string ParserLibrary::removeDoubleSpacing(std::string str) {
+        std::string substr = "  ";
+        return stringRemoveAll(str, substr);
+    }
+
+    
+
     std::vector<std::string> ParserLibrary::removeElementsFromStringVector(std::vector<std::string> origin, std::vector<std::string> list) {
-        for (size_t i = 0; i < origin.size(); i++) {
-            for (size_t j = 0; j < list.size(); j++) {
-                if (tolowercase(origin.at(i)) == tolowercase(list.at(j))) {
-                    origin.erase(origin.begin() + i);
+        for (size_t i = 0; i < list.size(); i++) {
+            for (size_t j = 0; j < origin.size(); j++) {
+                if (tolowercase(origin.at(j)) == tolowercase(list.at(i))) {
+                    origin.erase(origin.begin() + j);
                 }
             }
         }
