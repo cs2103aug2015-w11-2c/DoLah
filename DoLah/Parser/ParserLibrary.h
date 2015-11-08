@@ -21,6 +21,8 @@ namespace DoLah {
         static std::vector<std::string> stringVectorUnique(std::vector<std::string> vector);
         static bool isDecimal(std::string str);
         static std::string stringRemove(std::string str, std::string substr);
+        static std::string stringRemoveAll(std::string str, std::string substr);
+        static std::string removeDoubleSpacing(std::string);
         static std::vector<std::string> removeElementsFromStringVector(std::vector<std::string>, std::vector<std::string>);
     };
 
