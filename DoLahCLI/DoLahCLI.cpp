@@ -61,5 +61,6 @@ void printCalendar(const DoLah::Calendar& calendar){
             std::cout << "   on: " << std::string(s_dueDatetime) << std::endl;
         }
     }
+
     std::cout << std::endl;
 }

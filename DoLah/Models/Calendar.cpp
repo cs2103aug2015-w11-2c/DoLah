@@ -3,7 +3,7 @@
 namespace DoLah {
 	Calendar::Calendar() {
         this->cmdHistory = DoLah::CommandHistory();
-        this->lastQuery = "1234567890";
+        this->lastQuery = "";
 	}
 
     Calendar::~Calendar() {

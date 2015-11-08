@@ -9,7 +9,7 @@ namespace DoLah {
 
         static void invertAdd(AbstractTask *, Calendar *);
         static void invertDelete(AbstractTask *, Calendar *);
-        static void invertEdit(AbstractTask *, Calendar *);
+        static void invertEdit(AbstractTask *, AbstractTask *, Calendar *);
         static void invertClear(std::vector<AbstractTask*>, Calendar *);
         static void invertSearch(std::vector<AbstractTask*> **, std::string, Calendar *);
         static void invertDone(AbstractTask *, Calendar *);
