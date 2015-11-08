@@ -11,7 +11,6 @@ void DoLah::CalendarInverter::invertAdd(AbstractTask * task, Calendar * calendar
 }
 
 void DoLah::CalendarInverter::invertDelete(AbstractTask * task, Calendar * calendar){
-    //calendar->addTask(task, task->getIndex());
     calendar->addTask(task);
 }
 
