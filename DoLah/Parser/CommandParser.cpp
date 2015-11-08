@@ -80,7 +80,31 @@ namespace DoLah {
         }
 
         std::string arg = ParserLibrary::implode(inputArr, " ");
+
         return SearchTaskCommand(arg);
+    }
+
+    SearchDateTaskCommand CommandParser::parseSearchDate(std::vector<std::string> inputArr) {
+        if (inputArr.size() == 0) {
+            throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
+        }
+
+        std::string arg = ParserLibrary::implode(inputArr, " ");
+
+        std::tm baseDate;
+        std::tm searchDate;
+        std::vector<std::tm> dates = TaskTokenizer::findAndRemoveDate(inputArr);
+
+        if (dates.size() == 1) {
+            baseDate = TimeManager::getCurrentTime();
+            searchDate = dates[0];
+        } else if (dates.size() == 2) {
+            baseDate = dates[0];
+            searchDate = dates[1];
+        } else {
+            throw std::invalid_argument("");
+        }
+        return SearchDateTaskCommand(baseDate, searchDate);
     }
 
 
@@ -164,7 +188,13 @@ namespace DoLah {
             return command;
         } else if (ParserLibrary::inStringArray(SEARCH, command)) {
             inputArr = pruneCommand(inputArr);
-            SearchTaskCommand* command = new SearchTaskCommand(parseSearch(inputArr));
+            try {
+                AbstractCommand* command = new SearchDateTaskCommand(parseSearchDate(inputArr));
+                return command;
+            } catch (std::invalid_argument e) {
+                // continue
+            }
+            AbstractCommand* command = new SearchTaskCommand(parseSearch(inputArr));
             return command;
         } else if (ParserLibrary::inStringArray(DONE, command)) {
             inputArr = pruneCommand(inputArr);

@@ -22,6 +22,7 @@ namespace DoLah {
         static AbstractCommand* parse(std::string);
         static AddTaskCommand parseAdd(std::vector<std::string>);
         static SearchTaskCommand parseSearch(std::vector<std::string>);
+        static SearchDateTaskCommand parseSearchDate(std::vector<std::string>);
         static SetDoneTaskCommand parseSetDone(std::vector<std::string>);
         static SetUndoneTaskCommand parseSetUndone(std::vector<std::string>);
         static EditTaskCommand parseEdit(std::vector<std::string>);

@@ -26,6 +26,7 @@ namespace DoLah {
 		void updateTask(int, AbstractTask*);
 		void clearTasks();
         void search(std::string);
+        void searchDate(std::tm, std::tm);
         void sortTasks(std::vector<AbstractTask*>&);
         static bool taskCompare(AbstractTask*, AbstractTask*);
         static std::vector<std::tm> getDates(AbstractTask*);
