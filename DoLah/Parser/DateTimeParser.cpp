@@ -134,14 +134,20 @@ namespace DoLah {
         std::vector<std::string> strArr = ParserLibrary::explode(str, timeDivider);
 
         int hour = std::stoi(strArr.at(0));
-        time = hour * 60;
-
-        if (isAM && hour >= 12) {
-            throw std::invalid_argument("");
+        if (isAM) {
+            if (hour > 12) {
+                throw std::invalid_argument("");
+            } else if (isAM && hour == 12) {
+                hour = 0;
+            }
         }
 
-        if (isPM && hour < 12) {
-            time += 12 * 60;
+        time = hour * 60;
+
+        if (isPM) {
+            if (hour < 12) {
+                time += 12 * 60;
+            }
         }
 
         if (strArr.size() > 1) {
@@ -222,8 +228,10 @@ namespace DoLah {
         return TimeManager::compareTime(current, modified);
     }
 
-    int DateTimeParser::checkDateModifier(std::vector<std::string> strArr) {
-        std::tm output;
+    int DateTimeParser::checkDateModifier(std::vector<std::string> strArr, std::tm lowerBound) {
+        int modifier = 0;
+        std::tm current = TimeManager::getCurrentTime();
+
         int dayDiff = 0;
         int weekDiff = 0;
         int monthDiff = 0;
@@ -243,6 +251,18 @@ namespace DoLah {
                 dayDiff = 1;
             } else if (date != REJECT) {
                 dayDiff = getDateModifier(date, false);
+                
+                std::tm modifiedDate = current;
+                modifiedDate.tm_mday += dayDiff;
+                mktime(&modifiedDate);
+                modifier = TimeManager::compareTime(lowerBound, modifiedDate);
+                if (modifier > 0) {
+                    return modifier;
+                } else {
+                    modifiedDate.tm_mday += 7;
+                    modifier = TimeManager::compareTime(current, modifiedDate);
+                    return modifier;
+                }
             } else {
                 throw std::invalid_argument("");
             }
@@ -295,14 +315,18 @@ namespace DoLah {
 
             subVec = formatArr(subVec);
             std::tm specifiedDay = classifyDate(subVec);
-            std::tm current = TimeManager::getCurrentTime();
 
-            return TimeManager::compareTime(current, specifiedDay);
+            if (TimeManager::compareTime(lowerBound, specifiedDay) < 0) {
+                specifiedDay.tm_mday += 7;
+                mktime(&specifiedDay);
+            }
+
+            modifier = TimeManager::compareTime(current, specifiedDay);;
+            return modifier;
         } else {
             throw std::invalid_argument("");
         }
 
-        std::tm current = TimeManager::getCurrentTime();
         std::tm modified = current;
         modified.tm_mday += dayDiff + 7 * weekDiff;
         modified.tm_mon += monthDiff;
@@ -368,7 +392,7 @@ namespace DoLah {
 
         if (!done) {
             try {
-                int modifier = checkDateModifier(cleanArr);
+                int modifier = checkDateModifier(cleanArr, lowerBound);
                 time_t t = time(NULL) + modifier;
                 localtime_s(&output, &t);
                 if (!TimeManager::isValidDate(output)) {
@@ -421,10 +445,10 @@ namespace DoLah {
             output = TimeManager::copyDay(TimeManager::getCurrentTime(), output);
             if (TimeManager::compareTime(lowerBound, output) < 0) {
                 output.tm_mday += 1;
-                std::mktime(&output);
             }
         }
 
+        std::mktime(&output);
         return output;
     }
 
