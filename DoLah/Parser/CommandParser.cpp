@@ -155,6 +155,7 @@ namespace DoLah {
 
 
     AbstractCommand* CommandParser::parse(std::string input) {
+        input = ParserLibrary::removeDoubleSpacing(input);
         std::vector<std::string> inputArr = ParserLibrary::explode(input, " ");
         std::string command = inputArr[0];
 
