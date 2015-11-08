@@ -39,12 +39,10 @@ done:  # Completed Tasks
 ...)";
     const std::string SAMPLE_FIXTURE_SIMPLE_CONTENT = R"(---
 todo:  # Todo Tasks
-=======
-    - task: Floating Task 0
-      description: A task description for floating task 0
-    - task: Deadline Task 1
-      due: 2016-08-16 03:10:15
-      description: A task description for deadline task 1
+    - description: A task description for event task 2
+      end: 2015-10-18 00:10:15
+      start: 2015-10-16 23:10:15
+      task: Event Task 2
     - task: Deadline Task 1
       due: 2016-08-16 03:10:15
       description: A task description for deadline task 1
