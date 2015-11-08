@@ -1,5 +1,4 @@
 #include "Task.h"
-#include "TaskFactory.h"
 
 namespace DoLah {
 
