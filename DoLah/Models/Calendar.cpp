@@ -3,7 +3,6 @@
 namespace DoLah {
 	Calendar::Calendar() {
         this->cmdHistory = DoLah::CommandHistory();
-        this->lastQuery = "";
 	}
 
     Calendar::~Calendar() {
@@ -53,8 +52,6 @@ namespace DoLah {
             taskList.insert(taskList.begin() + task->getIndex(), task);
             indexTasks(taskList, task->getIndex());
         }
-
-        this->updateSearch();
     }
 
     void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
@@ -82,10 +79,6 @@ namespace DoLah {
         }
     }
 
-    void Calendar::updateSearch(){
-        this->search(lastQuery);
-    }
-
     void Calendar::addTask(AbstractTask* task, int index) {
         task->setId(index);
 
@@ -95,8 +88,6 @@ namespace DoLah {
         else {
             taskList.insert(taskList.begin()+index, task);
         }
-
-        this->updateSearch();
     }
 
     void Calendar::deleteTask(int index, bool status) {
@@ -112,8 +103,6 @@ namespace DoLah {
             taskList.erase(doneList.begin() + index);
             indexTasks(doneList);
         }
-
-        this->updateSearch();
     }
 
     void Calendar::setDoneTask(int taskIndex, bool status) {
@@ -140,26 +129,20 @@ namespace DoLah {
             sortTasks(taskList);
         }
 
-        this->updateSearch();
     }
 
     void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
         deleteTask(index);
         addTask(task);
-
-        this->updateSearch();
     }
 
     void Calendar::clearTasks() {
         this->taskList.clear();
         this->doneList.clear();
-
-        this->updateSearch();
     }
 
     void Calendar::search(std::string query) {
-        this->lastQuery = query;
         std::vector<AbstractTask*> results;
 
         for (int i = 0; i < taskList.size(); i++) {
