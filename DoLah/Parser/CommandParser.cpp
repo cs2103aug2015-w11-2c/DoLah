@@ -89,20 +89,25 @@ namespace DoLah {
             throw std::invalid_argument(TOO_LITTLE_ARGUMENTS_MESSAGE);
         }
 
-        std::string arg = ParserLibrary::implode(inputArr, " ");
-
         std::tm baseDate;
         std::tm searchDate;
-        std::vector<std::tm> dates = TaskTokenizer::findAndRemoveDate(inputArr);
+        std::vector<std::tm> dates;
 
-        if (dates.size() == 1) {
-            baseDate = TimeManager::getCurrentTime();
-            searchDate = dates[0];
-        } else if (dates.size() == 2) {
-            baseDate = dates[0];
-            searchDate = dates[1];
+        if (inputArr.size() == 1 && ParserLibrary::inStringArray({ "outdated", "overdue" }, inputArr[0])) {
+            baseDate = std::tm();
+            searchDate = TimeManager::getCurrentTime();
         } else {
-            throw std::invalid_argument("");
+            dates = TaskTokenizer::findAndRemoveDate(inputArr);
+
+            if (dates.size() == 1) {
+                baseDate = TimeManager::getCurrentTime();
+                searchDate = dates[0];
+            } else if (dates.size() == 2) {
+                baseDate = dates[0];
+                searchDate = dates[1];
+            } else {
+                throw std::invalid_argument("");
+            }
         }
         return SearchDateTaskCommand(baseDate, searchDate);
     }
