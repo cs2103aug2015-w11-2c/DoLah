@@ -5,13 +5,9 @@
 #include "Storage/CalendarStorage.h"
 
 namespace DoLah {
-    static const std::string DEFAULT_CALENDAR_FILENAME = "calendar.yaml";
 
     DoLahClient::DoLahClient() {
-        this->calendar = DoLah::CalendarStorage::load(DEFAULT_CALENDAR_FILENAME);
-        this->commandInvoker = CommandInvoker();
-        CommandHistory* cmdHistory = (this->calendar.getCmdHistory());
-        this->commandInvoker.setCmdHistory(cmdHistory);
+        this->restart();
     }
 
     DoLahClient::~DoLahClient() {
@@ -22,10 +18,24 @@ namespace DoLah {
         DoLah::AbstractCommand *command = CommandParser::parse(userinput);
         command->setCalendar(&calendar);
         this->commandInvoker.process(command);
-        DoLah::CalendarStorage::save(calendar, DEFAULT_CALENDAR_FILENAME);
+        DoLah::CalendarStorage::save(calendar, this->config.storagefile);
     }
 
     Calendar DoLahClient::getCalendar() const {
         return this->calendar;
+    }
+
+    void DoLahClient::setStorageLocation(std::string location) {
+        this->config.storagefile = location;
+        ConfigurationManager::saveConfig(this->config);
+        this->restart();
+    }
+
+    void DoLahClient::restart() {
+        this->config = ConfigurationManager::loadConfig();
+        this->calendar = DoLah::CalendarStorage::load(this->config.storagefile);
+        this->commandInvoker = CommandInvoker();
+        CommandHistory* cmdHistory = (this->calendar.getCmdHistory());
+        this->commandInvoker.setCmdHistory(cmdHistory);
     }
 }
