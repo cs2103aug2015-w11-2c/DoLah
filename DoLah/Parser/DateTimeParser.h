@@ -1,5 +1,13 @@
 #pragma once
 
+/**
+ * @file DateTimeParser.cpp
+ * Static library to handle conversion from string vector to std::tm.
+ * Throws invalid_argument exception if the given list of string cannot be converted.
+ * 
+ * @author Seokmin
+ */
+
 #include <string>
 #include <vector>
 #include <regex>
@@ -16,16 +24,61 @@ namespace DoLah {
         DateTimeParser();
         ~DateTimeParser();
 
-        // Converts string array into std::tm.
-        // Second parameter is the lowerBound of the time.
-        // By default, the current time will be used (done so inside the method).
+        /**
+         * Converts string array into std::tm.
+         * It will handle many different kinds of formats for a degree of NLP.
+         * @param[in]   strArr String array to be converted
+         * @param[in]   lowerBound std::tm that indicates the lowerbound for the time.
+         *              By default, the current time is set as the lowerbound.
+         * @return std::tm object
+         */
         static std::tm toDateFormat(std::vector<std::string>, std::tm = std::tm());
+
+        /**
+         * Check the input string and convert it into corresponding day.
+         * If not valid, global variable int REJECT will be returned.
+         * @param[in]   str String to be converted
+         * @return Day int
+         */
         static int getDay(std::string);
+
+        /**
+         * Check the input string and convert it into corresponding month.
+         * If not valid, global variable int REJECT will be returned.
+         * @param[in]   str String to be converted
+         * @return Month int
+         */
         static int getMonth(std::string);
+
+        /**
+         * Check the input string and convert it into corresponding year.
+         * If not valid, global variable int REJECT will be returned.
+         * @param[in]   str String to be converted
+         * @return Year int
+         */
         static int getYear(std::string);
+
+        /**
+         * Check the input string and convert it into corresponding int that represents the date.
+         * If not valid, global variable int REJECT will be returned.
+         * @param[in]   str String to be converted
+         * @return Date int
+         */
         static int getDate(std::string);
+
+        /**
+         * Check the input string and convert it into corresponding time represented as seconds since the Epoch.
+         * If not valid, global variable int REJECT will be returned.
+         * @param[in]   str String to be converted
+         * @return Time int
+         */
         static int getTime(std::string);
-        
+
+        /**
+         * Removes unnecessary elements that is unrelated to date time parsing from the string array.
+         * @param[in]   strArr String vector to be formatted
+         * @return Formatted string vector
+         */
         static std::vector<std::string> formatArr(std::vector<std::string>);
 
         // Date provides an indirect indication to a certain day.

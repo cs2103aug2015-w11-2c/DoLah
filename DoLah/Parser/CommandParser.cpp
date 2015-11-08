@@ -11,8 +11,6 @@ namespace DoLah {
     std::vector<std::string> CommandParser::UNDO = { "undo" };
     std::vector<std::string> CommandParser::REDO = { "redo" };
 
-    std::string CommandParser::UNHANDLED_COMMAND_MESSAGE = "Command not handled";
-    std::string CommandParser::UNKNOWN_COMMAND_MESSAGE = "Command not recognized";
     std::string CommandParser::TOO_MANY_ARGUMENTS_MESSAGE = "Too many arguments";
     std::string CommandParser::TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
     std::string CommandParser::INVALID_TASK_ID_ARGUMENT = "Invalid task ID given";
