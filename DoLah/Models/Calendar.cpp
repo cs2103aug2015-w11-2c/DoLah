@@ -161,13 +161,6 @@ namespace DoLah {
     void Calendar::searchDate(std::tm from, std::tm to) {
         std::vector<AbstractTask*> results;
 
-        int fromyear = from.tm_year;
-        int frommonth = from.tm_mon;
-        int fromday = from.tm_mday;
-        int toyear = to.tm_year;
-        int tomonth = to.tm_mon;
-        int today = to.tm_mday;
-
         for (int i = 0; i < taskList.size(); i++) {
             std::vector<std::tm> dates = getDates(taskList[i]);
             if (dates.size() == 0) {
