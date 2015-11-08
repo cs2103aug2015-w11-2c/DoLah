@@ -32,7 +32,7 @@ namespace DoLah {
         initInputArea();
         helpWindow = new HelpWindow(this);
         settingsWindow = new SettingsWindow(this);
-        QObject::connect(settingsWindow, SIGNAL(applySettings(QString)), this, SLOT(setStorageLocation(QString)));
+        QObject::connect(settingsWindow, SIGNAL(applyStorageSettings(QString)), this, SLOT(setStorageLocation(QString)));
 
         QMetaObject::connectSlotsByName(this);
     }

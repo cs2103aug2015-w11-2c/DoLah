@@ -1,5 +1,6 @@
 #pragma once
 #include "MenuLabel.h"
+#include "Config/ConfigurationManager.h"
 
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLineEdit>
@@ -20,14 +21,13 @@ namespace DoLah {
     public:
         SettingsWindow(QMainWindow * parent);
         ~SettingsWindow();
-
-        QFileDialog *fileBrowser;
+        QLineEdit *storageLocationBox;
         MenuLabel *exitButton;
         QDialogButtonBox *buttonBox;
         QPushButton *browseButton;
 
     signals:
-        void applySettings(QString);
+        void applyStorageSettings(QString);
 
     protected:
         void keyPressEvent(QKeyEvent*);
@@ -40,9 +40,9 @@ namespace DoLah {
 
     private:
         int originalTheme;
+        QFileDialog *fileBrowser;
         QString originalLocation;
         QString selectedLocation;
-        QLineEdit *storageLocationBox;
         QComboBox *themeSelection;
         QMainWindow *mainWin;
         void storageSettings();

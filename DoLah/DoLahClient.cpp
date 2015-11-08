@@ -29,6 +29,10 @@ namespace DoLah {
         return this->calendar;
     }
 
+    std::string DoLahClient::getStorageLocation() {
+        return this->config.storagefile;
+    }
+
     void DoLahClient::setStorageLocation(std::string location) {
         this->config.storagefile = location;
         ConfigurationManager::saveConfig(this->config);

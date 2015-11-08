@@ -34,11 +34,20 @@ namespace DoLah {
         fileBrowser = new QFileDialog(this);
         fileBrowser->setFileMode(QFileDialog::Directory);
         storageLocationBox = new QLineEdit(this);
+        storageLocationBox->setReadOnly(true);
         storageLocationBox->setGeometry(QRect(20, 100, 200, 20));
+        Configuration config = ConfigurationManager::loadConfig();
+        originalLocation = QString::fromUtf8(config.storagefile.c_str());
+        if (originalLocation == "calendar.yaml") {
+            originalLocation = QDir::currentPath();
+        }
+        else {
+            originalLocation.remove("/calendar.yaml");
+        }
+        storageLocationBox->setText(originalLocation);
         browseButton = new QPushButton(this);
         browseButton->setText("Browse");
         browseButton->setGeometry(QRect(230, 98, 50, 23));
-        originalLocation = storageLocationBox->text();
         connect(browseButton, SIGNAL(clicked()), this, SLOT(browseLocation()));
     }
 
@@ -54,7 +63,9 @@ namespace DoLah {
 
     void SettingsWindow::browseLocation() {
         selectedLocation = fileBrowser->getExistingDirectory(this, tr("Select Task Data Storage Location"));
-        storageLocationBox->setText(selectedLocation);
+        if (selectedLocation.length() != 0) {
+            storageLocationBox->setText(selectedLocation);
+        }
     }
 
     void SettingsWindow::changeTheme(int index) {
@@ -75,14 +86,13 @@ namespace DoLah {
     void SettingsWindow::applyChanges() {
         originalTheme = themeSelection->currentIndex();
         QString formattedUrl;
-        if (storageLocationBox->text().length() < 1) {
-            formattedUrl = "calendar.yaml";
+        if (storageLocationBox->text() == originalLocation) {
         }
         else {
             originalLocation = storageLocationBox->text();
             formattedUrl = originalLocation + "/calendar.yaml";
+            emit applyStorageSettings(formattedUrl);
         }
-        emit applySettings(formattedUrl);
         this->accept();
     }
 
