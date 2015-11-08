@@ -1,5 +1,6 @@
 ### DoLah ###
-calendar.yaml
+*.yaml
+config.xml
 
 ### C++ ###
 # Compiled Object files

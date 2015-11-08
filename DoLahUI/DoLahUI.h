@@ -69,13 +69,14 @@ namespace DoLah {
         void handleUserInput();
         void handleEasyEdit(int, QString);
         /*void handleMenuCommand(QString, int);*/
-        void menuExit();
-        void updateMenu(int);
         void goToHome();
         void goToDone();
         void goToSearch();
         void goToHelp();
         void goToSettings();
+        void setStorageLocation(QString);
+        void menuExit();
+        void updateMenu(int);
 
     private:
         void setupUI();
