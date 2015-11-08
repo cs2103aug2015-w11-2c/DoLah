@@ -101,6 +101,12 @@ namespace DoLahTest
             command = DoLah::CommandParser::parse("add task2 in 2 weeks");
             command->setCalendar(&testCal);
             command->execute();
+            command = DoLah::CommandParser::parse("add task3 from today to next week");
+            command->setCalendar(&testCal);
+            command->execute();
+            command = DoLah::CommandParser::parse("done 3");
+            command->setCalendar(&testCal);
+            command->execute();
             command = DoLah::CommandParser::parse("search in 10 days");
             command->setCalendar(&testCal);
             command->execute();
@@ -109,7 +115,7 @@ namespace DoLahTest
             std::vector<DoLah::AbstractTask*> resultVector = testCal.getSearchedTaskList();
 
             //Assert
-            Assert::AreEqual((size_t)1, resultVector.size());
+            Assert::AreEqual((size_t)2, resultVector.size());
         }
 
         TEST_METHOD(UndoCommand) {
