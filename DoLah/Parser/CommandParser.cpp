@@ -17,6 +17,7 @@ namespace DoLah {
     std::string CommandParser::TOO_LITTLE_ARGUMENTS_MESSAGE = "Too little arguments";
     std::string CommandParser::INVALID_TASK_ID_ARGUMENT = "Invalid task ID given";
 
+    std::vector<std::string> CommandParser::OUTDATED = { "outdated", "overdue" };
 
     CommandParser::CommandParser() {
     }
@@ -93,7 +94,7 @@ namespace DoLah {
         std::tm searchDate;
         std::vector<std::tm> dates;
 
-        if (inputArr.size() == 1 && ParserLibrary::inStringArray({ "outdated", "overdue" }, inputArr[0])) {
+        if (inputArr.size() == 1 && ParserLibrary::inStringArray(OUTDATED, inputArr[0])) {
             baseDate = std::tm();
             searchDate = TimeManager::getCurrentTime();
         } else {

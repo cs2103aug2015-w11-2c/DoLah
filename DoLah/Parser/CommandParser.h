@@ -48,5 +48,6 @@ namespace DoLah {
         static std::string TOO_MANY_ARGUMENTS_MESSAGE;
         static std::string TOO_LITTLE_ARGUMENTS_MESSAGE;
         static std::string INVALID_TASK_ID_ARGUMENT;
+        static std::vector<std::string> OUTDATED;
     };
 }
