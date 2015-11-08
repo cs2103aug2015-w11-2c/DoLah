@@ -514,8 +514,8 @@ namespace DoLah {
         } else if (month != REJECT) {
             output.tm_mday = 1;
             output.tm_mon = month;
-            if (size > 2) {
-                year = getYear(strArr.at(2));
+            if (size > 1) {
+                year = getYear(strArr.at(1));
                 if (year != REJECT) {
                     output.tm_year = year - 1900;
                 } else {
