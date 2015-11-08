@@ -175,7 +175,7 @@ namespace DoLah {
             if (dates.size() == 0) {
                 continue;
             }
-            if (TimeManager::compareTime(from, dates[0]) > 0 && TimeManager::compareTime(dates[0], to) > 0) {
+            if (TimeManager::compareTime(from, dates[0]) >= 0 && TimeManager::compareTime(dates[0], to) >= 0) {
                 results.push_back(doneList.at(i));
             }
         }

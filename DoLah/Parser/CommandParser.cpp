@@ -101,7 +101,7 @@ namespace DoLah {
             dates = TaskTokenizer::findAndRemoveDate(inputArr);
 
             if (dates.size() == 1) {
-                baseDate = TimeManager::getCurrentTime();
+                baseDate = std::tm();
                 searchDate = dates[0];
             } else if (dates.size() == 2) {
                 baseDate = dates[0];
