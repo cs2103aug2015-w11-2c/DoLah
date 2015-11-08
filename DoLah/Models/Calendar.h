@@ -36,9 +36,11 @@ namespace DoLah {
         std::vector<AbstractTask*> doneList;
         CommandHistory cmdHistory;
         std::vector<AbstractTask*> searchedList;
+        std::string lastQuery;
 
         std::string TASK_INDEX_OUT_OF_RANGE_MESSAGE = "Task index out of range";
 
-        void Calendar::findInsertionPoint(AbstractTask* task, int start, int end);
+        void findInsertionPoint(AbstractTask* task, int start, int end);
+        void updateSearch();
     };
 }

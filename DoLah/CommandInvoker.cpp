@@ -17,7 +17,9 @@ namespace DoLah {
     void CommandInvoker::process(AbstractCommand * command) {
         command->execute();
         if (typeid(*command) != typeid(RedoTaskCommand) && typeid(*command) != typeid(UndoTaskCommand)) {
-            cmdHistory->addToUndoStack(command);
+            if (typeid(*command) != typeid(SearchTaskCommand)) {
+                cmdHistory->addToUndoStack(command);
+            }
         }
     }
 }
