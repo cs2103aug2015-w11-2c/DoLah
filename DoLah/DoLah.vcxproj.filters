@@ -90,6 +90,9 @@
     <ClCompile Include="Commands\SetUndoneTaskCommand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Commands\SearchDateTaskCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Parser\TaskTokenizer.h">
