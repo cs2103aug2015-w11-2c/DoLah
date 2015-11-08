@@ -108,10 +108,9 @@ namespace DoLahTest
                 command->execute();
             }
 
+            //Act
             command = DoLah::CommandParser::parse("search in 10 days");
             command->setCalendar(&testCal);
-
-            //Act
             command->execute();
 
             //Assert
