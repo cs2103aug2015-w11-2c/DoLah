@@ -24,6 +24,5 @@ namespace DoLah {
     }
 
     void SearchDateTaskCommand::revert() {
-        CalendarInverter::invertSearchDate(resultVector, from, to, calendar);
     }
 }
