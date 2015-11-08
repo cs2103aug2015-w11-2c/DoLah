@@ -328,6 +328,7 @@ namespace DoLah {
         appClient.setStorageLocation(location);
         message->clear();
         message->setText("Settings changed");
+        this->refreshTasks();
     }
 
     void DoLahUI::menuExit() {

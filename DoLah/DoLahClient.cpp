@@ -7,11 +7,7 @@
 namespace DoLah {
 
     DoLahClient::DoLahClient() {
-        this->config = ConfigurationManager::loadConfig();
-        this->calendar = DoLah::CalendarStorage::load(this->config.storagefile);
-        this->commandInvoker = CommandInvoker();
-        CommandHistory* cmdHistory = (this->calendar.getCmdHistory());
-        this->commandInvoker.setCmdHistory(cmdHistory);
+        this->restart();
     }
 
     DoLahClient::~DoLahClient() {
@@ -32,5 +28,14 @@ namespace DoLah {
     void DoLahClient::setStorageLocation(std::string location) {
         this->config.storagefile = location;
         ConfigurationManager::saveConfig(this->config);
+        this->restart();
+    }
+
+    void DoLahClient::restart() {
+        this->config = ConfigurationManager::loadConfig();
+        this->calendar = DoLah::CalendarStorage::load(this->config.storagefile);
+        this->commandInvoker = CommandInvoker();
+        CommandHistory* cmdHistory = (this->calendar.getCmdHistory());
+        this->commandInvoker.setCmdHistory(cmdHistory);
     }
 }
