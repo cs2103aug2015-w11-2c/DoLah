@@ -90,6 +90,8 @@ namespace DoLah {
             node = YAML::LoadFile(filename);
         } catch (const YAML::ParserException&) {
             return calendar;
+        } catch (const YAML::BadFile&) {
+            return calendar;
         }
 
         if (node.IsMap()) {
