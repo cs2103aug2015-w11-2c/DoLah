@@ -14,5 +14,10 @@
         <file>Images/help_basic.png</file>
         <file>Images/help_add.png</file>
         <file>Images/help_commands.png</file>
+        <file>Images/help_datetime.png</file>
+        <file>Images/help_about.png</file>
+        <file>Images/help_keyboard.png</file>
+        <file>Images/help_other.png</file>
+        <file>stylesheets/ordinaire_stylesheet.qss</file>
     </qresource>
 </RCC>

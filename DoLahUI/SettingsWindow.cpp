@@ -18,7 +18,7 @@ namespace DoLah {
 
         buttonBox = new QDialogButtonBox(this);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));
-        buttonBox->setGeometry(QRect(65, 170, 170, 23));
+        buttonBox->setGeometry(QRect(0, 170, 300, 23));
         buttonBox->setCenterButtons(true);
         buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
         connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
@@ -32,7 +32,8 @@ namespace DoLah {
     void SettingsWindow::themeOptions() {
         themeSelection = new QComboBox(this);
         themeSelection->addItem("Default");
-        themeSelection->addItem("Windows 10");
+        themeSelection->addItem("Night");
+        themeSelection->addItem("Ordinaire");
         themeSelection->setGeometry(QRect(50, 100, 200, 20));
         connect(themeSelection, SIGNAL(currentIndexChanged(int)), this, SLOT(changeTheme(int)));
     }
@@ -45,6 +46,10 @@ namespace DoLah {
         else if (index == 1) {
             readAndSetStyleSheet("stylesheets/night_stylesheet.qss");
             themeSelection->setCurrentIndex(1);
+        }
+        else if (index == 2) {
+            readAndSetStyleSheet("stylesheets/ordinaire_stylesheet.qss");
+            themeSelection->setCurrentIndex(2);
         }
     }
 
