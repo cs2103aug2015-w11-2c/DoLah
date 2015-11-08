@@ -43,10 +43,6 @@ namespace DoLah {
 
         dueDate = DateTimeParser::toDateFormat(subVec);
 
-        if (TimeManager::compareTime(current, dueDate) < 0) {
-            throw std::invalid_argument("");
-        }
-
         return { dueDate };
     }
 
