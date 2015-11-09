@@ -327,7 +327,7 @@ namespace DoLah {
          */
         void revert();
     private:
-        const std::string ILLEGAL_FUNCTION_CALL_MESSAGE; ///< Thrown when revert is called.
+        static std::string ILLEGAL_FUNCTION_CALL_MESSAGE; ///< Thrown when revert is called.
     };
 
     /**
@@ -351,7 +351,7 @@ namespace DoLah {
          */
         void revert();
     private:
-        const std::string ILLEGAL_FUNCTION_CALL_MESSAGE; ///< Thrown when revert is called.
+        static std::string ILLEGAL_FUNCTION_CALL_MESSAGE; ///< Thrown when revert is called.
     };
 
 }
