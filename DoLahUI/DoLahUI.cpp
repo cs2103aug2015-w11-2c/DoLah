@@ -32,6 +32,7 @@ namespace DoLah {
         initInputArea();
         helpWindow = new HelpWindow(this);
         settingsWindow = new SettingsWindow(this);
+        QObject::connect(settingsWindow, SIGNAL(applyStorageSettings(QString)), this, SLOT(setStorageLocation(QString)));
 
         QMetaObject::connectSlotsByName(this);
     }
@@ -320,6 +321,14 @@ namespace DoLah {
 
     void DoLahUI::goToSettings() {
         settingsWindow->exec();
+    }
+
+    void DoLahUI::setStorageLocation(QString url) {
+        std::string location = url.toStdString();
+        appClient.setStorageLocation(location);
+        message->clear();
+        message->setText("Settings changed");
+        this->refreshTasks();
     }
 
     void DoLahUI::menuExit() {

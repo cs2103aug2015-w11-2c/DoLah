@@ -355,6 +355,10 @@ namespace DoLah {
             }
         }
 
+        if (cleanArr.size() == 0) {
+            throw std::invalid_argument("");
+        }
+
         return cleanArr;
     }
 

@@ -54,15 +54,22 @@ namespace DoLah {
         }
 
         out << YAML::BeginDoc;
-        out << YAML::BeginMap;
-        out << YAML::Key << "todo";
+        if (todoNode.size() + completedNode.size() > 0) {
+            out << YAML::BeginMap;
+            if (todoNode.size() > 0) {
+                out << YAML::Key << "todo";
 
-        out << YAML::Comment("Todo Tasks");
-        out << YAML::Value << todoNode;
-        out << YAML::Key << "done";
-        out << YAML::Comment("Completed Tasks");
-        out << YAML::Value << completedNode;
-        out << YAML::EndMap;
+                out << YAML::Comment("Todo Tasks");
+                out << YAML::Value << todoNode;
+            }
+            if (completedNode.size() > 0) {
+                out << YAML::Key << "done";
+                out << YAML::Comment("Completed Tasks");
+                out << YAML::Value << completedNode;
+            }
+
+            out << YAML::EndMap;
+        }
         out << YAML::EndDoc;
 
         std::ofstream ofstream(filename);
@@ -78,7 +85,14 @@ namespace DoLah {
             std::ofstream out(filename);
             out.close();
         }
-        YAML::Node node = YAML::LoadFile(filename);
+        YAML::Node node;
+        try {
+            node = YAML::LoadFile(filename);
+        } catch (const YAML::ParserException&) {
+            return calendar;
+        } catch (const YAML::BadFile&) {
+            return calendar;
+        }
 
         if (node.IsMap()) {
             for (auto taskGroupIterator = node.begin(); taskGroupIterator != node.end(); ++taskGroupIterator) {
@@ -86,34 +100,41 @@ namespace DoLah {
 
                 for (auto taskIterator = taskGroupIterator->second.begin(); taskIterator != taskGroupIterator->second.end(); ++taskIterator) {                    
                     YAML::Node taskNode = *taskIterator;
-                    const std::string text;
                     DoLah::AbstractTask* task = NULL;
-                    if (taskNode["due"].IsDefined()) {
-                        DeadlineTask* d_task = new DeadlineTask;
-                        d_task->setDueDate(taskNode["due"].as<std::tm>());
-                        task = d_task;
-                    } else if (taskNode["start"].IsDefined() && taskNode["end"].IsDefined()) {
-                        EventTask* e_task = new EventTask;
-                        e_task->setStartDate(taskNode["start"].as<std::tm>());
-                        e_task->setEndDate(taskNode["end"].as<std::tm>());
-                        task = e_task;
-                    } else {
-                        task = new FloatingTask;
-                    }
-
-                    if (!taskNode["tags"].IsNull()) {
-                        for (auto tagIter = taskNode["tags"].begin(); tagIter != taskNode["tags"].end(); ++tagIter) {
-                            task->addTag((*tagIter).as<std::string>());
+                    const std::string text;
+                    try {
+                        if (taskNode["due"].IsDefined()) {
+                            DeadlineTask* d_task = new DeadlineTask;
+                            d_task->setDueDate(taskNode["due"].as<std::tm>());
+                            task = d_task;
+                        } else if (taskNode["start"].IsDefined() && taskNode["end"].IsDefined()) {
+                            EventTask* e_task = new EventTask;
+                            e_task->setStartDate(taskNode["start"].as<std::tm>());
+                            e_task->setEndDate(taskNode["end"].as<std::tm>());
+                            task = e_task;
+                        } else {
+                            task = new FloatingTask;
                         }
-                    }
 
-                    if (taskStatus == "todo") {
-                        task->setDone(false);
-                    } else if (taskStatus == "done") {
-                        task->setDone(true);
+                        if (!taskNode["tags"].IsNull()) {
+                            for (auto tagIter = taskNode["tags"].begin(); tagIter != taskNode["tags"].end(); ++tagIter) {
+                                task->addTag((*tagIter).as<std::string>());
+                            }
+                        }
+
+                        if (taskStatus == "todo") {
+                            task->setDone(false);
+                        } else if (taskStatus == "done") {
+                            task->setDone(true);
+                        }
+                        task->setName(taskNode["task"].as<std::string>());
+                        task->setDescription(taskNode["description"].as<std::string>());
+
+                    } catch (const std::exception&) {
+                        // Load next item and ignore the rest of the operation.
+                        delete task;
+                        continue;
                     }
-                    task->setName(taskNode["task"].as<std::string>());
-                    task->setDescription(taskNode["description"].as<std::string>());
                     calendar.addTask(task);
                 }
             }

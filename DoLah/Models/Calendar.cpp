@@ -158,6 +158,30 @@ namespace DoLah {
         this->searchedList = results;
     }
 
+    void Calendar::searchDate(std::tm from, std::tm to) {
+        std::vector<AbstractTask*> results;
+
+        for (int i = 0; i < taskList.size(); i++) {
+            std::vector<std::tm> dates = getDates(taskList[i]);
+            if (dates.size() == 0) {
+                continue;
+            }
+            if (TimeManager::compareTime(from, dates[0]) >= 0 && TimeManager::compareTime(dates[0], to) >= 0) {
+                results.push_back(taskList.at(i));
+            }
+        }
+        for (int i = 0; i < doneList.size(); i++) {
+            std::vector<std::tm> dates = getDates(doneList[i]);
+            if (dates.size() == 0) {
+                continue;
+            }
+            if (TimeManager::compareTime(from, dates[0]) > 0 && TimeManager::compareTime(dates[0], to) > 0) {
+                results.push_back(doneList.at(i));
+            }
+        }
+        this->searchedList = results;
+    }
+
     void Calendar::sortTasks(std::vector<AbstractTask*> &unsortedTaskList) {
         std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), taskCompare);
         indexTasks(unsortedTaskList);

@@ -117,6 +117,22 @@ namespace DoLah {
         std::vector<AbstractTask*> ** resultVector;
 	};
 
+    class SearchDateTaskCommand : public AbstractCommand {
+    public:
+        SearchDateTaskCommand();
+        SearchDateTaskCommand(std::tm, std::tm);
+        SearchDateTaskCommand(std::tm, std::tm, std::vector<AbstractTask*> *);
+        ~SearchDateTaskCommand();
+
+        void execute();
+        void revert();
+
+    private:
+        std::tm from;
+        std::tm to;
+        std::vector<AbstractTask*> ** resultVector;
+    };
+
 	class UndoTaskCommand : public AbstractCommand {
 	public:
 		UndoTaskCommand();

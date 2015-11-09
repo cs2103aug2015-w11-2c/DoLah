@@ -55,6 +55,8 @@ namespace DoLah {
          */
         static SetDoneTaskCommand parseSetDone(std::vector<std::string>);
 
+        static SearchDateTaskCommand parseSearchDate(std::vector<std::string>);
+
         /**
          * Parse input string vector into a SetUndoneTaskCommand.
          * @param[in]       inputArr String vector to be parsed.
@@ -131,5 +133,6 @@ namespace DoLah {
         static std::string TOO_LITTLE_ARGUMENTS_MESSAGE;
         /// Message to be thrown when the task ID for edit or delete is nonsensual.
         static std::string INVALID_TASK_ID_ARGUMENT;
+        static std::vector<std::string> OUTDATED;
     };
 }

@@ -97,6 +97,10 @@ namespace DoLah {
          * @param[in]   substr Substring to be removed.
          * return Pruned string.
          */
+        static std::string stringRemoveAll(std::string str, std::string substr);
+
+
+        static std::string removeDoubleSpacing(std::string);
         static std::vector<std::string> removeElementsFromStringVector(std::vector<std::string>, std::vector<std::string>);
     };
 
