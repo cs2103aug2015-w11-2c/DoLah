@@ -20,7 +20,6 @@ namespace DoLah {
     *
     * If the input is invalid, it will throw invalid_argument exception.
     */
-
     class CommandParser {
 
     public:
@@ -49,14 +48,19 @@ namespace DoLah {
         static SearchTaskCommand parseSearch(std::vector<std::string>);
 
         /**
+         * Parse input string vector into a SearchDateTaskCommand.
+         * @param[in]       inputArr String vector to be parsed.
+         * @return SearchDateTaskCommand object.
+         */
+        static SearchDateTaskCommand parseSearchDate(std::vector<std::string>);
+
+        /**
          * Parse input string vector into a SetDoneTaskCommand.
          * @param[in]       inputArr String vector to be parsed.
          * @return SetDoneTaskCommand object.
          */
         static SetDoneTaskCommand parseSetDone(std::vector<std::string>);
-
-        static SearchDateTaskCommand parseSearchDate(std::vector<std::string>);
-
+        
         /**
          * Parse input string vector into a SetUndoneTaskCommand.
          * @param[in]       inputArr String vector to be parsed.
@@ -133,6 +137,8 @@ namespace DoLah {
         static std::string TOO_LITTLE_ARGUMENTS_MESSAGE;
         /// Message to be thrown when the task ID for edit or delete is nonsensual.
         static std::string INVALID_TASK_ID_ARGUMENT;
+
+        /// Indicates that the search is looking for outdated tasks.
         static std::vector<std::string> OUTDATED;
     };
 }

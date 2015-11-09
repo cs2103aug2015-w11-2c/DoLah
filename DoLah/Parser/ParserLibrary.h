@@ -1,18 +1,17 @@
 #pragma once
 
-/**
- * @class ParserLibrary.h Parser/ParserLibrary.h
- * @brief A library consists of general functions.
- *
- * These functions are widly used in parse component.
- */
-
 #include <string>
 #include <vector>
 #include <algorithm>
 
 namespace DoLah {
 
+    /**
+    * @class ParserLibrary.h Parser/ParserLibrary.h
+    * @brief A library consists of general functions.
+    *
+    * These functions are widly used in parse component.
+    */
     class ParserLibrary {
     public:
         ParserLibrary();
@@ -99,8 +98,19 @@ namespace DoLah {
          */
         static std::string stringRemoveAll(std::string str, std::string substr);
 
-
+        /**
+         * Removes the double spacing repeatedly until there is only single spacing.
+         * @param[in]   str String to be cleaned up.
+         * @return Clean string
+         */
         static std::string removeDoubleSpacing(std::string);
+
+        /**
+         * Removes the elements of the list 
+         * @param[in]   origin String vector list to be cleaned.
+         * @param[in]   list List of string vector list that needs to be cleaned from the origin.
+         * @return Clean string vector list.
+         */
         static std::vector<std::string> removeElementsFromStringVector(std::vector<std::string>, std::vector<std::string>);
     };
 

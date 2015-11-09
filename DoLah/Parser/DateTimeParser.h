@@ -1,12 +1,5 @@
 #pragma once
 
-/**
- * @class DateTimeParser.h Parser/DateTimeParser.h
- * @brief Static library to handle conversion from string vector to std::tm.
- *
- * Throws invalid_argument exception if the given list of string cannot be converted.
- */
-
 #include <string>
 #include <vector>
 #include <regex>
@@ -18,6 +11,12 @@
 #include "TimeManager.h"
 
 namespace DoLah {
+    /**
+    * @class DateTimeParser.h Parser/DateTimeParser.h
+    * @brief Static library to handle conversion from string vector to std::tm.
+    *
+    * Throws invalid_argument exception if the given list of string cannot be converted.
+    */
     class DateTimeParser {
     public:
         DateTimeParser();

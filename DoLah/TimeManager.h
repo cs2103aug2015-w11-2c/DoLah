@@ -1,17 +1,15 @@
 #pragma once
 
-/**
- * @class TimeManager.h TimeManager.h
- * @brief A library consists of general functions related to time manipulation in std::tm.
- *
- * These functions are widly used in parse component.
- */
-
-
 #include <ctime>
 #include <string>
 
 namespace DoLah {
+    /**
+    * @class TimeManager.h TimeManager.h
+    * @brief A library consists of general functions related to time manipulation in std::tm.
+    *
+    * These functions are widly used in parse component.
+    */
     class TimeManager {
     public:
         TimeManager();
