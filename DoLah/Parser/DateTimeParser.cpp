@@ -40,7 +40,7 @@ namespace DoLah {
     std::vector<std::string> DateTimeParser::PUNCTUATIONS = { "," };
 
     std::vector<std::string> DateTimeParser::TODAY_INDICATORS = { "today", "td" };
-    std::vector<std::string> DateTimeParser::TOMORROW_INDICATORS = { "tomorrow", "tom", "tm" };
+    std::vector<std::string> DateTimeParser::TOMORROW_INDICATORS = { "tomorrow", "tom", "tmr" };
     std::vector<std::string> DateTimeParser::SINGULAR_FORMATS = { "a", "an", "the", "one" };
 
     std::vector<std::string> DateTimeParser::DAY_DESCRIPTION_INDICATOR = { "d", "day", "days" };
