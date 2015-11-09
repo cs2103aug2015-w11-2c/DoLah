@@ -145,17 +145,21 @@ namespace DoLah {
     void Calendar::search(std::string query) {
         std::vector<AbstractTask*> results;
 
-        for (int i = 0; i < taskList.size(); i++) {
-            if (taskList[i]->getName().find(query) != std::string::npos) {
-                results.push_back(taskList.at(i));
+        if (query == "") {
+            results.clear();
+        } else {
+            for (int i = 0; i < taskList.size(); i++) {
+                if (taskList[i]->getName().find(query) != std::string::npos) {
+                    results.push_back(taskList.at(i));
+                }
             }
-        }
-        for (int i = 0; i < doneList.size(); i++) {
-            if (doneList[i]->getName().find(query) != std::string::npos) {
-                results.push_back(doneList.at(i));
+            for (int i = 0; i < doneList.size(); i++) {
+                if (doneList[i]->getName().find(query) != std::string::npos) {
+                    results.push_back(doneList.at(i));
+                }
             }
-        }
-        this->searchedList = results;
+            this->searchedList = results;
+        }  
     }
 
     void Calendar::searchDate(std::tm from, std::tm to) {
