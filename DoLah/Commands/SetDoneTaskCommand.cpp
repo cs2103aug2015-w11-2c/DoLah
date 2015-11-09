@@ -2,10 +2,7 @@
 #include "Command.h"
 
 namespace DoLah {
-    SetDoneTaskCommand::SetDoneTaskCommand() {
-
-    }
-
+    //public
     SetDoneTaskCommand::SetDoneTaskCommand(int taskIndex) : taskIndex(taskIndex) {
     
     }
@@ -22,5 +19,7 @@ namespace DoLah {
     void SetDoneTaskCommand::revert() {
         CalendarInverter::invertDone(oldTask, calendar);
     }
+
+    //private
 }
 

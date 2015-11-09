@@ -2,10 +2,7 @@
 #include "Command.h"
 
 namespace DoLah {
-    SetUndoneTaskCommand::SetUndoneTaskCommand(){
-    
-    }
-
+    //public
     SetUndoneTaskCommand::SetUndoneTaskCommand(int taskIndex) : taskIndex(taskIndex) {
     }
 
@@ -20,4 +17,6 @@ namespace DoLah {
     void SetUndoneTaskCommand::revert() {
         CalendarInverter::invertDone(oldTask, calendar);
     }
+
+    //private
 }

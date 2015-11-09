@@ -3,9 +3,6 @@
 
 namespace DoLah {
 	//public
-	DeleteTaskCommand::DeleteTaskCommand() {
-
-	}
 
 	DeleteTaskCommand::DeleteTaskCommand(int index) {
 		taskIndex = index;

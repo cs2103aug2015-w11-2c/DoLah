@@ -2,27 +2,23 @@
 #include "Command.h"
 
 namespace DoLah {
-	//public
+    //public
 
-	AddTaskCommand::AddTaskCommand() {
+    AddTaskCommand::AddTaskCommand(DoLah::AbstractTask* newTask) {
+        this->task = newTask;
+    }
 
-	}
+    AddTaskCommand::~AddTaskCommand() {
 
-	AddTaskCommand::AddTaskCommand(DoLah::AbstractTask* newTask) {
-		this->task = newTask;
-	}
+    }
 
-	AddTaskCommand::~AddTaskCommand() {
-
-	}
-
-	void AddTaskCommand::execute() {
-		calendar->addTask(task);
-	}
+    void AddTaskCommand::execute() {
+        calendar->addTask(task);
+    }
 
     void AddTaskCommand::revert() {
         CalendarInverter::invertAdd(task, calendar);
     }
 
-	//protected
+    //protected
 }

@@ -4,6 +4,7 @@
 namespace DoLah {
 	Calendar::Calendar() {
         this->cmdHistory = DoLah::CommandHistory();
+        this->lastQuery = "";
 	}
 
     Calendar::~Calendar() {
@@ -53,31 +54,8 @@ namespace DoLah {
             taskList.insert(taskList.begin() + task->getIndex(), task);
             indexTasks(taskList, task->getIndex());
         }
-    }
 
-    void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
-        if (end == start) {
-            task->setIndex(start);
-        }
-        else {
-            int middle = (start + end) / 2;
-            if (task->isDone()) {
-                if (taskCompare(task, doneList[middle])) {
-                    findInsertionPoint(task, start, middle);
-                } else {
-                    
-                    findInsertionPoint(task, middle + 1, end);
-                }
-            }
-            else {
-                if (taskCompare(task, taskList[middle])) {
-                    findInsertionPoint(task, start, middle);
-                }
-                else {
-                    findInsertionPoint(task, middle+1, end);
-                }
-            }
-        }
+        this->updateSearch();
     }
 
     void Calendar::deleteTask(int index, bool status) {
@@ -93,6 +71,8 @@ namespace DoLah {
             taskList.erase(doneList.begin() + index);
             indexTasks(doneList);
         }
+
+        this->updateSearch();
     }
 
     void Calendar::setDoneTask(int taskIndex, bool status) {
@@ -119,20 +99,24 @@ namespace DoLah {
             sortTasks(taskList);
         }
 
+        this->updateSearch();
     }
 
     void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
         deleteTask(index);
         addTask(task);
+        this->updateSearch();
     }
 
     void Calendar::clearTasks() {
         this->taskList.clear();
         this->doneList.clear();
+        this->updateSearch();
     }
 
     void Calendar::search(std::string query) {
+        this->lastQuery = query;
         std::vector<AbstractTask*> results;
 
         if (query == "") {
@@ -152,11 +136,12 @@ namespace DoLah {
         }  
     }
 
+    //@@collate A0116722M
     void Calendar::searchDate(std::tm from, std::tm to) {
         std::vector<AbstractTask*> results;
 
         for (int i = 0; i < taskList.size(); i++) {
-            std::vector<std::tm> dates = getDates(taskList[i]);
+            std::vector<std::tm> dates = AbstractTask::getDates(taskList[i]);
             if (dates.size() == 0) {
                 continue;
             }
@@ -165,7 +150,7 @@ namespace DoLah {
             }
         }
         for (int i = 0; i < doneList.size(); i++) {
-            std::vector<std::tm> dates = getDates(doneList[i]);
+            std::vector<std::tm> dates = AbstractTask::getDates(doneList[i]);
             if (dates.size() == 0) {
                 continue;
             }
@@ -177,7 +162,7 @@ namespace DoLah {
     }
 
     void Calendar::sortTasks(std::vector<AbstractTask*> &unsortedTaskList) {
-        std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), taskCompare);
+        std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), AbstractTask::taskCompare);
         indexTasks(unsortedTaskList);
     }
 
@@ -187,55 +172,40 @@ namespace DoLah {
         }
     }
 
-    //@@collate A0111275R
-    // Check if first < second
-    bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
-        if (typeid(*second) == typeid(FloatingTask)){
-            //case: floating task vs floating task
-            if (typeid(*first) == typeid(FloatingTask)) {
-                return first->getName().compare(second->getName()) < 0;
-            }
-            //case: non-floating task vs floating task
-            return true; 
-        } else if (typeid(*first) == typeid(FloatingTask)) {
-            //case: floating task vs non-floating task
-            return false;
-        } else {
-            std::vector<std::tm> firstDates = getDates(first);
-            std::vector<std::tm> secondDates = getDates(second);
-
-            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
-            if (diff != 0) {
-                return diff > 0;
-            }
-            else {
-                return first->getName().compare(second->getName()) < 0;
-            }
-        }
-    }
-
-    std::vector<std::tm> Calendar::getDates(AbstractTask *it) {
-        std::vector<std::tm> dates;
-
-        DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(it);
-        DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(it);
-        DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(it);
-
-        if (eventTask != NULL) {
-            dates.push_back(eventTask->getEndDate());
-            dates.push_back(eventTask->getStartDate());
-        }
-
-        if (deadlineTask != NULL) {
-            dates.push_back(deadlineTask->getDueDate());
-        }
-
-        return dates;
-    }
-
     void Calendar::updateTaskExpiry() {
         for (size_t i = 0; i < this->taskList.size(); i++) {
             this->taskList[i]->updateExpired();
+        }
+    }
+    
+    //@@collate A0111275R
+    void Calendar::updateSearch() {
+        this->search(lastQuery);
+    }
+
+    void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
+        if (end == start) {
+            task->setIndex(start);
+        }
+        else {
+            int middle = (start + end) / 2;
+            if (task->isDone()) {
+                if (AbstractTask::taskCompare(task, doneList[middle])) {
+                    findInsertionPoint(task, start, middle);
+                }
+                else {
+
+                    findInsertionPoint(task, middle + 1, end);
+                }
+            }
+            else {
+                if (AbstractTask::taskCompare(task, taskList[middle])) {
+                    findInsertionPoint(task, start, middle);
+                }
+                else {
+                    findInsertionPoint(task, middle + 1, end);
+                }
+            }
         }
     }
 }

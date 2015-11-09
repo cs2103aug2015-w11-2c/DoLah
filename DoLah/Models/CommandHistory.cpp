@@ -15,16 +15,16 @@ namespace DoLah {
 
 	}
 
-    void CommandHistory::addToUndoStack(AbstractCommand * command) {
-        this->undoStack.push(command);
-    }
-
     int CommandHistory::getUndoStackSize() const {
         return this->undoStack.size();
     }
 
     int CommandHistory::getRedoStackSize() const {
         return this->redoStack.size();
+    }
+
+    void CommandHistory::addToUndoStack(AbstractCommand * command) {
+        this->undoStack.push(command);
     }
 
     AbstractCommand * CommandHistory::undo() {

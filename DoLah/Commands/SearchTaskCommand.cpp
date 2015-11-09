@@ -2,31 +2,23 @@
 #include "Command.h"
 
 namespace DoLah {
-	//public
-	SearchTaskCommand::SearchTaskCommand() {
-
-	}
+    //public
 
     SearchTaskCommand::SearchTaskCommand(std::string searchString) {
         query = searchString;
     }
 
-	SearchTaskCommand::SearchTaskCommand(std::string searchString, std::vector<AbstractTask*> * resVector) {
-		query = searchString;
-        resultVector = &resVector;
-	}
+    SearchTaskCommand::~SearchTaskCommand() {
 
-	SearchTaskCommand::~SearchTaskCommand() {
-
-	}
-
-	void SearchTaskCommand::execute() {
-		this->calendar->search(query);
-	}
-
-    void SearchTaskCommand::revert() {
-        CalendarInverter::invertSearch(resultVector, query, calendar);
     }
 
-	//private
+    void SearchTaskCommand::execute() {
+        this->calendar->search(query);
+    }
+
+    void SearchTaskCommand::revert() {
+        CalendarInverter::invertSearch(query, calendar);
+    }
+
+    //private
 }

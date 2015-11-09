@@ -2,7 +2,7 @@
 #include "CommandInvoker.h"
 
 namespace DoLah {
-
+    //public
     CommandInvoker::CommandInvoker() {
 
     }
@@ -15,27 +15,28 @@ namespace DoLah {
         this->cmdHistory = history;
     }
 
+    void CommandInvoker::process(AbstractCommand * command) {
+        command->execute();
+        if (!checkIfExcludedCommandType(command)) {
+            cmdHistory->addToUndoStack(command);
+        }
+    }
+
+    //private
     bool CommandInvoker::checkIfExcludedCommandType(AbstractCommand * command) {
-        if (typeid(*command) == typeid(RedoTaskCommand)) {
-            return true;
-        }
-        if (typeid(*command) == typeid(UndoTaskCommand)) {
-            return true;
-        }
         if (typeid(*command) == typeid(SearchTaskCommand)) {
             return true;
         }
         if (typeid(*command) == typeid(SearchDateTaskCommand)) {
             return true;
         }
+        if (typeid(*command) == typeid(UndoTaskCommand)) {
+            return true;
+        }
+        if (typeid(*command) == typeid(RedoTaskCommand)) {
+            return true;
+        }
 
         return false;
-    }
-
-    void CommandInvoker::process(AbstractCommand * command) {
-        command->execute();
-        if (!checkIfExcludedCommandType(command)) {
-            cmdHistory->addToUndoStack(command);
-        }
     }
 }

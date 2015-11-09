@@ -15,13 +15,6 @@ namespace DoLah {
 
     }
 
-    void DoLahClient::parseAndProcessCommand(std::string userinput) {
-        DoLah::AbstractCommand *command = CommandParser::parse(userinput);
-        command->setCalendar(&calendar);
-        this->commandInvoker.process(command);
-        DoLah::CalendarStorage::save(calendar, this->config.storagefile);
-    }
-
     Calendar DoLahClient::getCalendar() const {
         return this->calendar;
     }
@@ -30,6 +23,13 @@ namespace DoLah {
         this->config.storagefile = location;
         ConfigurationManager::saveConfig(this->config);
         this->restart();
+    }
+
+    void DoLahClient::parseAndProcessCommand(std::string userInput) {
+        DoLah::AbstractCommand *command = CommandParser::parse(userInput);
+        command->setCalendar(&calendar);
+        this->commandInvoker.process(command);
+        DoLah::CalendarStorage::save(calendar, this->config.storagefile);
     }
 
     void DoLahClient::setTheme(int themeno) {
