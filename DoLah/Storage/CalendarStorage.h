@@ -5,19 +5,40 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace DoLah {
+    /**
+    * @brief This class handles the saving and loading of Calendar
+    *
+    * The Calendar will be stored in YAML format for readability.
+    */
     class CalendarStorage
     {
     public:
         CalendarStorage();
         ~CalendarStorage();
 
+        /**
+        * @brief This method handles the saving of calendar
+        *
+        * @param [in] calendar The Calendar object that will be saved
+        * @param [in] filename The filepath of yaml file.
+        */
         static void save(const DoLah::Calendar &, const std::string &);
+
+        /**
+        * @brief This method handles the saving of Calendar
+        *
+        * @param [in] filename The filepath of yaml file.
+        * @return The Calendar object that is loaded
+        */
         static Calendar load(const std::string &);
     };
 }
 
 
 namespace YAML {
+    /**
+    * @brief This struct contains the date time serialization before storing and loading in YAML file.
+    */
     template<>
     struct convert<std::tm> {
         static Node encode(const std::tm& rhs) {
