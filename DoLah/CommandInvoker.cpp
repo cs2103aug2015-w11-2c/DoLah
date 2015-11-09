@@ -14,9 +14,26 @@ namespace DoLah {
         this->cmdHistory = history;
     }
 
+    bool CommandInvoker::checkIfExcludedCommandType(AbstractCommand * command) {
+        if (typeid(*command) == typeid(RedoTaskCommand)) {
+            return true;
+        }
+        if (typeid(*command) == typeid(UndoTaskCommand)) {
+            return true;
+        }
+        if (typeid(*command) == typeid(SearchTaskCommand)) {
+            return true;
+        }
+        if (typeid(*command) == typeid(SearchDateTaskCommand)) {
+            return true;
+        }
+
+        return false;
+    }
+
     void CommandInvoker::process(AbstractCommand * command) {
         command->execute();
-        if (typeid(*command) != typeid(RedoTaskCommand) && typeid(*command) != typeid(UndoTaskCommand)) {
+        if (!checkIfExcludedCommandType(command)) {
             cmdHistory->addToUndoStack(command);
         }
     }
