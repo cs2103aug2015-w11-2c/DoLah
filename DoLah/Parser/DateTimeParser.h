@@ -81,68 +81,83 @@ namespace DoLah {
          */
         static std::vector<std::string> formatArr(std::vector<std::string>);
 
-        // Date provides an indirect indication to a certain day.
-        // Add modifier to the current day to find that day.
+        /**
+         * Handles dates such as Monday
+         * @param[in]   date Expressed in int value as the std::tm
+         * @param[in]   notThisWeek True if the date is not this week
+         * @return The number of days difference compared to the current day.
+         */
         static int getDateModifier(int, bool);
-
-        // Time that is relative to today such as in 10 days, in a week, tomorrow
+        
+        /**
+         * Deals with the expressions that describe relative date.
+         * e.x. today, tomorrow, 10 days, 1 week, next Thursday...
+         * @param[in]   strArr The string vector list to be evaluated.
+         * @param[in]   lowerBound Returned day is above this lowerbound.
+         * @return The number of seconds difference compared to the current time.
+         */
         static int checkDateModifier(std::vector<std::string>, std::tm);
 
+        /**
+         * Deals with the expressions that describe relative time.
+         * e.x. next hour, 30 minutes...
+         * @param[in]   strArr The string vector list to be evaluated.
+         * @return The number of seconds difference compared to the current time.
+         */
         static int checkTimeModifier(std::vector<std::string>);
 
+        /**
+         * Check the specific date format in DMY and MDY format
+         * e.x. 25 December 2015
+         * @param[in]   strArr The string vector list to be evaluated.
+         * @return Date in std::tm format.
+         */
         static std::tm classifyDate(std::vector<std::string>);
-        // 25th December 2015
+
+        /**
+         * Check Day Month Year format and convert it into date format
+         * @param[in]   strArr The string vector list to be evaluated.
+         * @return Date in std::tm format.
+         */
         static std::tm checkDMYformat(std::vector<std::string>);
-        // December 25th 2015
+        
+        /**
+         * Check Month Day Year format and convert it into date format
+         * @param[in]   strArr The string vector list to be evaluated.
+         * @return Date in std::tm format.
+         */
         static std::tm checkMDYformat(std::vector<std::string>);
     private:
-        static int REJECT;
-        static std::string CENTURY;
-        static int MININSECS;
-        static int HOURINSECS;
-        static int DAYINSECS;
-        static int WEEKINSECS;
-        static int MONTHINSECS;
-        static int DEFAULT_TIME;
+        static int REJECT; /// Arbitrary int value to indicates REJECT in any classification.
+        static std::string CENTURY; /// For year described in 2 digits, 20 will be added. e.x. 15 -> 2015
+        static int MININSECS; /// Minute in Seconds
+        static int HOURINSECS;  /// Hour in Seconds
+        static int DAYINSECS;  /// Day in Seconds
+        static int WEEKINSECS;  /// Week in Seconds
+        static int MONTHINSECS;  /// Month in Seconds
+        static int DEFAULT_TIME; /// If time is not specified, 23:59 is the default time.
 
-        // this week, next week (not implemented)
-        static std::string relativePattern;
-        static std::vector<std::string> datePattern;
-        static std::vector<std::string> monthPattern;
+        static std::vector<std::string> datePattern; /// Monday, Mon
+        static std::vector<std::string> monthPattern; /// 12, December, Dec
 
-        // 1st, 2nd, 3rd, 4th
-        static std::string dayAppendixPattern;
-        // 25th of December 2015
-        static std::vector<std::string> decorators;
-        // Sunday, 17th of March
-        static std::vector<std::string> punctuations;
-        // 25/12/2015, 25-12-2015, 25.12.2015,
-        static std::vector<std::string> dateDividers;
+        static std::string dayAppendixPattern; /// 1st, 2nd, 3rd, 4th
+        static std::vector<std::string> decorators; /// 25th of Dec
+        static std::vector<std::string> punctuations; /// Sunday, 17th of March
+        static std::vector<std::string> dateDividers; /// 25.12.2015, 25/12/2015, 25-12-2015
 
-        // today
-        static std::vector<std::string> todayPattern;
-        // tomorrow
-        static std::vector<std::string> tomorrowPattern;
-        // a week
-        static std::vector<std::string> singularPattern;
-        // in 10 days
-        static std::vector<std::string> dayDescriptionPattern;
-        // in 2 weeks
-        static std::vector<std::string> weekDescriptionPattern;
-        // in a month (will add 30 days per month)
-        static std::vector<std::string> monthDescriptionPattern;
+        static std::vector<std::string> todayPattern; /// today
+        static std::vector<std::string> tomorrowPattern; /// tomorrow
+        static std::vector<std::string> singularPattern; /// a, an, the, one
+        static std::vector<std::string> dayDescriptionPattern; /// 10 days
+        static std::vector<std::string> weekDescriptionPattern; /// 2 weeks
+        static std::vector<std::string> monthDescriptionPattern; /// 3 months
+        static std::vector<std::string> yearDescriptionPattern; /// 4 year
+        static std::vector<std::string> hourDescriptionPattern; /// 3 hours
+        static std::vector<std::string> minDescriptionPattern; /// 30 mins
+        static std::vector<std::string> nextPattern; /// next, coming
 
-        static std::vector<std::string> yearDescriptionPattern;
-
-        static std::vector<std::string> hourDescriptionPattern;
-
-        static std::vector<std::string> minDescriptionPattern;
-
-        // next week
-        static std::vector<std::string> nextPattern;
-
-        static std::string AM;
-        static std::string PM;
-        static std::string timeDivider;
+        static std::string AM; /// am
+        static std::string PM; /// pm
+        static std::string timeDivider; /// 12:30
     };
 }
