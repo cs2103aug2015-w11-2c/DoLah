@@ -14,7 +14,7 @@ namespace DoLah {
     public:
         DisplayArea(QWidget *parent = 0);
         ~DisplayArea();
-        QStackedWidget *tabbedView;
+        QStackedWidget *tabbedView; /**< Manages the different task views*/
         QVBoxLayout *homeLayout;
         QVBoxLayout *sortLayout;
         QVBoxLayout *searchLayout;

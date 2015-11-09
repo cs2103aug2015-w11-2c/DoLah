@@ -20,12 +20,12 @@ namespace DoLah {
 
         MenuLabel *exitButton;
         QLabel *description;
-        QLineEdit *editarea;
+        QLineEdit *editarea; /**< Input area where user can edit task*/
         QDialogButtonBox *buttonBox;
 
     protected:
-        void mousePressEvent(QMouseEvent*);
-        void mouseMoveEvent(QMouseEvent*);
+        void mousePressEvent(QMouseEvent*); /**< Reimplemented from QWidget::mousePressEvent() */
+        void mouseMoveEvent(QMouseEvent*); /**< Reimplemented from QWidget::mouseMoveEvent() */
 
     private:
         QPoint dragPosition;
