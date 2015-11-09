@@ -1,3 +1,4 @@
+//@@author A0116722M
 #include "TimeManager.h"
 
 namespace DoLah {

@@ -1,3 +1,4 @@
+//@@author A0111275R
 #pragma once
 
 #include <vector>
@@ -118,6 +119,7 @@ namespace DoLah {
         DoLah::AbstractTask* oldTask; ///< The task replaced in the execute() call.
     };
 
+    //@@author A0116631M
     /**
      * @class SetDoneTaskCommand Command.h Commands/Command.h
      * @brief The command class that encapsulates the action of marking a task as done in the 
@@ -183,6 +185,8 @@ namespace DoLah {
         DoLah::AbstractTask* oldTask; ///< The task that was marked as not done on the execute() call.
     };
 
+
+    //@@author A0111275R
     /**
      * @class DeleteTaskCommand Command.h Commands/Command.h
      * @brief The Command class that encapsulates the action of deleting a task in the Calendar.
@@ -273,6 +277,7 @@ namespace DoLah {
         std::string query; ///< The search string to look for in the name of the tasks.
     };
 
+    //@@author A0114391M
     /**
      * @class SearchDateTaskCommand Command.h Commands/Command.h
      * @brief The Command class that encapsulates the action of searching for tasks falling 
@@ -306,6 +311,7 @@ namespace DoLah {
         std::tm to; ///< The end date and time of the search.
     };
 
+    //@@author A0111275R
     /**
      * @class UndoTaskCommand Command.h Commands/Command.h
      * @brief The Command class that encapsulates the action of undoing the last executed Command.

@@ -1,3 +1,4 @@
+//@@author A0116631M
 #include "ConfigurationManager.h"
 #include <fstream>
 #include <boost/archive/xml_oarchive.hpp>

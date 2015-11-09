@@ -1,3 +1,4 @@
+//@@author A0114391M
 #include "HelpWindow.h"
 
 namespace DoLah {

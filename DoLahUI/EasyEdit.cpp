@@ -1,5 +1,5 @@
+//@@author A0114391M
 #include "EasyEdit.h"
-
 
 namespace DoLah {
     EasyEdit::EasyEdit(QWidget * parent, Qt::WindowFlags f)

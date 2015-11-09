@@ -1,3 +1,4 @@
+//@@author A0116631M
 #include "Task.h"
 
 namespace DoLah {
@@ -68,6 +69,7 @@ namespace DoLah {
         return this->index;
     }
 
+    //@@author A0111275R
     // Check if first < second
     bool AbstractTask::taskCompare(AbstractTask* first, AbstractTask* second) {
         if (typeid(*second) == typeid(FloatingTask)) {
@@ -96,6 +98,7 @@ namespace DoLah {
         }
     }
 
+    //@@author A0116722M
     std::vector<std::tm> AbstractTask::getDates(AbstractTask *it) {
         std::vector<std::tm> dates;
 

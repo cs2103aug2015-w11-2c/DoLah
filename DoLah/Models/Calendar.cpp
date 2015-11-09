@@ -1,3 +1,4 @@
+//@@author A0111275R
 #include "Calendar.h"
 
 namespace DoLah {
@@ -135,6 +136,7 @@ namespace DoLah {
         }  
     }
 
+    //@@author A0116722M
     void Calendar::searchDate(std::tm from, std::tm to) {
         std::vector<AbstractTask*> results;
 
@@ -175,7 +177,8 @@ namespace DoLah {
             this->taskList[i]->updateExpired();
         }
     }
-
+    
+    //@@author A0111275R
     void Calendar::updateSearch() {
         this->search(lastQuery);
     }
