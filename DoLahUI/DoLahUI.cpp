@@ -277,23 +277,6 @@ namespace DoLah {
         }
     }
 
-    //void DoLahUI::handleMenuCommand(QString keyword, int index) {
-    //    QString qcommand = keyword + QString::number(index);
-    //    std::string command = qcommand.toStdString();
-    //    try {
-    //        this->appClient.parseAndProcessCommand(command);
-    //        message->clear();
-    //        message->setText(qcommand);
-    //        refreshTasks();
-    //    }
-    //    catch (std::exception e) {
-    //        QString text = QString(e.what());
-    //        message->clear();
-    //        message->setText(text);
-    //        refreshTasks();
-    //    }
-    //}
-
     void DoLahUI::goToHome() {
         tabOrganizer->setCurrentIndex(0);
         viewPort->verticalScrollBar()->setValue(0);

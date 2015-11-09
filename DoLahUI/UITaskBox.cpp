@@ -5,12 +5,9 @@ namespace DoLah {
     UITaskBox::UITaskBox(int index, AbstractTask *task) {
         this->setWordWrap(true);
         this->setFrameStyle(QFrame::NoFrame);
-        //this->setContextMenuPolicy(Qt::CustomContextMenu);
         this->index = index;
         this->task = task;
         dynamicCast(index, task);
-        /*initContextMenu(task->isDone());
-        QObject::connect(this, SIGNAL(rightclicked(QPoint)), this, SLOT(openContextMenu(QPoint)));*/
         easyedit = new EasyEdit(this);
         QObject::connect(easyedit->buttonBox, SIGNAL(accepted()), this, SLOT(handleEasyEdit()));
 
@@ -23,22 +20,6 @@ namespace DoLah {
     QSize UITaskBox::sizeHint() const {
         return QSize(350, 300);
     }
-
-    /*void UITaskBox::initContextMenu(bool done) {
-        contextMenu = new QMenu(this);
-        if (done) {
-            contextMenu->addAction("Undone");
-            QObject::connect(contextMenu->actions().at(0), SIGNAL(triggered()), this, SLOT(menuUndone()));
-        }
-        else {
-            contextMenu->addAction("Edit");
-            QObject::connect(contextMenu->actions().at(0), SIGNAL(triggered()), this, SLOT(menuEdit()));
-            contextMenu->addAction("Done");
-            QObject::connect(contextMenu->actions().at(1), SIGNAL(triggered()), this, SLOT(menuDone()));
-            contextMenu->addAction("Delete");
-            QObject::connect(contextMenu->actions().at(2), SIGNAL(triggered()), this, SLOT(menuDelete()));
-        }
-    }*/
 
     void UITaskBox::dynamicCast(int index, AbstractTask *task) {
         std::string name = task->getName();
@@ -147,24 +128,4 @@ namespace DoLah {
             easyedit->reject();
         }
     }
-
-    //void UITaskBox::openContextMenu(QPoint pos) {
-    //    contextMenu->exec(pos);
-    //}
-
-    //void UITaskBox::menuEdit() {
-    //    easyedit->editarea->setText(editabletext);
-    //    QString temp = QString("Edit task ") + QString::number(index) + ":";
-    //    easyedit->description->setText(temp);
-    //    easyedit->exec();
-    //}
-    //void UITaskBox::menuDone() {
-    //    emit setDone(index);
-    //}
-    //void UITaskBox::menuDelete() {
-    //    emit deleteThis(index);
-    //}
-    /*void UITaskBox::menuUndone() {
-        emit setUndone(QString("undone "), index);
-    }*/
 }
