@@ -12,6 +12,7 @@ namespace DoLah {
         CommandInvoker();
         ~CommandInvoker();
         void setCmdHistory(CommandHistory*);
+        bool checkIfExcludedCommandType(AbstractCommand * command);
         void process(AbstractCommand*);
 
     private:
