@@ -247,7 +247,7 @@ namespace DoLah {
         std::string inputline = input.toStdString();
         if (inputline.length() != 0) {
             lineEdit->arrangeStack();
-            lineEdit->commandstack_up.push(inputline);
+            lineEdit->commandStackUp.push(inputline);
             try {
                 if (inputline == "help") {
                     goToHelp();

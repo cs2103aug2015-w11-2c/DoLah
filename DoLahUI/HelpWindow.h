@@ -17,7 +17,7 @@ namespace DoLah {
         HelpWindow(QWidget * parent = 0, Qt::WindowFlags f = 0);
         ~HelpWindow();
 
-        QLabel *bglabel;
+        QLabel *bgLabel;
         MenuLabel *exitButton;
         QWidget *navi;
         QVBoxLayout *navilayout;
@@ -54,7 +54,9 @@ namespace DoLah {
 
     private:
         void initNavi();
+        void initContents();
         void addNaviLabel(QLabel*, QString);
+        void initPage(QLabel*, QString);
         void clearStyles();
         QPoint dragPosition;
     };

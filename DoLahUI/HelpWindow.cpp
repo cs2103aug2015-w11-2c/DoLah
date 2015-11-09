@@ -8,51 +8,13 @@ namespace DoLah {
         this->setWindowFlags(Qt::CustomizeWindowHint | Qt::FramelessWindowHint | Qt::Dialog);
         this->setObjectName(QStringLiteral("helpwindow"));
 
-        bglabel = new QLabel(this);
+        bgLabel = new QLabel(this);
         QPixmap background("images/helpwindow.jpg");
-        bglabel->setGeometry(QRect(0, 0, 308, 500));
-        bglabel->setPixmap(background);
+        bgLabel->setGeometry(QRect(0, 0, 308, 500));
+        bgLabel->setPixmap(background);
 
         initNavi();
-
-        page_basic = new QLabel;
-        QPixmap basicimg("images/help_basic.png");
-        page_basic->setPixmap(basicimg);
-
-        page_add = new QLabel;
-        QPixmap addimg("images/help_add.png");
-        page_add->setPixmap(addimg);
-
-        page_commands = new QLabel;
-        QPixmap commandsimg("images/help_commands.png");
-        page_commands->setPixmap(commandsimg);
-
-        page_datetime = new QLabel;
-        QPixmap datetimeimg("images/help_datetime.png");
-        page_datetime->setPixmap(datetimeimg);
-
-        page_keyboard = new QLabel;
-        QPixmap keyboardimg("images/help_keyboard.png");
-        page_keyboard->setPixmap(keyboardimg);
-
-        page_other = new QLabel;
-        QPixmap otherimg("images/help_other.png");
-        page_other->setPixmap(otherimg);
-
-        page_about = new QLabel;
-        QPixmap aboutimg("images/help_about.png");
-        page_about->setPixmap(aboutimg);
-
-        helpcontents = new QStackedWidget(this);
-        helpcontents->setGeometry(QRect(278, 25, 450, 450));
-        helpcontents->addWidget(page_basic);
-        helpcontents->addWidget(page_add);
-        helpcontents->addWidget(page_commands);
-        helpcontents->addWidget(page_datetime);
-        helpcontents->addWidget(page_keyboard);
-        helpcontents->addWidget(page_other);
-        helpcontents->addWidget(page_about);
-        QObject::connect(helpcontents, SIGNAL(currentChanged(int)), this, SLOT(updateNav(int)));
+        initContents();
 
         exitButton = new MenuLabel(this);
         exitButton->setObjectName(QStringLiteral("exitButton"));
@@ -104,10 +66,48 @@ namespace DoLah {
         navilayout->addWidget(instructions);
     }
 
+    void HelpWindow::initContents() {
+        helpcontents = new QStackedWidget(this);
+        helpcontents->setGeometry(QRect(278, 25, 450, 450));
+        QObject::connect(helpcontents, SIGNAL(currentChanged(int)), this, SLOT(updateNav(int)));
+
+        page_basic = new QLabel;
+        initPage(page_basic, "images/help_basic.png");
+        page_add = new QLabel;
+        initPage(page_add, "images/help_add.png");
+        page_commands = new QLabel;
+        initPage(page_commands, "images/help_commands.png");
+        page_datetime = new QLabel;
+        initPage(page_datetime, "images/help_datetime.png");
+        page_keyboard = new QLabel;
+        initPage(page_keyboard, "images/help_keyboard.png");
+        page_other = new QLabel;
+        initPage(page_other, "images/help_other.png");
+        page_about = new QLabel;
+        initPage(page_about, "images/help_about.png");
+
+    }
+
     void HelpWindow::addNaviLabel(QLabel* label, QString text) {
         label->setText(text);
         label->setObjectName(QStringLiteral("helpnavi"));
         navilayout->addWidget(label);
+    }
+
+    void HelpWindow::initPage(QLabel* page, QString imgsrc) {
+        QPixmap img(imgsrc);
+        page->setPixmap(img);
+        helpcontents->addWidget(page);
+    }
+
+    void HelpWindow::clearStyles() {
+        nav_basic->setStyleSheet("");
+        nav_add->setStyleSheet("");
+        nav_datetime->setStyleSheet("");
+        nav_commands->setStyleSheet("");
+        nav_keyboard->setStyleSheet("");
+        nav_other->setStyleSheet("");
+        nav_about->setStyleSheet("");
     }
 
     void HelpWindow::mousePressEvent(QMouseEvent *event) {
@@ -140,16 +140,6 @@ namespace DoLah {
         else {
             QDialog::keyPressEvent(event);
         }
-    }
-
-    void HelpWindow::clearStyles(){
-        nav_basic->setStyleSheet("");
-        nav_add->setStyleSheet("");
-        nav_datetime->setStyleSheet("");
-        nav_commands->setStyleSheet("");
-        nav_keyboard->setStyleSheet("");
-        nav_other->setStyleSheet("");
-        nav_about->setStyleSheet("");
     }
 
     //////////////////////////////////////////
