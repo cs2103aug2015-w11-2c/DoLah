@@ -4,12 +4,20 @@
 #include "TaskTokenizer.h"
 
 namespace DoLah {
+    /**
+    * @class TaskParser TaskParser.h TaskParser.h
+    * @brief Provides function to parse string vector list into a Task object.
+    */
     class TaskParser {
     public:
         TaskParser();
         ~TaskParser();
 
-        // parseTask is used by parseAdd and parseEdit
+        /**
+         * Convert input string vector list into a task object
+         * @param[in]   inputArr String vector list to be converted into a task object
+         * @return Parsed task object
+         */
         static AbstractTask* parseTask(std::vector<std::string>);
     };
 }
