@@ -1,11 +1,3 @@
-/**
- * @class CommandParser.h Parser/CommandParser.h
- * @brief Receives a string and returns a Command object.
- *
- * It receives a string and returns a Command object.
- * If the input is invalid, it will throw invalid_argument exception.
- */
-
 
 #pragma once
 
@@ -22,6 +14,13 @@
 
 
 namespace DoLah {
+    /**
+    * @class CommandParser CommandParser.h Parser/CommandParser.h
+    * @brief Receives a string and returns a Command object.
+    *
+    * If the input is invalid, it will throw invalid_argument exception.
+    */
+
     class CommandParser {
 
     public:
@@ -107,7 +106,7 @@ namespace DoLah {
         // Fixed format ~ command is always at the front
         static std::vector<std::string> pruneCommand(std::vector<std::string> lineArr);
     private:
-        /// List of strings that indicates the string is an AddTaskCommand
+        /// @brief List of strings that indicates the string is an AddTaskCommand
         static std::vector<std::string> ADD;
         /// List of strings that indicates the string is a SearchTaskCommand
         static std::vector<std::string> SEARCH;

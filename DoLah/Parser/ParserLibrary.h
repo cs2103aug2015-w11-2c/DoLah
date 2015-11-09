@@ -4,7 +4,6 @@
  * @class ParserLibrary.h Parser/ParserLibrary.h
  * @brief A library consists of general functions.
  *
- * A library consists of general functions.
  * These functions are widly used in parse component.
  */
 

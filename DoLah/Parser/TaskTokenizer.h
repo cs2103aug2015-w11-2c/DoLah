@@ -1,6 +1,11 @@
 #include <string>
 #include <vector>
 
+/**
+ * @class TaskTokenizer.h Parser/TaskTokenizer.h
+ * @brief Tokenize the string vector list into tokens that make up Task object.
+ */
+
 #include "ParserLibrary.h"
 #include "DateTimeParser.h"
 
