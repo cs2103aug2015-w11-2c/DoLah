@@ -79,17 +79,6 @@ namespace DoLah {
         }
     }
 
-    void Calendar::addTask(AbstractTask* task, int index) {
-        task->setId(index);
-
-        if (task->isDone()) {
-            doneList.insert(doneList.begin()+index, task);
-        }
-        else {
-            taskList.insert(taskList.begin()+index, task);
-        }
-    }
-
     void Calendar::deleteTask(int index, bool status) {
         if (index >= taskList.size()) {
             throw std::out_of_range(TASK_INDEX_OUT_OF_RANGE_MESSAGE);

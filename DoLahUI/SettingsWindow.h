@@ -21,21 +21,21 @@ namespace DoLah {
     public:
         SettingsWindow(QMainWindow * parent);
         ~SettingsWindow();
-        QLineEdit *storageLocationBox;
+        QLineEdit *storageLocationBox; /**< Where user-selected storage location is displayed*/
         MenuLabel *exitButton;
         QDialogButtonBox *buttonBox;
         QPushButton *browseButton;
 
     signals:
-        void applyStorageSettings(QString);
+        void applyStorageSettings(QString); /**< This signal is emitted when the user presses the ok button in the EasyEdit window*/
         void applyThemeSettings(int);
 
     protected:
-        void keyPressEvent(QKeyEvent*);
+        void keyPressEvent(QKeyEvent*); /**< Reimplemented from QWidget::keyPressEvent() */
 
     private slots:
-        void browseLocation();
-        void changeTheme(int);
+        void browseLocation(); /**< Opens fileBrowser, then gets and stores the user-selected location */
+        void changeTheme(int); /**< Changes the theme according to user selection */
         void applyChanges();
         void cancelChanges();
 
@@ -47,7 +47,11 @@ namespace DoLah {
         QComboBox *themeSelection;
         QMainWindow *mainWin;
         void storageSettings();
-        void themeOptions();
+        void themeOptions(); /**< Initializes the drop down menu allowing theme selection */
+        /**
+        * Reads stylesheet from a QSS file and sets it as the main window stylesheet
+        * @param qss file name of the QSS stylesheet to be loaded
+        */
         void readAndSetStyleSheet(const char*);
     };
 }

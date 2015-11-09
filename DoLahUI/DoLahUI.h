@@ -13,7 +13,6 @@
 #include <iostream>
 #include <string>
 #include <Windows.h>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
@@ -28,6 +27,11 @@
 #include <QScrollBar>
 
 namespace DoLah {
+    /**
+    * \brief Setup the main window for the DoLah application.
+    *
+    * The main window is made up of 3 main components: the menu, DisplayArea, and InputBox.
+    */
     class DoLahUI : public QMainWindow
     {
         Q_OBJECT
@@ -37,10 +41,10 @@ namespace DoLah {
         ~DoLahUI();
 
         QFile stylesheet;
-        QWidget *centralWidget;
+        QWidget *centralWidget; /**< Main widget of the main window. Classes that are to be displayed in the main window should set this as parent*/
 
-        QWidget *menu;
-        QHBoxLayout *menuLayout;
+        QWidget *menu; /**< QWidget containing the menu*/
+        QHBoxLayout *menuLayout; /**< Layout to be applied to menu*/
         MenuLabel *homeButton;
         MenuLabel *doneButton;
         MenuLabel *searchButton;
@@ -48,36 +52,35 @@ namespace DoLah {
         MenuLabel *settingsButton;
         MenuLabel *exitButton;
 
-        DisplayArea *viewPort;
-        QStackedWidget *tabOrganizer;
-        QVBoxLayout *home;
-        QVBoxLayout *done;
-        QVBoxLayout *search;
+        DisplayArea *viewPort; /**< QWidget containing the display area*/
+        QStackedWidget *tabOrganizer; /**< Manages the different task views*/
+        QVBoxLayout *home; /**< Layout to be applied to default view*/
+        QVBoxLayout *done; /**< Layout to be applied to done tasks menu*/
+        QVBoxLayout *search; /**< Layout to be applied to search results view*/
 
-        QLabel *message;
-        InputBox *lineEdit;
+        QLabel *message; /**< Message displaying program response to user input*/
+        InputBox *lineEdit; /**< Input area where user input is entered*/
 
         HelpWindow *helpWindow;
         SettingsWindow *settingsWindow;
 
     protected:
-        void mousePressEvent(QMouseEvent*);
-        void mouseMoveEvent(QMouseEvent*);
-        void keyPressEvent(QKeyEvent*);
+        void mousePressEvent(QMouseEvent*); /**< Reimplemented from QWidget::mousePressEvent() */
+        void mouseMoveEvent(QMouseEvent*); /**< Reimplemented from QWidget::mouseMoveEvent() */
+        void keyPressEvent(QKeyEvent*); /**< Reimplemented from QWidget::keyPressEvent() */
 
     private slots:
-        void handleUserInput();
-        void handleEasyEdit(int, QString);
-        /*void handleMenuCommand(QString, int);*/
-        void goToHome();
-        void goToDone();
-        void goToSearch();
-        void goToHelp();
-        void goToSettings();
-        void setStorageLocation(QString);
-        void setThemeConfig(int);
-        void menuExit();
-        void updateMenu(int);
+        void handleUserInput(); /**< Handles the input in InputBox entered by the user */
+        void handleEasyEdit(int, QString); /**< Handles the input in EasyEdit entered by the user */
+        void goToHome(); /**< Sets the display area to show the default view*/
+        void goToDone(); /**< Sets the display area to show the done tasks view*/
+        void goToSearch(); /**< Sets the display area to show the search results view*/
+        void goToHelp(); /**< Opens the help window*/
+        void goToSettings(); /**< Opens the settings window*/
+        void setStorageLocation(QString); /**< Sets the storage location for the file containing tasks data*/
+        void setThemeConfig(int); /**< Sets the theme number in the config*/
+        void menuExit(); /**< Quits the program*/
+        void updateMenu(int); /**< Changes the appearance of the menu's tabs according to the active view*/
 
     private:
         void setupUI();
@@ -86,10 +89,20 @@ namespace DoLah {
         void initMenu();
         void initDisplayArea();
         void initInputArea();
-        void clearMenuStyles();
+        void clearMenuStyles(); /**< Clears the tab indication appearance of the menu buttons*/
+        /**
+        * Creates a UITaskBox that displays a task
+        * @param page the layout to where the created task box is added to
+        * @param index index of the task
+        * @param task AbstractTask to be added and displayed
+        */
         void createTaskBox(QVBoxLayout*, int, AbstractTask*);
-        void loadTasks();
-        void refreshTasks();
+        void loadTasks(); /**< Loads tasks in all views*/
+        void refreshTasks(); /**< Refreshes all views*/
+        /**
+        * Clears all tasks in the view
+        * @param page the layout to be cleared
+        */
         void flushPage(QVBoxLayout*);
 
         DoLah::DoLahClient appClient;
