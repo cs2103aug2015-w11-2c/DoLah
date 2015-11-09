@@ -67,4 +67,51 @@ namespace DoLah {
     int AbstractTask::getIndex() {
         return this->index;
     }
+
+    // Check if first < second
+    bool AbstractTask::taskCompare(AbstractTask* first, AbstractTask* second) {
+        if (typeid(*second) == typeid(FloatingTask)) {
+            //case: floating task vs floating task
+            if (typeid(*first) == typeid(FloatingTask)) {
+                return first->getName().compare(second->getName()) < 0;
+            }
+            //case: non-floating task vs floating task
+            return true;
+        }
+        else if (typeid(*first) == typeid(FloatingTask)) {
+            //case: floating task vs non-floating task
+            return false;
+        }
+        else {
+            std::vector<std::tm> firstDates = getDates(first);
+            std::vector<std::tm> secondDates = getDates(second);
+
+            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
+            if (diff != 0) {
+                return diff > 0;
+            }
+            else {
+                return first->getName().compare(second->getName()) < 0;
+            }
+        }
+    }
+
+    std::vector<std::tm> AbstractTask::getDates(AbstractTask *it) {
+        std::vector<std::tm> dates;
+
+        DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(it);
+        DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(it);
+        DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(it);
+
+        if (eventTask != NULL) {
+            dates.push_back(eventTask->getEndDate());
+            dates.push_back(eventTask->getStartDate());
+        }
+
+        if (deadlineTask != NULL) {
+            dates.push_back(deadlineTask->getDueDate());
+        }
+
+        return dates;
+    }
 }

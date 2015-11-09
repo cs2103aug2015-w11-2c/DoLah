@@ -89,7 +89,7 @@ public:
         testCal.updateTask(0, newTask);
 
         //Act
-        DoLah::CalendarInverter::invertEdit(oldTask, &testCal);
+        DoLah::CalendarInverter::invertEdit(oldTask, newTask, &testCal);
 
         //Assert
         Assert::AreEqual(oldTask->getName(), testCal.getTaskList()[0]->getName());

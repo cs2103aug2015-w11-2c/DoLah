@@ -1,29 +1,25 @@
 #include "Command.h"
 
 namespace DoLah {
-	//public
+    //public
 
-	EditTaskCommand::EditTaskCommand() {
+    EditTaskCommand::EditTaskCommand(int index, DoLah::AbstractTask* targetTask) {
+        taskIndex = index;
+        task = targetTask;
+    }
 
-	}
+    EditTaskCommand::~EditTaskCommand() {
 
-	EditTaskCommand::EditTaskCommand(int index, DoLah::AbstractTask* targetTask) {
-		taskIndex = index;
-		task = targetTask;
-	}
-
-	EditTaskCommand::~EditTaskCommand() {
-
-	}
+    }
 
     void EditTaskCommand::execute() {
         this->oldTask = calendar->getTask(taskIndex);
-		this->calendar->updateTask(taskIndex, task);
-	}
-
-    void EditTaskCommand::revert() {
-        CalendarInverter::invertEdit(oldTask, calendar);
+        this->calendar->updateTask(taskIndex, task);
     }
 
-	//protected
+    void EditTaskCommand::revert() {
+        CalendarInverter::invertEdit(oldTask, task, calendar);
+    }
+
+    //protected
 }

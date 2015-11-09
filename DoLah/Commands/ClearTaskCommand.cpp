@@ -1,23 +1,23 @@
 #include "Command.h"
 
 namespace DoLah {
-	//public
-	ClearTaskCommand::ClearTaskCommand() {
+    //public
+    ClearTaskCommand::ClearTaskCommand() {
 
-	}
+    }
 
-	ClearTaskCommand::~ClearTaskCommand() {
+    ClearTaskCommand::~ClearTaskCommand() {
 
-	}
+    }
 
-	void ClearTaskCommand::execute() {
+    void ClearTaskCommand::execute() {
         this->oldTaskList = this->calendar->getAllTaskList();
-		this->calendar->clearTasks();
-	}
+        this->calendar->clearTasks();
+    }
 
     void ClearTaskCommand::revert() {
         CalendarInverter::invertClear(oldTaskList, calendar);
     }
 
-	//private
+    //private
 }

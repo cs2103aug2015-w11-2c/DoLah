@@ -1,7 +1,7 @@
 #include "Command.h"
 
 namespace DoLah {
-
+    //public
 	AbstractCommand::~AbstractCommand() {
 	}
 
