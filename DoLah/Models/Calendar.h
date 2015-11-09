@@ -151,25 +151,6 @@ namespace DoLah {
         void sortTasks(std::vector<AbstractTask*>&);
 
         /**
-         * @brief Compares two tasks. Returns the result of the assertion that the second task 
-         * is strictly greater than the first.
-         *
-         * @param first The first task to be compared
-         * @param second The second task to be compared
-         * @return true if and only if first < second. false otherwise.
-         */
-        static bool taskCompare(AbstractTask*, AbstractTask*);
-
-        /**
-         * @brief Retrieves any datetime items from a task. If it is an EventTask, the endDate 
-         * comes first.
-         *
-         * @param it The task to retreive datetime objects from.
-         * @return A vector containing the dates. 
-         */
-        static std::vector<std::tm> getDates(AbstractTask*);
-
-        /**
          * @brief Go through all the tasks and marks expired tasks as overdue.
          */
         void updateTaskExpiry();

@@ -61,7 +61,7 @@ namespace DoLah {
         else {
             int middle = (start + end) / 2;
             if (task->isDone()) {
-                if (taskCompare(task, doneList[middle])) {
+                if (AbstractTask::taskCompare(task, doneList[middle])) {
                     findInsertionPoint(task, start, middle);
                 } else {
                     
@@ -69,7 +69,7 @@ namespace DoLah {
                 }
             }
             else {
-                if (taskCompare(task, taskList[middle])) {
+                if (AbstractTask::taskCompare(task, taskList[middle])) {
                     findInsertionPoint(task, start, middle);
                 }
                 else {
@@ -155,7 +155,7 @@ namespace DoLah {
         std::vector<AbstractTask*> results;
 
         for (int i = 0; i < taskList.size(); i++) {
-            std::vector<std::tm> dates = getDates(taskList[i]);
+            std::vector<std::tm> dates = AbstractTask::getDates(taskList[i]);
             if (dates.size() == 0) {
                 continue;
             }
@@ -164,7 +164,7 @@ namespace DoLah {
             }
         }
         for (int i = 0; i < doneList.size(); i++) {
-            std::vector<std::tm> dates = getDates(doneList[i]);
+            std::vector<std::tm> dates = AbstractTask::getDates(doneList[i]);
             if (dates.size() == 0) {
                 continue;
             }
@@ -176,7 +176,7 @@ namespace DoLah {
     }
 
     void Calendar::sortTasks(std::vector<AbstractTask*> &unsortedTaskList) {
-        std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), taskCompare);
+        std::sort(unsortedTaskList.begin(), unsortedTaskList.end(), AbstractTask::taskCompare);
         indexTasks(unsortedTaskList);
     }
 
@@ -184,51 +184,6 @@ namespace DoLah {
         for (size_t index = startIndex; index < list.size(); index++) {
             list[index]->setIndex(index);
         }
-    }
-
-    // Check if first < second
-    bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
-        if (typeid(*second) == typeid(FloatingTask)){
-            //case: floating task vs floating task
-            if (typeid(*first) == typeid(FloatingTask)) {
-                return first->getName().compare(second->getName()) < 0;
-            }
-            //case: non-floating task vs floating task
-            return true; 
-        } else if (typeid(*first) == typeid(FloatingTask)) {
-            //case: floating task vs non-floating task
-            return false;
-        } else {
-            std::vector<std::tm> firstDates = getDates(first);
-            std::vector<std::tm> secondDates = getDates(second);
-
-            int diff = TimeManager::compareTime(firstDates[0], secondDates[0]);
-            if (diff != 0) {
-                return diff > 0;
-            }
-            else {
-                return first->getName().compare(second->getName()) < 0;
-            }
-        }
-    }
-
-    std::vector<std::tm> Calendar::getDates(AbstractTask *it) {
-        std::vector<std::tm> dates;
-
-        DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(it);
-        DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(it);
-        DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(it);
-
-        if (eventTask != NULL) {
-            dates.push_back(eventTask->getEndDate());
-            dates.push_back(eventTask->getStartDate());
-        }
-
-        if (deadlineTask != NULL) {
-            dates.push_back(deadlineTask->getDueDate());
-        }
-
-        return dates;
     }
 
     void Calendar::updateTaskExpiry() {

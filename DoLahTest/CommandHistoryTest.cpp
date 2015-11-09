@@ -31,7 +31,7 @@ namespace DoLahTest {
         TEST_METHOD(ValidUndo) {
             //Arrange
             DoLah::CommandHistory testCommHist = DoLah::CommandHistory();
-            DoLah::AbstractCommand * command = new DoLah::AddTaskCommand;
+            DoLah::AbstractCommand * command = new DoLah::ClearTaskCommand;
             testCommHist.addToUndoStack(command);
 
             //Act
@@ -45,7 +45,7 @@ namespace DoLahTest {
         TEST_METHOD(DoubleUndo) {
             //Arrange
             DoLah::CommandHistory testCommHist = DoLah::CommandHistory();
-            DoLah::AbstractCommand * command = new DoLah::AddTaskCommand;
+            DoLah::AbstractCommand * command = new DoLah::ClearTaskCommand;
             testCommHist.addToUndoStack(command);
             testCommHist.addToUndoStack(command);
 
@@ -75,7 +75,7 @@ namespace DoLahTest {
         TEST_METHOD(ValidRedo) {
             //Arrange
             DoLah::CommandHistory testCommHist = DoLah::CommandHistory();
-            DoLah::AbstractCommand * command = new DoLah::AddTaskCommand;
+            DoLah::AbstractCommand * command = new DoLah::ClearTaskCommand;
             testCommHist.addToUndoStack(command);
             testCommHist.undo();
 
@@ -90,7 +90,7 @@ namespace DoLahTest {
         TEST_METHOD(DoubleRedo) {
             //Arrange
             DoLah::CommandHistory testCommHist = DoLah::CommandHistory();
-            DoLah::AbstractCommand * command = new DoLah::AddTaskCommand;
+            DoLah::AbstractCommand * command = new DoLah::ClearTaskCommand;
             testCommHist.addToUndoStack(command);
             testCommHist.addToUndoStack(command);
             testCommHist.undo();
@@ -108,7 +108,7 @@ namespace DoLahTest {
         TEST_METHOD(AlternatingUndoRedo) {
             //Arrange
             DoLah::CommandHistory testCommHist = DoLah::CommandHistory();
-            DoLah::AbstractCommand * command = new DoLah::AddTaskCommand;
+            DoLah::AbstractCommand * command = new DoLah::ClearTaskCommand;
             testCommHist.addToUndoStack(command);
 
             //Act

@@ -89,8 +89,6 @@ namespace DoLah {
      */
     class EditTaskCommand : public AbstractCommand {
     public:
-        EditTaskCommand();
-
         /**
          * @brief Instantiates an instance of EditTaskCommand with the index of the task to be 
          * edited and the task for it to be replaced with attached.
