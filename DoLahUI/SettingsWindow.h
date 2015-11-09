@@ -28,6 +28,7 @@ namespace DoLah {
 
     signals:
         void applyStorageSettings(QString);
+        void applyThemeSettings(int);
 
     protected:
         void keyPressEvent(QKeyEvent*);

@@ -31,6 +31,11 @@ namespace DoLah {
         this->restart();
     }
 
+    void DoLahClient::setTheme(int themeno) {
+        this->config.theme = themeno;
+        ConfigurationManager::saveConfig(this->config);
+    }
+
     void DoLahClient::restart() {
         this->config = ConfigurationManager::loadConfig();
         this->calendar = DoLah::CalendarStorage::load(this->config.storagefile);
