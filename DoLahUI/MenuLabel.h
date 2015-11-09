@@ -1,3 +1,4 @@
+//@@collate A0114391M
 #pragma once
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QApplication>

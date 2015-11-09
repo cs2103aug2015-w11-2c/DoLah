@@ -1,3 +1,4 @@
+//@@collate A0114391M
 #ifndef UITASKBOX_H
 #define UITASKBOX_H
 

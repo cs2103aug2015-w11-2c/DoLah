@@ -1,3 +1,4 @@
+//@@collate A0116722M
 #include <string>
 #include <vector>
 

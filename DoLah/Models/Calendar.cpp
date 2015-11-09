@@ -1,3 +1,4 @@
+//@@collate A0111275R
 #include "Calendar.h"
 
 namespace DoLah {
@@ -186,6 +187,7 @@ namespace DoLah {
         }
     }
 
+    //@@collate A0111275R
     // Check if first < second
     bool Calendar::taskCompare(AbstractTask* first, AbstractTask* second) {
         if (typeid(*second) == typeid(FloatingTask)){

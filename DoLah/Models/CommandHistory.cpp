@@ -1,3 +1,4 @@
+//@@collate A0111275R
 #include "CommandHistory.h"
 
 namespace DoLah {

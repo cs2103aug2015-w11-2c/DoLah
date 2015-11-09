@@ -1,3 +1,4 @@
+//@@collate A0116631M
 #pragma once
 #include <string>
 #include <chrono>

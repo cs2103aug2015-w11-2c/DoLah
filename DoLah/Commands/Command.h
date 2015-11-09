@@ -1,3 +1,4 @@
+//@@collate A0111275R
 #pragma once
 
 #include <vector>
@@ -48,6 +49,7 @@ namespace DoLah {
         DoLah::AbstractTask* oldTask;
 	};
 
+    //@@collate A0116631M
     class SetDoneTaskCommand : public AbstractCommand {
     public:
         SetDoneTaskCommand();
@@ -75,6 +77,7 @@ namespace DoLah {
         DoLah::AbstractTask* oldTask;
     };
 
+    //@@collate A0111275R
 	class DeleteTaskCommand : public AbstractCommand {
 	public:
 		DeleteTaskCommand();
@@ -117,6 +120,7 @@ namespace DoLah {
         std::vector<AbstractTask*> ** resultVector;
 	};
 
+    //@@collate A0114391M
     class SearchDateTaskCommand : public AbstractCommand {
     public:
         SearchDateTaskCommand();
@@ -133,6 +137,7 @@ namespace DoLah {
         std::vector<AbstractTask*> ** resultVector;
     };
 
+    //@@collate A0111275R
 	class UndoTaskCommand : public AbstractCommand {
 	public:
 		UndoTaskCommand();
