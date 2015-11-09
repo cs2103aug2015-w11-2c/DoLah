@@ -22,7 +22,7 @@ namespace DoLah {
 	}
 
     void EditTaskCommand::revert() {
-        CalendarInverter::invertEdit(oldTask, task, calendar);
+        CalendarInverter::invertEdit(oldTask, calendar);
     }
 
 	//protected

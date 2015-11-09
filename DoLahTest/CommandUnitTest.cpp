@@ -7,6 +7,8 @@
 #include "CalendarBuilder.h"
 #include "TaskBuilder.h"
 
+#include "Parser/CommandParser.h"
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace DoLahTest
@@ -87,6 +89,33 @@ namespace DoLahTest
 
             //Assert
             Assert::AreEqual((size_t) 5, resultVector.size());
+        }
+
+        TEST_METHOD(SearchDateTaskCommand) {
+            //Arrange
+            DoLah::Calendar testCal;
+            std::vector<std::string> commands = {
+                "add task1 by next week",
+                "add task2 in 2 weeks",
+                "add task3 from today to next week",
+                "done 3"
+            };
+
+            DoLah::AbstractCommand* command;
+            for (size_t i = 0; i < commands.size(); i++) {
+                command = DoLah::CommandParser::parse(commands[i]);
+                command->setCalendar(&testCal);
+                command->execute();
+            }
+
+            //Act
+            command = DoLah::CommandParser::parse("search in 10 days");
+            command->setCalendar(&testCal);
+            command->execute();
+
+            //Assert
+            std::vector<DoLah::AbstractTask*> resultVector = testCal.getSearchedTaskList(); 
+            Assert::AreEqual((size_t)2, resultVector.size());
         }
 
         TEST_METHOD(UndoCommand) {
