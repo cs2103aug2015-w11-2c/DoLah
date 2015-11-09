@@ -1,4 +1,4 @@
-//@@collate A0111275R
+//@@author A0111275R
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
@@ -92,6 +92,7 @@ namespace DoLahTest
             Assert::AreEqual((size_t) 5, resultVector.size());
         }
 
+        //@@author A0116722M
         TEST_METHOD(SearchDateTaskCommand) {
             //Arrange
             DoLah::Calendar testCal;
@@ -119,6 +120,7 @@ namespace DoLahTest
             Assert::AreEqual((size_t)2, resultVector.size());
         }
 
+        //@@author A0111275R
         TEST_METHOD(UndoCommand) {
             //Arrange
             DoLah::Calendar testCal = DoLah::Calendar();

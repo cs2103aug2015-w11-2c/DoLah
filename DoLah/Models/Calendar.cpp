@@ -1,4 +1,4 @@
-//@@collate A0111275R
+//@@author A0111275R
 #include "Calendar.h"
 
 namespace DoLah {
@@ -136,7 +136,7 @@ namespace DoLah {
         }  
     }
 
-    //@@collate A0116722M
+    //@@author A0116722M
     void Calendar::searchDate(std::tm from, std::tm to) {
         std::vector<AbstractTask*> results;
 
@@ -178,7 +178,7 @@ namespace DoLah {
         }
     }
     
-    //@@collate A0111275R
+    //@@author A0111275R
     void Calendar::updateSearch() {
         this->search(lastQuery);
     }

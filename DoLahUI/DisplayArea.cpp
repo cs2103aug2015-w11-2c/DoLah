@@ -1,4 +1,4 @@
-//@@collate A0114391M
+//@@author A0114391M
 // SETS UP THE CONTAINERS NEEDED FOR UI DISPLAY AREA
 
 #include "DisplayArea.h"

@@ -1,4 +1,4 @@
-//@@collate A0114391M
+//@@author A0114391M
 #ifndef DOLAHUI_H
 #define DOLAHUI_H
 

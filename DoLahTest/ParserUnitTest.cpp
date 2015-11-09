@@ -1,4 +1,4 @@
-//@@collate A0116722M
+//@@author A0116722M
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "regex"

@@ -1,4 +1,4 @@
-//@@collate A0114391M
+//@@author A0114391M
 #pragma once
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QScrollArea>

@@ -1,4 +1,4 @@
-//@@collate A0111275R
+//@@author A0111275R
 #include "stdafx.h"
 #include "CppUnitTest.h"
 

@@ -1,4 +1,4 @@
-//@@collate A0116631M
+//@@author A0116631M
 #include "DoLahClient.h"
 #include "Commands/Command.h"
 #include "Parser/CommandParser.h"
