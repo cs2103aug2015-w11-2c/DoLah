@@ -31,6 +31,29 @@ namespace DoLah {
         * @return The Calendar object that is loaded
         */
         static Calendar load(const std::string &);
+
+    private:
+        /**
+         * @brief build yaml string from two task list: done and todo
+         * @param todoNode The YAML::Node for todo task.
+         * @param completedNode The YAML::Node for done task.
+         * @return the string ready to be saved as a yaml file.
+         */
+        static std::string emitYAMLtoString(const YAML::Node&, const YAML::Node&);
+
+        /**
+         * @brief build the yaml string of the calendar.
+         * @param calendar the Calendar object to build
+         * @return yaml string ready to be stored.
+         */
+        static std::string buildCalendarYAML(const DoLah::Calendar&);
+
+        /**
+         * @brief build YAML::Node from the task
+         * @param task the AbstractTask object that will be constructed.
+         * @return YAML::Node of the task
+         */
+        static YAML::Node CalendarStorage::buildTaskNode(AbstractTask*);
     };
 }
 

@@ -11,7 +11,7 @@ namespace DoLah {
 
     CalendarStorage::~CalendarStorage() { }
 
-    YAML::Node buildTaskNode(AbstractTask* task) {
+    YAML::Node CalendarStorage::buildTaskNode(AbstractTask* task) {
         YAML::Node taskNode;
         taskNode["task"] = task->getName();
         taskNode["description"] = task->getDescription();
@@ -34,8 +34,8 @@ namespace DoLah {
         return taskNode;
     }
 
-    std::string buildYAML(const DoLah::Calendar& calendar) {
-        YAML::Emitter out;
+    std::string CalendarStorage::buildCalendarYAML(const DoLah::Calendar& calendar) {
+
         std::vector<DoLah::AbstractTask*> taskList = calendar.getAllTaskList();
         YAML::Node todoNode;
         YAML::Node completedNode;
@@ -50,12 +50,17 @@ namespace DoLah {
             }
         }
 
+        return emitYAMLtoString(todoNode, completedNode);
+    }
+
+    std::string CalendarStorage::emitYAMLtoString(const YAML::Node& todoNode, const YAML::Node& completedNode) {
+        YAML::Emitter out;
         out << YAML::BeginDoc;
         if (todoNode.size() + completedNode.size() > 0) {
             out << YAML::BeginMap;
             if (todoNode.size() > 0) {
-                out << YAML::Key << "todo" 
-                    << YAML::Comment("Todo Tasks") 
+                out << YAML::Key << "todo"
+                    << YAML::Comment("Todo Tasks")
                     << YAML::Value << todoNode;
             }
             if (completedNode.size() > 0) {
@@ -67,12 +72,11 @@ namespace DoLah {
             out << YAML::EndMap;
         }
         out << YAML::EndDoc;
-
         return out.c_str();
     }
 
     void CalendarStorage::save(const DoLah::Calendar& calendar, const std::string & filename) {
-        std::string out = buildYAML(calendar);
+        std::string out = CalendarStorage::buildCalendarYAML(calendar);
         std::ofstream ofstream(filename);
         if (ofstream.is_open()) {
             ofstream << out;
