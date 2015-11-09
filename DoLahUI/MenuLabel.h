@@ -13,11 +13,11 @@ namespace DoLah {
         ~MenuLabel();
 
     signals:
-        void clicked();
+        void clicked(); /**< This signal is emitted when the user clicks on the label */
 
     protected:
-        void mousePressEvent(QMouseEvent*);
-        void mouseMoveEvent(QMouseEvent*);
+        void mousePressEvent(QMouseEvent*); /**< Reimplemented from QWidget::mousePressEvent() */
+        void mouseMoveEvent(QMouseEvent*); /**< Reimplemented from QWidget::mouseMoveEvent() */
 
     };
 

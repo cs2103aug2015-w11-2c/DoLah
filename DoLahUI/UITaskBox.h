@@ -23,22 +23,13 @@ namespace DoLah {
         EasyEdit *easyedit;
 
     signals:
-        /**
-        * This signal is emitted when the user presses the ok button in the EasyEdit window
-        * @param index index of the task
-        * @param text user input from easyedit
-        */
-        void confirmed(int, QString);
-        /**
-        * This signal is emitted when the user rightclicks on the task box
-        * @param position the position where the click occurs
-        */
-        void rightclicked(QPoint);
+        void confirmed(int, QString); /**< This signal is emitted when the user presses the ok button in the EasyEdit window */
+        void rightclicked(QPoint); /**< This signal is emitted when the user rightclicks on the task box */
 
     protected:
         void mousePressEvent(QMouseEvent*); /**< Reimplemented from QWidget::mousePressEvent() */
         void mouseMoveEvent(QMouseEvent*); /**< Reimplemented from QWidget::mouseMoveEvent() */
-        void mouseDoubleClickEvent(QMouseEvent*); /**< Reimplemented from QWidget::keyPressEvent() */
+        void mouseDoubleClickEvent(QMouseEvent*); /**< Reimplemented from QWidget::mouseDoubleClickEvent() */
 
     private slots:
         void handleEasyEdit(); /**< Handles what happens when user presses ok in easyedit */
