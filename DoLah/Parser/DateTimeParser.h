@@ -130,34 +130,34 @@ namespace DoLah {
     private:
         static int REJECT; /// Arbitrary int value to indicates REJECT in any classification.
         static std::string CENTURY; /// For year described in 2 digits, 20 will be added. e.x. 15 -> 2015
-        static int MININSECS; /// Minute in Seconds
-        static int HOURINSECS;  /// Hour in Seconds
-        static int DAYINSECS;  /// Day in Seconds
-        static int WEEKINSECS;  /// Week in Seconds
-        static int MONTHINSECS;  /// Month in Seconds
+        static int MIN_IN_SECS; /// Minute in Seconds
+        static int HOUR_IN_SECS;  /// Hour in Seconds
+        static int DAY_IN_SECS;  /// Day in Seconds
+        static int WEEK_IN_SECS;  /// Week in Seconds
+        static int MONTH_IN_SECS;  /// Month in Seconds
         static int DEFAULT_TIME; /// If time is not specified, 23:59 is the default time.
 
-        static std::vector<std::string> datePattern; /// Monday, Mon
-        static std::vector<std::string> monthPattern; /// 12, December, Dec
+        static std::vector<std::string> DATE_PATTERN; /// Monday, Mon
+        static std::vector<std::string> MONTH_PATTERN; /// 12, December, Dec
 
-        static std::string dayAppendixPattern; /// 1st, 2nd, 3rd, 4th
-        static std::vector<std::string> decorators; /// 25th of Dec
-        static std::vector<std::string> punctuations; /// Sunday, 17th of March
-        static std::vector<std::string> dateDividers; /// 25.12.2015, 25/12/2015, 25-12-2015
+        static std::string DAY_APPENDIX_PATTERN; /// 1st, 2nd, 3rd, 4th
+        static std::vector<std::string> DECORATORS; /// 25th of Dec
+        static std::vector<std::string> PUNCTUATIONS; /// Sunday, 17th of March
+        static std::vector<std::string> DATE_DIVIDERS; /// 25.12.2015, 25/12/2015, 25-12-2015
 
-        static std::vector<std::string> todayPattern; /// today
-        static std::vector<std::string> tomorrowPattern; /// tomorrow
-        static std::vector<std::string> singularPattern; /// a, an, the, one
-        static std::vector<std::string> dayDescriptionPattern; /// 10 days
-        static std::vector<std::string> weekDescriptionPattern; /// 2 weeks
-        static std::vector<std::string> monthDescriptionPattern; /// 3 months
-        static std::vector<std::string> yearDescriptionPattern; /// 4 year
-        static std::vector<std::string> hourDescriptionPattern; /// 3 hours
-        static std::vector<std::string> minDescriptionPattern; /// 30 mins
-        static std::vector<std::string> nextPattern; /// next, coming
+        static std::vector<std::string> TODAY_INDICATORS; /// today
+        static std::vector<std::string> TOMORROW_INDICATORS; /// tomorrow
+        static std::vector<std::string> SINGULAR_FORMATS; /// a, an, the, one
+        static std::vector<std::string> DAY_DESCRIPTION_INDICATOR; /// 10 days
+        static std::vector<std::string> WEEK_DESCRIPTION_INDICATOR; /// 2 weeks
+        static std::vector<std::string> MONTH_DESCRIPTION_INDICATOR; /// 3 months
+        static std::vector<std::string> YEAR_DESCRIPTION_INDICATOR; /// 4 year
+        static std::vector<std::string> HOUR_DESCRIPTION_INDICATOR; /// 3 hours
+        static std::vector<std::string> MIN_DESCRIPTION_INDICATOR; /// 30 mins
+        static std::vector<std::string> NEXT_FORMATS; /// next, coming
 
         static std::string AM; /// am
         static std::string PM; /// pm
-        static std::string timeDivider; /// 12:30
+        static std::string TIME_DIVIDERS; /// 12:30
     };
 }

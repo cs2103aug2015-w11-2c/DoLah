@@ -5,8 +5,8 @@ namespace DoLah {
     std::vector<std::string> TaskTokenizer::EVENT_INDICATOR = { "in", "on", "from", "between" };
     std::vector<std::string> TaskTokenizer::DEADLINE_INDICATOR = { "in", "on", "by", "due", "at" };
     std::vector<std::string> TaskTokenizer::EVENT_SEPARATOR = { "to", "~", "until" };
-    std::string TaskTokenizer::tag = "#";
-    int TaskTokenizer::defaultTMYear = 0; // represents 1900
+    std::string TaskTokenizer::TAG_INDICATOR = "#";
+    int TaskTokenizer::DEFAULTTMYEAR = 0; // represents 1900
 
     TaskTokenizer::TaskTokenizer() {
     }
@@ -20,7 +20,7 @@ namespace DoLah {
         std::vector<std::string> moretags;
 
         for (size_t i = 0; i < lineArr.size(); i++) {
-            moretags = ParserLibrary::explode(lineArr.at(i), tag);
+            moretags = ParserLibrary::explode(lineArr.at(i), TAG_INDICATOR);
             tags.insert(tags.begin(), moretags.begin() + 1, moretags.end());
         }
 
@@ -55,19 +55,19 @@ namespace DoLah {
         std::tm startdate = DateTimeParser::toDateFormat(startDateArr);
         std::tm enddate = DateTimeParser::toDateFormat(endDateArr, startdate);
 
-        if (startdate.tm_year == defaultTMYear && startdate.tm_year == defaultTMYear) {
+        if (startdate.tm_year == DEFAULTTMYEAR && startdate.tm_year == DEFAULTTMYEAR) {
             TimeManager::copyDay(current, startdate);
             TimeManager::copyDay(current, enddate);
             if (TimeManager::compareTime(startdate, enddate) < 0) {
                 enddate.tm_mon += 1;
                 mktime(&enddate);
             }
-        } else if (startdate.tm_year == defaultTMYear) {
+        } else if (startdate.tm_year == DEFAULTTMYEAR) {
             TimeManager::copyDay(enddate, startdate);
             if (TimeManager::compareTime(startdate, enddate) < 0) {
                 throw std::invalid_argument("");
             }
-        } else if (enddate.tm_year == defaultTMYear) {
+        } else if (enddate.tm_year == DEFAULTTMYEAR) {
             TimeManager::copyDay(startdate, enddate);
             if (TimeManager::compareTime(startdate, enddate) < 0) {
                 enddate.tm_mon += 1;
@@ -83,7 +83,8 @@ namespace DoLah {
         return { startdate, enddate };
     }
 
-    std::vector<std::tm> TaskTokenizer::findDate(std::vector<std::string> lineArr, int index) {
+    std::vector<std::tm> TaskTokenizer::findDate(std::vector<std::string> lineArr) {
+        int index = 0;
         std::vector<std::tm> output;
 
         if (ParserLibrary::inStringArray(EVENT_INDICATOR, ParserLibrary::tolowercase(lineArr.at(index)))) {
@@ -121,7 +122,8 @@ namespace DoLah {
 
         for (size_t index = 0; index < lineArr.size(); index++) {
             try {
-                output = findDate(lineArr, index);
+                std::vector<std::string> subVec(lineArr.begin() + index, lineArr.end());
+                output = findDate(subVec);
                 prunedArr = std::vector<std::string>(lineArr.begin(), lineArr.begin() + index);
             } catch (std::invalid_argument e) {
                 // continue

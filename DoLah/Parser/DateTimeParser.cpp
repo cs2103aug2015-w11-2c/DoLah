@@ -3,16 +3,16 @@
 namespace DoLah {
     int DateTimeParser::REJECT = -1;
     std::string DateTimeParser::CENTURY = "20";
-    int DateTimeParser::MININSECS = 60;
-    int DateTimeParser::HOURINSECS = 3600;
-    int DateTimeParser::DAYINSECS = 86400;
-    int DateTimeParser::WEEKINSECS = 604800;
-    int DateTimeParser::MONTHINSECS = 2592000;
+    int DateTimeParser::MIN_IN_SECS = 60;
+    int DateTimeParser::HOUR_IN_SECS = 3600;
+    int DateTimeParser::DAY_IN_SECS = 86400;
+    int DateTimeParser::WEEK_IN_SECS = 604800;
+    int DateTimeParser::MONTH_IN_SECS = 2592000;
     int DateTimeParser::DEFAULT_TIME = 1439; // 23:59
 
-    std::vector<std::string> DateTimeParser::decorators = { "of", "in", "on", "by", "due", "at" };
+    std::vector<std::string> DateTimeParser::DECORATORS = { "of", "in", "on", "by", "due", "at" };
 
-    std::vector<std::string> DateTimeParser::datePattern = {
+    std::vector<std::string> DateTimeParser::DATE_PATTERN = {
         "monday|mon|mond",
         "tuesday|tue|tues",
         "wednesday|wed|weds",
@@ -21,8 +21,8 @@ namespace DoLah {
         "saturday|sat|satu",
         "sunday|sun|sund"
     };
-    std::string DateTimeParser::dayAppendixPattern = "(st|nd|rd|th)$";
-    std::vector<std::string> DateTimeParser::monthPattern = {
+    std::string DateTimeParser::DAY_APPENDIX_PATTERN = "(st|nd|rd|th)$";
+    std::vector<std::string> DateTimeParser::MONTH_PATTERN = {
         "^(january|jan|01|1)$",
         "^(february|feb|02|2)$",
         "^(march|mar|03|3)$",
@@ -36,25 +36,25 @@ namespace DoLah {
         "^(november|nov|11)$",
         "^(december|dec|12)$"
     };
-    std::vector<std::string> DateTimeParser::dateDividers = { "/", "-", "." };
-    std::vector<std::string> DateTimeParser::punctuations = { "," };
+    std::vector<std::string> DateTimeParser::DATE_DIVIDERS = { "/", "-", "." };
+    std::vector<std::string> DateTimeParser::PUNCTUATIONS = { "," };
 
-    std::vector<std::string> DateTimeParser::todayPattern = { "today", "td" };
-    std::vector<std::string> DateTimeParser::tomorrowPattern = { "tomorrow", "tom", "tm" };
-    std::vector<std::string> DateTimeParser::singularPattern = { "a", "an", "the", "one" };
+    std::vector<std::string> DateTimeParser::TODAY_INDICATORS = { "today", "td" };
+    std::vector<std::string> DateTimeParser::TOMORROW_INDICATORS = { "tomorrow", "tom", "tm" };
+    std::vector<std::string> DateTimeParser::SINGULAR_FORMATS = { "a", "an", "the", "one" };
 
-    std::vector<std::string> DateTimeParser::dayDescriptionPattern = { "d", "day", "days" };
-    std::vector<std::string> DateTimeParser::weekDescriptionPattern = { "w", "week", "weeks", "wk", "wks" };
-    std::vector<std::string> DateTimeParser::monthDescriptionPattern = { "m", "month", "months", "mon", "mons" };
-    std::vector<std::string> DateTimeParser::yearDescriptionPattern = { "y", "year", "years", "yr", "yrs" };
-    std::vector<std::string> DateTimeParser::hourDescriptionPattern = { "hour", "hours", "hr", "hrs" };
-    std::vector<std::string> DateTimeParser::minDescriptionPattern = { "minute", "minutes", "min", "mins" };
+    std::vector<std::string> DateTimeParser::DAY_DESCRIPTION_INDICATOR = { "d", "day", "days" };
+    std::vector<std::string> DateTimeParser::WEEK_DESCRIPTION_INDICATOR = { "w", "week", "weeks", "wk", "wks" };
+    std::vector<std::string> DateTimeParser::MONTH_DESCRIPTION_INDICATOR = { "m", "month", "months", "mon", "mons" };
+    std::vector<std::string> DateTimeParser::YEAR_DESCRIPTION_INDICATOR = { "y", "year", "years", "yr", "yrs" };
+    std::vector<std::string> DateTimeParser::HOUR_DESCRIPTION_INDICATOR = { "hour", "hours", "hr", "hrs" };
+    std::vector<std::string> DateTimeParser::MIN_DESCRIPTION_INDICATOR = { "minute", "minutes", "min", "mins" };
 
-    std::vector<std::string> DateTimeParser::nextPattern = { "next", "coming" };
+    std::vector<std::string> DateTimeParser::NEXT_FORMATS = { "next", "coming" };
 
     std::string DateTimeParser::AM = "am";
     std::string DateTimeParser::PM = "pm";
-    std::string DateTimeParser::timeDivider = ":";
+    std::string DateTimeParser::TIME_DIVIDERS = ":";
 
     DateTimeParser::DateTimeParser() {
     }
@@ -66,7 +66,7 @@ namespace DoLah {
 
 
     int DateTimeParser::getDay(std::string str) {
-        str = std::regex_replace(str, std::regex(dayAppendixPattern), "");
+        str = std::regex_replace(str, std::regex(DAY_APPENDIX_PATTERN), "");
 
         if (str.length() > 2) {
             return REJECT;
@@ -79,8 +79,8 @@ namespace DoLah {
 
     int DateTimeParser::getMonth(std::string str) {
         std::string out;
-        for (size_t m = 0; m < monthPattern.size(); m++) {
-            if (std::regex_match(str, std::regex(monthPattern.at(m), std::regex_constants::icase))) {
+        for (size_t m = 0; m < MONTH_PATTERN.size(); m++) {
+            if (std::regex_match(str, std::regex(MONTH_PATTERN.at(m), std::regex_constants::icase))) {
                 return (int)m;
             }
         }
@@ -104,8 +104,8 @@ namespace DoLah {
 
     int DateTimeParser::getDate(std::string str) {
         std::string out;
-        for (size_t d = 0; d < datePattern.size(); d++) {
-            if (std::regex_match(str, std::regex(datePattern.at(d), std::regex_constants::icase))) {
+        for (size_t d = 0; d < DATE_PATTERN.size(); d++) {
+            if (std::regex_match(str, std::regex(DATE_PATTERN.at(d), std::regex_constants::icase))) {
                 return (int)d;
             }
         }
@@ -131,7 +131,7 @@ namespace DoLah {
             isTime = true;
         }
         
-        std::vector<std::string> strArr = ParserLibrary::explode(str, timeDivider);
+        std::vector<std::string> strArr = ParserLibrary::explode(str, TIME_DIVIDERS);
 
         int hour = std::stoi(strArr.at(0));
         if (isAM) {
@@ -187,28 +187,28 @@ namespace DoLah {
         element = strArr.at(index++);
 
         if (size == 2) {
-            if (ParserLibrary::inStringArray(nextPattern, element)) { // next pattern
+            if (ParserLibrary::inStringArray(NEXT_FORMATS, element)) { // next pattern
                 element = strArr.at(index++);
-                if (ParserLibrary::inStringArray(hourDescriptionPattern, element)) {
+                if (ParserLibrary::inStringArray(HOUR_DESCRIPTION_INDICATOR, element)) {
                     hourDiff = 1;
-                } else if (ParserLibrary::inStringArray(minDescriptionPattern, element)) {
+                } else if (ParserLibrary::inStringArray(MIN_DESCRIPTION_INDICATOR, element)) {
                     minDiff = 1;
                 } else {
                     throw std::invalid_argument("");
                 }
             } else if (ParserLibrary::isDecimal(element) ||
-                ParserLibrary::inStringArray(singularPattern, element)) { // 10 days, a week, etc
+                ParserLibrary::inStringArray(SINGULAR_FORMATS, element)) { // 10 days, a week, etc
                 int n = 0;
-                if (ParserLibrary::inStringArray(singularPattern, element)) {
+                if (ParserLibrary::inStringArray(SINGULAR_FORMATS, element)) {
                     n = 1;
                 } else {
                     n = stoi(element);
                 }
 
                 element = strArr.at(index++);
-                if (ParserLibrary::inStringArray(hourDescriptionPattern, element)) {
+                if (ParserLibrary::inStringArray(HOUR_DESCRIPTION_INDICATOR, element)) {
                     hourDiff = n;
-                } else if (ParserLibrary::inStringArray(minDescriptionPattern, element)) {
+                } else if (ParserLibrary::inStringArray(MIN_DESCRIPTION_INDICATOR, element)) {
                     minDiff = n;
                 } else {
                     throw std::invalid_argument("");
@@ -245,9 +245,9 @@ namespace DoLah {
         element = strArr.at(index++);
         int date = getDate(element);
         if (size == 1) { // singleton format
-            if (ParserLibrary::inStringArray(todayPattern, element)) {
+            if (ParserLibrary::inStringArray(TODAY_INDICATORS, element)) {
                 dayDiff = 0;
-            } else if (ParserLibrary::inStringArray(tomorrowPattern, element)) {
+            } else if (ParserLibrary::inStringArray(TOMORROW_INDICATORS, element)) {
                 dayDiff = 1;
             } else if (date != REJECT) {
                 dayDiff = getDateModifier(date, false);
@@ -267,41 +267,41 @@ namespace DoLah {
                 throw std::invalid_argument("");
             }
         } else if (size == 2) {
-            if (ParserLibrary::inStringArray(nextPattern, element)) { // next pattern
+            if (ParserLibrary::inStringArray(NEXT_FORMATS, element)) { // next pattern
                 element = strArr.at(index++);
                 int date = getDate(element);
                 if (date != REJECT) {
                     dayDiff = getDateModifier(date, true);
                 } else {
-                    if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
+                    if (ParserLibrary::inStringArray(DAY_DESCRIPTION_INDICATOR, element)) {
                         dayDiff = 1;
-                    } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
+                    } else if (ParserLibrary::inStringArray(WEEK_DESCRIPTION_INDICATOR, element)) {
                         weekDiff = 1;
-                    } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
+                    } else if (ParserLibrary::inStringArray(MONTH_DESCRIPTION_INDICATOR, element)) {
                         monthDiff = 1;
-                    } else if (ParserLibrary::inStringArray(yearDescriptionPattern, element)) {
+                    } else if (ParserLibrary::inStringArray(YEAR_DESCRIPTION_INDICATOR, element)) {
                         yearDiff = 1;
                     } else {
                         throw std::invalid_argument("");
                     }
                 }
             } else if (ParserLibrary::isDecimal(element) ||
-                ParserLibrary::inStringArray(singularPattern, element)) { // 10 days, a week, etc
+                ParserLibrary::inStringArray(SINGULAR_FORMATS, element)) { // 10 days, a week, etc
                 int n = 0;
-                if (ParserLibrary::inStringArray(singularPattern, element)) {
+                if (ParserLibrary::inStringArray(SINGULAR_FORMATS, element)) {
                     n = 1;
                 } else {
                     n = stoi(element);
                 }
 
                 element = strArr.at(index++);
-                if (ParserLibrary::inStringArray(dayDescriptionPattern, element)) {
+                if (ParserLibrary::inStringArray(DAY_DESCRIPTION_INDICATOR, element)) {
                     dayDiff = n;
-                } else if (ParserLibrary::inStringArray(weekDescriptionPattern, element)) {
+                } else if (ParserLibrary::inStringArray(WEEK_DESCRIPTION_INDICATOR, element)) {
                     weekDiff = n;
-                } else if (ParserLibrary::inStringArray(monthDescriptionPattern, element)) {
+                } else if (ParserLibrary::inStringArray(MONTH_DESCRIPTION_INDICATOR, element)) {
                     monthDiff = n;
-                } else if (ParserLibrary::inStringArray(yearDescriptionPattern, element)) {
+                } else if (ParserLibrary::inStringArray(YEAR_DESCRIPTION_INDICATOR, element)) {
                     yearDiff = n;
                 } else {
                     throw std::invalid_argument("");
@@ -336,19 +336,19 @@ namespace DoLah {
     }
 
     std::vector<std::string> DateTimeParser::formatArr(std::vector<std::string> strArr) {
-        std::vector<std::string> cleanArr = ParserLibrary::removeElementsFromStringVector(strArr, decorators);
+        std::vector<std::string> cleanArr = ParserLibrary::removeElementsFromStringVector(strArr, DECORATORS);
 
         for (size_t i = 0; i < cleanArr.size(); i++) {
-            for (size_t j = 0; j < punctuations.size(); j++) {
-                boost::erase_all(cleanArr.at(i), punctuations.at(j));
+            for (size_t j = 0; j < PUNCTUATIONS.size(); j++) {
+                boost::erase_all(cleanArr.at(i), PUNCTUATIONS.at(j));
             }
         }
 
         if (cleanArr.size() == 1) {
             std::string str = cleanArr.at(0);
 
-            for (size_t i = 0; i < dateDividers.size(); i++) {
-                cleanArr = ParserLibrary::explode(str, dateDividers.at(i));
+            for (size_t i = 0; i < DATE_DIVIDERS.size(); i++) {
+                cleanArr = ParserLibrary::explode(str, DATE_DIVIDERS.at(i));
                 if (cleanArr.size() > 1) {
                     break;
                 }

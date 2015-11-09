@@ -11,15 +11,25 @@ namespace DoLah {
         TaskTokenizer();
         ~TaskTokenizer();
 
-        // Fixed format ~ date is at the end of command indicated by subcommand 'on'.
-        // It will prune the date part from the input
+        /**
+         * Find the date from the string vector list and returns it as well as removing the date portion from the referenced list.
+         * @param[in, out]  lineArr Reference of a string vector list to be evaluated. Date portion will be removed.
+         * @return Date found in std::tm format.
+         */
         static std::vector<std::tm> findAndRemoveDate(std::vector<std::string>&);
 
-        // The input should not have date already, and thus findDate always come before this.
-        // Tag is ignored and the hashes remain in description.
+        /**
+         * Find the description from the string vector list.
+         * @param[in]   lineArr String vector list to be evaluated.
+         * @return String that represents the description.
+         */
         static std::string findDescription(std::vector<std::string>);
 
-        // A tag is indicated by hash (#)
+        /**
+         * Find the tags from the string vector list.
+         * @param[in]   lineArr String vector list to be evaluated.
+         * @return String vector list of tags.
+         */
         static std::vector<std::string> findTags(std::vector<std::string>);
         
     private:
@@ -28,11 +38,28 @@ namespace DoLah {
         static std::vector<std::string> EVENT_SEPARATOR;
         static std::string SCHEDULE_INDICATOR;
         static std::vector<std::string> SCHEDULE_SEPARATOR;
-        static std::string tag;
-        static int defaultTMYear;
+        static std::string TAG_INDICATOR;
+        static int DEFAULTTMYEAR;
         
-        static std::vector<std::tm> TaskTokenizer::findDate(std::vector<std::string>, int);
+        /**
+         * Find all dates from the given string vector list.
+         * @param[in]   lineArr String vector list to be evaluated.
+         * @return Vector list of time in std::tm format.
+         */
+        static std::vector<std::tm> TaskTokenizer::findDate(std::vector<std::string>);
+
+        /**
+         * Find date for deadline task.
+         * @param[in]   lineArr String vector list to be evaluated.
+         * @return Vector list of time in std::tm format.
+         */
         static std::vector<std::tm> TaskTokenizer::findDeadline(std::vector<std::string>);
+
+        /**
+         * Find dates for event task.
+         * @param[in]   lineArr String vector list to be evaluated.
+         * @return Vector list of time in std::tm format.
+         */
         static std::vector<std::tm> TaskTokenizer::findEvent(std::vector<std::string>, std::vector<std::string>);
     };
 }
