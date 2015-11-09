@@ -1,9 +1,9 @@
 /**
- * @file CommandParser.cpp
+ * @class CommandParser.h Parser/CommandParser.h
+ * @brief Receives a string and returns a Command object.
+ *
  * It receives a string and returns a Command object.
  * If the input is invalid, it will throw invalid_argument exception.
- * 
- * @author Seokmin
  */
 
 
