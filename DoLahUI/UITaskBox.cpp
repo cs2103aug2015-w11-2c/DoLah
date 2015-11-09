@@ -81,7 +81,6 @@ namespace DoLah {
         }
     }
 
-    // Remove space padding from strftime %e
     void UITaskBox::tidyDate(char date[]) {
         if (isspace(date[4])) {
             for (int i = 4; i < 100; i++) {
