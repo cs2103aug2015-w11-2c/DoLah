@@ -7,44 +7,41 @@
 
 
 namespace DoLah {
-    CalendarStorage::CalendarStorage()
-    {
+    CalendarStorage::CalendarStorage() { }
+
+    CalendarStorage::~CalendarStorage() { }
+
+    YAML::Node buildTaskNode(AbstractTask* task) {
+        YAML::Node taskNode;
+        taskNode["task"] = task->getName();
+        taskNode["description"] = task->getDescription();
+        if (!task->getTags().empty()) {
+            taskNode["tags"] = task->getTags();
+        }
+
+        DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(task);
+        DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(task);
+        DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(task);
+
+        if (eventTask != NULL) {
+            taskNode["start"] = eventTask->getStartDate();
+            taskNode["end"] = eventTask->getEndDate();
+        }
+
+        if (deadlineTask != NULL) {
+            taskNode["due"] = deadlineTask->getDueDate();
+        }
+        return taskNode;
     }
 
-
-    CalendarStorage::~CalendarStorage()
-    {
-    }
-
-    void CalendarStorage::save(const DoLah::Calendar& calendar, const std::string & filename) {
-        std::vector<DoLah::AbstractTask*> taskList = calendar.getAllTaskList();
+    std::string buildYAML(const DoLah::Calendar& calendar) {
         YAML::Emitter out;
-
-
-
+        std::vector<DoLah::AbstractTask*> taskList = calendar.getAllTaskList();
         YAML::Node todoNode;
         YAML::Node completedNode;
 
         for (auto it = taskList.begin(); it != taskList.end(); it++) {
-            YAML::Node taskNode;
-            taskNode["task"] = (*it)->getName();
-            taskNode["description"] = (*it)->getDescription();
-            if (!(*it)->getTags().empty()) {
-                taskNode["tags"] = (*it)->getTags();
-            }
-
-            DoLah::FloatingTask* floatingTask = dynamic_cast<DoLah::FloatingTask*>(*it);
-            DoLah::EventTask* eventTask = dynamic_cast<DoLah::EventTask*>(*it);
-            DoLah::DeadlineTask* deadlineTask = dynamic_cast<DoLah::DeadlineTask*>(*it);
-
-            if (eventTask != NULL) {
-                taskNode["start"] = eventTask->getStartDate();
-                taskNode["end"] = eventTask->getEndDate();
-            }
-
-            if (deadlineTask != NULL) {
-                taskNode["due"] = deadlineTask->getDueDate();
-            }
+            YAML::Node taskNode = buildTaskNode(*it);
 
             if ((*it)->isDone()) {
                 completedNode.push_back(taskNode);
@@ -57,24 +54,28 @@ namespace DoLah {
         if (todoNode.size() + completedNode.size() > 0) {
             out << YAML::BeginMap;
             if (todoNode.size() > 0) {
-                out << YAML::Key << "todo";
-
-                out << YAML::Comment("Todo Tasks");
-                out << YAML::Value << todoNode;
+                out << YAML::Key << "todo" 
+                    << YAML::Comment("Todo Tasks") 
+                    << YAML::Value << todoNode;
             }
             if (completedNode.size() > 0) {
-                out << YAML::Key << "done";
-                out << YAML::Comment("Completed Tasks");
-                out << YAML::Value << completedNode;
+                out << YAML::Key << "done"
+                    << YAML::Comment("Completed Tasks")
+                    << YAML::Value << completedNode;
             }
 
             out << YAML::EndMap;
         }
         out << YAML::EndDoc;
 
+        return out.c_str();
+    }
+
+    void CalendarStorage::save(const DoLah::Calendar& calendar, const std::string & filename) {
+        std::string out = buildYAML(calendar);
         std::ofstream ofstream(filename);
         if (ofstream.is_open()) {
-            ofstream << out.c_str();
+            ofstream << out;
         }
         ofstream.close();
     }
