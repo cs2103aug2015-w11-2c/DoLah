@@ -18,11 +18,13 @@ namespace DoLah {
         /**
         * This static method will retrieve load the latest configuration from
         * the latest config.xml file.
+        * @return the user Configuration
         */
         static Configuration loadConfig();
 
         /**
         * saveConfig static method will save the configuration into config.xml.
+        * @param config     The Configuration object which will be saved
         */
         static void saveConfig(Configuration config);
 
