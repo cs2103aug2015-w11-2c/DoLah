@@ -7,7 +7,7 @@
 namespace DoLah {
 
     /**
-    * @class ParserLibrary.h Parser/ParserLibrary.h
+    * @class ParserLibrary ParserLibrary.h Parser/ParserLibrary.h
     * @brief A library consists of general functions.
     *
     * These functions are widly used in parse component.

@@ -5,7 +5,7 @@
 
 namespace DoLah {
     /**
-    * @class TaskParser.h TaskParser.h
+    * @class TaskParser TaskParser.h TaskParser.h
     * @brief Provides function to parse string vector list into a Task object.
     */
     class TaskParser {
