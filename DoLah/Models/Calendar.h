@@ -2,9 +2,9 @@
 
 #include <vector>
 #include <algorithm>
-#include "Models/Task.h"
+#include <Models/Task.h>
 #include <Models/CommandHistory.h>
-#include "TimeManager.h"
+#include <TimeManager.h>
 
 namespace DoLah {
     /**

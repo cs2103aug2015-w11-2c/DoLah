@@ -41,9 +41,10 @@ namespace DoLah {
         virtual void execute() = 0;
 
         /**
-         * @brief When called, will call functions from the associated Calendar to reverse the
-         * stipulated operation. This command must be implemented unless it is not to be
-         * included in CommandHistory.
+         * @brief When called, will call functions from the CalendarInverter and CommandHistory 
+         * classes to reverse the stipulated operation. This function must be implemented unless 
+         * it is not to be included in CommandHistory. This function should not directly call 
+         * functions that mutate the Calendar, but instead go through the CalendarInverter class.
          *
          * Generally this will only be called by UndoTaskCommand.
          */
@@ -74,8 +75,8 @@ namespace DoLah {
         void execute();
 
         /**
-         * @brief When called, will call functions from the associated Calendar to reverse the
-         * operation of adding the task to the Calendar.
+         * @brief When called, will call functions from CalendarInverter and CommandHistory 
+         * to reverse the operation of adding the task to the Calendar.
          */
         void revert();
 
@@ -106,8 +107,8 @@ namespace DoLah {
         void execute();
 
         /**
-         * @brief When called, will call functions from the associated Calendar to reverse the
-         * operation of editing the task in the Calendar.
+         * @brief When called, will call functions from CalendarInverter and CommandHistory 
+         * to reverse the operation of editing the task in the Calendar.
          */
         void revert();
 
@@ -140,8 +141,8 @@ namespace DoLah {
         void execute();
 
         /**
-         * @brief When called, will call functions from the associated Calendar to reverse marking 
-         * the task as done in the Calendar.
+         * @brief When called, will call functions from CalendarInverter and CommandHistory 
+         * to reverse the operation of marking the task as done in the Calendar.
          */
         void revert();
     
@@ -173,8 +174,8 @@ namespace DoLah {
         void execute();
 
         /**
-         * @brief When called, will call functions from the associated Calendar to reverse marking
-         * the task as not done in the Calendar.
+         * @brief When called, will call functions from CalendarInverter and CommandHistory 
+         * to reverse the operation of marking the task as not done in the Calendar.
          */
         void revert();
     private:
@@ -204,8 +205,8 @@ namespace DoLah {
         void execute();
 
         /**
-         * @brief When called, will call functions from the associated Calendar to reverse deleting
-         * the task in the Calendar.
+         * @brief When called, will call functions from CalendarInverter and CommandHistory 
+         * to reverse the operation of deleting the task in the Calendar.
          */
         void revert();
 
@@ -231,8 +232,8 @@ namespace DoLah {
         void execute();
 
         /**
-         * @brief When called, will call functions from the associated Calendar to reverse clearing
-         * all tasks in the Calendar.
+         * @brief When called, will call functions from CalendarInverter and CommandHistory 
+         * to reverse the operation of clearing all tasks in the Calendar.
          */
         void revert();
 
