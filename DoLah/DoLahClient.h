@@ -42,6 +42,8 @@ namespace DoLah {
          */
         void parseAndProcessCommand(std::string);
 
+        void setTheme(int);
+
         /**
          * @brief Restarts the application.
          */

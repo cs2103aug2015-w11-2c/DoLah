@@ -18,9 +18,9 @@ namespace DoLah {
         description = new QLabel(this);
         description->setGeometry(QRect(25, 40, 370, 20));
 
-        editarea = new QLineEdit(this);
-        editarea->setGeometry(QRect(25, 60, 370, 20));
-        editarea->setFocus();
+        editArea = new QLineEdit(this);
+        editArea->setGeometry(QRect(25, 60, 370, 20));
+        editArea->setFocus();
 
         buttonBox = new QDialogButtonBox(this);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));

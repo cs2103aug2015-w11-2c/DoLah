@@ -17,7 +17,7 @@ namespace DoLah {
         HelpWindow(QWidget * parent = 0, Qt::WindowFlags f = 0);
         ~HelpWindow();
 
-        QLabel *bglabel;
+        QLabel *bgLabel; /**< Holds the background image of the help window*/
         MenuLabel *exitButton;
         QWidget *navi;
         QVBoxLayout *navilayout;
@@ -38,9 +38,9 @@ namespace DoLah {
         QStackedWidget *helpcontents;
 
     protected:
-        void mousePressEvent(QMouseEvent*);
-        void mouseMoveEvent(QMouseEvent*);
-        void keyPressEvent(QKeyEvent*);
+        void mousePressEvent(QMouseEvent*); /**< Reimplemented from QWidget::mousePressEvent() */
+        void mouseMoveEvent(QMouseEvent*); /**< Reimplemented from QWidget::mouseMoveEvent() */
+        void keyPressEvent(QKeyEvent*); /**< Reimplemented from QWidget::keyPressEvent() */
 
     private slots:
         void goToBasic();
@@ -50,12 +50,19 @@ namespace DoLah {
         void goToKeyboard();
         void goToOther();
         void goToAbout();
-        void updateNav(int);
+        void updateNav(int); /**< Changes the appearance of the navigation according to the active page*/
 
     private:
         void initNavi();
+        /**
+        * Adds a label with the desired text to the navigation
+        * @param label Label to be added
+        * @param text Text of the label
+        */
         void addNaviLabel(QLabel*, QString);
-        void clearStyles();
+        void clearStyles(); /**< Clears the navigation page indication*/
+        void initContents();
+        void initPage(QLabel*, QString);
         QPoint dragPosition;
     };
 }

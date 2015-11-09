@@ -57,7 +57,9 @@ namespace DoLah {
         themeSelection->addItem("Night");
         themeSelection->addItem("Ordinaire");
         themeSelection->setGeometry(QRect(50, 170, 200, 20));
-        originalTheme = themeSelection->currentIndex();
+        Configuration config = ConfigurationManager::loadConfig();
+        originalTheme = config.theme;
+        themeSelection->setCurrentIndex(originalTheme);
         connect(themeSelection, SIGNAL(currentIndexChanged(int)), this, SLOT(changeTheme(int)));
     }
 
@@ -85,6 +87,7 @@ namespace DoLah {
 
     void SettingsWindow::applyChanges() {
         originalTheme = themeSelection->currentIndex();
+        emit applyThemeSettings(originalTheme);
         QString formattedUrl;
         if (storageLocationBox->text() == originalLocation) {
         }
