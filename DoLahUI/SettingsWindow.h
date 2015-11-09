@@ -28,6 +28,7 @@ namespace DoLah {
 
     signals:
         void applyStorageSettings(QString); /**< This signal is emitted when the user presses the ok button in the EasyEdit window*/
+        void applyThemeSettings(int);
 
     protected:
         void keyPressEvent(QKeyEvent*); /**< Reimplemented from QWidget::keyPressEvent() */

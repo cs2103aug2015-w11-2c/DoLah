@@ -78,12 +78,14 @@ namespace DoLah {
         void goToHelp(); /**< Opens the help window*/
         void goToSettings(); /**< Opens the settings window*/
         void setStorageLocation(QString); /**< Sets the storage location for the file containing tasks data*/
+        void setThemeConfig(int); /**< Sets the theme number in the config*/
         void menuExit(); /**< Quits the program*/
         void updateMenu(int); /**< Changes the appearance of the menu's tabs according to the active view*/
 
     private:
         void setupUI();
-        void retranslateUI();
+        void loadTheme(int);
+        void readAndSetStyleSheet(const char*);
         void initMenu();
         void initDisplayArea();
         void initInputArea();

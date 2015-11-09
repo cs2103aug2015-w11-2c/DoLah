@@ -1,19 +1,38 @@
 #include "DoLahUI.h"
+#include "Config/ConfigurationManager.h"
 
 namespace DoLah {
     DoLahUI::DoLahUI(QWidget *parent)
         : QMainWindow(parent)
     {
         this->setupUI();
-        QFile stylesheet("stylesheets/stylesheet.qss");
-        if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            setStyleSheet(stylesheet.readAll());
-            stylesheet.close();
-        }
+        Configuration config = ConfigurationManager::loadConfig();
+        loadTheme(config.theme);
+        QObject::connect(settingsWindow, SIGNAL(applyThemeSettings(int)), this, SLOT(setThemeConfig(int)));
     }
 
     DoLahUI::~DoLahUI() {
+    }
+
+    void DoLahUI::loadTheme(int index) {
+        if (index == 0) {
+            readAndSetStyleSheet("stylesheets/stylesheet.qss");
+        }
+        else if (index == 1) {
+            readAndSetStyleSheet("stylesheets/night_stylesheet.qss");
+        }
+        else if (index == 2) {
+            readAndSetStyleSheet("stylesheets/ordinaire_stylesheet.qss");
+        }
+    }
+
+    void DoLahUI::readAndSetStyleSheet(const char *qss) {
+        QFile stylesheet(qss);
+        if (stylesheet.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            this->setStyleSheet(stylesheet.readAll());
+            stylesheet.close();
+        }
     }
 
     // MAIN WINDOW
@@ -228,7 +247,7 @@ namespace DoLah {
         std::string inputline = input.toStdString();
         if (inputline.length() != 0) {
             lineEdit->arrangeStack();
-            lineEdit->commandstack_up.push(inputline);
+            lineEdit->commandStackUp.push(inputline);
             try {
                 if (inputline == "help") {
                     goToHelp();
@@ -309,6 +328,13 @@ namespace DoLah {
     void DoLahUI::setStorageLocation(QString url) {
         std::string location = url.toStdString();
         appClient.setStorageLocation(location);
+        message->clear();
+        message->setText("Settings changed");
+        this->refreshTasks();
+    }
+
+    void DoLahUI::setThemeConfig(int theme) {
+        appClient.setTheme(theme);
         message->clear();
         message->setText("Settings changed");
         this->refreshTasks();

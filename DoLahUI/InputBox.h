@@ -14,8 +14,8 @@ namespace DoLah {
         ~InputBox();
         void arrangeStack(); /**< Moves all commands back up to commandstack_up */
 
-        std::stack<std::string> commandstack_up; /**< Contains previous commands */
-        std::stack<std::string> commandstack_down; /**< Contains previous commands that have been scrolled down */
+        std::stack<std::string> commandStackUp; /**< Contains previous commands */
+        std::stack<std::string> commandStackDown; /**< Contains previous commands that have been scrolled down */
 
     protected:
         void keyPressEvent(QKeyEvent*); /**< Reimplemented from QWidget::keyPressEvent() */

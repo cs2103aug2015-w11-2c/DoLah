@@ -8,14 +8,12 @@ namespace DoLah {
         this->index = index;
         this->task = task;
         dynamicCast(index, task);
-        easyedit = new EasyEdit(this);
-        QObject::connect(easyedit->buttonBox, SIGNAL(accepted()), this, SLOT(handleEasyEdit()));
+        easyEdit = new EasyEdit(this);
+        QObject::connect(easyEdit->buttonBox, SIGNAL(accepted()), this, SLOT(handleEasyEdit()));
 
     }
 
-    UITaskBox::~UITaskBox()
-    {
-    }
+    UITaskBox::~UITaskBox() { }
 
     QSize UITaskBox::sizeHint() const {
         return QSize(350, 300);
@@ -39,7 +37,6 @@ namespace DoLah {
             if (task->isDone()) {
                 QString contents = tasktitle.append("</font><br><font size=3>" + QString(deadline));
                 this->setText(contents);
-
             }
             else if (task->isExpired()) {
                 QString contents = tasktitle.append("</font><br><font size=3><font color=#fc7370>" + QString(deadline));
@@ -94,12 +91,7 @@ namespace DoLah {
     //////////////////////////////////////////
 
     void UITaskBox::mousePressEvent(QMouseEvent *event) {
-        if (event->button() == Qt::RightButton) {
-            emit rightclicked(event->globalPos());
-        }
-        else {
-            event->ignore();
-        }
+        event->ignore();
     }
     void UITaskBox::mouseMoveEvent(QMouseEvent *event) {
         event->ignore();
@@ -107,10 +99,10 @@ namespace DoLah {
     void UITaskBox::mouseDoubleClickEvent(QMouseEvent *event) {
         if (event->button() == Qt::LeftButton) {
             if (!task->isDone()) {
-                easyedit->editarea->setText(editabletext);
+                easyEdit->editArea->setText(editabletext);
                 QString temp = QString("Edit task ") + QString::number(index) + ":";
-                easyedit->description->setText(temp);
-                easyedit->exec();
+                easyEdit->description->setText(temp);
+                easyEdit->exec();
             }
         }
     }
@@ -120,11 +112,11 @@ namespace DoLah {
     //////////////////////////////////////////
 
     void UITaskBox::handleEasyEdit() {
-        if (!easyedit->editarea->text().isEmpty()) {
-            emit confirmed(index, easyedit->editarea->text());
+        if (!easyEdit->editArea->text().isEmpty()) {
+            emit confirmed(index, easyEdit->editArea->text());
         }
         else {
-            easyedit->reject();
+            easyEdit->reject();
         }
     }
 }

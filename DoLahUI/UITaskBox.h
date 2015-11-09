@@ -20,11 +20,10 @@ namespace DoLah {
         ~UITaskBox();
         QSize sizeHint() const; /**< Reimplemented from QWidget::sizeHint() */
 
-        EasyEdit *easyedit;
+        EasyEdit *easyEdit;
 
     signals:
         void confirmed(int, QString); /**< This signal is emitted when the user presses the ok button in the EasyEdit window */
-        void rightclicked(QPoint); /**< This signal is emitted when the user rightclicks on the task box */
 
     protected:
         void mousePressEvent(QMouseEvent*); /**< Reimplemented from QWidget::mousePressEvent() */

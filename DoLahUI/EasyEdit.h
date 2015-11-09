@@ -20,7 +20,7 @@ namespace DoLah {
 
         MenuLabel *exitButton;
         QLabel *description;
-        QLineEdit *editarea; /**< Input area where user can edit task*/
+        QLineEdit *editArea; /**< Input area where user can edit task*/
         QDialogButtonBox *buttonBox;
 
     protected:

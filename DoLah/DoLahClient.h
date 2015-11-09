@@ -18,6 +18,7 @@ namespace DoLah {
         void parseAndProcessCommand(std::string);
         Calendar getCalendar() const;
         void setStorageLocation(std::string);
+        void setTheme(int);
         void restart();
     private:
         Configuration config;

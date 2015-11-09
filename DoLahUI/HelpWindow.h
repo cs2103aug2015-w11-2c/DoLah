@@ -17,7 +17,7 @@ namespace DoLah {
         HelpWindow(QWidget * parent = 0, Qt::WindowFlags f = 0);
         ~HelpWindow();
 
-        QLabel *bglabel; /**< Holds the background image of the help window*/
+        QLabel *bgLabel; /**< Holds the background image of the help window*/
         MenuLabel *exitButton;
         QWidget *navi;
         QVBoxLayout *navilayout;
@@ -61,6 +61,8 @@ namespace DoLah {
         */
         void addNaviLabel(QLabel*, QString);
         void clearStyles(); /**< Clears the navigation page indication*/
+        void initContents();
+        void initPage(QLabel*, QString);
         QPoint dragPosition;
     };
 }
