@@ -14,8 +14,8 @@ namespace DoLah {
         ~InputBox();
         void arrangeStack();
 
-        std::stack<std::string> commandstack_up;
-        std::stack<std::string> commandstack_down;
+        std::stack<std::string> commandStackUp;
+        std::stack<std::string> commandStackDown;
 
     protected:
         void keyPressEvent(QKeyEvent*);

@@ -75,12 +75,14 @@ namespace DoLah {
         void goToHelp();
         void goToSettings();
         void setStorageLocation(QString);
+        void setThemeConfig(int);
         void menuExit();
         void updateMenu(int);
 
     private:
         void setupUI();
-        void retranslateUI();
+        void loadTheme(int);
+        void readAndSetStyleSheet(const char*);
         void initMenu();
         void initDisplayArea();
         void initInputArea();

@@ -20,7 +20,7 @@ namespace DoLah {
 
         MenuLabel *exitButton;
         QLabel *description;
-        QLineEdit *editarea;
+        QLineEdit *editArea;
         QDialogButtonBox *buttonBox;
 
     protected:

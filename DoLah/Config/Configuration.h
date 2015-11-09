@@ -12,14 +12,17 @@ namespace DoLah {
         template<class Archive>
         void save(Archive& ar, const unsigned int version) const {
             ar << BOOST_SERIALIZATION_NVP(storagefile);
+            ar << BOOST_SERIALIZATION_NVP(theme);
         }
 
         template<class Archive>
         void load(Archive& ar, const unsigned int version) {
             ar >> BOOST_SERIALIZATION_NVP(storagefile);
+            ar >> BOOST_SERIALIZATION_NVP(theme);
         }
         BOOST_SERIALIZATION_SPLIT_MEMBER()
     public:
         std::string storagefile;
+        int theme;
     };
 }

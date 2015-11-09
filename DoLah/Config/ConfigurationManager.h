@@ -14,4 +14,5 @@ namespace DoLah {
     };
 
     static const std::string DEFAULT_CALENDAR_FILENAME = "calendar.yaml";
+    static const int DEFAULT_THEME_NUMBER = 0;
 }

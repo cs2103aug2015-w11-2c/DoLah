@@ -16,6 +16,7 @@ namespace DoLah {
             ia >> BOOST_SERIALIZATION_NVP(config);
         } catch (const boost::archive::archive_exception&) {
             config.storagefile = DEFAULT_CALENDAR_FILENAME;
+            config.theme = DEFAULT_THEME_NUMBER;
             ConfigurationManager::saveConfig(config);
         }
         return config;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="13">
+<config class_id="0" tracking_level="0" version="0">
+	<storagefile>calendar.yaml</storagefile>
+	<theme>2</theme>
+</config>
+</boost_serialization>
+
