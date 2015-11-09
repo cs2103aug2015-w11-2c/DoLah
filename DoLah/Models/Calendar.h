@@ -151,24 +151,30 @@ namespace DoLah {
         void sortTasks(std::vector<AbstractTask*>&);
 
         /**
+        * @brief Updates the index fields of all tasks in the given vector starting from the given
+        * index. This index is always equal to
+        * its actual index in the vector plus one.
+        *
+        * @param list The vector to be indexed.
+        * @param startIndex The index to start from.
+        */
+        void indexTasks(std::vector<AbstractTask*>&, int = 0);
+
+        /**
          * @brief Go through all the tasks and marks expired tasks as overdue.
          */
         void updateTaskExpiry();
 
         /**
-         * @brief Updates the index fields of all tasks in the given vector starting from the given
-         * index. This index is always equal to
-         * its actual index in the vector plus one.
-         * 
-         * @param list The vector to be indexed.
-         * @param startIndex The index to start from.
+         * @brief Update the search results. Usually called after an operation on the Calendar.
          */
-        void indexTasks(std::vector<AbstractTask*>&, int=0);
+        void updateSearch();
     private:
         std::vector<AbstractTask*> taskList; ///< Vector of undone tasks. Always assumed to be sorted.
         std::vector<AbstractTask*> doneList; ///< Vector of done tasks. Always assumed to be sorted.
         CommandHistory cmdHistory; ///< The instance of CommandHistory associated with this Calendar.
         std::vector<AbstractTask*> searchedList; ///< Vector containing search results.
+        std::string lastQuery;
 
         std::string TASK_INDEX_OUT_OF_RANGE_MESSAGE = "Task index out of range";
 

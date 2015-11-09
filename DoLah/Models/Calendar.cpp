@@ -3,6 +3,7 @@
 namespace DoLah {
 	Calendar::Calendar() {
         this->cmdHistory = DoLah::CommandHistory();
+        this->lastQuery = "";
 	}
 
     Calendar::~Calendar() {
@@ -52,31 +53,8 @@ namespace DoLah {
             taskList.insert(taskList.begin() + task->getIndex(), task);
             indexTasks(taskList, task->getIndex());
         }
-    }
 
-    void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
-        if (end == start) {
-            task->setIndex(start);
-        }
-        else {
-            int middle = (start + end) / 2;
-            if (task->isDone()) {
-                if (AbstractTask::taskCompare(task, doneList[middle])) {
-                    findInsertionPoint(task, start, middle);
-                } else {
-                    
-                    findInsertionPoint(task, middle + 1, end);
-                }
-            }
-            else {
-                if (AbstractTask::taskCompare(task, taskList[middle])) {
-                    findInsertionPoint(task, start, middle);
-                }
-                else {
-                    findInsertionPoint(task, middle+1, end);
-                }
-            }
-        }
+        this->updateSearch();
     }
 
     void Calendar::deleteTask(int index, bool status) {
@@ -92,6 +70,8 @@ namespace DoLah {
             taskList.erase(doneList.begin() + index);
             indexTasks(doneList);
         }
+
+        this->updateSearch();
     }
 
     void Calendar::setDoneTask(int taskIndex, bool status) {
@@ -118,20 +98,24 @@ namespace DoLah {
             sortTasks(taskList);
         }
 
+        this->updateSearch();
     }
 
     void Calendar::updateTask(int taskIndex, AbstractTask* task) {
         size_t index = taskIndex;
         deleteTask(index);
         addTask(task);
+        this->updateSearch();
     }
 
     void Calendar::clearTasks() {
         this->taskList.clear();
         this->doneList.clear();
+        this->updateSearch();
     }
 
     void Calendar::search(std::string query) {
+        this->lastQuery = query;
         std::vector<AbstractTask*> results;
 
         if (query == "") {
@@ -189,6 +173,36 @@ namespace DoLah {
     void Calendar::updateTaskExpiry() {
         for (size_t i = 0; i < this->taskList.size(); i++) {
             this->taskList[i]->updateExpired();
+        }
+    }
+
+    void Calendar::updateSearch() {
+        this->search(lastQuery);
+    }
+
+    void Calendar::findInsertionPoint(AbstractTask* task, int start, int end) {
+        if (end == start) {
+            task->setIndex(start);
+        }
+        else {
+            int middle = (start + end) / 2;
+            if (task->isDone()) {
+                if (AbstractTask::taskCompare(task, doneList[middle])) {
+                    findInsertionPoint(task, start, middle);
+                }
+                else {
+
+                    findInsertionPoint(task, middle + 1, end);
+                }
+            }
+            else {
+                if (AbstractTask::taskCompare(task, taskList[middle])) {
+                    findInsertionPoint(task, start, middle);
+                }
+                else {
+                    findInsertionPoint(task, middle + 1, end);
+                }
+            }
         }
     }
 }

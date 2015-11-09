@@ -35,10 +35,11 @@ namespace DoLah {
         /**
          * @brief Performs the inverse of the Edit operation on the given Calendar.
          *
-         * @param task The task that was edited.
+         * @param oldTask The task that was edited.
+         * @param newTask The replacement task.
          * @param calendar The calendar to operate on.
          */
-        static void invertEdit(AbstractTask *, Calendar *);
+        static void invertEdit(AbstractTask *, AbstractTask *, Calendar *);
 
         /**
          * @brief Performs the inverse of the Clear operation on the given Calendar.
