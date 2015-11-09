@@ -63,7 +63,7 @@ namespace DoLah {
 		std::stack<AbstractCommand *> redoStack; ///< The stack holding the list of undone Commands.
 
         //error messages
-        static std::string INVALID_UNDO_CALL_MESSAGE; ///< Thrown if #undoStack is empty.
-        static std::string INVALID_REDO_CALL_MESSAGE; ///< Thrown if #redoStack is empty.
+        const std::string INVALID_UNDO_CALL_MESSAGE; ///< Thrown if #undoStack is empty.
+        const std::string INVALID_REDO_CALL_MESSAGE; ///< Thrown if #redoStack is empty.
 	};
 }
